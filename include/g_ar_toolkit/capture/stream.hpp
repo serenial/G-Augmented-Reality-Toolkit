@@ -17,11 +17,12 @@ namespace g_ar_toolkit{
             public:
             Stream();
             virtual ~Stream();
-            virtual bool start();
-            virtual bool stop();
-            virtual bool grab_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
+            virtual void start_stream();
+            virtual void stop_stream();
+            virtual void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
         };
 
-        Stream* create_platform_stream(std::string, stream_type_t stream_type);
+        // stream factory
+        std::unique_ptr<Stream> create_platform_stream(std::string, stream_type_t stream_type);
     }
 }

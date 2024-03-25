@@ -40,7 +40,7 @@ namespace g_ar_toolkit
             errors last_error;
             std::mutex mtx;
             const std::future<HRESULT> ftr;
-            std::condition_variable cv;
+            std::condition_variable notifier;
             std::vector<device_info_t> last_enumeration;
             void update_last_device_enumeration();
 

@@ -5,6 +5,8 @@
 #include <memory>
 #include <map>
 
+#include "g_ar_toolkit/lv-interop/lv-types.hpp"
+
 namespace g_ar_toolkit
 {
     namespace capture
@@ -48,10 +50,10 @@ namespace g_ar_toolkit
             Context();
             virtual ~Context();
             virtual void enumerate_devices(std::vector<device_info_t> &);
-            Stream* open_stream(std::string, stream_type_t);
+            std::unique_ptr<Stream> open_stream(std::string, stream_type_t);
         };
 
         // context factory
-        Context *create_platform_context();
+        std::unique_ptr<Context> create_platform_context();
     }
 }

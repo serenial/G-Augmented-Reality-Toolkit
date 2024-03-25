@@ -36,36 +36,19 @@ namespace g_ar_toolkit
         using LV_InstanceDataPtr_t = void *;
         using LV_InstanceDataHandle_t = LV_Ptr_t<LV_InstanceDataPtr_t>;
 
-        // LabVIEW Manager Allocated 
-        // see https://github.com/ni/grpc-labview/blob/master/src/lv_interop.h
         template <size_t n_dims, typename T>
         struct LV_Array_t
         {
-            size_t dims[n_dims];
-            uint8_t buffer[1];
+            int32_t dims[n_dims];
+            T data[1];
 
-            T *data(size_t byteOffset = 0)
-            {
-#ifndef G_AR_TOOLKIT_BYTE_PACKING_4
-                if (sizeof(T) < 8)
-                {
-                    return reinterpret_cast<T *>(buffer + byteOffset);
-                }
-                return reinterpret_cast<T *>(buffer + 4 + byteOffset); // 8-byte aligned data
-#else
-                T *p = reinterpret_cast<T *>(buffer + byteOffset);
-                return p;
-#endif
-            };
+            T* data_ptr(){
+                return reinterpret_cast<T*>(&data[0]);
+            }
         };
 
         // LabVIEW allocated strings - the same as a 1D array but with more relevant member names
-        struct LV_String_t
-        {
-            int32_t length;
-            uint8_t str[1];
-        };
-
+        using LV_String_t = LV_Array_t<1,char>;
         using LV_StringPtr_t = LV_Ptr_t<LV_String_t>;
         using LV_StringHandle_t = LV_Handle_t<LV_String_t>;
         using LV_StringHandlePtr_t = LV_HandlePtr_t<LV_String_t>;
@@ -86,7 +69,7 @@ namespace g_ar_toolkit
         // and the stride (how many elements to increment a pointer by to get to the next element in this direction)
         struct LV_EDVRDimensionSpecifier_t
         {
-            int32_t dimension_size;
+            size_t dimension_size;
             ptrdiff_t stride;
         };
 
@@ -126,18 +109,6 @@ namespace g_ar_toolkit
 
         using LV_EDVRReferencePtr_t = LV_Ptr_t<LV_EDVRReference_t>;
         using LV_EDVRDataHandle_t = LV_Handle_t<LV_EDVRData_t>;
-
-        // MgErr EDVR_GetCurrentContext(ExternalDataValueReferenceContext* pContext);
-        using LV_EDVRGetCurrentContextFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_Ptr_t<LV_EDVRContext_t>)>;
-
-        // MgErr EDVR_CreateReference(ExternalDataValueReference* pReference, ExternalDataValueReferenceData** ppReferenceData);
-        using LV_EDVRCreateReferenceFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_EDVRReferencePtr_t, LV_EDVRDataHandle_t)>;
-
-        // MgErr EDVR_AddRefWithContext(ExternalDataValueReference reference, ExternalDataValueReferenceContext context, ExternalDataValueReferenceData** ppReferenceData);
-        using LV_EDVRAddRefWithContextFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_EDVRReference_t, LV_EDVRContext_t, LV_EDVRDataHandle_t)>;
-
-        // MgErr EDVR_ReleaseRefWithContext(ExternalDataValueReference reference, ExternalDataValueReferenceContext context);
-        using LV_EDVRReleaseRefWithContextFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_EDVRReference_t, LV_EDVRContext_t)>;
         
         // LV Manager Function 
 
@@ -145,24 +116,12 @@ namespace g_ar_toolkit
         using LV_UHandle_t = LV_Handle_t<uint8_t>;
         using LV_UHandlePtr_t = LV_HandlePtr_t<uint8_t>;
 
-        // https://www.ni.com/docs/en-US/bundle/labview-api-ref/page/properties-and-methods/lv-manager/postlvuserevent.html
-        // MgErr PostLVUserEvent(LVUserEventRef ref, void *data);
-        using LV_PostLVUserEventFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_UserEventRef_t, void*)>;
-
-        // https://www.ni.com/docs/en-US/bundle/labview-api-ref/page/properties-and-methods/lv-manager/numericarrayresize.html
-        // MgErr NumericArrayResize (int32 typeCode, int32 numDims, Uhandle *dataHP, size_t totalNewSize)
-        using LV_NumericArrayResizeFnPtr_t = std::add_pointer_t<LV_MgErr_t(int32_t, int32_t, LV_UHandlePtr_t, size_t)>;
-
-        // https://www.ni.com/docs/en-US/bundle/labview-api-ref/page/properties-and-methods/lv-manager/dsdisposehandle.html
-        // MgErr DSDisposeHandle(h)
-        using LV_DSDisposeHandleFnPtr_t = std::add_pointer_t<LV_MgErr_t(LV_UHandle_t)>;
-
-
         // Error Codes
         // https://www.ni.com/docs/en-US/bundle/labview/page/labview-manager-function-errors.html
         const LV_MgErr_t LV_ERR_noError = 0;
         const LV_MgErr_t LV_ERR_mgArgErr = 1;
         const LV_MgErr_t LV_ERR_mFullErr = 2;
+        const LV_MgErr_t LV_ERR_mZoneErr = 3;
         const LV_MgErr_t LV_ERR_fEOF = 4;
         const LV_MgErr_t LV_ERR_fIsOpen = 5;
         const LV_MgErr_t LV_ERR_fIOErr = 6;

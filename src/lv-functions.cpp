@@ -1,3 +1,8 @@
+#include <algorithm>
+#include <vector>
+#include <iterator>
+#include <stdexcept>
+
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/image/image.hpp"
 #include "g_ar_toolkit_export.h"
@@ -13,6 +18,10 @@ static LV_EDVRReleaseRefWithContextFnPtr_t EDVR_ReleaseRefWithContextImp = nullp
 static LV_PostLVUserEventFnPtr_t PostLVUserEventImp = nullptr;
 static LV_NumericArrayResizeFnPtr_t NumericArrayResizeImp = nullptr;
 static LV_DSDisposeHandleFnPtr_t DSDisposeHandleImp = nullptr;
+static LV_DSCheckHandlePtr_t DSCheckHandleImp = nullptr;
+static LV_DSNewHandlePtr_t DSNewHandleImp = nullptr;
+static LV_DSSetHandleSizePtr_t DSSetHandleSizeImp = nullptr;
+static LV_DSGetHandleSizePtr_t DSGetHandleSizeImp = nullptr;
 
 extern "C"
 {
@@ -21,7 +30,18 @@ extern "C"
         for (int i = 0; i < 2; i++)
         {
             // check if the function pointers already populated
-            if (EDVR_GetCurrentContextImp && EDVR_CreateReferenceImp && EDVR_AddRefWithContextImp && EDVR_ReleaseRefWithContextImp && PostLVUserEventImp && NumericArrayResizeImp && DSDisposeHandleImp)
+            if (
+                EDVR_GetCurrentContextImp &&
+                EDVR_CreateReferenceImp &&
+                EDVR_AddRefWithContextImp &&
+                EDVR_ReleaseRefWithContextImp &&
+                PostLVUserEventImp &&
+                NumericArrayResizeImp &&
+                DSDisposeHandleImp &&
+                DSCheckHandleImp &&
+                DSNewHandleImp &&
+                DSSetHandleSizeImp &&
+                DSGetHandleSizeImp)
             {
                 return LV_ERR_noError;
             }
@@ -50,6 +70,10 @@ extern "C"
                 PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(GetProcAddress(module, "PostLVUserEvent"));
                 NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(GetProcAddress(module, "NumericArrayResize"));
                 DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(GetProcAddress(module, "DSDisposeHandle"));
+                DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(GetProcAddress(module, "DSCheckHandle"));
+                DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(GetProcAddress(module, "DSNewHandle"));
+                DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(GetProcAddress(module, "DSSetHandleSize"));
+                DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(GetProcAddress(module, "DSGetHandleSize"));
             }
             else
             {
@@ -71,6 +95,10 @@ extern "C"
                 PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(dlsym(module, "PostLVUserEvent"));
                 NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(dlsym(module, "NumericArrayResize"));
                 DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(dlsym(module, "DSDisposeHandle"));
+                DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(dlsym(module, "DSCheckHandle"));
+                DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(dlsym(module, "DSNewHandle"));
+                DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(dlsym(module, "DSSetHandleSize"));
+                DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(dlsym(module, "DSGetHandleSize"));
 #endif
         }
 
@@ -78,85 +106,52 @@ extern "C"
     }
 }
 
-LV_MgErr_t g_ar_toolkit::lv_interop::EDVR_GetCurrentContext(LV_Ptr_t<LV_EDVRContext_t> ctx_ptr)
+LV_MgErr_t lv_interop::EDVR_GetCurrentContext(LV_Ptr_t<LV_EDVRContext_t> ctx_ptr)
 {
-    try
-    {
-        return EDVR_GetCurrentContextImp(ctx_ptr);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return EDVR_GetCurrentContextImp(ctx_ptr);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::EDVR_CreateReference(LV_EDVRReferencePtr_t edvr_ref_ptr, LV_EDVRDataHandle_t hndl)
+LV_MgErr_t lv_interop::EDVR_CreateReference(LV_EDVRReferencePtr_t edvr_ref_ptr, LV_EDVRDataHandle_t hndl)
 {
-    try
-    {
-        return EDVR_CreateReferenceImp(edvr_ref_ptr, hndl);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return EDVR_CreateReferenceImp(edvr_ref_ptr, hndl);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::EDVR_AddRefWithContext(LV_EDVRReference_t edvr_ref_ptr, LV_EDVRContext_t ctx, LV_EDVRDataHandle_t hndl)
+LV_MgErr_t lv_interop::EDVR_AddRefWithContext(LV_EDVRReference_t edvr_ref_ptr, LV_EDVRContext_t ctx, LV_EDVRDataHandle_t hndl)
 {
-    try
-    {
-        return EDVR_AddRefWithContextImp(edvr_ref_ptr, ctx, hndl);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return EDVR_AddRefWithContextImp(edvr_ref_ptr, ctx, hndl);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::EDVR_ReleaseRefWithContext(LV_EDVRReference_t edvr_ref_ptr, LV_EDVRContext_t ctx)
+LV_MgErr_t lv_interop::EDVR_ReleaseRefWithContext(LV_EDVRReference_t edvr_ref_ptr, LV_EDVRContext_t ctx)
 {
-    try
-    {
-        return EDVR_ReleaseRefWithContextImp(edvr_ref_ptr, ctx);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return EDVR_ReleaseRefWithContextImp(edvr_ref_ptr, ctx);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::PostLVUserEvent(LV_UserEventRef_t ue_ref, void *data_ptr)
+LV_MgErr_t lv_interop::PostLVUserEvent(LV_UserEventRef_t ue_ref, void *data_ptr)
 {
-    try
-    {
-        return PostLVUserEventImp(ue_ref, data_ptr);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return PostLVUserEventImp(ue_ref, data_ptr);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::NumericArrayResize(int32_t type, int32_t n_dims, LV_UHandlePtr_t hndl, size_t size)
+LV_MgErr_t lv_interop::NumericArrayResize(int32_t type, int32_t n_dims, LV_UHandlePtr_t hndl, size_t size)
 {
-    try
-    {
-        return NumericArrayResizeImp(type, n_dims, hndl, size);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return NumericArrayResizeImp(type, n_dims, hndl, size);
 }
-LV_MgErr_t g_ar_toolkit::lv_interop::DSDisposeHandle(LV_UHandle_t hndl)
+LV_MgErr_t lv_interop::DSDisposeHandle(LV_UHandle_t hndl)
 {
-    try
-    {
-        return DSDisposeHandleImp(hndl);
-    }
-    catch (...)
-    {
-        return LV_ERR_bogusError;
-    }
+    return DSDisposeHandleImp(hndl);
+}
+LV_MgErr_t lv_interop::DSCheckHandle(LV_UHandle_t hndl)
+{
+    return DSCheckHandleImp(hndl);
+}
+LV_UHandle_t lv_interop::DSNewHandle(size_t size)
+{
+    return DSNewHandleImp(size);
+}
+LV_MgErr_t lv_interop::DSSetHandleSize(LV_UHandle_t hndl, size_t size)
+{
+    return DSSetHandleSizeImp(hndl, size);
+}
+size_t lv_interop::DSGetHandleSize(LV_UHandle_t hndl)
+{
+    return DSGetHandleSizeImp(hndl);
 }
 
-LV_MgErr_t g_ar_toolkit::lv_interop::get_edvr_data_handle_with_context(LV_EDVRReference_t edvr_ref, LV_EDVRContext_t *cntx_ptr, LV_EDVRDataHandle_t data_handle)
+LV_MgErr_t lv_interop::get_edvr_data_handle_with_context(LV_EDVRReference_t edvr_ref, LV_EDVRContext_t *cntx_ptr, LV_EDVRDataHandle_t data_handle)
 {
 
     if (!edvr_ref || !cntx_ptr || !data_handle)
@@ -179,4 +174,32 @@ LV_MgErr_t g_ar_toolkit::lv_interop::get_edvr_data_handle_with_context(LV_EDVRRe
     err = EDVR_AddRefWithContext(edvr_ref, *cntx_ptr, data_handle);
 
     return err;
+}
+
+void lv_interop::throw_if_edvr_ref_pointers_not_unique(std::initializer_list<LV_EDVRReferencePtr_t> ptr_list)
+{
+    std::vector<LV_EDVRReference_t> refs;
+    refs.reserve(ptr_list.size());
+
+    // de-reference
+    std::transform(ptr_list.begin(), ptr_list.end(),
+                   std::back_inserter(refs),
+                   [](LV_EDVRReferencePtr_t ptr)
+                   { return *ptr; });
+
+    // compare
+    refs.erase(std::remove(refs.begin(), refs.end(), 0), refs.end());
+
+    // sort
+    std::sort(refs.begin(), refs.end());
+
+    auto end = refs.end();
+
+    // remove potential duplicates
+    auto last = std::unique(refs.begin(), refs.end());
+
+    if (last != end)
+    {
+        throw std::invalid_argument("Image references must be unique. This function cannot operate in-place.");
+    }
 }

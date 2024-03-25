@@ -4,5 +4,7 @@
 	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
+	<Property Name="NI.SortType" Type="Int">3</Property>
 	<Item Name="Image.lvclass" Type="LVClass" URL="../Image/Image.lvclass"/>
+	<Item Name="CameraManager.lvclass" Type="LVClass" URL="../CameraManager/CameraManager.lvclass"/>
 </Library>

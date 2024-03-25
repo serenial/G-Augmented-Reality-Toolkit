@@ -5,6 +5,9 @@
 #include <condition_variable>
 #include <future>
 
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+
 #include <windows.h>
 #include <mfapi.h>
 #include <Mfidl.h>
@@ -24,34 +27,34 @@ namespace g_ar_toolkit
             {
                 STARTING,
                 WAITING_ON_ACTION,
+                WAITING_ON_STREAM_START,
+                WAITING_ON_STREAM_START_ACK,
+                WAITING_ON_CAPTURE,
+                WAITING_ON_CAPTURE_ACK,
+                WAITING_ON_STREAM_STOP,
+                WAITING_ON_STREAM_STOP_ACK,
                 STOPPING,
                 STOPPED
             };
-            enum class errors
-            {
-                NO_ERR,
-                COM_INIT_ERR,
-                MF_STARTUP_BAD_VER,
-                MF_STARTUP_OTHER_ERR,
-                CAPTURE_DEVICE_ID_NOT_FOUND,
-                CAPTURE_DEVICE_FORMAT_INVALID,
-                CAPTURE_DEVICE_FPS_INVALID,
-                CAPTURE_DEVICE_DIMS_INVALID,
-                CAPTURE_STREAM_APPLYING_CONFIG
-            };
 
             std::mutex mtx;
-            std::condition_variable cv;
+            std::condition_variable notifier;
             states last_state;
-            errors last_error;
+            cv::Mat buffer_mat;
+            cv::Mat* dest_mat_ptr;
             const std::future<void> ftr;
+            void on_sample(IMFSample *pSample);
+            winrt::event_token sample_handler_token;
+            const uint32_t rows,cols;
+            std::exception_ptr last_exception;
+            bool streaming;
 
         public:
             StreamWMF(std::string device_id, stream_type_t stream_format);
             ~StreamWMF();
-            bool grab_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
-            bool start();
-            bool stop();
+            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
+            void start_stream();
+            void stop_stream();
         };
 
     }

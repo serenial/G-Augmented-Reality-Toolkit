@@ -13,9 +13,9 @@ using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
 
-Context *capture::create_platform_context()
+ std::unique_ptr<Context> capture::create_platform_context()
 {
-    return new ContextWMF();
+    return std::make_unique<ContextWMF>();
 }
 
 // Use a thread to manage all Context Operations as this provides more control over
@@ -68,7 +68,7 @@ ContextWMF::ContextWMF() : Context(),
                                                   last_state = last_error == errors::NO_ERR ? states::WAITING_ON_ACTION : states::STOPPING;
                                               }
                                               // setup done
-                                              cv.notify_one();
+                                              notifier.notify_one();
 
                                               // handle setup fail
                                               if (last_error != errors::NO_ERR)
@@ -82,38 +82,32 @@ ContextWMF::ContextWMF() : Context(),
                                               {
                                                   std::unique_lock<std::mutex> lk(mtx);
                                                   // poll to see if the state has changed - wait 50ms
-                                                  if (cv.wait_for(lk, 50ms, [&]
-                                                                  { return last_state != states::WAITING_ON_ACTION; }))
-
+                                                  notifier.wait(lk, [&]
+                                                                { return last_state != states::WAITING_ON_ACTION; });
+                                                  switch (last_state)
                                                   {
-                                                      switch (last_state)
-                                                      {
-                                                      case states::STOPPING:
-                                                          lk.unlock();
-                                                          goto done;
-                                                      case states::LISTING_DEVICES:
-                                                          // update the last device enum
-                                                          try
-                                                          {
-                                                              update_last_device_enumeration();
-                                                              last_error = errors::NO_ERR;
-                                                          }
-                                                          catch (winrt::hresult_error &e)
-                                                          {
-                                                              last_error = errors::DEVICE_ENUM_ERROR;
-                                                          }
-                                                          // update flags and signal completion
-                                                          last_state = states::WAITING_ON_ACTION;
-                                                          lk.unlock();
-                                                          cv.notify_one();
-                                                          break;
-                                                      default:
-                                                          break;
-                                                      }
-                                                  }
-                                                  else
-                                                  {
+                                                  case states::STOPPING:
                                                       lk.unlock();
+                                                      goto done;
+                                                  case states::LISTING_DEVICES:
+                                                      // update the last device enum
+                                                      try
+                                                      {
+                                                          update_last_device_enumeration();
+                                                          last_error = errors::NO_ERR;
+                                                      }
+                                                      catch (winrt::hresult_error &e)
+                                                      {
+                                                          last_error = errors::DEVICE_ENUM_ERROR;
+                                                      }
+                                                      // update flags and signal completion
+                                                      last_state = states::WAITING_ON_ACTION;
+                                                      lk.unlock();
+                                                      notifier.notify_one();
+                                                      break;
+                                                  default:
+                                                      lk.unlock();
+                                                      break;
                                                   }
                                               }
 
@@ -133,7 +127,7 @@ ContextWMF::ContextWMF() : Context(),
                                                   std::lock_guard lk(mtx);
                                                   last_state = states::STOPPED;
                                               }
-                                              cv.notify_one();
+                                              notifier.notify_one();
 
                                               return hr;
                                           }))
@@ -141,8 +135,8 @@ ContextWMF::ContextWMF() : Context(),
 
     // wait on cv to see if the co-thread initialized ok
     std::unique_lock lk(mtx);
-    cv.wait(lk, [&]
-            { return last_state != states::STARTING; });
+    notifier.wait(lk, [&]
+                  { return last_state != states::STARTING; });
 
     if (last_state != states::WAITING_ON_ACTION)
     {
@@ -175,7 +169,7 @@ ContextWMF::~ContextWMF()
             // instruct thread to stop
             last_state = states::STOPPING;
             lk.unlock();
-            cv.notify_one();
+            notifier.notify_one();
         }
         else
         {
@@ -193,12 +187,12 @@ void ContextWMF::enumerate_devices(std::vector<device_info_t> &devices)
         std::lock_guard lk(mtx);
         last_state = states::LISTING_DEVICES;
     }
-    cv.notify_one();
+    notifier.notify_one();
 
     // wait for result
     std::unique_lock lk(mtx);
-    cv.wait(lk, [&]
-            { return last_state != states::LISTING_DEVICES; });
+    notifier.wait(lk, [&]
+                  { return last_state != states::LISTING_DEVICES; });
 
     // check error and copy result;
     if (last_error == errors::DEVICE_ENUM_ERROR)
@@ -228,7 +222,7 @@ void ContextWMF::update_last_device_enumeration()
     IMFActivate **ppDevices = NULL;
     winrt::check_hresult(MFEnumDeviceSources(spDeviceAttributes.get(), &ppDevices, &device_count));
     // wrap ppDevices into unique pointer
-    std::unique_ptr<IMFActivate**, CoTaskMemFreeDeleter<IMFActivate**>>spppDevices(&ppDevices);
+    std::unique_ptr<IMFActivate **, CoTaskMemFreeDeleter<IMFActivate **>> spppDevices(&ppDevices);
 
     last_enumeration.clear();
     last_enumeration.reserve(device_count);
@@ -243,15 +237,15 @@ void ContextWMF::update_last_device_enumeration()
         UINT32 property_length;
         // populate device_id
         winrt::check_hresult((*spppDevices)[i]->GetStringLength(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK, &property_length));
-        std::wstring property(property_length+1, '\0');
-        winrt::check_hresult((*spppDevices)[i]->GetString(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK, &property[0], property_length+1, NULL));
+        std::wstring property(property_length + 1, '\0');
+        winrt::check_hresult((*spppDevices)[i]->GetString(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK, &property[0], property_length + 1, NULL));
         property.resize(property_length);
         device_info.device_id = winrt::to_string(property);
 
         // populate device_name
         winrt::check_hresult((*spppDevices)[i]->GetStringLength(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME, &property_length));
-        property.resize(property_length+1);
-        winrt::check_hresult((*spppDevices)[i]->GetString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME, &property[0],property_length+1,NULL));
+        property.resize(property_length + 1);
+        winrt::check_hresult((*spppDevices)[i]->GetString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME, &property[0], property_length + 1, NULL));
         property.resize(property_length);
         device_info.device_name = winrt::to_string(property);
 
