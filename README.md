@@ -19,17 +19,32 @@ This is a simple example based on proof-of-concept code which is being polished 
 
 ![Am animated-gif of a AR cow floating in-front of a chessboard in LabVIEW](docs/demo.gif "an example of a simple AR application in LabVIEW (built using proof-of-concept code not in this toolkit yet)")
 
-## Developer Requirements:
-Whilst this library is a work in progress, the following tools are required to build the binaries and develop the code in LabVIEW
+## 🎉 Pre-Release Version 1.0.0 🎉
+
+A pre-release version is available in the releases section.
+
+This contains the current state of the project (at tag 1.0.0-pre) with built binaries for 32 and 64 bit windows.
+
+These have been provided to enable community experimentation and as a basis for feedback.
+
+If you do have any feedback please open an issue to discuss.
+
+Unfortunately documentation is currently very sparese. Some information on interoperability is provided in [this document](docs/Interop.md).
+
+## LabVIEW Developer Setup
 * Windows 10/11
 * LabVIEW 2020
-* LUnit (via VIPM)
+* VIPM
+* LUnit (for tests - install via VIPM)
+
+## C++ Developer Setup
+If you wish to modify the C++ code you will require the following for building the binaries
+
 * C++ Development Tools for Windows (VS 2022)
 * vcpkg
 * (Recommended) VSCode with C++ and CMake Tool Extensions installed
 
-## Developmer Setup
-The build binary files are not currently provided so must be build from source. To create the binaries for your system (with the bitness matching your LabVIEW bitness), complete the following:
+### C++ Setup
 
 * Install dependencies
 _If using VSCode_
@@ -42,18 +57,6 @@ _If not using VSCode_
 
 >![NOTE] 
 > When building code you will have to close the LabVIEW project and potentially exit LabVIEW to avoid file locking of the binaries.
-
-## IMAQ Interoperability
-Whilst this toolkit is designed to have no IMAQ or NI-Vision dependencies, users may wish to integrate it alongside IMAQ/NI-Vision functionality.
-
-Methods of copying to/from IMAQ images into the g-ar-tookit image format can be accomplished using the snippets below:
-
-![Copy to IMAQ](docs/snippets/copy-from-imaq.png "Copy from IMAQ")
-
-![Copy to IMAQ](docs/snippets/copy-to-imaq.png "Copy to IMAQ")
-
-> ![NOTE]
-> Only basic IMAQ functions are required when using the `Get Pixel Ptr` IMAQ vi. Other operations using the IMAQ to Array functions require NI-Vision
 
 ## To Do:
 - [x] Basic LV-C++ Interoperability with an EDVR based image type
@@ -74,6 +77,6 @@ Welcome - please open an issue if you would like to contribute
 | Library | Licence |
 |---------|---------|
 | OpenCV 4 | Apache License 2.0 |
-| tinyobjectloader | MIT |
-| Apriltag | BSD-2 |
 | ros_msft_camera | MIT |
+| tinyobjectloader (not yet integrated) | MIT |
+| Apriltag (not yet integrated) | BSD-2 |
