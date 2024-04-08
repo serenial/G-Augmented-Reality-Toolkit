@@ -23,6 +23,6 @@ namespace g_ar_toolkit{
         };
 
         // stream factory
-        std::unique_ptr<Stream> create_platform_stream(std::string, stream_type_t stream_type);
+        Stream* create_platform_stream(std::string, stream_type_t stream_type);
     }
 }

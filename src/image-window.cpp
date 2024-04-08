@@ -4,7 +4,7 @@
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
 #include "g_ar_toolkit/lv-interop/lv-str.hpp"
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -16,7 +16,7 @@ extern "C"
     {
         try
         {
-            cv::imshow(lv_string_handle_to_string(window_name_str_handle), image::Image(edvr_ref_ptr));
+            cv::imshow(lv_string_handle_to_string(window_name_str_handle), lv_image(edvr_ref_ptr));
         }
         catch (...)
         {

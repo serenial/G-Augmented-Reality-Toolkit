@@ -4,7 +4,7 @@
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
 #include "g_ar_toolkit/lv-interop/lv-array.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -16,7 +16,7 @@ using LV_RectangleCorners_t = struct
     int16_t left, top, right, bottom;
 };
 
-using LV_PixmapImage_t = struct
+using LV_Pixmapimage_t = struct
 {
     int32_t image_type;
     int32_t image_depth;
@@ -28,13 +28,13 @@ using LV_PixmapImage_t = struct
 
 #include "g_ar_toolkit/lv-interop/reset-packing.hpp"
 
-void copy_lv_mask_to_cv_mat(LV_PixmapImage_t *, size_t, cv::Mat &);
+void copy_lv_mask_to_cv_mat(LV_Pixmapimage_t *, size_t, cv::Mat &);
 
 extern "C"
 {
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_copy_from_lv_pixmap(
         LV_ErrorClusterPtr_t error_cluster_ptr,
-        LV_PixmapImage_t *pixmap_image_ptr,
+        LV_Pixmapimage_t *pixmap_image_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
         LV_BooleanPtr_t has_mask_ptr)
@@ -44,7 +44,7 @@ extern "C"
             // create rectangle
             cv::Rect2i rectangle(cv::Point2i{pixmap_image_ptr->rect.left, pixmap_image_ptr->rect.top}, cv::Point2i{pixmap_image_ptr->rect.right, pixmap_image_ptr->rect.bottom});
 
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(rectangle);
 
@@ -129,7 +129,7 @@ extern "C"
                 break;
             }
             default:
-                throw std::out_of_range("Unsupported Pixmap Image Type. Use 8,24 or 32 bit image.");
+                throw std::out_of_range("Unsupported Pixmap image Type. Use 8,24 or 32 bit image.");
             }
 
             if (!(*has_mask_ptr))
@@ -139,7 +139,7 @@ extern "C"
             }
 
             size_t number_of_mask_bytes = (*pixmap_image_ptr->mask_array_handle)->dims ? (*pixmap_image_ptr->mask_array_handle)->dims[0] : 0;
-            image::Image mask(mask_edvr_ref_ptr);
+            lv_image mask(mask_edvr_ref_ptr);
 
             mask.ensure_sized_to_match(rectangle);
 
@@ -164,7 +164,7 @@ extern "C"
     }
 }
 
-void copy_lv_mask_to_cv_mat(LV_PixmapImage_t *pixmap_image_ptr, size_t number_of_mask_bytes, cv::Mat &mask)
+void copy_lv_mask_to_cv_mat(LV_Pixmapimage_t *pixmap_image_ptr, size_t number_of_mask_bytes, cv::Mat &mask)
 {
     auto mask_bytes_ptr = (*pixmap_image_ptr->mask_array_handle)->data_ptr();
     auto mask_bytes_end = mask_bytes_ptr + number_of_mask_bytes;

@@ -17,9 +17,9 @@ using namespace capture;
 using namespace std::chrono_literals;
 using namespace ros_msft_camera;
 
-std::unique_ptr<Stream> capture::create_platform_stream(std::string device_id, stream_type_t stream_type)
+Stream* capture::create_platform_stream(std::string device_id, stream_type_t stream_type)
 {
-    return std::make_unique<StreamWMF>(device_id, stream_type);
+    return new StreamWMF(device_id, stream_type);
 }
 
 // Use a thread to manage all Stream Operations as this provides more control over

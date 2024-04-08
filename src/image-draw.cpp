@@ -6,7 +6,7 @@
 #include "g_ar_toolkit/lv-interop/lv-enums.hpp"
 #include "g_ar_toolkit/lv-interop/lv-array.hpp"
 #include "g_ar_toolkit/lv-interop/lv-str.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -42,7 +42,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::line(
                 (*img),
@@ -72,7 +72,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::arrowedLine(
                 (*img),
@@ -103,7 +103,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::circle(
                 (*img),
@@ -135,7 +135,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::ellipse(
                 (*img),
@@ -167,7 +167,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::rectangle(
                 (*img),
@@ -196,7 +196,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             std::vector<cv::Point> points;
 
@@ -233,7 +233,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             std::vector<cv::Point> points;
 
@@ -282,7 +282,7 @@ extern "C"
     {
         try
         {
-            image::Image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr);
 
             cv::putText(
                 (*img),

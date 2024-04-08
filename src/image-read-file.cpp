@@ -4,7 +4,7 @@
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
 #include "g_ar_toolkit/lv-interop/lv-str.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -21,7 +21,7 @@ extern "C"
         try
         {
             int flags = 0;
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             if (dst.is_greyscale())
             {

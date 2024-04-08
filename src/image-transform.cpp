@@ -6,7 +6,7 @@
 #include "g_ar_toolkit/lv-interop/lv-fixed-size-matrix.hpp"
 #include "g_ar_toolkit/lv-interop/lv-u32-colour.hpp"
 #include "g_ar_toolkit/lv-interop/lv-enums.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -19,7 +19,7 @@ extern "C"
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_2x3MatrixPtr_t<double> affine_mat,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        image::LV_ImageSizePtr_t dst_size_ptr,
+        LV_ImageSizePtr_t dst_size_ptr,
         uint8_t interpolation_mode,
         uint8_t border_type,
         LV_U32RGBColour_t border_colour)
@@ -27,8 +27,8 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            image::Image src(src_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             auto M = cv_matx_from_lv_fixed_sized_matrix_ptr(affine_mat);
 
@@ -52,7 +52,7 @@ extern "C"
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_3x3MatrixPtr_t<double> warp_mat,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        image::LV_ImageSizePtr_t dst_size_ptr,
+        LV_ImageSizePtr_t dst_size_ptr,
         uint8_t interpolation_mode,
         uint8_t border_type,
         LV_U32RGBColour_t border_colour)
@@ -60,8 +60,8 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            image::Image src(src_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             auto M = cv_matx_from_lv_fixed_sized_matrix_ptr(warp_mat);
 

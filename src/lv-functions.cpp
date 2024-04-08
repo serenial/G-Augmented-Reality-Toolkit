@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -200,6 +200,6 @@ void lv_interop::throw_if_edvr_ref_pointers_not_unique(std::initializer_list<LV_
 
     if (last != end)
     {
-        throw std::invalid_argument("Image references must be unique. This function cannot operate in-place.");
+        throw std::invalid_argument("image references must be unique. This function cannot operate in-place.");
     }
 }

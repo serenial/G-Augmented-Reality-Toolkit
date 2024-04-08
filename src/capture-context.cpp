@@ -42,7 +42,7 @@ extern "C"
         try
         {
             // create context
-            volatile EDVRManagedObject<Context> context(edvr_ref_ptr, std::move(create_platform_context()));
+            EDVRManagedObject<Context>(edvr_ref_ptr, create_platform_context());
         }
         catch (...)
         {
@@ -105,7 +105,7 @@ extern "C"
     }
 }
 
-std::unique_ptr<Stream> Context::open_stream(std::string device_id, stream_type_t stream_format)
+Stream* Context::open_stream(std::string device_id, stream_type_t stream_format)
 {
     return create_platform_stream(device_id, stream_format);
 }

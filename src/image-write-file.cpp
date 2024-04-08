@@ -7,7 +7,7 @@
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
 #include "g_ar_toolkit/lv-interop/lv-str.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -23,7 +23,7 @@ extern "C"
     {
         try
         {
-            image::Image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
 
             std::filesystem::path dst_path = lv_string_handle_to_string(path_string_handle);
 

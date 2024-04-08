@@ -68,7 +68,8 @@ SET(PLATFORM_SOURCE_FILES_Windows
 target_sources(${PROJECT_NAME} PRIVATE
     src/lv-functions.cpp
     src/lv-error.cpp
-    src/image.cpp
+    src/lv-image.cpp
+    src/image-create.cpp
     src/image-window.cpp
     src/image-resize.cpp
     src/image-draw-picture.cpp
@@ -115,7 +116,7 @@ FILES
     ${PUBLIC_HEADER_DIR}/lv-interop/lv-fixed-size-matrix.hpp
     ${PUBLIC_HEADER_DIR}/lv-interop/lv-enums.hpp
     ${PUBLIC_HEADER_DIR}/lv-interop/lv-fixed-size-matrix.hpp
-    ${PUBLIC_HEADER_DIR}/image/image.hpp
+    ${PUBLIC_HEADER_DIR}/lv-interop/lv-image.hpp
     ${PUBLIC_HEADER_DIR}/capture/context.hpp
     ${PUBLIC_HEADER_DIR}/capture/stream.hpp
     "${PLATFORM_HEADER_FILES_${CMAKE_HOST_SYSTEM_NAME}}"

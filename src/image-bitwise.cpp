@@ -2,7 +2,7 @@
 
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -23,9 +23,9 @@ extern "C"
         {
             
             throw_if_edvr_ref_pointers_not_unique({a_edvr_ref_ptr, b_edvr_ref_ptr, dst_edvr_ref_ptr, mask_edvr_ref_ptr});
-            image::Image a(a_edvr_ref_ptr);
-            image::Image b(b_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image a(a_edvr_ref_ptr);
+            lv_image b(b_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             if(a.size() != b.size()){
                 throw std::invalid_argument("The source image must have the same size.");
@@ -37,7 +37,7 @@ extern "C"
                 {
                     throw std::invalid_argument("The destination image must be pre-sized to match the source images when applying a bitwise operation with a mask.");
                 }
-                image::Image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr);
                 switch (operation)
                 {
                 case 0:
@@ -86,8 +86,8 @@ extern "C"
         {
             
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            image::Image src(src_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             if (*has_mask_ptr)
             {
@@ -95,7 +95,7 @@ extern "C"
                 {
                     throw std::invalid_argument("The destination image must be pre-sized to match the source images when applying a bitwise operation with a mask.");
                 }
-                image::Image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr);
                 cv::bitwise_not(src, dst, mask);
             }
             else

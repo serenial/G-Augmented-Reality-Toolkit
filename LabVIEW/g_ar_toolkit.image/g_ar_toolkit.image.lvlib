@@ -51,9 +51,14 @@
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
 		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
+		<Item Name="UserLockAndGetRawPointerCore.vim" Type="VI" URL="../UserLockAndGetRawPointerCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
 		<Item Name="WarpPerspectiveCore.vim" Type="VI" URL="../WarpPerspectiveCore.vim"/>
 		<Item Name="WriteImageFileCore.vim" Type="VI" URL="../WriteImageFileCore.vim"/>
+	</Item>
+	<Item Name="Mapped Memory Access Image" Type="Folder">
+		<Item Name="Mapped Memory Access Image ARGB.lvclass" Type="LVClass" URL="../Mapped Memory Access Image ARGB/Mapped Memory Access Image ARGB.lvclass"/>
+		<Item Name="Mapped Memory Access Image Greyscale.lvclass" Type="LVClass" URL="../Mapped Memory Access Image Greyscale/Mapped Memory Access Image Greyscale.lvclass"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Property Name="NI.SortType" Type="Int">0</Property>
@@ -68,9 +73,13 @@
 			<Item Name="ARGBImagExtractBlue.vi" Type="VI" URL="../ARGBImagExtractBlue.vi"/>
 		</Item>
 		<Item Name="Bitwise" Type="Folder">
+			<Item Name="BitwiseANDGreyscale.vi" Type="VI" URL="../BitwiseANDGreyscale.vi"/>
 			<Item Name="BitwiseANDWithMaskGreyscale.vi" Type="VI" URL="../BitwiseANDWithMaskGreyscale.vi"/>
+			<Item Name="BitwiseNOTGreyscale.vi" Type="VI" URL="../BitwiseNOTGreyscale.vi"/>
 			<Item Name="BitwiseNOTWithMaskGreyscale.vi" Type="VI" URL="../BitwiseNOTWithMaskGreyscale.vi"/>
+			<Item Name="BitwiseORGreyscale.vi" Type="VI" URL="../BitwiseORGreyscale.vi"/>
 			<Item Name="BitwiseORWithMaskGreyscale.vi" Type="VI" URL="../BitwiseORWithMaskGreyscale.vi"/>
+			<Item Name="BitwiseXORGreyscale.vi" Type="VI" URL="../BitwiseXORGreyscale.vi"/>
 			<Item Name="BitwiseXORWithMaskGreyscale.vi" Type="VI" URL="../BitwiseXORWithMaskGreyscale.vi"/>
 		</Item>
 		<Item Name="Copy" Type="Folder">
@@ -227,7 +236,7 @@
 			<Item Name="Copy.vi" Type="VI" URL="../Copy.vi"/>
 			<Item Name="Copy Pixmap to Image.vi" Type="VI" URL="../Copy Pixmap to Image.vi"/>
 			<Item Name="Copy Memory Address to Image.vi" Type="VI" URL="../Copy Memory Address to Image.vi"/>
-			<Item Name="Draw Image to Picture.vi" Type="VI" URL="../Draw Image to Picture.vi"/>
+			<Item Name="Draw Image To Picture.vi" Type="VI" URL="../Draw Image To Picture.vi"/>
 			<Item Name="Copy Image to Memory Address.vi" Type="VI" URL="../Copy Image to Memory Address.vi"/>
 			<Item Name="Copy Array to Image.vi" Type="VI" URL="../Copy Array to Image.vi"/>
 		</Item>
@@ -272,6 +281,11 @@
 		<Item Name="Drawing" Type="Folder">
 			<Item Name="Draw.vi" Type="VI" URL="../Draw.vi"/>
 			<Item Name="Font Scale from Required Height.vi" Type="VI" URL="../Font Scale from Required Height.vi"/>
+		</Item>
+		<Item Name="Mapped Memory Access" Type="Folder">
+			<Item Name="Acquire Mapped Memory Access.vi" Type="VI" URL="../Acquire Mapped Memory Access.vi"/>
+			<Item Name="Get Mapped Memory Access Information.vi" Type="VI" URL="../Get Mapped Memory Access Information.vi"/>
+			<Item Name="Release Mapped Memory Access.vi" Type="VI" URL="../Release Mapped Memory Access.vi"/>
 		</Item>
 	</Item>
 </Library>
