@@ -6,9 +6,10 @@
 
 #include <memory>
 #include <mutex>
+#include <functional>
 #include <condition_variable>
 
-#include "g_ar_toolkit/lv-interop/lv-types.hpp"
+#include "./lv-types.hpp"
 
 namespace g_ar_toolkit
 {
@@ -22,16 +23,21 @@ namespace g_ar_toolkit
         class EDVRManagedObject
         {
         private:
-            struct PersistantData
+            struct persistant_data
             {
-                std::unique_ptr<T> ptr;
+                T* object;
                 bool locked;
                 std::mutex m;
                 std::condition_variable cv;
+                const std::function<LV_MgErr_t(T*,LV_EDVRDataPtr_t)> on_lock, on_unlock;
+                persistant_data(std::function<LV_MgErr_t(T*, LV_EDVRDataPtr_t)> on_lock, std::function<LV_MgErr_t(T*, LV_EDVRDataPtr_t ptr)> on_unlock): on_lock(on_lock), on_unlock(on_unlock){}
+                ~persistant_data(){
+                    delete object;
+                }
             };
 
             // locking and unlocking utility functions
-            static inline void lock(EDVRManagedObject::PersistantData *d)
+            static inline void lock(EDVRManagedObject::persistant_data *d)
             {
                 // obtain the mutex
                 std::unique_lock lk(d->m);
@@ -44,7 +50,7 @@ namespace g_ar_toolkit
                 lk.unlock();
                 d->cv.notify_one();
             }
-            static inline void unlock(EDVRManagedObject::PersistantData *d)
+            static inline void unlock(EDVRManagedObject::persistant_data *d)
             {
                 {
                     // obtain the mutex
@@ -68,7 +74,7 @@ namespace g_ar_toolkit
                 return ctx;
             }
 
-            LV_EDVRDataPtr_t create_new_edvr_data_ptr()
+            LV_EDVRDataPtr_t create_new_edvr_data_ptr(std::function<LV_MgErr_t(T*,LV_EDVRDataPtr_t)> on_lock, std::function<LV_MgErr_t(T*,LV_EDVRDataPtr_t)> on_unlock)
             {
                 // initialize EDVR reference and get new EDVR data_ptr
 
@@ -79,38 +85,35 @@ namespace g_ar_toolkit
                     throw std::runtime_error("Unable to create a data-reference to associate with the supplied EDVR Refnum.");
                 }
 
-                // initialize ImagePersistantData object
-                EDVRManagedObject::PersistantData *persistant_data_ptr = new PersistantData();
+                // initialize Imagepersistant_data object
+                persistant_data *persistant_data_ptr = new persistant_data(on_lock, on_unlock);
 
                 // set the metadata_ptr of the new edvr data pointer
                 data_ptr->metadata_ptr = reinterpret_cast<uintptr_t>(persistant_data_ptr);
 
-                // locking and unlocking from labVIEW side ignored so just set the delete-callback
-                // set the callback functions
-                data_ptr->lock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
-                {
-                    // We shouldn't be using the sub-array data in LabVIEW so do nothing
-                    return LV_ERR_noError;
+                // locking and unlocking from labVIEW side
+                data_ptr->lock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr){
+                    persistant_data *pdp = reinterpret_cast<persistant_data *>(ptr->metadata_ptr);
+                    return pdp->on_lock(pdp->object, ptr);
                 };
 
-                data_ptr->unlock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
-                {
-                    // We shouldn't be using the sub-array data in LabVIEW so do nothing
-                    return LV_ERR_noError;
+                data_ptr->unlock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr){
+                    persistant_data *pdp = reinterpret_cast<persistant_data *>(ptr->metadata_ptr);
+                    return pdp->on_unlock(pdp->object, ptr);
                 };
 
                 data_ptr->delete_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
                 {
-                    auto data = reinterpret_cast<EDVRManagedObject::PersistantData *>(ptr->metadata_ptr);
+                    persistant_data *pdp = reinterpret_cast<persistant_data *>(ptr->metadata_ptr);
                     // obtain the mutex
-                    std::unique_lock lk(data->m);
+                    std::unique_lock lk(pdp->m);
                     // wait for the locked flag to be cleared
-                    data->cv.wait(lk, [&]
-                                  { return !(data->locked); });
+                    pdp->cv.wait(lk, [&]
+                                  { return !(pdp->locked); });
                     // free the lock
                     lk.unlock();
-                    // delete data
-                    delete data;
+                    // delete persistant_data
+                    delete pdp;
                     ptr->metadata_ptr = reinterpret_cast<uintptr_t>(nullptr);
                 };
 
@@ -128,16 +131,16 @@ namespace g_ar_toolkit
                 return data_ptr;
             }
 
-            PersistantData *get_data()
+            persistant_data *get_data()
             {
-                return reinterpret_cast<PersistantData *>(edvr_data_ptr->metadata_ptr);
+                return reinterpret_cast<persistant_data *>(edvr_data_ptr->metadata_ptr);
             }
 
             // private properties - the order here is important for the initialization step
             const LV_EDVRReferencePtr_t edvr_ref_ptr;
             const LV_EDVRContext_t ctx;
             const LV_EDVRDataPtr_t edvr_data_ptr;
-            PersistantData *const data;
+            persistant_data *const data;
 
         public:
             // create from exisiting object
@@ -149,15 +152,20 @@ namespace g_ar_toolkit
             }
 
             // initialize and add new object
-            EDVRManagedObject(LV_EDVRReferencePtr_t edvr_ref_ptr, std::unique_ptr<T> ptr) : edvr_ref_ptr(edvr_ref_ptr),
-                                                                                            ctx(0),
-                                                                                            edvr_data_ptr(create_new_edvr_data_ptr()),
-                                                                                            data(get_data())
+            EDVRManagedObject(
+                LV_EDVRReferencePtr_t edvr_ref_ptr, 
+                T* object, 
+                std::function<void(T* ,const LV_EDVRDataPtr_t)> edvr_value_set_function = [&](auto ptr, auto e_data_ptr)
+                                                                                          {
+                        // set the sub-array to be a 1-D empty array
+                        e_data_ptr->n_dims = 1;
+                        e_data_ptr->sub_array.dimension_specifier[0] = {0, 1}; },
+                std::function<LV_MgErr_t(T*, LV_EDVRDataPtr_t)> on_lock = [](auto p, auto d){ return LV_ERR_noError;},
+                std::function<LV_MgErr_t(T*, LV_EDVRDataPtr_t)> on_unlock = [](auto p, auto d){ return LV_ERR_noError;}
+            ) : edvr_ref_ptr(edvr_ref_ptr), ctx(0), edvr_data_ptr(create_new_edvr_data_ptr(on_lock,on_unlock)), data(get_data())
             {
-                data->ptr = std::move(ptr);
-                // set the sub-array to be a 1-D empty array
-                edvr_data_ptr->n_dims = 1;
-                edvr_data_ptr->sub_array.dimension_specifier[0] = {0, 1};
+                data->object = object;
+                edvr_value_set_function(data->object, edvr_data_ptr);
                 data->locked = true; // exclusive access so can lock manually
             }
 
@@ -171,9 +179,9 @@ namespace g_ar_toolkit
                 }
             }
 
-            auto get_object()
+            T* get_object()
             {
-                return data->ptr.get();
+                return data->object;
             }
         };
     }

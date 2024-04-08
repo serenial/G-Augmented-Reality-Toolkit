@@ -3,7 +3,7 @@
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
 #include "g_ar_toolkit/lv-interop/lv-u32-colour.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -23,8 +23,8 @@ extern "C"
         {
             
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            image::Image src(src_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
             auto ignore_alpha = *ignore_argb_alpha_ptr;
 
             // destination will be auto-sized so no need to force with ensure_sized_to_match()

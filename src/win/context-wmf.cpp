@@ -13,9 +13,9 @@ using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
 
- std::unique_ptr<Context> capture::create_platform_context()
+Context *capture::create_platform_context()
 {
-    return std::make_unique<ContextWMF>();
+    return new ContextWMF;
 }
 
 // Use a thread to manage all Context Operations as this provides more control over

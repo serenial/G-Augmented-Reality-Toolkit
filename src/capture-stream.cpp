@@ -8,13 +8,12 @@
 #include "g_ar_toolkit/lv-interop/lv-edvr-managed-object.hpp"
 #include "g_ar_toolkit_export.h"
 
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit/capture/stream.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;
 using namespace lv_interop;
-using namespace image;
 
 #include "g_ar_toolkit/lv-interop/set-packing.hpp"
 
@@ -109,7 +108,7 @@ extern "C"
 
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
 
-            Image dst(edvr_image_ref_ptr);
+            lv_image dst(edvr_image_ref_ptr);
 
             stream.get_object()->capture_frame(*dst, std::chrono::milliseconds{timeout_ms});
         }

@@ -4,7 +4,7 @@
 #include "g_ar_toolkit/lv-interop/lv-array.hpp"
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -16,12 +16,12 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         void *array_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        image::LV_ImageSizePtr_t array_size_ptr,
+        LV_ImageSizePtr_t array_size_ptr,
         uint8_t array_third_dim)
     {
         try
         {
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
             // wrap raw pointer in Mat to make copy easy
             cv::Mat wrapped(array_size_ptr->size(), dst.cv_type(), array_ptr);
 

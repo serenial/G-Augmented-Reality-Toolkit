@@ -2,7 +2,7 @@
 
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -21,8 +21,8 @@ extern "C"
         {
             
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr, mask_edvr_ref_ptr});
-            image::Image src(src_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             if (*has_mask_ptr)
             {
@@ -30,7 +30,7 @@ extern "C"
                 {
                     throw std::invalid_argument("The destination image must be pre-sized to match the source image when copying with a mask.");
                 }
-                image::Image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr);
                 src.copyTo(dst, mask);
             }
             else

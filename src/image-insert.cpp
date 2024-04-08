@@ -2,7 +2,7 @@
 
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -34,9 +34,9 @@ extern "C"
         {
             
             throw_if_edvr_ref_pointers_not_unique({src_parent_edvr_ref_ptr, src_child_edvr_ref_ptr, dst_edvr_ref_ptr, mask_edvr_ref_ptr});
-            image::Image src_parent(src_parent_edvr_ref_ptr);
-            image::Image src_child(src_child_edvr_ref_ptr);
-            image::Image dst(dst_edvr_ref_ptr);
+            lv_image src_parent(src_parent_edvr_ref_ptr);
+            lv_image src_child(src_child_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(src_parent);
 
@@ -55,7 +55,7 @@ extern "C"
 
             if (*has_mask_ptr)
             {
-                image::Image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr);
                 src_rect.copyTo(dst_rect, mask);
             }
             else

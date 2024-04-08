@@ -7,7 +7,7 @@
 #include "g_ar_toolkit/lv-interop/lv-str.hpp"
 #include "g_ar_toolkit/lv-interop/lv-picture.hpp"
 #include "g_ar_toolkit/lv-interop/lv-array.hpp"
-#include "g_ar_toolkit/image/image.hpp"
+#include "g_ar_toolkit/lv-interop/lv-image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -50,7 +50,7 @@ extern "C"
     {
         try
         {
-            image::Image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr);
             cv::Size dst_size = src.size();
             auto use_mask = *use_mask_ptr;
             size_t mask_row_length = 0, mask_bytes_length = 0;
@@ -134,7 +134,7 @@ extern "C"
             }
             if (use_mask)
             {
-                image::Image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr);
                 auto mask_bytes_ptr = dst_data_ptr + image_bytes_length;
                 auto mask_bytes_end = mask_bytes_ptr + mask_bytes_length;
 
