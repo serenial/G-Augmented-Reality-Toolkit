@@ -100,7 +100,6 @@
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 			<Item Name="Extract_Options.ctl" Type="VI" URL="../g_ar_toolkit.image/Extract_Options.ctl"/>
-			<Item Name="ARGBExtractChannel.vim" Type="VI" URL="../g_ar_toolkit.image/ARGBExtractChannel.vim"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">

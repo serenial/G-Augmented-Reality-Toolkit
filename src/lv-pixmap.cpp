@@ -72,6 +72,8 @@ extern "C"
                     }
                     else
                     {
+                        // set the alpha pixel of the lookup table to 0xFF
+                        lookup_table.reshape(1, lookup_table.size().area()).col(3).setTo(cv::Scalar(255));
                         // apply lookup pixel-by-pixel as we are reading 4 channel lookup on a single channel source
                         for (size_t row = 0; row < dst.height(); row++)
                         {
