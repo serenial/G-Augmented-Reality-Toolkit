@@ -89,7 +89,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/lv-array.cpp
     src/lv-enums.cpp
     src/lv-raw-memory-ptr.cpp
-    src/image-argb-extract.cpp
+    src/image-argb-channel-operations.cpp
     src/image-copy.cpp
     src/capture-context.cpp
     src/capture-stream.cpp

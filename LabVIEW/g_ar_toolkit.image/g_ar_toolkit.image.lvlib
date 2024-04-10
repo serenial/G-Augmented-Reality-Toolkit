@@ -12,8 +12,8 @@
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
 		<Property Name="NI.SortType" Type="Int">0</Property>
 		<Item Name="Typedefs" Type="Folder">
+			<Item Name="ARGBChannels.ctl" Type="VI" URL="../ARGBChannels.ctl"/>
 			<Item Name="BitwiseOperation.ctl" Type="VI" URL="../BitwiseOperation.ctl"/>
-			<Item Name="Extract_Options.ctl" Type="VI" URL="../Extract_Options.ctl"/>
 			<Item Name="ExtractOptions.ctl" Type="VI" URL="../ExtractOptions.ctl"/>
 			<Item Name="Matrix(2x3).ctl" Type="VI" URL="../Matrix(2x3).ctl"/>
 			<Item Name="Matrix(3x3).ctl" Type="VI" URL="../Matrix(3x3).ctl"/>
@@ -50,6 +50,7 @@
 		<Item Name="ReadImageFileCore.vim" Type="VI" URL="../ReadImageFileCore.vim"/>
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
+		<Item Name="SetARGBChannelToValueCore.vim" Type="VI" URL="../SetARGBChannelToValueCore.vim"/>
 		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
 		<Item Name="UserLockAndGetRawPointerCore.vim" Type="VI" URL="../UserLockAndGetRawPointerCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
@@ -71,6 +72,12 @@
 			<Item Name="ARGBImageExtractGreen.vi" Type="VI" URL="../ARGBImageExtractGreen.vi"/>
 			<Item Name="ARGBImageExtractRed.vi" Type="VI" URL="../ARGBImageExtractRed.vi"/>
 			<Item Name="ARGBImagExtractBlue.vi" Type="VI" URL="../ARGBImagExtractBlue.vi"/>
+		</Item>
+		<Item Name="ARGB Image Set Channel Value" Type="Folder">
+			<Item Name="ARGBImageSetChannelValueAlpha.vi" Type="VI" URL="../ARGBImageSetChannelValueAlpha.vi"/>
+			<Item Name="ARGBImageSetChannelValueBlue.vi" Type="VI" URL="../ARGBImageSetChannelValueBlue.vi"/>
+			<Item Name="ARGBImageSetChannelValueGreen.vi" Type="VI" URL="../ARGBImageSetChannelValueGreen.vi"/>
+			<Item Name="ARGBImageSetChannelValueRed.vi" Type="VI" URL="../ARGBImageSetChannelValueRed.vi"/>
 		</Item>
 		<Item Name="Bitwise" Type="Folder">
 			<Item Name="BitwiseANDGreyscale.vi" Type="VI" URL="../BitwiseANDGreyscale.vi"/>
@@ -253,6 +260,7 @@
 			<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
 			<Item Name="ARGB Image Channel Extract.vi" Type="VI" URL="../ARGB Image Channel Extract.vi"/>
 			<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
+			<Item Name="ARGB Image Set Channel Value.vi" Type="VI" URL="../ARGB Image Set Channel Value.vi"/>
 		</Item>
 		<Item Name="Operations" Type="Folder">
 			<Item Name="Crop.vi" Type="VI" URL="../Crop.vi"/>
