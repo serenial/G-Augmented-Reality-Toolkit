@@ -22,7 +22,9 @@
 		</Item>
 		<Item Name="AddWeightedCore.vim" Type="VI" URL="../AddWeightedCore.vim"/>
 		<Item Name="ARGBColourToU32.vi" Type="VI" URL="../ARGBColourToU32.vi"/>
-		<Item Name="ARGBExtractChannel.vim" Type="VI" URL="../ARGBExtractChannel.vim"/>
+		<Item Name="ARGBExtractChannel.vi" Type="VI" URL="../ARGBExtractChannel.vi"/>
+		<Item Name="ARGBSetChannelCore.vi" Type="VI" URL="../ARGBSetChannelCore.vi"/>
+		<Item Name="ARGBSetChannelValueCore.vi" Type="VI" URL="../ARGBSetChannelValueCore.vi"/>
 		<Item Name="BitwiseImageOperationCore.vim" Type="VI" URL="../BitwiseImageOperationCore.vim"/>
 		<Item Name="BitwiseNOTImageCore.vim" Type="VI" URL="../BitwiseNOTImageCore.vim"/>
 		<Item Name="CopyImageToRawMemoryCore.vim" Type="VI" URL="../CopyImageToRawMemoryCore.vim"/>
@@ -50,7 +52,6 @@
 		<Item Name="ReadImageFileCore.vim" Type="VI" URL="../ReadImageFileCore.vim"/>
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
-		<Item Name="SetARGBChannelToValueCore.vim" Type="VI" URL="../SetARGBChannelToValueCore.vim"/>
 		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
 		<Item Name="UserLockAndGetRawPointerCore.vim" Type="VI" URL="../UserLockAndGetRawPointerCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
@@ -67,11 +68,17 @@
 			<Item Name="AddWeightedImagesARGB.vi" Type="VI" URL="../AddWeightedImagesARGB.vi"/>
 			<Item Name="AddWeightedImagesGreyscale.vi" Type="VI" URL="../AddWeightedImagesGreyscale.vi"/>
 		</Item>
-		<Item Name="ARGB Image Channel Extract" Type="Folder">
-			<Item Name="ARGBImageExtractAlpha.vi" Type="VI" URL="../ARGBImageExtractAlpha.vi"/>
-			<Item Name="ARGBImageExtractGreen.vi" Type="VI" URL="../ARGBImageExtractGreen.vi"/>
-			<Item Name="ARGBImageExtractRed.vi" Type="VI" URL="../ARGBImageExtractRed.vi"/>
-			<Item Name="ARGBImagExtractBlue.vi" Type="VI" URL="../ARGBImagExtractBlue.vi"/>
+		<Item Name="ARGB Image Get Channel" Type="Folder">
+			<Item Name="ARGBImageGetChannelAlpha.vi" Type="VI" URL="../ARGBImageGetChannelAlpha.vi"/>
+			<Item Name="ARGBImageGetChannelGreen.vi" Type="VI" URL="../ARGBImageGetChannelGreen.vi"/>
+			<Item Name="ARGBImageGetChannelRed.vi" Type="VI" URL="../ARGBImageGetChannelRed.vi"/>
+			<Item Name="ARGBImagGetChannelBlue.vi" Type="VI" URL="../ARGBImagGetChannelBlue.vi"/>
+		</Item>
+		<Item Name="ARGB Image Set Channel" Type="Folder">
+			<Item Name="ARGBImageSetChannelAlpha.vi" Type="VI" URL="../ARGBImageSetChannelAlpha.vi"/>
+			<Item Name="ARGBImageSetChannelBlue.vi" Type="VI" URL="../ARGBImageSetChannelBlue.vi"/>
+			<Item Name="ARGBImageSetChannelGreen.vi" Type="VI" URL="../ARGBImageSetChannelGreen.vi"/>
+			<Item Name="ARGBImageSetChannelRed.vi" Type="VI" URL="../ARGBImageSetChannelRed.vi"/>
 		</Item>
 		<Item Name="ARGB Image Set Channel Value" Type="Folder">
 			<Item Name="ARGBImageSetChannelValueAlpha.vi" Type="VI" URL="../ARGBImageSetChannelValueAlpha.vi"/>
@@ -257,9 +264,10 @@
 			<Item Name="Destroy All Image Windows.vi" Type="VI" URL="../Destroy All Image Windows.vi"/>
 		</Item>
 		<Item Name="Colour Channel" Type="Folder">
-			<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
-			<Item Name="ARGB Image Channel Extract.vi" Type="VI" URL="../ARGB Image Channel Extract.vi"/>
 			<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
+			<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
+			<Item Name="ARGB Image Get Channel.vi" Type="VI" URL="../ARGB Image Get Channel.vi"/>
+			<Item Name="ARGB Image Set Channel.vi" Type="VI" URL="../ARGB Image Set Channel.vi"/>
 			<Item Name="ARGB Image Set Channel Value.vi" Type="VI" URL="../ARGB Image Set Channel Value.vi"/>
 		</Item>
 		<Item Name="Operations" Type="Folder">
