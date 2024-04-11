@@ -186,11 +186,13 @@ void copy_lv_mask_to_cv_mat(LV_Pixmapimage_t *pixmap_image_ptr, size_t number_of
             }
         }
         // account for end of row padding
-        int32_t excess_bits = 16 - mask.cols % 16;
-        while (excess_bits > 0)
+        // determine number of bits up to next 16-bit boundary
+        int32_t bits_over_boundary = mask.cols % 16;
+        int32_t bits_to_next = (16 - bits_over_boundary) % 16;
+        while (bits_to_next > 0)
         {
             mask_bytes_ptr++;
-            excess_bits -= 8;
+            bits_to_next -= 8;
         }
     }
 }
