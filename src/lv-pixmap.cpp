@@ -72,8 +72,6 @@ extern "C"
                     }
                     else
                     {
-                        // set the alpha pixel of the lookup table to 0xFF
-                        lookup_table.reshape(1, lookup_table.size().area()).col(3).setTo(cv::Scalar(255));
                         // apply lookup pixel-by-pixel as we are reading 4 channel lookup on a single channel source
                         for (size_t row = 0; row < dst.height(); row++)
                         {
@@ -188,7 +186,7 @@ void copy_lv_mask_to_cv_mat(LV_Pixmapimage_t *pixmap_image_ptr, size_t number_of
             }
         }
         // account for end of row padding
-        int32_t excess_bits = mask.cols % 16;
+        int32_t excess_bits = 16 - mask.cols % 16;
         while (excess_bits > 0)
         {
             mask_bytes_ptr++;
