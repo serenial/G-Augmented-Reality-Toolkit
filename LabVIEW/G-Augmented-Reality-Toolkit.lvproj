@@ -99,8 +99,6 @@
 				<Item Name="Create Mask.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pictutil.llb/Create Mask.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="Extract_Options.ctl" Type="VI" URL="../g_ar_toolkit.image/Extract_Options.ctl"/>
-			<Item Name="ExpandArrayToTargetWidth.vim" Type="VI" URL="../g_ar_toolkit.image/ExpandArrayToTargetWidth.vim"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
