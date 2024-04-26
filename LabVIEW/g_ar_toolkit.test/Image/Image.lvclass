@@ -41,7 +41,7 @@
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
 			<Property Name="NI.ClassItem.State" Type="Int">536576</Property>
 		</Item>
-		<Item Name="MaskArrayValue.vim" Type="VI" URL="../MaskArrayValue.vim">
+		<Item Name="MaskArrayValue.vi" Type="VI" URL="../MaskArrayValue.vi">
 			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!"B!!!!"!!.1!=!"UZV&lt;76S;7-!'E"!!!,``````````Q!!#5&amp;S=G&amp;Z)'^V&gt;!!;1%!!!P``````````!!!)18*S98EA37Y!!"A!]!!#!!%!!A)!!!A!!!E!!!)1!!!!!!%!!Q!!!!!</Property>
 			<Property Name="NI.ClassItem.ExecutionSystem" Type="Int">-1</Property>
 			<Property Name="NI.ClassItem.Flags" Type="Int">32</Property>
@@ -49,6 +49,24 @@
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
 			<Property Name="NI.ClassItem.State" Type="Int">8400896</Property>
+		</Item>
+		<Item Name="MaskArrayValueGreyscale.vi" Type="VI" URL="../MaskArrayValueGreyscale.vi">
+			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!"B!!!!"!!.1!5!"UZV&lt;76S;7-!'E"!!!,``````````Q!!#5&amp;S=G&amp;Z)'^V&gt;!!;1%!!!P``````````!!!)18*S98EA37Y!!"A!]!!#!!%!!A)!!!A!!!E!!!)1!!!!!!%!!Q!!!!!</Property>
+			<Property Name="NI.ClassItem.ExecutionSystem" Type="Int">-1</Property>
+			<Property Name="NI.ClassItem.Flags" Type="Int">16777216</Property>
+			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
+			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
+			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">268967936</Property>
+		</Item>
+		<Item Name="RGBtoGreyscale.vi" Type="VI" URL="../RGBtoGreyscale.vi">
+			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!"I!!!!"1!.1!5!"UZV&lt;76S;7-!'E"!!!,``````````Q!!#5&gt;S:8FT9W&amp;M:1!.1!=!"UZV&lt;76S;7-!&amp;%"!!!,``````````Q!#!V*#2Q!9!0!!!A!"!!-#!!!)!!!*!!!#%!!!!!!"!!1!!!!!</Property>
+			<Property Name="NI.ClassItem.ExecutionSystem" Type="Int">-1</Property>
+			<Property Name="NI.ClassItem.Flags" Type="Int">32</Property>
+			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
+			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
+			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">524290</Property>
 		</Item>
 	</Item>
 	<Item Name="Protected" Type="Folder">
@@ -98,5 +116,14 @@
 		<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
 		<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
 		<Property Name="NI.ClassItem.State" Type="Int">1342710290</Property>
+	</Item>
+	<Item Name="Test Copy from Pixmap Greyscale.vi" Type="VI" URL="../Test Copy from Pixmap Greyscale.vi">
+		<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!&amp;'!!!!#1!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!$Z!=!!?!!!H&amp;W&gt;@98*@&gt;'^P&lt;'NJ&gt;#ZU:8.U,GRW&lt;'FC$5FN97&gt;F,GRW9WRB=X-!$62F=X1A1W&amp;T:3"0&gt;81!)%"1!!-!!!!"!!)4:8*S&lt;X)A;7YA+'ZP)'6S=G^S+1!_1(!!(A!!*R&gt;H8W&amp;S8X2P&lt;WRL;81O&gt;'6T&gt;#ZM&gt;GRJ9AV*&lt;7&amp;H:3ZM&gt;G.M98.T!!R5:8.U)%.B=W5A37Y!!'%!]!!-!!-!"!!%!!5!"!!%!!1!"!!'!!1!"!!(!Q!!?!!!$1A!!!!!!!!!!!!!$1M!!!!!!!!!!!!!!!!!!!!!!!!+!!!!!!!!!!!!!!!3!!!.!!!!$!!!!!!!!!!!!!!"!!A!!!!!</Property>
+		<Property Name="NI.ClassItem.ExecutionSystem" Type="Int">-1</Property>
+		<Property Name="NI.ClassItem.Flags" Type="Int">2</Property>
+		<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
+		<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
+		<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
+		<Property Name="NI.ClassItem.State" Type="Int">1074541072</Property>
 	</Item>
 </LVClass>
