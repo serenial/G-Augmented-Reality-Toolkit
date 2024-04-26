@@ -26,6 +26,7 @@
 		<Item Name="g_ar_toolkit_common.lvlib" Type="Library" URL="../g_ar_toolkit.common/g_ar_toolkit_common.lvlib"/>
 		<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
 		<Item Name="g_ar_toolkit.capture.lvlib" Type="Library" URL="../g_ar_toolkit.capture/g_ar_toolkit.capture.lvlib"/>
+		<Item Name="g_ar_toolkit.ar.lvlib" Type="Library" URL="../g_ar_toolkit.ar/g_ar_toolkit.ar.lvlib"/>
 		<Item Name="g_ar_toolkit.pointset_utils.lvlib" Type="Library" URL="../g_ar_toolkit.pointset_utils/g_ar_toolkit.pointset_utils.lvlib"/>
 		<Item Name="g_ar_toolkit.test.lvlib" Type="Library" URL="../g_ar_toolkit.test/g_ar_toolkit.test.lvlib"/>
 		<Item Name="Dependencies" Type="Dependencies">

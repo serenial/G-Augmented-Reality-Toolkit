@@ -16,7 +16,7 @@
 	<Item Name="Private" Type="Folder">
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
 		<Property Name="NI.SortType" Type="Int">3</Property>
-		<Item Name="Estimate Plane for Point Set.vi" Type="VI" URL="../Estimate Plane for Point Set.vi"/>
-		<Item Name="Rotation Matrix Between Planes.vi" Type="VI" URL="../Rotation Matrix Between Planes.vi"/>
+		<Item Name="EstimatePlaneForPointSet.vi" Type="VI" URL="../EstimatePlaneForPointSet.vi"/>
+		<Item Name="RotationMatrixBetweenPlanes.vi" Type="VI" URL="../RotationMatrixBetweenPlanes.vi"/>
 	</Item>
 </Library>
