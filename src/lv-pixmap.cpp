@@ -64,9 +64,9 @@ extern "C"
             {
                 if (dst.size() != rectangle.size())
                 {
-                    throw std::invalid_argument("The pixmap contains mask data. Either use"
-                                                "<b>Copy Pixmap to Image with Mask Output.vi</b> to copy the mask information"
-                                                "or intialize the destination image pixels to specify the background image.");
+                    throw std::invalid_argument("The pixmap contains mask data but the destination image is not correctly initialized. " 
+                                                " Either use <b>Copy Pixmap to Image with Mask Output.vi</b> to copy the mask information"
+                                                " or intialize the destination image pixels to specify the background image.");
                 }
 
                 working_mat = cv::Mat(rectangle.size(), dst.cv_type());
