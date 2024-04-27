@@ -37,6 +37,11 @@ endif()
 ## Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
 
+if(UNIX)
+
+
+endif()
+
 # specify shared-library target
 add_library(${PROJECT_NAME} SHARED)
 

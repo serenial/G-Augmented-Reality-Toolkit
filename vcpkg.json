@@ -1,6 +1,8 @@
 {
     "dependencies": [
-        "opencv"
+        "opencv",
+        {"name":"ffmpeg" ,"platform":"linux", "default-features": false,
+        "features": [ "core","swscale","avcodec" ]}
     ],
     "overrides": [
         {

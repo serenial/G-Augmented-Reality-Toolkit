@@ -62,13 +62,14 @@ _If not using VSCode_
 - [x] Basic LV-C++ Interoperability with an EDVR based image type
 - [x] OpenCV basic image manipulation
 - [x] Basic Windows Media Framework Camera Driver Integration
+- [ ] Linux Webcam Driver and Linux Build Tooling (Work-in-progress)
 - [ ] OpenCV 3dCalib routines
 - [ ] Apriltag Integration
 - [ ] OpenCV to LabVIEW 3D Control transformations
 - [ ] Example Code
 - [ ] Documentation
 - [ ] Windows Media Framework Camera Property Control
-- [ ] Linux Webcam Driver and Linux Build Tooling
+
 
 ## Contributions
 Welcome - please open an issue if you would like to contribute
@@ -77,6 +78,7 @@ Welcome - please open an issue if you would like to contribute
 | Library | Licence |
 |---------|---------|
 | OpenCV 4 | Apache License 2.0 |
-| ros_msft_camera | MIT |
-| tinyobjectloader (not yet integrated) | MIT |
-| Apriltag (not yet integrated) | BSD-2 |
+| [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
+| [usb_cam](https://github.com/ros-drivers/usb_cam) (on Linux) | BSD License 2.0 |
+| [tinyobjectloader](https://github.com/tinyobjloader/tinyobjloader) (not yet integrated) | MIT |
+| [Apriltag](https://github.com/AprilRobotics/apriltag) (not yet integrated) | BSD 2-Clause License |
