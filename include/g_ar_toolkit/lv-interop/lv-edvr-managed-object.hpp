@@ -155,7 +155,7 @@ namespace g_ar_toolkit
             EDVRManagedObject(
                 LV_EDVRReferencePtr_t edvr_ref_ptr, 
                 T* object, 
-                std::function<void(T* ,const LV_EDVRDataPtr_t)> edvr_value_set_function = [&](auto ptr, auto e_data_ptr)
+                std::function<void(T* ,const LV_EDVRDataPtr_t)> edvr_value_set_function = [](auto ptr, auto e_data_ptr)
                                                                                           {
                         // set the sub-array to be a 1-D empty array
                         e_data_ptr->n_dims = 1;
