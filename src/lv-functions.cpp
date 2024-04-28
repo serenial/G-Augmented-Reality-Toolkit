@@ -23,87 +23,79 @@ static LV_DSNewHandlePtr_t DSNewHandleImp = nullptr;
 static LV_DSSetHandleSizePtr_t DSSetHandleSizeImp = nullptr;
 static LV_DSGetHandleSizePtr_t DSGetHandleSizeImp = nullptr;
 
-extern "C"
+extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_InstanceDataHandle_t instance_data_handle)
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_InstanceDataHandle_t instance_data_handle)
+    for (int i = 0; i < 2; i++)
     {
-        for (int i = 0; i < 2; i++)
+        // check if the function pointers already populated
+        if (
+            EDVR_GetCurrentContextImp &&
+            EDVR_CreateReferenceImp &&
+            EDVR_AddRefWithContextImp &&
+            EDVR_ReleaseRefWithContextImp &&
+            PostLVUserEventImp &&
+            NumericArrayResizeImp &&
+            DSDisposeHandleImp &&
+            DSCheckHandleImp &&
+            DSNewHandleImp &&
+            DSSetHandleSizeImp &&
+            DSGetHandleSizeImp)
         {
-            // check if the function pointers already populated
-            if (
-                EDVR_GetCurrentContextImp &&
-                EDVR_CreateReferenceImp &&
-                EDVR_AddRefWithContextImp &&
-                EDVR_ReleaseRefWithContextImp &&
-                PostLVUserEventImp &&
-                NumericArrayResizeImp &&
-                DSDisposeHandleImp &&
-                DSCheckHandleImp &&
-                DSNewHandleImp &&
-                DSSetHandleSizeImp &&
-                DSGetHandleSizeImp)
-            {
-                return LV_ERR_noError;
-            }
+            return LV_ERR_noError;
+        }
 
-            if (i == 0)
-            {
+        if (i == 0)
+        {
 #ifdef _WIN32
-                auto module = GetModuleHandle("LabVIEW.exe");
-                if (!module)
-                {
-                    module = GetModuleHandle("lvffrt.dll");
-                }
-                if (!module)
-                {
-                    module = GetModuleHandle("lvrt.dll");
-                }
-                if (!module)
-                {
-                    return LV_ERR_rfNotFound;
-                }
-
-                EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(GetProcAddress(module, "EDVR_GetCurrentContext"));
-                EDVR_CreateReferenceImp = reinterpret_cast<LV_EDVRCreateReferenceFnPtr_t>(GetProcAddress(module, "EDVR_CreateReference"));
-                EDVR_AddRefWithContextImp = reinterpret_cast<LV_EDVRAddRefWithContextFnPtr_t>(GetProcAddress(module, "EDVR_AddRefWithContext"));
-                EDVR_ReleaseRefWithContextImp = reinterpret_cast<LV_EDVRReleaseRefWithContextFnPtr_t>(GetProcAddress(module, "EDVR_ReleaseRefWithContext"));
-                PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(GetProcAddress(module, "PostLVUserEvent"));
-                NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(GetProcAddress(module, "NumericArrayResize"));
-                DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(GetProcAddress(module, "DSDisposeHandle"));
-                DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(GetProcAddress(module, "DSCheckHandle"));
-                DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(GetProcAddress(module, "DSNewHandle"));
-                DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(GetProcAddress(module, "DSSetHandleSize"));
-                DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(GetProcAddress(module, "DSGetHandleSize"));
+            auto module = GetModuleHandle("LabVIEW.exe");
+            if (!module)
+            {
+                module = GetModuleHandle("lvffrt.dll");
             }
-            else
+            if (!module)
+            {
+                module = GetModuleHandle("lvrt.dll");
+            }
+            if (!module)
             {
                 return LV_ERR_rfNotFound;
             }
+
+            EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(GetProcAddress(module, "EDVR_GetCurrentContext"));
+            EDVR_CreateReferenceImp = reinterpret_cast<LV_EDVRCreateReferenceFnPtr_t>(GetProcAddress(module, "EDVR_CreateReference"));
+            EDVR_AddRefWithContextImp = reinterpret_cast<LV_EDVRAddRefWithContextFnPtr_t>(GetProcAddress(module, "EDVR_AddRefWithContext"));
+            EDVR_ReleaseRefWithContextImp = reinterpret_cast<LV_EDVRReleaseRefWithContextFnPtr_t>(GetProcAddress(module, "EDVR_ReleaseRefWithContext"));
+            PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(GetProcAddress(module, "PostLVUserEvent"));
+            NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(GetProcAddress(module, "NumericArrayResize"));
+            DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(GetProcAddress(module, "DSDisposeHandle"));
+            DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(GetProcAddress(module, "DSCheckHandle"));
+            DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(GetProcAddress(module, "DSNewHandle"));
+            DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(GetProcAddress(module, "DSSetHandleSize"));
+            DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(GetProcAddress(module, "DSGetHandleSize"));
 #else
+            auto module = dlopen(nullptr, RTLD_LAZY);
 
-                auto module = dlopen(nullptr, RTLD_LAZY);
+            if (!module)
+            {
+                return LV_ERR_rfNotFound;
+            }
 
-                if (!module)
-                {
-                    return LV_ERR_rfNotFound;
-                }
-
-                EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(dlsym(module, "EDVR_GetCurrentContext"));
-                EDVR_CreateReferenceImp = reinterpret_cast<LV_EDVRCreateReferenceFnPtr_t>(dlsym(module, "EDVR_CreateReference"));
-                EDVR_AddRefWithContextImp = reinterpret_cast<LV_EDVRAddRefWithContextFnPtr_t>(dlsym(module, "EDVR_AddRefWithContext"));
-                EDVR_ReleaseRefWithContextImp = reinterpret_cast<LV_EDVRReleaseRefWithContextFnPtr_t>(dlsym(module, "EDVR_ReleaseRefWithContext"));
-                PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(dlsym(module, "PostLVUserEvent"));
-                NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(dlsym(module, "NumericArrayResize"));
-                DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(dlsym(module, "DSDisposeHandle"));
-                DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(dlsym(module, "DSCheckHandle"));
-                DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(dlsym(module, "DSNewHandle"));
-                DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(dlsym(module, "DSSetHandleSize"));
-                DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(dlsym(module, "DSGetHandleSize"));
+            EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(dlsym(module, "EDVR_GetCurrentContext"));
+            EDVR_CreateReferenceImp = reinterpret_cast<LV_EDVRCreateReferenceFnPtr_t>(dlsym(module, "EDVR_CreateReference"));
+            EDVR_AddRefWithContextImp = reinterpret_cast<LV_EDVRAddRefWithContextFnPtr_t>(dlsym(module, "EDVR_AddRefWithContext"));
+            EDVR_ReleaseRefWithContextImp = reinterpret_cast<LV_EDVRReleaseRefWithContextFnPtr_t>(dlsym(module, "EDVR_ReleaseRefWithContext"));
+            PostLVUserEventImp = reinterpret_cast<LV_PostLVUserEventFnPtr_t>(dlsym(module, "PostLVUserEvent"));
+            NumericArrayResizeImp = reinterpret_cast<LV_NumericArrayResizeFnPtr_t>(dlsym(module, "NumericArrayResize"));
+            DSDisposeHandleImp = reinterpret_cast<LV_DSDisposeHandleFnPtr_t>(dlsym(module, "DSDisposeHandle"));
+            DSCheckHandleImp = reinterpret_cast<LV_DSCheckHandlePtr_t>(dlsym(module, "DSCheckHandle"));
+            DSNewHandleImp = reinterpret_cast<LV_DSNewHandlePtr_t>(dlsym(module, "DSNewHandle"));
+            DSSetHandleSizeImp = reinterpret_cast<LV_DSSetHandleSizePtr_t>(dlsym(module, "DSSetHandleSize"));
+            DSGetHandleSizeImp = reinterpret_cast<LV_DSGetHandleSizePtr_t>(dlsym(module, "DSGetHandleSize"));
 #endif
         }
-
-        return LV_ERR_bogusError;
     }
+
+    return LV_ERR_bogusError;
 }
 
 LV_MgErr_t lv_interop::EDVR_GetCurrentContext(LV_Ptr_t<LV_EDVRContext_t> ctx_ptr)

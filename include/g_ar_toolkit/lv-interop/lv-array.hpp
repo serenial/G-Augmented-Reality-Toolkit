@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <functional>
 #include <cstring>
 #include <numeric>
@@ -51,15 +52,7 @@ namespace g_ar_toolkit
         template <typename T>
         auto array_handle_ptr_array_length(LV_HandlePtr_t<LV_Array_t<1, T>> handle_ptr)
         {
-            if (!handle_ptr)
-            {
-                return 0;
-            }
-            if (!(*handle_ptr))
-            {
-                return 0;
-            }
-            if (!(**handle_ptr))
+            if (!handle_ptr || !(*handle_ptr) || !(**handle_ptr))
             {
                 return 0;
             }
@@ -69,17 +62,9 @@ namespace g_ar_toolkit
         template <typename T>
         auto array_handle_ptr_array_length(LV_HandlePtr_t<LV_Array_t<2, T>> handle_ptr)
         {
-            if (!handle_ptr)
+            if (!handle_ptr || !(*handle_ptr) || !(**handle_ptr))
             {
-                return [ 0, 0 ];
-            }
-            if (!(*handle_ptr))
-            {
-                return [ 0, 0 ];
-            }
-            if (!(**handle_ptr))
-            {
-                return [ 0, 0 ];
+                return std::array<size_t,2>{ 0, 0 };
             }
             return (**handle_ptr)->dims;
         }

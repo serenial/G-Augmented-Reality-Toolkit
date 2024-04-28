@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include <functional>
-#include <opencv2\core.hpp>
+#include <opencv2/core.hpp>
 
 #include "g_ar_toolkit/lv-interop/lv-functions.hpp"
 #include "g_ar_toolkit/lv-interop/lv-error.hpp"
