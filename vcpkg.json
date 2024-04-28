@@ -1,8 +1,17 @@
 {
     "dependencies": [
         "opencv",
-        {"name":"ffmpeg" ,"platform":"linux", "default-features": false,
-        "features": [ "core","swscale","avcodec" ]}
+        {
+            "name": "ffmpeg",
+            "platform": "linux",
+            "default-features": false,
+            "features": [
+                "core",
+                "swscale",
+                "avcodec"
+            ],
+            "version": "6.1.1"
+        }
     ],
     "overrides": [
         {
@@ -10,5 +19,5 @@
             "version": "4.8.0"
         }
     ],
-    "builtin-baseline":"c95000e1b5bb62884de08d5e952993c8bced9db6"
+    "builtin-baseline": "c95000e1b5bb62884de08d5e952993c8bced9db6"
 }
