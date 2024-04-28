@@ -77,11 +77,24 @@ SET(PLATFORM_SOURCE_FILES_Windows
 SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/context-v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/stream-v4l2.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/constants.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/conversions.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/usb_cam.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/utils.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/av_pixel_format_helper.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/m420.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/mjpeg.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/mono.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/pixel_format_base.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/rgb.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/utils.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/uyvy.hpp
+  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/yuyv.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context-v4l2.cpp
-  src/linux/stream-v4l2.cpp
+  #src/linux/stream-v4l2.cpp
 )
 
 # Add Project sources
@@ -168,6 +181,10 @@ if(WIN32)
     shlwapi
   )
 elseif(UNIX)
+  # don't use "lib"-prefix on linux
+  set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+  # set linkage types to match ffmpeg not using -fPIC
+  set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY CMAKE_SHARED_LINKER_FLAGS " -Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC 
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_USB_CAM}/include>"
     ${FFMPEG_INCLUDE_DIRS}

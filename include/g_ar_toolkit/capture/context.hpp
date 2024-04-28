@@ -14,7 +14,7 @@ namespace g_ar_toolkit
         // forward decleration of Stream
         class Stream;
 
-        using fractional_fps_t = struct
+        struct fractional_fps_t
         {
             uint32_t numerator, denominator;
         };
@@ -30,14 +30,14 @@ namespace g_ar_toolkit
             H264
         };
 
-        using stream_type_t = struct
+        struct stream_type_t
         {
             stream_pixel_format format;
             uint32_t width, height;
             fractional_fps_t fps;
         };
 
-        using device_info_t = struct
+        struct device_info_t
         {
             std::string device_id;
             std::string device_name;

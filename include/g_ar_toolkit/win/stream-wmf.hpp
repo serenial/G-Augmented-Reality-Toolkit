@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef _WIN32
+
 #include <unordered_map>
 #include <mutex>
 #include <condition_variable>
@@ -48,14 +50,9 @@ namespace g_ar_toolkit
             const uint32_t rows,cols;
             std::exception_ptr last_exception;
             bool streaming;
-
-        public:
-            StreamWMF(std::string device_id, stream_type_t stream_format);
-            ~StreamWMF();
-            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
-            void start_stream();
-            void stop_stream();
         };
 
     }
 }
+
+#endif

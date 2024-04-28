@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef _WIN32
+
 #include <stdexcept>
 #include <unordered_map>
 #include <mutex>
@@ -95,3 +97,5 @@ namespace g_ar_toolkit
     }
 };
 }
+
+#endif
