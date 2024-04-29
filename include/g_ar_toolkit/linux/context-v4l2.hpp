@@ -3,7 +3,7 @@
 
 #ifdef __linux__
 
-#include "usb_cam/usb_cam.hpp"
+#include <chrono>
 
 #include "../capture/context.hpp"
 
