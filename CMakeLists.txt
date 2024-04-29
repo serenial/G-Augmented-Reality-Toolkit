@@ -182,9 +182,9 @@ if(WIN32)
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
-  set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
-  # set linkage types to match ffmpeg not using -fPIC
-  set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY CMAKE_SHARED_LINKER_FLAGS " -Wl,-Bsymbolic")
+  set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "") 
+  # set linking flags required for static ffmpeg without --fPIC
+  set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC 
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_USB_CAM}/include>"
     ${FFMPEG_INCLUDE_DIRS}
