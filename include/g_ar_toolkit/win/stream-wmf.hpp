@@ -50,6 +50,12 @@ namespace g_ar_toolkit
             const uint32_t rows,cols;
             std::exception_ptr last_exception;
             bool streaming;
+            public:
+            StreamWMF(std::string device_id, stream_type_t stream_type);
+            ~StreamWMF();
+            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
+            void start_stream();
+            void stop_stream();
         };
 
     }

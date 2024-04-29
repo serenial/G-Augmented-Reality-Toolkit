@@ -94,7 +94,7 @@ SET(PLATFORM_HEADER_FILES_Linux
 
 SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context-v4l2.cpp
-  #src/linux/stream-v4l2.cpp
+  src/linux/stream-v4l2.cpp
 )
 
 # Add Project sources
@@ -182,7 +182,7 @@ if(WIN32)
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
-  set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "") 
+  set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
   # set linking flags required for static ffmpeg without --fPIC
   set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC 
@@ -214,6 +214,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE opencv_core opencv_imgproc opencv_
 
 # Install Shared Library
 INSTALL(TARGETS ${PROJECT_NAME}
-  RUNTIME DESTINATION
-  LIBRARY DESTINATION
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION bin
 )

@@ -12,3 +12,17 @@ Stream* capture::create_platform_stream(std::string device_id, stream_type_t str
     return new StreamV4L2(device_id, stream_type);
 }
 
+StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type) : Stream(){
+    // init
+}
+
+StreamV4L2::~StreamV4L2(){
+    // deinit
+}
+
+
+void StreamV4L2::start_stream(){}
+void StreamV4L2::stop_stream(){}
+void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout){}
+
+
