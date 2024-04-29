@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_STR_HPP_
+#define G_AR_TK__INTEROP_LV_STR_HPP_
 
 #include <string>
 
@@ -13,3 +14,5 @@ namespace g_ar_toolkit
         LV_MgErr_t copy_std_string_to_lv_string_handle_ptr(std::string, LV_StringHandlePtr_t);
     }
 }
+
+#endif //G_AR_TK__INTEROP_LV_STR_HPP_

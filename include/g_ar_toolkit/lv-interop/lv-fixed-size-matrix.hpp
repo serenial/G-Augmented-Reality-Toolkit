@@ -1,4 +1,6 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_FIXED_SZ_MAT_HPP_
+#define G_AR_TK__INTEROP_LV_FIXED_SZ_MAT_HPP_
+
 #include <opencv2/core/matx.hpp>
 
 #include "./lv-types.hpp"
@@ -29,3 +31,5 @@ cv::Matx<T,rows,cols> cv_matx_from_lv_fixed_sized_matrix_ptr(LV_FixedSizeMatrixP
 }
     }
 }
+
+#endif //G_AR_TK__INTEROP_LV_FIXED_SZ_MAT_HPP_

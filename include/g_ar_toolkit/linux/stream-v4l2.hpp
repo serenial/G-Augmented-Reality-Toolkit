@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
+#define G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
 
 #ifdef __linux__
 
@@ -20,4 +21,5 @@ namespace g_ar_toolkit
     }
 }
 
-#endif
+#endif //__linux__
+#endif //G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_

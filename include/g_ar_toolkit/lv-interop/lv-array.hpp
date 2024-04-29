@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_ARRAY_HPP_
+#define G_AR_TK__INTEROP_LV_ARRAY_HPP_
 
 #include <vector>
 #include <array>
@@ -122,3 +123,5 @@ namespace g_ar_toolkit
         }
     }
 }
+
+#endif // G_AR_TK__INTEROP_LV_ARRAY_HPP_

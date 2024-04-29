@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__CAPTURE_CONTEXT_HPP_
+#define G_AR_TK__CAPTURE_CONTEXT_HPP_
 
 #include <string>
 #include <vector>
@@ -57,3 +58,5 @@ namespace g_ar_toolkit
         Context* create_platform_context();
     }
 }
+
+#endif // G_AR_TK__CAPTURE_CONTEXT_HPP_

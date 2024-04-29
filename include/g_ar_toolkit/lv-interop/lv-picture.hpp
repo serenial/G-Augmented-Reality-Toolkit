@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_PICTURE_HPP_
+#define G_AR_TK__INTEROP_LV_PICTURE_HPP_
 
 #include <cstdint>
 #include <type_traits>
@@ -16,3 +17,5 @@ namespace g_ar_toolkit
         }
     }
 }
+
+#endif //G_AR_TK__INTEROP_LV_PICTURE_HPP_

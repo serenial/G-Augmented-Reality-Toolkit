@@ -2,7 +2,8 @@
 // only uses the EDVR for lifetime managment and never
 // sets the sub-array
 
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_EDVR_MNGD_OBJ_HPP_
+#define G_AR_TK__INTEROP_LV_EDVR_MNGD_OBJ_HPP_
 
 #include <memory>
 #include <mutex>
@@ -186,3 +187,5 @@ namespace g_ar_toolkit
         };
     }
 }
+
+#endif //G_AR_TK__INTEROP_LV_EDVR_MNGD_OBJ_HPP_

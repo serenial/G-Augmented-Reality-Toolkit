@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__CAPTURE_STREAM_HPP_
+#define G_AR_TK__CAPTURE_STREAM_HPP_
 
 #include <memory>
 #include <string>
@@ -26,3 +27,5 @@ namespace g_ar_toolkit{
         Stream* create_platform_stream(std::string, stream_type_t stream_type);
     }
 }
+
+#endif //G_AR_TK__CAPTURE_STREAM_HPP_

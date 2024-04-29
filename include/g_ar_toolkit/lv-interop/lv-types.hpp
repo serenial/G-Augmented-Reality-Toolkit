@@ -2,7 +2,8 @@
 // Without the dependency on NIs extcode.h or ni_extcode.h
 // ** Here Be Dragons ** NI could change these at anytime
 
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_TYPES_HPP_
+#define G_AR_TK__INTEROP_LV_TYPES_HPP_
 
 #include <string>
 #include <stddef.h>
@@ -230,3 +231,5 @@ namespace g_ar_toolkit
 }
 
 #include "./reset-packing.hpp"
+
+#endif //G_AR_TK__INTEROP_LV_TYPES_HPP_

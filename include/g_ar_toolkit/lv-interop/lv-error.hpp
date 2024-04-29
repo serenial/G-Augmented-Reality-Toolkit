@@ -1,4 +1,5 @@
-#pragma once
+#ifndef G_AR_TK__INTEROP_LV_ERROR_HPP_
+#define G_AR_TK__INTEROP_LV_ERROR_HPP_
 
 #include <exception>
 #include <stdexcept>
@@ -13,3 +14,5 @@ namespace g_ar_toolkit
         LV_MgErr_t caught_exception_to_lv_err(std::exception_ptr,LV_ErrorClusterPtr_t, const char*);
     }
 }
+
+#endif //G_AR_TK__INTEROP_LV_ERROR_HPP_
