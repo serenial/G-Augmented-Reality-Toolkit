@@ -61,6 +61,7 @@ If you wish to modify the C++ code you will require the following for building t
 - libtool
 - pkg-config
 - python3-jinja2
+- nasm
 
 ### C++ Setup
 
@@ -70,7 +71,7 @@ _If using VSCode_
 * Use the VSCode CMake intergration tools to choose the build-kit, release type to match your system
 * build the "install" target which should configure, build and install the binaries to `LabVIEW/bin`
 _If not using VSCode_
-* Use the provided `<platform>-win-build.bat-example` batch files as a starting point. Set the `VCKPGROOT` variable in the batch file and modify other values to suit your preferences. 
+* Use the provided `<platform>-win-build.bat-example` batch files as a starting point. Adjust variables in the batch file and modify other values to suit your preferences. 
 * Run your modified batch file to build and install the .dll into the `LabVIEW/bin` directory
 
 >![NOTE] 
