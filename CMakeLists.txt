@@ -90,6 +90,7 @@ SET(PLATFORM_HEADER_FILES_Linux
   ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/utils.hpp
   ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/uyvy.hpp
   ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/yuyv.hpp
+  3rd-party/v4l2-list-devices/include/list-devices.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux

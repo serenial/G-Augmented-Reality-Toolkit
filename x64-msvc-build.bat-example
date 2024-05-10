@@ -1,4 +1,4 @@
-set VCPKGROOT="C:\src\vcpkg"
+set VCPKGROOT="vcpkg"
 set SCRIPT_DIR=%~dp0.
 set BUILD_DIR="%SCRIPT_DIR%\build"
 echo off

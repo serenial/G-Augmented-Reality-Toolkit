@@ -37,14 +37,22 @@ Unfortunately documentation is currently very sparese. Some information on inter
 * VIPM
 * LUnit (for tests - install via VIPM)
 
-## C++ Developer Setup (Windows)
+## C++ Developer Setup 
+
+Setup `vcpkg` buildtool in the vcpkg submodule with 
+```bash
+git submodule init
+git submodule update
+```
+Then run the `vcpkg` bootstrap script in the `vcpkg` directory for your platform (`.bat` for Windows or `.sh` for Linux)
+
+### on Windows
 If you wish to modify the C++ code you will require the following for building the binaries
 
 * C++ Development Tools for Windows (VS 2022)
-* vcpkg
 * (Recommended) VSCode with C++ and CMake Tool Extensions installed
 
-## C++ Developer Setup (Linux)
+### on Linux
 * Install the following dependencies
 - python3
 - bison
