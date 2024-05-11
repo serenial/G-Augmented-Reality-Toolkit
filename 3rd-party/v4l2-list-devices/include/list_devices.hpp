@@ -20,6 +20,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <cstring>
+#include <stdexcept>
 
 #include <string>
 #include <vector>
