@@ -289,7 +289,7 @@ void ContextWMF::update_last_device_enumeration()
                 }
                 // get format details
                 winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &stream_format.width, &stream_format.height));
-                winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &stream_format.fps.numerator, &stream_format.fps.denominator));
+                winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &stream_format.fps.denominator, &stream_format.fps.numerator));
 
                 // push this stream_format into the vector
                 device_info.supported_formats.push_back(stream_format);

@@ -18,7 +18,7 @@ using namespace lv_interop;
 using LV_StreamFormat_t = struct
 {
     uint8_t pixel_format;
-    uint32_t width, height, fps;
+    uint32_t width, height, fps_n, fps_d;
 };
 
 // array allocation for this struct should use PtrSized type!
@@ -82,7 +82,8 @@ extern "C"
                         in.supported_formats, 
                         &(out_ptr->formats), 
                         [](LV_StreamFormat_t *out_ptr, bool newly_allocated, stream_type_t in){
-                            out_ptr->fps = in.fps.denominator == 1? in.fps.numerator : 0;
+                            out_ptr->fps_n = in.fps.numerator;
+                            out_ptr->fps_d = in.fps.denominator;
                             out_ptr->height = in.height;
                             out_ptr->width = in.width;
                             out_ptr->pixel_format = format_to_enum_value(in.format); } //no-deallcoator required for these types
