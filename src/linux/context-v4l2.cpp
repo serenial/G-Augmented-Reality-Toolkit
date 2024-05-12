@@ -25,8 +25,10 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
     for (const auto & device : device_list) 
     {
         device_info_t d;
-        d.device_id = device.device_paths.front();
+        std::vector<stream_type_t> formats;
+        d.device_id = device.bus_info + device.device_paths.front();
         d.device_name = device.device_description;
+        d.supported_formats = formats;
         devices.push_back(d);
     }
 }
