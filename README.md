@@ -52,16 +52,12 @@ If you wish to modify the C++ code you will require the following for building t
 * C++ Development Tools for Windows (VS 2022)
 * (Recommended) VSCode with C++ and CMake Tool Extensions installed
 
-### on Linux
-* Install the following dependencies
-- python3
-- bison
-- autoconf
-- automake
-- libtool
-- pkg-config
-- python3-jinja2
-- nasm
+### on Linux (Ubuntu)
+Install the dependencies using `apt`
+
+```bash
+sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev  libxinerama-dev libxrandr-dev
+``` 
 
 ### C++ Setup
 
