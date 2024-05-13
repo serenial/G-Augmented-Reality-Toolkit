@@ -71,13 +71,10 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
                                 stream_type_t supported_format;
                                 supported_format.width = current_interval.width;
                                 supported_format.height = current_interval.height;
-                                supported_format.fps.numerator = current_interval.discrete.numerator;
-                                supported_format.fps.denominator = current_interval.discrete.denominator;
+                                // invert frame-intervals to get frame rate
+                                supported_format.fps.numerator = current_interval.discrete.denominator;
+                                supported_format.fps.denominator = current_interval.discrete.numerator;
                                 
-                                // capture_format_t capture_format;
-                                // capture_format.format = current_format;
-                                // capture_format.v4l2_fmt = current_interval;
-                                // m_supported_formats.push_back(capture_format);
                                 supported_formats.push_back(supported_format);
                             }
                         } // interval loop
