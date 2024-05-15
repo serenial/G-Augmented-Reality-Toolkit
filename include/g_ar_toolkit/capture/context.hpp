@@ -25,7 +25,7 @@ namespace g_ar_toolkit
             UNKNOWN,
             RGB24,
             RGB32,
-            YUY2,
+            YUV,
             NV12,
             MJPEG,
             H264

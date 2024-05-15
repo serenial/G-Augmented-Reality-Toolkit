@@ -125,7 +125,7 @@ uint8_t format_to_enum_value(stream_pixel_format fmt)
         return 1;
     case stream_pixel_format::RGB32:
         return 2;
-    case stream_pixel_format::YUY2:
+    case stream_pixel_format::YUV:
         return 3;
     case stream_pixel_format::NV12:
         return 4;

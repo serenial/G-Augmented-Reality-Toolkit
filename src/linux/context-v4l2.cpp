@@ -7,6 +7,8 @@ using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
 
+stream_pixel_format fourcc_to_stream_pixel_format(__u32);
+
 Context *capture::create_platform_context()
 {
     return new ContextV4L2;
@@ -74,7 +76,7 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
                                 // invert frame-intervals to get frame rate
                                 supported_format.fps.numerator = current_interval.discrete.denominator;
                                 supported_format.fps.denominator = current_interval.discrete.numerator;
-                                
+                                supported_format.format = fourcc_to_stream_pixel_format(current_format.pixelformat);
                                 supported_formats.push_back(supported_format);
                             }
                         } // interval loop
@@ -92,4 +94,27 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 ContextV4L2::~ContextV4L2()
 {
     // de-init
+}
+
+stream_pixel_format fourcc_to_stream_pixel_format(__u32 pixel_format)
+{
+    switch (pixel_format)
+    {
+    case V4L2_PIX_FMT_RGB24:
+        return stream_pixel_format::RGB24;
+    case V4L2_PIX_FMT_RGB32:
+        return stream_pixel_format::RGB32;
+    case V4L2_PIX_FMT_YUYV:
+    case V4L2_PIX_FMT_YYUV:
+    case V4L2_PIX_FMT_UYVY:
+    case V4L2_PIX_FMT_VYUY:
+        return stream_pixel_format::YUV;
+    case V4L2_PIX_FMT_NV12:
+        return stream_pixel_format::NV12;
+    case V4L2_PIX_FMT_MJPEG:
+        return stream_pixel_format::MJPEG;
+    case V4L2_PIX_FMT_H264:
+        return stream_pixel_format::H264;
+    }
+    return stream_pixel_format::UNKNOWN;
 }
