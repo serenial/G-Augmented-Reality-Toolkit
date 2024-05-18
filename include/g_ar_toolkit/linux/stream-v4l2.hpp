@@ -3,7 +3,10 @@
 
 #ifdef __linux__
 
+#include <memory>
+
 #include "../capture/stream.hpp"
+#include "usb_cam/usb_cam.hpp"
 
 namespace g_ar_toolkit
 {
@@ -17,6 +20,9 @@ namespace g_ar_toolkit
             void capture_frame(cv::Mat&, std::chrono::milliseconds);
             void start_stream();
             void stop_stream();
+        private:
+            const std::unique_ptr<usb_cam::UsbCam> usb_cam_ptr;
+            usb_cam::parameters_t usb_cam_parameters;
         };
     }
 }
