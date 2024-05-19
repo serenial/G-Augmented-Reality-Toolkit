@@ -89,7 +89,7 @@ stream_pixel_format fourcc_to_stream_pixel_format(__u32 pixel_format)
     return stream_pixel_format::UNKNOWN;
 }
 
-bool fourcc_is_a_stream_pixel_format_match(stream_pixel_format type, __u32 pixel_format)
+bool capture::fourcc_is_a_stream_pixel_format_match(stream_pixel_format type, __u32 pixel_format)
 {
     switch (type)
     {
@@ -112,7 +112,7 @@ bool fourcc_is_a_stream_pixel_format_match(stream_pixel_format type, __u32 pixel
     return false;
 }
 
-void lookup_support_formats_by_device_path(std::string path, std::vector<v4l2_frmivalenum> &v4l2_supported_formats)
+void capture::lookup_support_formats_by_device_path(std::string path, std::vector<v4l2_frmivalenum> &v4l2_supported_formats)
 {
     int fd;
     // Try and open device to test access
