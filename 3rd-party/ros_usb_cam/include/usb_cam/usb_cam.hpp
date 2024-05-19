@@ -78,23 +78,24 @@ using usb_cam::formats::M4202RGB;
 
 /// @brief list all supported formats that this driver supports
 std::vector<std::shared_ptr<pixel_format_base>> driver_supported_formats(
-  const formats::format_arguments_t & args = formats::format_arguments_t())
-{
-  std::vector<std::shared_ptr<pixel_format_base>> fmts = {
-    std::make_shared<RGB8>(args),
-    std::make_shared<YUYV>(args),
-    std::make_shared<YUYV2RGB>(args),
-    std::make_shared<UYVY>(args),
-    std::make_shared<UYVY2RGB>(args),
-    std::make_shared<MONO8>(args),
-    std::make_shared<MONO16>(args),
-    std::make_shared<Y102MONO8>(args),
-    std::make_shared<RAW_MJPEG>(args),
-    std::make_shared<MJPEG2RGB>(args),
-    std::make_shared<M4202RGB>(args),
-  };
-  return fmts;
-}
+  const formats::format_arguments_t & args = formats::format_arguments_t());
+// {
+//   definition moved to .cpp file
+//   std::vector<std::shared_ptr<pixel_format_base>> fmts = {
+//     std::make_shared<RGB8>(args),
+//     std::make_shared<YUYV>(args),
+//     std::make_shared<YUYV2RGB>(args),
+//     std::make_shared<UYVY>(args),
+//     std::make_shared<UYVY2RGB>(args),
+//     std::make_shared<MONO8>(args),
+//     std::make_shared<MONO16>(args),
+//     std::make_shared<Y102MONO8>(args),
+//     std::make_shared<RAW_MJPEG>(args),
+//     std::make_shared<MJPEG2RGB>(args),
+//     std::make_shared<M4202RGB>(args),
+//   };
+//   return fmts;
+// }
 
 typedef struct
 {

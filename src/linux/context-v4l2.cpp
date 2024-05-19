@@ -35,54 +35,24 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 
         for (auto const &path : device.device_paths)
         {
-            int fd;
-            // Try and open device to test access
-            if ((fd = open(path.c_str(), O_RDONLY)) != -1)
+            std::vector<v4l2_frmivalenum> v4l2_supported_formats;
+
+            lookup_support_formats_by_device_path(path, v4l2_supported_formats);
+
+            for (const auto &v4l2_format : v4l2_supported_formats)
             {
-                struct v4l2_fmtdesc current_format;
-                struct v4l2_frmsizeenum current_size;
-                struct v4l2_frmivalenum current_interval;
+                stream_type_t supported_format;
+                supported_format.width = v4l2_format.width;
+                supported_format.height = v4l2_format.height;
+                // invert frame-intervals to get frame rate
+                supported_format.fps.numerator = v4l2_format.discrete.denominator;
+                supported_format.fps.denominator = v4l2_format.discrete.numerator;
+                supported_format.format = fourcc_to_stream_pixel_format(v4l2_format.pixel_format);
+                supported_formats.push_back(supported_format);
+            }
 
-                current_format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-                current_format.index = 0;
-                for (current_format.index = 0;
-                     usb_cam::utils::xioctl(
-                         fd, VIDIOC_ENUM_FMT, &current_format) == 0;
-                     ++current_format.index)
-                {
-                    current_size.index = 0;
-                    current_size.pixel_format = current_format.pixelformat;
-
-                    for (current_size.index = 0;
-                         usb_cam::utils::xioctl(
-                             fd, VIDIOC_ENUM_FRAMESIZES, &current_size) == 0;
-                         ++current_size.index)
-                    {
-                        current_interval.index = 0;
-                        current_interval.pixel_format = current_size.pixel_format;
-                        current_interval.width = current_size.discrete.width;
-                        current_interval.height = current_size.discrete.height;
-                        for (current_interval.index = 0;
-                             usb_cam::utils::xioctl(
-                                 fd, VIDIOC_ENUM_FRAMEINTERVALS, &current_interval) == 0;
-                             ++current_interval.index)
-                        {
-                            if (current_interval.type == V4L2_FRMIVAL_TYPE_DISCRETE)
-                            {
-
-                                stream_type_t supported_format;
-                                supported_format.width = current_interval.width;
-                                supported_format.height = current_interval.height;
-                                // invert frame-intervals to get frame rate
-                                supported_format.fps.numerator = current_interval.discrete.denominator;
-                                supported_format.fps.denominator = current_interval.discrete.numerator;
-                                supported_format.format = fourcc_to_stream_pixel_format(current_format.pixelformat);
-                                supported_formats.push_back(supported_format);
-                            }
-                        } // interval loop
-                    } // size loop
-                } // fmt loop
-                close(fd);
+            if (supported_formats.size() > 0)
+            {
                 break;
             }
         }
@@ -117,4 +87,72 @@ stream_pixel_format fourcc_to_stream_pixel_format(__u32 pixel_format)
         return stream_pixel_format::H264;
     }
     return stream_pixel_format::UNKNOWN;
+}
+
+bool fourcc_is_a_stream_pixel_format_match(stream_pixel_format type, __u32 pixel_format)
+{
+    switch (type)
+    {
+    case stream_pixel_format::RGB24:
+        return pixel_format == V4L2_PIX_FMT_RGB24;
+    case stream_pixel_format::RGB32:
+        return pixel_format == V4L2_PIX_FMT_RGB32;
+    case stream_pixel_format::YUV:
+    {
+        __u32 pixel_formats[] = {V4L2_PIX_FMT_YUYV, V4L2_PIX_FMT_YYUV, V4L2_PIX_FMT_UYVY, V4L2_PIX_FMT_VYUY};
+        return std::find(std::begin(pixel_formats), std::end(pixel_formats), pixel_format) != std::end(pixel_formats);
+    }
+    case stream_pixel_format::NV12:
+        return pixel_format == V4L2_PIX_FMT_NV12;
+    case stream_pixel_format::MJPEG:
+        return pixel_format == V4L2_PIX_FMT_MJPEG;
+    case stream_pixel_format::H264:
+        return pixel_format == V4L2_PIX_FMT_H264;
+    }
+    return false;
+}
+
+void lookup_support_formats_by_device_path(std::string path, std::vector<v4l2_frmivalenum> &v4l2_supported_formats)
+{
+    int fd;
+    // Try and open device to test access
+    if ((fd = open(path.c_str(), O_RDONLY)) != -1)
+    {
+        struct v4l2_fmtdesc current_format;
+        struct v4l2_frmsizeenum current_size;
+        struct v4l2_frmivalenum current_interval;
+
+        current_format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        current_format.index = 0;
+        for (current_format.index = 0;
+             usb_cam::utils::xioctl(
+                 fd, VIDIOC_ENUM_FMT, &current_format) == 0;
+             ++current_format.index)
+        {
+            current_size.index = 0;
+            current_size.pixel_format = current_format.pixelformat;
+
+            for (current_size.index = 0;
+                 usb_cam::utils::xioctl(
+                     fd, VIDIOC_ENUM_FRAMESIZES, &current_size) == 0;
+                 ++current_size.index)
+            {
+                current_interval.index = 0;
+                current_interval.pixel_format = current_size.pixel_format;
+                current_interval.width = current_size.discrete.width;
+                current_interval.height = current_size.discrete.height;
+                for (current_interval.index = 0;
+                     usb_cam::utils::xioctl(
+                         fd, VIDIOC_ENUM_FRAMEINTERVALS, &current_interval) == 0;
+                     ++current_interval.index)
+                {
+                    if (current_interval.type == V4L2_FRMIVAL_TYPE_DISCRETE)
+                    {
+                        v4l2_supported_formats.push_back(current_interval);
+                    }
+                } // interval loop
+            } // size loop
+        } // fmt loop
+        close(fd);
+    }
 }

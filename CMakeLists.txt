@@ -96,6 +96,8 @@ SET(PLATFORM_HEADER_FILES_Linux
 SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context-v4l2.cpp
   src/linux/stream-v4l2.cpp
+  ${3RD_PARTY_ROS_USB_CAM}/src/usb_cam.cpp
+  ${3RD_PARTY_ROS_USB_CAM}/src/conversions.cpp
 )
 
 # Add Project sources
@@ -192,7 +194,7 @@ elseif(UNIX)
     ${FFMPEG_INCLUDE_DIRS}
   )
   target_link_directories(${PROJECT_NAME} PRIVATE ${FFMPEG_LIBRARY_DIRS})
-  target_link_libraries(${PROJECT_NAME} PRIVATE ${FFMPEG_LIBRARIES})
+  target_link_libraries(${PROJECT_NAME} PRIVATE ${FFMPEG_LIBRARY_DIRS})
 endif()
 
 # specify target properties

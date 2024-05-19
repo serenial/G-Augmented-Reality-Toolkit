@@ -4,9 +4,10 @@
 #ifdef __linux__
 
 #include <memory>
+#include "usb_cam/usb_cam.hpp"
+#include "usb_cam/utils.hpp"
 
 #include "../capture/stream.hpp"
-#include "usb_cam/usb_cam.hpp"
 
 namespace g_ar_toolkit
 {

@@ -56,6 +56,25 @@ namespace usb_cam
 
 using utils::io_method_t;
 
+std::vector<std::shared_ptr<pixel_format_base>> driver_supported_formats(
+  const formats::format_arguments_t & args)
+{
+  std::vector<std::shared_ptr<pixel_format_base>> fmts = {
+    std::make_shared<RGB8>(args),
+    std::make_shared<YUYV>(args),
+    std::make_shared<YUYV2RGB>(args),
+    std::make_shared<UYVY>(args),
+    std::make_shared<UYVY2RGB>(args),
+    std::make_shared<MONO8>(args),
+    std::make_shared<MONO16>(args),
+    std::make_shared<Y102MONO8>(args),
+    std::make_shared<RAW_MJPEG>(args),
+    std::make_shared<MJPEG2RGB>(args),
+    std::make_shared<M4202RGB>(args),
+  };
+  return fmts;
+}
+
 
 UsbCam::UsbCam()
 : m_device_name(), m_io(io_method_t::IO_METHOD_MMAP), m_fd(-1),
