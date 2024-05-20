@@ -51,7 +51,7 @@ namespace g_ar_toolkit
             Context();
             virtual ~Context();
             virtual void enumerate_devices(std::vector<device_info_t> &);
-            Stream* open_stream(std::string, stream_type_t);
+            Stream* open_stream(std::string, stream_type_t, uint32_t);
         };
 
         // context factory

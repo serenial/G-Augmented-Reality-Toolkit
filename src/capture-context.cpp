@@ -15,10 +15,14 @@ using namespace lv_interop;
 
 #include "g_ar_toolkit/lv-interop/set-packing.hpp"
 
+using LV_StreamFormatParameters_t = struct {
+    uint32_t width, height, fps;
+};
+
 using LV_StreamFormat_t = struct
 {
-    uint8_t pixel_format;
-    uint32_t width, height, fps_n, fps_d;
+    LV_StreamFormatParameters_t params;
+    uint32_t pixel_format;
 };
 
 // array allocation for this struct should use PtrSized type!
