@@ -14,8 +14,9 @@
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="Example" Type="Folder">
-			<Item Name="Capture Example.vi" Type="VI" URL="../Capture Example.vi"/>
 			<Item Name="Image Example.vi" Type="VI" URL="../Image Example.vi"/>
+			<Item Name="Capture Example.vi" Type="VI" URL="../Capture Example.vi"/>
+			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../Mapped Pixel Pointer Example.vi"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
