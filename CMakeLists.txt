@@ -77,6 +77,7 @@ SET(PLATFORM_SOURCE_FILES_Windows
 
 SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/context-v4l2.hpp
+  ${PUBLIC_HEADER_DIR}/linux/context-v4l2-formats.hpp
   ${PUBLIC_HEADER_DIR}/linux/stream-v4l2.hpp
   ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/constants.hpp
   ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/conversions.hpp

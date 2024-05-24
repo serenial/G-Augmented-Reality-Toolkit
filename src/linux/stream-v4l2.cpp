@@ -9,12 +9,12 @@ using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
 
-Stream *capture::create_platform_stream(std::string device_id, stream_type_t stream_type)
+Stream *capture::create_platform_stream(std::string device_id, stream_type_t stream_type, uint32_t options)
 {
-    return new StreamV4L2(device_id, stream_type);
+    return new StreamV4L2(device_id, stream_type, options);
 }
 
-StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type) : Stream(), usb_cam_ptr(std::make_unique<usb_cam::UsbCam>())
+StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_t options) : Stream(), usb_cam_ptr(std::make_unique<usb_cam::UsbCam>())
 {
     // lookup the device path
     std::vector<v4l2::devices::DEVICE_INFO> device_list;

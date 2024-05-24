@@ -2,19 +2,26 @@
 #include "usb_cam/utils.hpp"
 
 #include "g_ar_toolkit/linux/context-v4l2.hpp"
+#include "g_ar_toolkit/linux/context-v4l2-formats.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
-
-stream_pixel_format fourcc_to_stream_pixel_format(__u32);
 
 Context *capture::create_platform_context()
 {
     return new ContextV4L2;
 }
 
-ContextV4L2::ContextV4L2() : Context()
+ContextV4L2::ContextV4L2() : Context(), format_lookup([&]()
+                                                      {
+                                   std::unordered_map<__u32, format_item_t> lookup;
+                                   for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
+                                   {
+                                       format_item_t value{i, formats_guid_and_names[i].second};
+                                       lookup.emplace(formats_guid_and_names[i].first, value);
+                                   }
+                                   return lookup; }())
 {
     // init
 }
@@ -31,7 +38,7 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
         d.device_id = device.bus_info;
         d.device_name = device.device_description;
 
-        std::vector<stream_type_t> supported_formats;
+        std::vector<stream_type_with_format_t> supported_formats;
 
         for (auto const &path : device.device_paths)
         {
@@ -41,13 +48,13 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 
             for (const auto &v4l2_format : v4l2_supported_formats)
             {
-                stream_type_t supported_format;
-                supported_format.width = v4l2_format.width;
-                supported_format.height = v4l2_format.height;
+                stream_type_with_format_t supported_format;
+                supported_format.stream_type.width = v4l2_format.width;
+                supported_format.stream_type.height = v4l2_format.height;
                 // invert frame-intervals to get frame rate
-                supported_format.fps.numerator = v4l2_format.discrete.denominator;
-                supported_format.fps.denominator = v4l2_format.discrete.numerator;
-                supported_format.format = fourcc_to_stream_pixel_format(v4l2_format.pixel_format);
+                supported_format.stream_type.fps_numerator = v4l2_format.discrete.denominator;
+                supported_format.stream_type.fps_denominator = v4l2_format.discrete.numerator;
+                supported_format.pixel_format = v4l2_format.pixel_format;
                 supported_formats.push_back(supported_format);
             }
 

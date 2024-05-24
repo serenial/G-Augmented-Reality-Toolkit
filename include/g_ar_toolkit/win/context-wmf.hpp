@@ -1,7 +1,7 @@
-#ifndef G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
-#define G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
 
 #ifdef _WIN32
+#ifndef G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
+#define G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
 
 #include <stdexcept>
 #include <unordered_map>
@@ -82,5 +82,5 @@ namespace g_ar_toolkit
     };
 }
 
-#endif //_WIN32
 #endif // G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
+#endif //_WIN32

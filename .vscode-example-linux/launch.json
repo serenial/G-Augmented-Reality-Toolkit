@@ -7,7 +7,7 @@
         {
             "name": "Attach",
             "type": "cppdbg",
-            "program": "/usr/local/natinst/LabVIEW-2023-64/labview",
+            "program": "/usr/local/natinst/LabVIEW-2024-64/labview",
             "request": "attach",
             "processId":"${command:pickProcess}"
         }
