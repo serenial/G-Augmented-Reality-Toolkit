@@ -8,11 +8,6 @@
 
 #include "../capture/context.hpp"
 
-extern "C"
-{
-#include <linux/videodev2.h>
-}
-
 namespace g_ar_toolkit
 {
     namespace capture
@@ -26,6 +21,7 @@ namespace g_ar_toolkit
             ContextV4L2();
             ~ContextV4L2();
             void enumerate_devices(std::vector<device_info_t> &devices);
+            void list_of_formats(std::vector<format_item_t>&);
         };
     };
 }

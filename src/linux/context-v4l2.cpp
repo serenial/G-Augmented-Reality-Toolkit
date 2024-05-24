@@ -68,6 +68,15 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
     }
 }
 
+void ContextV4L2::list_of_formats(std::vector<format_item_t> &list)
+{
+    for (auto const &item : format_lookup)
+    {
+        format_item_t value {item.second.index, item.second.name};
+        list.push_back(value);
+    }
+}
+
 ContextV4L2::~ContextV4L2()
 {
     // de-init

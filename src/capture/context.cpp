@@ -4,15 +4,14 @@
 using namespace g_ar_toolkit;
 using namespace capture;
 
+Context::Context() {
+    /// nothing to init
+}
+
 Stream *Context::open_stream(std::string device_id, stream_type_t stream_format, uint32_t options)
 {
     return create_platform_stream(device_id, stream_format, options);
 }
-Context::Context() {}
-Context::~Context() {}
-
-void Context::enumerate_devices(std::vector<device_info_t> &devices) {}
-void Context::list_of_formats(std::vector<format_item_t> &list) {}
 
 uint32_t capture::get_pixel_format_from_options(uint32_t options)
 {
