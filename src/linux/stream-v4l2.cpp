@@ -32,7 +32,7 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     usb_cam_parameters.camera_name = device_id;
     usb_cam_parameters.image_height = stream_type.height;
     usb_cam_parameters.image_width = stream_type.width;
-    usb_cam_parameters.framerate = stream_type.fps.numerator;
+    usb_cam_parameters.framerate = stream_type.fps_numerator;
 
     // try to find a suitable format match
     std::vector<v4l2_frmivalenum> supported_formats;
@@ -42,13 +42,16 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
         usb_cam_parameters.device_name = path;
         
         lookup_support_formats_by_device_path(path, supported_formats);
+        uint32_t pixel_format = get_pixel_format_from_options(options);
         
         // elimtate any non-matching formats
         supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const v4l2_frmivalenum &item){
             bool match = stream_type.height == item.height 
             && stream_type.width == item.width
-            && stream_type.fps.numerator != item.discrete.denominator // frame interval so denominator = numerator
-            && fourcc_is_a_stream_pixel_format_match(stream_type.format, item.pixel_format);
+            && stream_type.fps_numerator != item.discrete.denominator // frame interval so denominator = numerator
+            && item.discrete.numerator == 1
+            // pixel_format == 0 is match_any
+            && (pixel_format == 0 || item.pixel_format == pixel_format);
             return !match;
         }), supported_formats.end());
 

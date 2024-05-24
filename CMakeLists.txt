@@ -104,9 +104,14 @@ SET(PLATFORM_SOURCE_FILES_Linux
 
 # Add Project sources
 target_sources(${PROJECT_NAME} PRIVATE
-  src/lv-functions.cpp
-  src/lv-error.cpp
-  src/lv-image.cpp
+  src/lv-interop/lv-functions.cpp
+  src/lv-interop/lv-error.cpp
+  src/lv-interop/lv-image.cpp
+  src/lv-interop/lv-u32-colour.cpp
+  src/lv-interop/lv-str.cpp
+  src/lv-interop/lv-enums.cpp
+  src/capture/context.cpp
+  src/capture/stream.cpp
   src/image-create.cpp
   src/image-window.cpp
   src/image-resize.cpp
@@ -121,14 +126,11 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image-crop.cpp
   src/image-greyscale-to-argb.cpp
   src/image-insert.cpp
-  src/lv-u32-colour.cpp
-  src/lv-str.cpp
-  src/lv-pixmap.cpp
-  src/lv-array.cpp
-  src/lv-enums.cpp
-  src/lv-raw-memory-ptr.cpp
   src/image-argb-channel-operations.cpp
   src/image-copy.cpp
+  src/image-copy-raw-memory-ptr.cpp
+  src/image-copy-pixmap.cpp
+  src/image-copy-array.cpp
   src/capture-context.cpp
   src/capture-stream.cpp
   src/image-negate.cpp

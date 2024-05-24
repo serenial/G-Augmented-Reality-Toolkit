@@ -15,7 +15,7 @@ using namespace lv_interop;
 
 #include "g_ar_toolkit/lv-interop/set-packing.hpp"
 
-using LV_StreamFormatParameters_t =struct
+using LV_StreamFormatParameters_t = struct
 {
     uint32_t width, height, fps_numerator, fps_denominator, pixel_format;
 };
@@ -30,7 +30,8 @@ using LV_DeviceInfo_t = struct
 
 using LV_DeviceInfoHandlePtr_t = LV_HandlePtr_t<LV_Array_t<1, LV_DeviceInfo_t>>;
 
-using LV_FormatListItem_t = struct {
+using LV_FormatListItem_t = struct
+{
     uint32_t index;
     LV_StringHandle_t name;
 };
@@ -83,15 +84,16 @@ extern "C"
                     copy_std_string_to_lv_string_handle_ptr(in.device_id, &(out_ptr->id));
                     copy_std_string_to_lv_string_handle_ptr(in.device_name, &(out_ptr->name));
                     copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<stream_type_with_format_t>, LV_StreamFormatParameters_t>(
-                        in.supported_formats, 
-                        &(out_ptr->formats), 
-                        [](LV_StreamFormatParameters_t *out_ptr, bool newly_allocated, stream_type_with_format_t in){
+                        in.supported_formats,
+                        &(out_ptr->formats),
+                        [](LV_StreamFormatParameters_t *out_ptr, bool newly_allocated, stream_type_with_format_t in)
+                        {
                             out_ptr->fps_numerator = in.stream_type.fps_numerator;
                             out_ptr->fps_denominator = in.stream_type.fps_denominator;
                             out_ptr->height = in.stream_type.height;
                             out_ptr->width = in.stream_type.width;
-                            out_ptr->pixel_format = in.pixel_format; } //no-deallcoator required for these types
-                        ); 
+                            out_ptr->pixel_format = in.pixel_format; } // no-deallcoator required for these types
+                    );
                 },
                 [](LV_DeviceInfo_t to_deallocate)
                 {
@@ -109,7 +111,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-        G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_capture_context_list_formats(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_capture_context_list_formats(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         LV_FormatListHandlePtr_t format_list_handle_ptr)
@@ -148,13 +150,3 @@ extern "C"
         return LV_ERR_noError;
     }
 }
-
-Stream* Context::open_stream(std::string device_id, stream_type_t stream_format, uint32_t options)
-{
-    return create_platform_stream(device_id, stream_format, options);
-}
-Context::Context() {}
-Context::~Context() {}
-
-void Context::enumerate_devices(std::vector<device_info_t> &devices) {}
-void Context::list_of_formats(std::vector<format_item_t> &list){}

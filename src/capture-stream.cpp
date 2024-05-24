@@ -120,9 +120,3 @@ extern "C"
         return LV_ERR_noError;
     }
 }
-
-Stream::Stream(){}
-Stream::~Stream(){}
-void Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout){}
-void Stream::start_stream(){}
-void Stream::stop_stream(){}

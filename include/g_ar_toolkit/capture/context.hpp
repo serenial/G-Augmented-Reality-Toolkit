@@ -51,6 +51,8 @@ namespace g_ar_toolkit
 
         // context factory
         Context* create_platform_context();
+        // utility functions
+        uint32_t get_pixel_format_from_options(uint32_t);
     }
 }
 

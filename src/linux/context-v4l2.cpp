@@ -73,52 +73,6 @@ ContextV4L2::~ContextV4L2()
     // de-init
 }
 
-stream_pixel_format fourcc_to_stream_pixel_format(__u32 pixel_format)
-{
-    switch (pixel_format)
-    {
-    case V4L2_PIX_FMT_RGB24:
-        return stream_pixel_format::RGB24;
-    case V4L2_PIX_FMT_RGB32:
-        return stream_pixel_format::RGB32;
-    case V4L2_PIX_FMT_YUYV:
-    case V4L2_PIX_FMT_YYUV:
-    case V4L2_PIX_FMT_UYVY:
-    case V4L2_PIX_FMT_VYUY:
-        return stream_pixel_format::YUV;
-    case V4L2_PIX_FMT_NV12:
-        return stream_pixel_format::NV12;
-    case V4L2_PIX_FMT_MJPEG:
-        return stream_pixel_format::MJPEG;
-    case V4L2_PIX_FMT_H264:
-        return stream_pixel_format::H264;
-    }
-    return stream_pixel_format::UNKNOWN;
-}
-
-bool capture::fourcc_is_a_stream_pixel_format_match(stream_pixel_format type, __u32 pixel_format)
-{
-    switch (type)
-    {
-    case stream_pixel_format::RGB24:
-        return pixel_format == V4L2_PIX_FMT_RGB24;
-    case stream_pixel_format::RGB32:
-        return pixel_format == V4L2_PIX_FMT_RGB32;
-    case stream_pixel_format::YUV:
-    {
-        __u32 pixel_formats[] = {V4L2_PIX_FMT_YUYV, V4L2_PIX_FMT_YYUV, V4L2_PIX_FMT_UYVY, V4L2_PIX_FMT_VYUY};
-        return std::find(std::begin(pixel_formats), std::end(pixel_formats), pixel_format) != std::end(pixel_formats);
-    }
-    case stream_pixel_format::NV12:
-        return pixel_format == V4L2_PIX_FMT_NV12;
-    case stream_pixel_format::MJPEG:
-        return pixel_format == V4L2_PIX_FMT_MJPEG;
-    case stream_pixel_format::H264:
-        return pixel_format == V4L2_PIX_FMT_H264;
-    }
-    return false;
-}
-
 void capture::lookup_support_formats_by_device_path(std::string path, std::vector<v4l2_frmivalenum> &v4l2_supported_formats)
 {
     int fd;
