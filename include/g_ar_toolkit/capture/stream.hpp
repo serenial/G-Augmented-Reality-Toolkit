@@ -20,11 +20,11 @@ namespace g_ar_toolkit{
             virtual ~Stream();
             virtual void start_stream();
             virtual void stop_stream();
-            virtual void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
+            virtual void capture_frame(cv::Mat &, std::chrono::milliseconds);
         };
 
         // stream factory
-        Stream* create_platform_stream(std::string, stream_type_t stream_type);
+        Stream* create_platform_stream(std::string, stream_type_t, uint32_t);
     }
 }
 

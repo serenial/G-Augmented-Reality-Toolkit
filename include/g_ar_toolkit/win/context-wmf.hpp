@@ -17,6 +17,22 @@
 
 #include "../capture/context.hpp"
 
+struct GUIDHash
+{
+    std::size_t operator()(const GUID &g) const
+    {
+
+        RPC_STATUS status;
+        UUID uuid = g;
+        auto hash = UuidHash(&uuid, &status);
+        if (status != RPC_S_OK)
+        {
+            throw(std::out_of_range("Unable to generate hash of GUID"));
+        }
+        return hash;
+    }
+};
+
 namespace g_ar_toolkit
 {
     namespace capture
@@ -42,6 +58,7 @@ namespace g_ar_toolkit
             states last_state;
             errors last_error;
             std::mutex mtx;
+            const std::unordered_map<GUID, format_item_t, GUIDHash> format_lookup;
             const std::future<HRESULT> ftr;
             std::condition_variable notifier;
             std::vector<device_info_t> last_enumeration;
@@ -51,53 +68,19 @@ namespace g_ar_toolkit
             ContextWMF();
             ~ContextWMF();
             void enumerate_devices(std::vector<device_info_t> &devices);
+            void list_of_formats(std::vector<format_item_t>&);
         };
-
-        struct GUIDHash
-        {
-            std::size_t operator()(const GUID &g) const
-            {
-
-                RPC_STATUS status;
-                UUID uuid = g;
-                auto hash = UuidHash(&uuid, &status);
-                if (status != RPC_S_OK)
-                {
-                    throw(std::out_of_range("Unable to generate hash of GUID"));
-                }
-                return hash;
-            }
-        };
-
-        static const std::unordered_map<GUID, capture::stream_pixel_format, GUIDHash>
-            wmf_pixel_format_to_context_pixel_format_map =
-                {
-                    {MFVideoFormat_NV12, capture::stream_pixel_format::NV12},
-                    {MFVideoFormat_MJPG, capture::stream_pixel_format::MJPEG},
-                    {MFVideoFormat_RGB24, capture::stream_pixel_format::RGB24},
-                    {MFVideoFormat_RGB32, capture::stream_pixel_format::RGB32},
-                    {MFVideoFormat_YUY2, capture::stream_pixel_format::YUY2},
-                    {MFVideoFormat_H264, capture::stream_pixel_format::H264}};
-
-        static const std::unordered_map<stream_pixel_format, GUID>
-            context_pixel_format_to_wmf_pixel_format_map =
-                {
-                    {capture::stream_pixel_format::NV12, MFVideoFormat_NV12},
-                    {capture::stream_pixel_format::MJPEG, MFVideoFormat_MJPG},
-                    {capture::stream_pixel_format::RGB24, MFVideoFormat_RGB24},
-                    {capture::stream_pixel_format::RGB32, MFVideoFormat_RGB32},
-                    {capture::stream_pixel_format::YUY2, MFVideoFormat_YUY2},
-                    {capture::stream_pixel_format::H264, MFVideoFormat_H264}};
     }
 
-    template<typename T>
-    struct CoTaskMemFreeDeleter {
-    void operator()(T* p) const
+    template <typename T>
+    struct CoTaskMemFreeDeleter
     {
-        CoTaskMemFree(*p);
-    }
-};
+        void operator()(T *p) const
+        {
+            CoTaskMemFree(*p);
+        }
+    };
 }
 
 #endif //_WIN32
-#endif //G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_
+#endif // G_AR_TK__INTEROP_LV_CONTEXTWMF_HPP_

@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <utility>
 
 #include "g_ar_toolkit/lv-interop/lv-types.hpp"
 
@@ -15,34 +16,27 @@ namespace g_ar_toolkit
         // forward decleration of Stream
         class Stream;
 
-        struct fractional_fps_t
-        {
-            uint32_t numerator, denominator;
-        };
-
-        enum class stream_pixel_format : uint8_t
-        {
-            UNKNOWN,
-            RGB24,
-            RGB32,
-            YUV,
-            NV12,
-            MJPEG,
-            H264
-        };
-
         struct stream_type_t
         {
-            stream_pixel_format format;
-            uint32_t width, height;
-            fractional_fps_t fps;
+            uint32_t width, height, fps_numerator, fps_denominator;
+        };
+
+        struct stream_type_with_format_t
+        {
+            stream_type_t stream_type;
+            uint32_t pixel_format;
         };
 
         struct device_info_t
         {
             std::string device_id;
             std::string device_name;
-            std::vector<stream_type_t> supported_formats;
+            std::vector<stream_type_with_format_t> supported_formats;
+        };
+
+        struct format_item_t {
+            uint32_t index;
+            std::string name;
         };
 
         class Context
@@ -51,6 +45,7 @@ namespace g_ar_toolkit
             Context();
             virtual ~Context();
             virtual void enumerate_devices(std::vector<device_info_t> &);
+            virtual void list_of_formats(std::vector<format_item_t>&);
             Stream* open_stream(std::string, stream_type_t, uint32_t);
         };
 

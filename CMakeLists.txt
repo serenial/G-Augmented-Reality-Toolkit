@@ -37,10 +37,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set(OpenCV_SHARED OFF)
 endif()
 
-## Find OpenCV
+# # Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
 
-## Find FFMPEG on Linux
+# # Find FFMPEG on Linux
 if(UNIX)
   find_package(FFMPEG REQUIRED)
 endif()
@@ -64,6 +64,7 @@ set(3RD_PARTY_ROS_USB_CAM ${3RD_PARTY_DIR}/ros_usb_cam)
 # Platform name should match the value in
 SET(PLATFORM_HEADER_FILES_Windows
   ${PUBLIC_HEADER_DIR}/win/context-wmf.hpp
+  ${PUBLIC_HEADER_DIR}/win/context-wmf-formats.hpp
   ${PUBLIC_HEADER_DIR}/win/stream-wmf.hpp
   ${3RD_PARTY_ROS_MSFT_CAM}/include/wincapture.h
 )
@@ -173,22 +174,23 @@ if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX)
   target_include_directories(${PROJECT_NAME}
     PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_MSFT_CAM}/include>")
-  target_link_libraries(${PROJECT_NAME} PRIVATE 
-    mf 
-    mfplat 
-    Mfreadwrite 
-    mfuuid 
-    Rpcrt4 
-    runtimeobject 
-    Mfsensorgroup 
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+    mf
+    mfplat
+    Mfreadwrite
+    mfuuid
+    Rpcrt4
+    runtimeobject
+    Mfsensorgroup
     shlwapi
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
   set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+
   # set linking flags required for static ffmpeg without --fPIC
   set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
-  target_include_directories(${PROJECT_NAME} PUBLIC 
+  target_include_directories(${PROJECT_NAME} PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_USB_CAM}/include>"
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_DIR}/v4l2-list-devices/include>"
     ${FFMPEG_INCLUDE_DIRS}
@@ -196,7 +198,7 @@ elseif(UNIX)
   target_link_directories(${PROJECT_NAME} PRIVATE
     ${FFMPEG_LIBRARY_DIRS}
   )
-  target_link_libraries(${PROJECT_NAME} PRIVATE 
+  target_link_libraries(${PROJECT_NAME} PRIVATE
     ${FFMPEG_LIBRARIES}
   )
 endif()
@@ -218,7 +220,11 @@ generate_export_header(${PROJECT_NAME})
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}.${CMAKE_PROJECT_VERSION_MAJOR}.${BITNESS})
-target_link_libraries(${PROJECT_NAME} PRIVATE opencv_core opencv_imgproc opencv_highgui)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  opencv_core
+  opencv_imgproc
+  opencv_highgui
+)
 
 # Install Shared Library
 INSTALL(TARGETS ${PROJECT_NAME}

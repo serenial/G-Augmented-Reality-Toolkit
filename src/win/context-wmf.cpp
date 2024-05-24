@@ -5,8 +5,10 @@
 #include <chrono>
 #include <winrt/base.h>
 #include <mferror.h>
+#include <vector>
 
 #include "g_ar_toolkit/win/context-wmf.hpp"
+#include "g_ar_toolkit/win/context-wmf-formats.hpp"
 #include "g_ar_toolkit/capture/stream.hpp"
 
 using namespace g_ar_toolkit;
@@ -25,6 +27,17 @@ Context *capture::create_platform_context()
 ContextWMF::ContextWMF() : Context(),
                            last_state(states::STARTING),
                            last_error(errors::NO_ERR),
+                           format_lookup(
+                               [&]()
+                               {
+                                   std::unordered_map<GUID, format_item_t, GUIDHash> lookup;
+                                   for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
+                                   {
+                                       format_item_t value{i, formats_guid_and_names[i].second};
+                                       lookup.emplace(formats_guid_and_names[i].first, value);
+                                   }
+                                   return lookup;
+                               }()),
                            ftr(std::async(std::launch::async,
                                           [&]()
                                           {
@@ -132,7 +145,6 @@ ContextWMF::ContextWMF() : Context(),
                                               return hr;
                                           }))
 {
-
     // wait on cv to see if the co-thread initialized ok
     std::unique_lock lk(mtx);
     notifier.wait(lk, [&]
@@ -263,7 +275,7 @@ void ContextWMF::update_last_device_enumeration()
         HRESULT hr = S_OK;
         while (hr == S_OK)
         {
-            stream_type_t stream_format;
+            stream_type_with_format_t format;
             winrt::com_ptr<IMFMediaType> spMediaType;
             hr = spSourceReader->GetNativeMediaType(0, dwMediaTypeIndex, spMediaType.put());
             if (hr == MF_E_NO_MORE_TYPES)
@@ -281,22 +293,31 @@ void ContextWMF::update_last_device_enumeration()
                     winrt::check_hresult(spMediaType->GetGUID(MF_MT_SUBTYPE, &subType));
                 try
                 {
-                    stream_format.format = wmf_pixel_format_to_context_pixel_format_map.at(subType);
+                    format.pixel_format = format_lookup.at(subType).index;
                 }
                 catch (std::out_of_range &e)
                 {
-                    stream_format.format = capture::stream_pixel_format::UNKNOWN;
+                    format.pixel_format = 0;
                 }
                 // get format details
-                winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &stream_format.width, &stream_format.height));
-                winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &stream_format.fps.numerator,&stream_format.fps.denominator));
+                winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &format.stream_type.width, &format.stream_type.height));
+                winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &format.stream_type.fps_numerator, &format.stream_type.fps_denominator));
 
-                // push this stream_format into the vector
-                device_info.supported_formats.push_back(stream_format);
+                // push this format into the vector
+                device_info.supported_formats.push_back(format);
             }
             ++dwMediaTypeIndex;
         }
 
         last_enumeration.push_back(device_info);
+    }
+}
+
+void ContextWMF::list_of_formats(std::vector<format_item_t> &list)
+{
+    for (auto const &item : format_lookup)
+    {
+        format_item_t value {item.second.index, item.second.name};
+        list.push_back(value);
     }
 }

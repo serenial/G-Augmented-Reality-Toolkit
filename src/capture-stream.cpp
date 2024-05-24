@@ -31,7 +31,8 @@ extern "C"
         LV_EDVRReferencePtr_t edvr_capture_ctx_ref_ptr,
         LV_EDVRReferencePtr_t edvr_strm_ref_ptr,
         LV_StringHandle_t device_id_str_handle,
-        LV_Ptr_t<LV_StreamSpec_t> stream_spec_ptr)
+        LV_Ptr_t<LV_StreamSpec_t> stream_spec_ptr,
+        uint32_t options)
     {
         try
         {
@@ -41,14 +42,13 @@ extern "C"
             std::string device_id;
             lv_string_handle_to_string(device_id_str_handle, device_id);
             stream_type_t stream_type;
-            stream_type.fps.numerator = stream_spec_ptr->fps;
-            stream_type.fps.denominator = 1;
+            stream_type.fps_numerator = stream_spec_ptr->fps;
             stream_type.height = stream_spec_ptr->height;
             stream_type.width = stream_spec_ptr->width;
-            stream_type.format = capture::stream_pixel_format::UNKNOWN;
+            stream_type.fps_denominator = 1;
 
             // create stream using context
-            auto stream_object = context.get_object()->open_stream(device_id, stream_type);
+            auto stream_object = context.get_object()->open_stream(device_id, stream_type, options);
             // wrap stream object into EDVRManaged Object - Use volatile to avoid compiler optimization
             volatile EDVRManagedObject<Stream> stream(edvr_strm_ref_ptr, std::move(stream_object));
         }

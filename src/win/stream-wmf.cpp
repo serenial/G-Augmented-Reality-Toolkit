@@ -17,9 +17,9 @@ using namespace capture;
 using namespace std::chrono_literals;
 using namespace ros_msft_camera;
 
-Stream* capture::create_platform_stream(std::string device_id, stream_type_t stream_type)
+Stream* capture::create_platform_stream(std::string device_id, stream_type_t stream_type, uint32_t option)
 {
-    return new StreamWMF(device_id, stream_type);
+    return new StreamWMF(device_id, stream_type, option);
 }
 
 // Use a thread to manage all Stream Operations as this provides more control over
@@ -27,7 +27,7 @@ Stream* capture::create_platform_stream(std::string device_id, stream_type_t str
 // Specify all the Context Functionality inside a lambda which is controlled via
 // mutex/conditional_variable synchronization
 
-StreamWMF::StreamWMF(std::string device_id, stream_type_t stream_type)
+StreamWMF::StreamWMF(std::string device_id, stream_type_t stream_type, uint32_t option)
     : Stream(), last_state(states::STARTING),
       buffer_mat(cv::Mat(stream_type.height, stream_type.width, CV_8UC4)),
       rows(stream_type.height),
@@ -45,7 +45,7 @@ StreamWMF::StreamWMF(std::string device_id, stream_type_t stream_type)
                              {
                                  last_exception = nullptr;
                                  camera.attach(WindowsMFCapture::CreateInstance(true, winrt::to_hstring(device_id), true));
-                                 camera->ChangeCaptureConfig(stream_type.width, stream_type.height, stream_type.fps.numerator, MFVideoFormat_ARGB32, true);
+                                 camera->ChangeCaptureConfig(stream_type.width, stream_type.height, stream_type.fps_numerator, MFVideoFormat_ARGB32, true);
                                  sample_handler_token = camera->AddSampleHandler([&](winrt::hresult_error ex, winrt::hstring msg, IMFSample *pSample)
                                                                                  {
                                      // sample handler callback function                                                               
