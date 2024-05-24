@@ -4,10 +4,6 @@
 using namespace g_ar_toolkit;
 using namespace capture;
 
-Context::Context() {
-    /// nothing to init
-}
-
 Stream *Context::open_stream(std::string device_id, stream_type_t stream_format, uint32_t options)
 {
     return create_platform_stream(device_id, stream_format, options);

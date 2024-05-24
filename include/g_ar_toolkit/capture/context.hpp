@@ -42,15 +42,15 @@ namespace g_ar_toolkit
         class Context
         {
         public:
-            Context();
-            virtual ~Context();
-            virtual void enumerate_devices(std::vector<device_info_t> &);
-            virtual void list_of_formats(std::vector<format_item_t>&);
+            virtual void enumerate_devices(std::vector<device_info_t> &) =0;
+            virtual void list_of_formats(std::vector<format_item_t>&) = 0;
             Stream* open_stream(std::string, stream_type_t, uint32_t);
         };
 
         // context factory
+        // this should be provided by the platform specific implementation
         Context* create_platform_context();
+        
         // utility functions
         uint32_t get_pixel_format_from_options(uint32_t);
     }

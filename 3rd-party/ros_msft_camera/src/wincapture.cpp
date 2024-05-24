@@ -9,14 +9,14 @@ using namespace winrt::Windows::System::Threading;
 #define _WARN printf
 #define _ERROR printf
 #define LOG_TRANSFORMS()                                                                                                                                                   \
-    {                                                                                                                                                                      \
-        int i = 0;                                                                                                                                                         \
-        while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put())) \
-        {                                                                                                                                                                  \
-            _INFO("\nTranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);              \
-        }                                                                                                                                                                  \
-        _INFO("\nNumber of tranforms in Chain: %d", i - 1);                                                                                                                \
-    }
+    // {                                                                                                                                                                      \
+    //     int i = 0;                                                                                                                                                         \
+    //     while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put())) \
+    //     {                                                                                                                                                                  \
+    //         _INFO("\nTranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);              \
+    //     }                                                                                                                                                                  \
+    //     _INFO("\nNumber of tranforms in Chain: %d", i - 1);                                                                                                                \
+    // }
 
 namespace ros_msft_camera
 {
@@ -174,14 +174,14 @@ namespace ros_msft_camera
                     check_hresult(spSourceReader->GetCurrentMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, spMT.put()));
                     check_hresult(MFGetAttributeSize(spMT.get(), MF_MT_FRAME_SIZE, &m_u32Width, &m_u32Height));
 
-                    int i = 0;
-                    GUID guid;
-                    winrt::com_ptr<IMFTransform> spTransform;
-                    while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put()))
-                    {
-                        _INFO("Tranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);
-                    }
-                    _INFO("Aftermath:Number of tranforms in Chain: %d", i - 1);
+                    // int i = 0;
+                    // GUID guid;
+                    // winrt::com_ptr<IMFTransform> spTransform;
+                    // while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put()))
+                    // {
+                    //     _INFO("Tranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);
+                    // }
+                    // _INFO("Aftermath:Number of tranforms in Chain: %d", i - 1);
                 }
             }
             else
