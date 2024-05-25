@@ -29,7 +29,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # set to use Multithreaded Static Runtime
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-  # # vcpkg has some issues with not loading the static libs
+  ## vcpkg has some issues with not loading the static libs
   # so manually fix the MSVC runtime components used
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
@@ -37,21 +37,36 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set(OpenCV_SHARED OFF)
 endif()
 
-# # Find OpenCV
+## Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
 
-# include_directories(${hiberlite_SOURCE_DIR}/include)
 if(WIN32)
-  set(rosmsftcam_patch git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch)
   FetchContent_Declare(rosmsftcam
     GIT_REPOSITORY https://github.com/ms-iot/ros_msft_camera.git
     GIT_TAG fe2b4190a1cc8bb837286244a417e083493c198c # foxy-devel latest commit 2021/08/09
-    PATCH_COMMAND ${rosmsftcam_patch}
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch
     UPDATE_DISCONNECTED 1
   )
   FetchContent_MakeAvailable(rosmsftcam)
+  
 elseif(UNIX)
   find_package(FFMPEG REQUIRED)
+  FetchContent_Declare(rosusbcam
+    GIT_REPOSITORY https://github.com/ros-drivers/usb_cam
+    GIT_TAG 52dd75fb78ae608a2c40eea60f6e8eac673b91e8 # ros2 latest commit 2024/05/01
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_usb_cam.patch
+    UPDATE_DISCONNECTED 1
+  )
+  FetchContent_MakeAvailable(rosusbcam)
+
+  FetchContent_Declare(v4l2listdevices
+    GIT_REPOSITORY https://github.com/improvess/v4l2-list-devices
+    GIT_TAG 9e4b0bb6c4e52ee174fe0055c1ba654de9c0ace7 # main latest commit 2022/06/09
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/v4l2_list_devices.patch
+    UPDATE_DISCONNECTED 1
+  )
+  FetchContent_MakeAvailable(v4l2listdevices)
+
 endif()
 
 # specify shared-library target
@@ -82,27 +97,26 @@ SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/context-v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/context-v4l2-formats.hpp
   ${PUBLIC_HEADER_DIR}/linux/stream-v4l2.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/constants.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/conversions.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/usb_cam.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/utils.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/av_pixel_format_helper.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/m420.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/mjpeg.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/mono.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/pixel_format_base.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/rgb.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/utils.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/uyvy.hpp
-  ${3RD_PARTY_ROS_USB_CAM}/include/usb_cam/formats/yuyv.hpp
-  ${3RD_PARTY_DIR}/v4l2-list-devices/include/list_devices.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/constants.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/conversions.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/usb_cam.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/utils.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/av_pixel_format_helper.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/m420.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/mjpeg.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/mono.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/pixel_format_base.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/rgb.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/utils.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/uyvy.hpp
+  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/yuyv.hpp
+  ${v4l2listdevices_SOURCE_DIR}/include/v4l2_list_devices/list_devices.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context-v4l2.cpp
   src/linux/stream-v4l2.cpp
-  ${3RD_PARTY_ROS_USB_CAM}/src/usb_cam.cpp
-  ${3RD_PARTY_ROS_USB_CAM}/src/conversions.cpp
+  ${rosusbcam_SOURCE_DIR}/src/usb_cam.cpp
 )
 
 # Add Project sources
@@ -195,9 +209,9 @@ elseif(UNIX)
   # set linking flags required for static ffmpeg without --fPIC
   set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_USB_CAM}/include>"
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_DIR}/v4l2-list-devices/include>"
     ${FFMPEG_INCLUDE_DIRS}
+    ${rosusbcam_SOURCE_DIR}/include
+    ${v4l2listdevices_SOURCE_DIR}/include
   )
   target_link_directories(${PROJECT_NAME} PRIVATE
     ${FFMPEG_LIBRARY_DIRS}
