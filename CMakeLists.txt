@@ -117,6 +117,7 @@ SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context_v4l2.cpp
   src/linux/stream_v4l2.cpp
   ${rosusbcam_SOURCE_DIR}/src/usb_cam.cpp
+  ${rosusbcam_SOURCE_DIR}/src/conversions.cpp
 )
 
 # Add Project sources

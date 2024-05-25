@@ -169,3 +169,107 @@ index 2387c32..0000000
 -      config
 -  )
 -endif()
+diff --git a/include/usb_cam/conversions.hpp b/include/usb_cam/conversions.hpp
+index 4cf1ba9..75fa684 100644
+--- a/include/usb_cam/conversions.hpp
++++ b/include/usb_cam/conversions.hpp
+@@ -45,19 +45,7 @@ namespace conversions
+ {
+ 
+ 
+-std::string FCC2S(const unsigned int & val)
+-{
+-  std::string s;
+-
+-  s += val & 0x7f;
+-  s += (val >> 8) & 0x7f;
+-  s += (val >> 16) & 0x7f;
+-  s += (val >> 24) & 0x7f;
+-  if (val & (1 << 31)) {
+-    s += "-BE";
+-  }
+-  return s;
+-}
++std::string FCC2S(const unsigned int &);
+ 
+ }  // namespace conversions
+ }  // namespace usb_cam
+diff --git a/include/usb_cam/usb_cam.hpp b/include/usb_cam/usb_cam.hpp
+index 1663e0f..37f922e 100644
+--- a/include/usb_cam/usb_cam.hpp
++++ b/include/usb_cam/usb_cam.hpp
+@@ -78,23 +78,7 @@ using usb_cam::formats::M4202RGB;
+ 
+ /// @brief list all supported formats that this driver supports
+ std::vector<std::shared_ptr<pixel_format_base>> driver_supported_formats(
+-  const formats::format_arguments_t & args = formats::format_arguments_t())
+-{
+-  std::vector<std::shared_ptr<pixel_format_base>> fmts = {
+-    std::make_shared<RGB8>(args),
+-    std::make_shared<YUYV>(args),
+-    std::make_shared<YUYV2RGB>(args),
+-    std::make_shared<UYVY>(args),
+-    std::make_shared<UYVY2RGB>(args),
+-    std::make_shared<MONO8>(args),
+-    std::make_shared<MONO16>(args),
+-    std::make_shared<Y102MONO8>(args),
+-    std::make_shared<RAW_MJPEG>(args),
+-    std::make_shared<MJPEG2RGB>(args),
+-    std::make_shared<M4202RGB>(args),
+-  };
+-  return fmts;
+-}
++  const formats::format_arguments_t & args = formats::format_arguments_t());
+ 
+ typedef struct
+ {
+diff --git a/src/conversions.cpp b/src/conversions.cpp
+new file mode 100644
+index 0000000..518fc7f
+--- /dev/null
++++ b/src/conversions.cpp
+@@ -0,0 +1,15 @@
++#include "usb_cam/conversions.hpp"
++
++std::string usb_cam::conversions::FCC2S(const unsigned int & val)
++{
++  std::string s;
++
++  s += val & 0x7f;
++  s += (val >> 8) & 0x7f;
++  s += (val >> 16) & 0x7f;
++  s += (val >> 24) & 0x7f;
++  if (val & (1 << 31)) {
++    s += "-BE";
++  }
++  return s;
++}
+\ No newline at end of file
+diff --git a/src/usb_cam.cpp b/src/usb_cam.cpp
+index b82cdf6..56b07b1 100644
+--- a/src/usb_cam.cpp
++++ b/src/usb_cam.cpp
+@@ -731,4 +731,23 @@ bool UsbCam::set_v4l_parameter(const std::string & param, const std::string & va
+   return retcode;
+ }
+ 
++std::vector<std::shared_ptr<pixel_format_base>> driver_supported_formats(
++  const formats::format_arguments_t & args )
++{
++  std::vector<std::shared_ptr<pixel_format_base>> fmts = {
++    std::make_shared<RGB8>(args),
++    std::make_shared<YUYV>(args),
++    std::make_shared<YUYV2RGB>(args),
++    std::make_shared<UYVY>(args),
++    std::make_shared<UYVY2RGB>(args),
++    std::make_shared<MONO8>(args),
++    std::make_shared<MONO16>(args),
++    std::make_shared<Y102MONO8>(args),
++    std::make_shared<RAW_MJPEG>(args),
++    std::make_shared<MJPEG2RGB>(args),
++    std::make_shared<M4202RGB>(args),
++  };
++  return fmts;
++}
++
+ }  // namespace usb_cam
