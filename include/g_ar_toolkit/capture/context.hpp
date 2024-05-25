@@ -7,7 +7,7 @@
 #include <map>
 #include <utility>
 
-#include "g_ar_toolkit/lv-interop/lv-types.hpp"
+#include "g_ar_toolkit/lv_interop/lv_types.hpp"
 
 namespace g_ar_toolkit
 {

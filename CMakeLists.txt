@@ -81,22 +81,22 @@ set(PUBLIC_HEADER_DIR include/${PROJECT_NAME})
 # define platform specific headers and source
 # Platform name should match the value in
 SET(PLATFORM_HEADER_FILES_Windows
-  ${PUBLIC_HEADER_DIR}/win/context-wmf.hpp
-  ${PUBLIC_HEADER_DIR}/win/context-wmf-formats.hpp
-  ${PUBLIC_HEADER_DIR}/win/stream-wmf.hpp
+  ${PUBLIC_HEADER_DIR}/win/context_wmf.hpp
+  ${PUBLIC_HEADER_DIR}/win/context_wmf_formats.hpp
+  ${PUBLIC_HEADER_DIR}/win/stream_wmf.hpp
   ${rosmsftcam_SOURCE_DIR}/include/win_camera/wincapture.h
 )
 
 SET(PLATFORM_SOURCE_FILES_Windows
-  src/win/context-wmf.cpp
-  src/win/stream-wmf.cpp
+  src/win/context_wmf.cpp
+  src/win/stream_wmf.cpp
   ${rosmsftcam_SOURCE_DIR}/src/wincapture.cpp
 )
 
 SET(PLATFORM_HEADER_FILES_Linux
-  ${PUBLIC_HEADER_DIR}/linux/context-v4l2.hpp
-  ${PUBLIC_HEADER_DIR}/linux/context-v4l2-formats.hpp
-  ${PUBLIC_HEADER_DIR}/linux/stream-v4l2.hpp
+  ${PUBLIC_HEADER_DIR}/linux/context_v4l2.hpp
+  ${PUBLIC_HEADER_DIR}/linux/context_v4l2_formats.hpp
+  ${PUBLIC_HEADER_DIR}/linux/stream_v4l2.hpp
   ${rosusbcam_SOURCE_DIR}/include/usb_cam/constants.hpp
   ${rosusbcam_SOURCE_DIR}/include/usb_cam/conversions.hpp
   ${rosusbcam_SOURCE_DIR}/include/usb_cam/usb_cam.hpp
@@ -114,44 +114,44 @@ SET(PLATFORM_HEADER_FILES_Linux
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
-  src/linux/context-v4l2.cpp
-  src/linux/stream-v4l2.cpp
+  src/linux/context_v4l2.cpp
+  src/linux/stream_v4l2.cpp
   ${rosusbcam_SOURCE_DIR}/src/usb_cam.cpp
 )
 
 # Add Project sources
 target_sources(${PROJECT_NAME} PRIVATE
-  src/lv-interop/lv-functions.cpp
-  src/lv-interop/lv-error.cpp
-  src/lv-interop/lv-image.cpp
-  src/lv-interop/lv-u32-colour.cpp
-  src/lv-interop/lv-str.cpp
-  src/lv-interop/lv-enums.cpp
+  src/lv_interop/lv_functions.cpp
+  src/lv_interop/lv_error.cpp
+  src/lv_interop/lv_image.cpp
+  src/lv_interop/lv_u32_colour.cpp
+  src/lv_interop/lv_str.cpp
+  src/lv_interop/lv_enums.cpp
   src/capture/context.cpp
-  src/image-create.cpp
-  src/image-window.cpp
-  src/image-resize.cpp
-  src/image-draw-picture.cpp
-  src/image-draw.cpp
-  src/image-in-range.cpp
-  src/image-bitwise.cpp
-  src/image-read-file.cpp
-  src/image-write-file.cpp
-  src/image-add-weighted.cpp
-  src/image-flip.cpp
-  src/image-crop.cpp
-  src/image-greyscale-to-argb.cpp
-  src/image-insert.cpp
-  src/image-argb-channel-operations.cpp
-  src/image-copy.cpp
-  src/image-copy-raw-memory-ptr.cpp
-  src/image-copy-pixmap.cpp
-  src/image-copy-array.cpp
-  src/capture-context.cpp
-  src/capture-stream.cpp
-  src/image-negate.cpp
-  src/image-transform.cpp
-  src/image-rotate.cpp
+  src/image_create.cpp
+  src/image_window.cpp
+  src/image_resize.cpp
+  src/image_draw_picture.cpp
+  src/image_draw.cpp
+  src/image_in_range.cpp
+  src/image_bitwise.cpp
+  src/image_read_file.cpp
+  src/image_write_file.cpp
+  src/image_add_weighted.cpp
+  src/image_flip.cpp
+  src/image_crop.cpp
+  src/image_greyscale_to_argb.cpp
+  src/image_insert.cpp
+  src/image_argb_channel_operations.cpp
+  src/image_copy.cpp
+  src/image_copy_raw_memory_ptr.cpp
+  src/image_copy_pixmap.cpp
+  src/image_copy_array.cpp
+  src/capture_context.cpp
+  src/capture_stream.cpp
+  src/image_negate.cpp
+  src/image_transform.cpp
+  src/image_rotate.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -159,20 +159,20 @@ target_sources(${PROJECT_NAME} PRIVATE
 # target_include_dirs still required
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   FILES
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-functions.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-types.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-error.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-picture.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-u32-colour.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-str.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-array.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/reset-packing.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/set-packing.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-edvr-managed-object.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-fixed-size-matrix.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-enums.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-fixed-size-matrix.hpp
-  ${PUBLIC_HEADER_DIR}/lv-interop/lv-image.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_functions.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_types.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_error.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_picture.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_u32_colour.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_str.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/set_packing.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_edvr_managed_object.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_fixed_size_matrix.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_enums.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_fixed_size_matrix.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_image.hpp
   ${PUBLIC_HEADER_DIR}/capture/context.hpp
   ${PUBLIC_HEADER_DIR}/capture/stream.hpp
   "${PLATFORM_HEADER_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
