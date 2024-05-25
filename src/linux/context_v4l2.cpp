@@ -13,15 +13,7 @@ Context *capture::create_platform_context()
     return new ContextV4L2;
 }
 
-ContextV4L2::ContextV4L2() : Context(), format_lookup([&]()
-                                                      {
-                                   std::unordered_map<__u32, format_item_t> lookup;
-                                   for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
-                                   {
-                                       format_item_t value{i, formats_guid_and_names[i].second};
-                                       lookup.emplace(formats_guid_and_names[i].first, value);
-                                   }
-                                   return lookup; }())
+ContextV4L2::ContextV4L2() : Context(), format_lookup(get_format_lookup())
 {
     // init
 }
@@ -42,20 +34,27 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 
         for (auto const &path : device.device_paths)
         {
-            std::vector<v4l2_frmivalenum> v4l2_supported_formats;
+            std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> v4l2_supported_formats;
 
             lookup_support_formats_by_device_path(path, v4l2_supported_formats);
 
             for (const auto &v4l2_format : v4l2_supported_formats)
             {
                 stream_type_with_format_t supported_format;
-                supported_format.stream_type.width = v4l2_format.width;
-                supported_format.stream_type.height = v4l2_format.height;
+                supported_format.stream_type.width = v4l2_format.first.width;
+                supported_format.stream_type.height = v4l2_format.first.height;
                 // invert frame-intervals to get frame rate
-                supported_format.stream_type.fps_numerator = v4l2_format.discrete.denominator;
-                supported_format.stream_type.fps_denominator = v4l2_format.discrete.numerator;
-                supported_format.pixel_format = v4l2_format.pixel_format;
-                supported_formats.push_back(supported_format);
+                supported_format.stream_type.fps_numerator = v4l2_format.first.discrete.denominator;
+                supported_format.stream_type.fps_denominator = v4l2_format.first.discrete.numerator;
+                try
+                {
+                    supported_format.pixel_format = format_lookup.at(v4l2_format.first.pixel_format).index;
+                    supported_formats.push_back(supported_format);
+                }
+                catch (const std::out_of_range &e)
+                {
+                    // unknown pixel-format - ignore
+                }
             }
 
             if (supported_formats.size() > 0)
@@ -72,7 +71,7 @@ void ContextV4L2::list_of_formats(std::vector<format_item_t> &list)
 {
     for (auto const &item : format_lookup)
     {
-        format_item_t value {item.second.index, item.second.name};
+        format_item_t value{item.second.index, item.second.name};
         list.push_back(value);
     }
 }
@@ -82,7 +81,7 @@ ContextV4L2::~ContextV4L2()
     // de-init
 }
 
-void capture::lookup_support_formats_by_device_path(std::string path, std::vector<v4l2_frmivalenum> &v4l2_supported_formats)
+void capture::lookup_support_formats_by_device_path(std::string path, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &v4l2_supported_formats)
 {
     int fd;
     // Try and open device to test access
@@ -118,11 +117,22 @@ void capture::lookup_support_formats_by_device_path(std::string path, std::vecto
                 {
                     if (current_interval.type == V4L2_FRMIVAL_TYPE_DISCRETE)
                     {
-                        v4l2_supported_formats.push_back(current_interval);
+                        v4l2_supported_formats.emplace_back(current_interval,current_format);
                     }
                 } // interval loop
             } // size loop
         } // fmt loop
         close(fd);
     }
+}
+
+const std::unordered_map<__u32, format_item_t> capture::get_format_lookup()
+{
+    std::unordered_map<__u32, format_item_t> lookup;
+    for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
+    {
+        format_item_t value{i, formats_guid_and_names[i].second};
+        lookup.emplace(formats_guid_and_names[i].first, value);
+    }
+    return lookup;
 }

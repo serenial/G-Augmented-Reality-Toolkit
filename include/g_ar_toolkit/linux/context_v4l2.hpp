@@ -4,6 +4,7 @@
 #define G_AR_TK__INTEROP_LV_CONTEXTV4L2_HPP_
 
 #include <chrono>
+#include <utility>
 #include <unordered_map>
 
 #include "../capture/context.hpp"
@@ -13,10 +14,11 @@ namespace g_ar_toolkit
     namespace capture
     {
 
-        void lookup_support_formats_by_device_path(std::string, std::vector<v4l2_frmivalenum> &);
+        void lookup_support_formats_by_device_path(std::string, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &);
+        const std::unordered_map<__u32, format_item_t> get_format_lookup();
         class ContextV4L2 : public g_ar_toolkit::capture::Context
         {
-            const std::unordered_map<__u32, format_item_t> format_lookup;
+        const std::unordered_map<__u32, format_item_t> format_lookup;
         public:
             ContextV4L2();
             ~ContextV4L2();

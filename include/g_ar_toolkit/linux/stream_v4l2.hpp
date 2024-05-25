@@ -13,14 +13,26 @@ namespace g_ar_toolkit
 {
     namespace capture
     {
+        struct options_bitfield_t
+        {
+            uint32_t pixel_format : 8;
+            uint32_t io_method : 2;
+            uint32_t packing : 22;
+        };
+        union options_t
+        {
+            uint32_t as_value;
+            options_bitfield_t as_bits;
+        };
         class StreamV4L2 : public g_ar_toolkit::capture::Stream
         {
         public:
             StreamV4L2(std::string, stream_type_t, uint32_t);
             ~StreamV4L2();
-            void capture_frame(cv::Mat&, std::chrono::milliseconds);
+            void capture_frame(cv::Mat &, std::chrono::milliseconds);
             void start_stream();
             void stop_stream();
+
         private:
             const std::unique_ptr<usb_cam::UsbCam> usb_cam_ptr;
             usb_cam::parameters_t usb_cam_parameters;
@@ -29,4 +41,4 @@ namespace g_ar_toolkit
 }
 
 #endif //__linux__
-#endif //G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
+#endif // G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_

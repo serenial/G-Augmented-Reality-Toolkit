@@ -36,35 +36,68 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     usb_cam_parameters.framerate = stream_type.fps_numerator;
 
     // try to find a suitable format match
-    std::vector<v4l2_frmivalenum> supported_formats;
+    std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> supported_formats;
+
+    const std::unordered_map<__u32, format_item_t> format_lookup = get_format_lookup();
 
     for (auto const &path : device_match->device_paths)
     {
         usb_cam_parameters.device_name = path;
-        
+
         lookup_support_formats_by_device_path(path, supported_formats);
         uint32_t pixel_format = get_pixel_format_from_options(options);
-        
-        // elimtate any non-matching formats
-        supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const v4l2_frmivalenum &item){
-            bool match = stream_type.height == item.height 
-            && stream_type.width == item.width
-            && stream_type.fps_numerator != item.discrete.denominator // frame interval so denominator = numerator
-            && item.discrete.numerator == 1
-            // pixel_format == 0 is match_any
-            && (pixel_format == 0 || item.pixel_format == pixel_format);
-            return !match;
-        }), supported_formats.end());
 
-        if(!supported_formats.empty()){
+        // remove any non-matching formats
+        supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const std::pair<v4l2_frmivalenum,v4l2_fmtdesc> &item)
+                                               {
+            bool match = stream_type.height == item.first.height 
+            && stream_type.width == item.first.width
+            && stream_type.fps_numerator == item.first.discrete.denominator // frame interval so denominator => numerator
+            && item.first.discrete.numerator == 1
+            // pixel_format == 0 is match_any
+            && (pixel_format == 0 || format_lookup.at(item.first.pixel_format).index == pixel_format);
+            return !match; }),
+                                supported_formats.end());
+
+        if (!supported_formats.empty())
+        {
             break;
         }
     }
 
-    if(supported_formats.empty()){
+    if (supported_formats.empty())
+    {
         throw std::invalid_argument("Unable to find matching stream format for device with device-id:\"" + device_id + "\".");
     }
+    
+    // get the format-descritption of the first remaining format
+    auto &desc = supported_formats.front().second.description;
 
+    usb_cam_parameters.pixel_format_name = std::string(std::begin(desc), std::find(std::begin(desc), std::end(desc), '\0'));
+
+// yuv422p - YUV422 - default, compatible with most MJPEG hardware encoders
+
+// yuv420p - YUV420 - may be required by H.264 and H.265 hardware encoders
+
+    // sepecify the av-format
+    usb_cam_parameters.av_device_format = "yuv422p";
+
+    // parse values from options
+    options_t opts;
+    opts.as_value = options;
+
+    usb_cam::utils::io_method_t io_method = usb_cam::utils::IO_METHOD_MMAP;
+    switch (opts.as_bits.io_method)
+    {
+    case 1:
+        io_method = usb_cam::utils::IO_METHOD_READ;
+        break;
+    case 2:
+        io_method = usb_cam::utils::IO_METHOD_USERPTR;
+        break;
+    }
+
+    usb_cam_ptr->configure(usb_cam_parameters, io_method);
 }
 
 StreamV4L2::~StreamV4L2()

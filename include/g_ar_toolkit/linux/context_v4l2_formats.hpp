@@ -3,7 +3,7 @@
 #define G_AR_TK__INTEROP_LV_CONTEXTV4L2_FORMATS_HPP_
 
 #include <string>
-#include <utility>
+#include <tuple>
 
 extern "C"
 {
@@ -14,7 +14,7 @@ namespace g_ar_toolkit
 {
     namespace capture
     {
-        static const std::pair<__u32, std::string> formats_guid_and_names[] = {
+        static const std::tuple<__u32, std::string, std::string> formats_guid_and_names[] = {
             {V4L2_PIX_FMT_RGB332, "RGB332"},
             {V4L2_PIX_FMT_RGB444, "RGB444"},
             {V4L2_PIX_FMT_ARGB444, "ARGB444"},
