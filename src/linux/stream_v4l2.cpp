@@ -1,6 +1,7 @@
 #include <string>
 #include <algorithm>
-#include "list_devices.hpp"
+
+#include "v4l2_list_devices/list_devices.hpp"
 
 #include "g_ar_toolkit/linux/stream_v4l2.hpp"
 #include "g_ar_toolkit/linux/context_v4l2.hpp"

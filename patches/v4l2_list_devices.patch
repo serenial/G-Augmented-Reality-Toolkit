@@ -31,6 +31,19 @@ index ddff601..0000000
 -
 -target_link_libraries(${PROJECT_NAME} v4l2)
 diff --git a/include/list_devices.hpp b/include/v4l2_list_devices/list_devices.hpp
-similarity index 100%
+similarity index 98%
 rename from include/list_devices.hpp
 rename to include/v4l2_list_devices/list_devices.hpp
+index db3414e..db731d2 100644
+--- a/include/list_devices.hpp
++++ b/include/v4l2_list_devices/list_devices.hpp
+@@ -20,6 +20,9 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ #include <stdio.h>
++// #fixed - added these two missing includes
++#include <cstring>
++#include <stdexcept>
+ 
+ #include <string>
+ #include <vector>
