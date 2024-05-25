@@ -19,8 +19,8 @@ endif()
 # Specify Project
 project(g_ar_toolkit VERSION 1.0.0 LANGUAGES C CXX)
 
-# Inlcude tools to auto-generate shared-library export header
 include(GenerateExportHeader)
+include(FetchContent)
 
 # # Install directory
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_LIST_DIR}/LabVIEW)
@@ -40,8 +40,17 @@ endif()
 # # Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
 
-# # Find FFMPEG on Linux
-if(UNIX)
+# include_directories(${hiberlite_SOURCE_DIR}/include)
+if(WIN32)
+  set(rosmsftcam_patch git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch)
+  FetchContent_Declare(rosmsftcam
+    GIT_REPOSITORY https://github.com/ms-iot/ros_msft_camera.git
+    GIT_TAG fe2b4190a1cc8bb837286244a417e083493c198c # foxy-devel latest commit 2021/08/09
+    PATCH_COMMAND ${rosmsftcam_patch}
+    UPDATE_DISCONNECTED 1
+  )
+  FetchContent_MakeAvailable(rosmsftcam)
+elseif(UNIX)
   find_package(FFMPEG REQUIRED)
 endif()
 
@@ -54,25 +63,19 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC G_AR_TOOLKIT_BYTE_PACKING_${CM
 # define include root dir
 set(PUBLIC_HEADER_DIR include/${PROJECT_NAME})
 
-# define 3rd-party includes
-set(3RD_PARTY_DIR 3rd-party)
-
-set(3RD_PARTY_ROS_MSFT_CAM ${3RD_PARTY_DIR}/ros_msft_camera)
-set(3RD_PARTY_ROS_USB_CAM ${3RD_PARTY_DIR}/ros_usb_cam)
-
 # define platform specific headers and source
 # Platform name should match the value in
 SET(PLATFORM_HEADER_FILES_Windows
   ${PUBLIC_HEADER_DIR}/win/context-wmf.hpp
   ${PUBLIC_HEADER_DIR}/win/context-wmf-formats.hpp
   ${PUBLIC_HEADER_DIR}/win/stream-wmf.hpp
-  ${3RD_PARTY_ROS_MSFT_CAM}/include/wincapture.h
+  ${rosmsftcam_SOURCE_DIR}/include/win_camera/wincapture.h
 )
 
 SET(PLATFORM_SOURCE_FILES_Windows
   src/win/context-wmf.cpp
   src/win/stream-wmf.cpp
-  ${3RD_PARTY_ROS_MSFT_CAM}/src/wincapture.cpp
+  ${rosmsftcam_SOURCE_DIR}/src/wincapture.cpp
 )
 
 SET(PLATFORM_HEADER_FILES_Linux
@@ -174,8 +177,7 @@ target_include_directories(${PROJECT_NAME}
 if(WIN32)
   # windows.h definitions
   target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX)
-  target_include_directories(${PROJECT_NAME}
-    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${3RD_PARTY_ROS_MSFT_CAM}/include>")
+  target_include_directories(${PROJECT_NAME} PUBLIC ${rosmsftcam_SOURCE_DIR}/include)
   target_link_libraries(${PROJECT_NAME} PRIVATE
     mf
     mfplat

@@ -1,0 +1,250 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+deleted file mode 100644
+index 224f36a..0000000
+--- a/CMakeLists.txt
++++ /dev/null
+@@ -1,129 +0,0 @@
+-cmake_minimum_required(VERSION 3.15.3)
+-project(win_camera)
+-
+-# Default to C99
+-if(NOT CMAKE_C_STANDARD)
+-  set(CMAKE_C_STANDARD 99)
+-endif()
+-
+-# Default to C++17
+-if(NOT CMAKE_CXX_STANDARD)
+-  set(CMAKE_CXX_STANDARD 17)
+-endif()
+-
+-if(NOT CMAKE_CXX_STANDARD_REQUIRED)
+-  set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+-endif()
+-
+-if(NOT CMAKE_CXX_EXTENSIONS)
+-  set(CMAKE_CXX_EXTENSIONS FALSE)
+-endif()
+-
+-if(MSVC)
+-  add_compile_definitions(
+-    NOMINMAX
+-  )
+-endif()
+-
+-find_package(ament_cmake REQUIRED)
+-
+-find_package(std_msgs REQUIRED)
+-find_package(sensor_msgs REQUIRED)
+-find_package(rclcpp REQUIRED)
+-find_package(rclcpp_components REQUIRED)
+-find_package(image_transport REQUIRED)
+-find_package(camera_info_manager REQUIRED)
+-find_package(compressed_image_transport REQUIRED)
+-
+-find_package(rosidl_default_generators REQUIRED)
+-
+-rosidl_generate_interfaces(${PROJECT_NAME}_msgs
+-  "msg/MFSample.msg"
+-  DEPENDENCIES std_msgs
+-)
+-
+-include_directories(
+-  include
+-)
+-
+-## Declare a cpp library
+-add_library(win_camera SHARED
+-  src/wincapture.cpp
+-  src/win_camera_node.cpp
+-)
+-
+-target_compile_definitions(win_camera PRIVATE "WIN_CAMERA_BUILDING_LIBRARY")
+-
+-rclcpp_components_register_nodes(
+-  win_camera
+-  "win_camera::CameraDriver"
+-)
+-
+-target_link_libraries(win_camera
+-  mf
+-  mfplat
+-  mfuuid
+-  mfreadwrite
+-  Mfsensorgroup
+-  shlwapi
+-  runtimeobject
+-)
+-
+-ament_target_dependencies(win_camera
+-  compressed_image_transport
+-  image_transport
+-  camera_info_manager
+-  sensor_msgs
+-  rclcpp
+-)
+-
+-## Declare a cpp executable
+-add_executable(win_camera_node src/main.cpp)
+-
+-target_link_libraries(win_camera_node
+-  win_camera
+-)
+-
+-ament_target_dependencies(win_camera_node
+-  compressed_image_transport
+-  image_transport
+-  camera_info_manager
+-  sensor_msgs
+-  rclcpp
+-)
+-
+-#############
+-## Install ##
+-#############
+-
+-## Mark executables and/or libraries for installation
+-install(TARGETS win_camera
+-  ARCHIVE DESTINATION lib
+-  LIBRARY DESTINATION lib
+-  RUNTIME DESTINATION bin
+-)
+-
+-install(TARGETS win_camera_node
+-  RUNTIME DESTINATION lib/${PROJECT_NAME}
+-)
+-
+-install(DIRECTORY include
+-  DESTINATION include
+-)
+-
+-install(DIRECTORY
+-  launch
+-  DESTINATION share/${PROJECT_NAME}/
+-)
+-
+-install(DIRECTORY
+-  rviz
+-  DESTINATION share/${PROJECT_NAME}/
+-)
+-
+-install(DIRECTORY
+-  camera_info
+-  DESTINATION share/${PROJECT_NAME}/
+-)
+-
+-ament_package()
+diff --git a/src/wincapture.cpp b/src/wincapture.cpp
+index 6b53b00..fd7785b 100644
+--- a/src/wincapture.cpp
++++ b/src/wincapture.cpp
+@@ -120,7 +120,7 @@ namespace ros_win_camera
+         // wait for the config-stop event to complete
+         eventCompletion.wait(ul);
+ 
+-        _INFO("\nStopped streaming complete!\n");
++        //_INFO("\nStopped streaming complete!\n");
+         m_captureCallbackEvent(hresult_error(MF_E_END_OF_STREAM), L"Sample Stopped", nullptr);
+     }
+ 
+@@ -183,14 +183,14 @@ namespace ros_win_camera
+                     }
+                     check_hresult(MFGetAttributeSize(spMT.get(), MF_MT_FRAME_SIZE, &m_u32Width, &m_u32Height));
+ 
+-                    int i = 0;
+-                    GUID guid;
+-                    winrt::com_ptr<IMFTransform> spTransform;
+-                    while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put()))
+-                    {
+-                        _INFO("Tranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);
+-                    }
+-                    _INFO("Aftermath:Number of tranforms in Chain: %d", i - 1);
++                    // int i = 0;
++                    // GUID guid;
++                    // winrt::com_ptr<IMFTransform> spTransform;
++                    // while (MF_E_INVALIDINDEX != spSourceReader.try_as<IMFSourceReaderEx>()->GetTransformForStream(MF_SOURCE_READER_FIRST_VIDEO_STREAM, i++, &guid, spTransform.put()))
++                    // {
++                    //     _INFO("Tranform %d: %x-%x-%x-%x%x%x%x", i - 1, guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3]);
++                    // }
++                    // _INFO("Aftermath:Number of tranforms in Chain: %d", i - 1);
+ 
+                 }
+             }
+@@ -203,17 +203,17 @@ namespace ros_win_camera
+                 winrt::com_ptr <IMFMediaType> spMT;
+                 check_hresult(spSourceReader->GetNativeMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, MF_SOURCE_READER_CURRENT_TYPE_INDEX, spMT.put()));
+                 check_hresult(MFGetAttributeSize(spMT.get(), MF_MT_FRAME_SIZE, &m_u32Width, &m_u32Height));
+-                _INFO("\nNative Type changed: %dx%d", m_u32Width, m_u32Height);
++                //_INFO("\nNative Type changed: %dx%d", m_u32Width, m_u32Height);
+             }
+             if (MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED & dwStreamFlags)
+             {
+                 winrt::com_ptr <IMFMediaType> spMT;
+                 check_hresult(spSourceReader->GetCurrentMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, spMT.put()));
+                 check_hresult(MFGetAttributeSize(spMT.get(), MF_MT_FRAME_SIZE, &m_u32Width, &m_u32Height));
+-                _INFO("\nCurrent Type changed %dx%d", m_u32Width, m_u32Height);
+-                GUID guid;
+-                winrt::com_ptr<IMFTransform> spTransform;
+-                LOG_TRANSFORMS();
++                // _INFO("\nCurrent Type changed %dx%d", m_u32Width, m_u32Height);
++                // GUID guid;
++                // winrt::com_ptr<IMFTransform> spTransform;
++                // LOG_TRANSFORMS();
+ 
+                 m_u32SourceReaderFlags = MF_SOURCE_READER_CONTROLF_DRAIN;
+ 
+@@ -225,7 +225,7 @@ namespace ros_win_camera
+         }
+         catch (hresult_error const& ex)
+         {
+-            _ERROR("%x:%s", (unsigned int)ex.code(), winrt::to_string(ex.message()).c_str());
++            //_ERROR("%x:%s", (unsigned int)ex.code(), winrt::to_string(ex.message()).c_str());
+             m_captureCallbackEvent(ex, L":Trying to read sample in callback", nullptr);
+         }
+         if (m_bStreamingStarted)
+@@ -243,7 +243,7 @@ namespace ros_win_camera
+             else if (FAILED(hr))
+             {
+                 hresult_error ex(hr);
+-                _ERROR("%x:%s", (unsigned int)ex.code(), winrt::to_string(ex.message()).c_str());
++                //_ERROR("%x:%s", (unsigned int)ex.code(), winrt::to_string(ex.message()).c_str());
+                 m_captureCallbackEvent(ex, L":Trying to read sample in callback", nullptr);
+             }
+         }
+@@ -302,10 +302,10 @@ namespace ros_win_camera
+             winrt::com_ptr<IMFMediaType> spMediaType;
+             UINT32 FRNum, FRDen;
+             int idx = 0;
+-            _INFO("\nSetting resolution :%dx%d@%f", width, height, frameRate);
++            //_INFO("\nSetting resolution :%dx%d@%f", width, height, frameRate);
+             if (!m_bIsController)
+             {
+-                _WARN("Instance is not in controller mode. Setting up a conversion");
++                //_WARN("Instance is not in controller mode. Setting up a conversion");
+                 HRESULT hr = spSourceReader->GetNativeMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, MF_SOURCE_READER_CURRENT_TYPE_INDEX, spMediaType.put());
+ 
+                 check_hresult(MFSetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, width, height));
+@@ -320,7 +320,7 @@ namespace ros_win_camera
+             {
+                 if (bForceConversion)
+                 {
+-                    _WARN("No matching resolution and subtype supported by source. Setting up a conversion");
++                    //_WARN("No matching resolution and subtype supported by source. Setting up a conversion");
+                     if (!FindMatchingMediaType(spMediaType.put(), width, height, frameRate, GUID_NULL))
+                     {
+                         if (!FindMatchingMediaType(spMediaType.put(), width, height, 0, GUID_NULL))
+@@ -351,13 +351,13 @@ namespace ros_win_camera
+ 
+                 if (SUCCEEDED(hr))
+                 {
+-                    _INFO("Native res set");
++                    //_INFO("Native res set");
+                     m_u32Width = width;
+                     m_u32Height = height;
+                 }
+                 else
+                 {
+-                    _WARN("Couldn't set native res: %x", hr);
++                    //_WARN("Couldn't set native res: %x", hr);
+                 }
+             }
+             eventCompletion.notify_one();

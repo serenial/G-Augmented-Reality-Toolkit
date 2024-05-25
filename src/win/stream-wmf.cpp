@@ -7,7 +7,7 @@
 #include <Wmcodecdsp.h>
 #include <winrt/base.h>
 
-#include "wincapture.h"
+#include "win_camera/wincapture.h"
 
 #include "g_ar_toolkit/win/stream-wmf.hpp"
 #include "g_ar_toolkit/win/context-wmf.hpp"
@@ -15,7 +15,7 @@
 using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
-using namespace ros_msft_camera;
+using namespace ros_win_camera;
 
 Stream* capture::create_platform_stream(std::string device_id, stream_type_t stream_type, uint32_t option)
 {
