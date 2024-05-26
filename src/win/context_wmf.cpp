@@ -289,22 +289,24 @@ void ContextWMF::update_last_device_enumeration()
                 // get the format info
                 GUID subType;
                 if (spMediaType != NULL)
+                {
                     // lookup name of format
                     winrt::check_hresult(spMediaType->GetGUID(MF_MT_SUBTYPE, &subType));
-                try
-                {
-                    format.pixel_format = format_lookup.at(subType).index;
-                }
-                catch (std::out_of_range &e)
-                {
-                    format.pixel_format = 0;
-                }
-                // get format details
-                winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &format.stream_type.width, &format.stream_type.height));
-                winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &format.stream_type.fps_numerator, &format.stream_type.fps_denominator));
+                    // get format details
+                    winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &format.stream_type.width, &format.stream_type.height));
+                    winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &format.stream_type.fps_numerator, &format.stream_type.fps_denominator));
 
-                // push this format into the vector
-                device_info.supported_formats.push_back(format);
+                    try
+                    {
+                        format.pixel_format = format_lookup.at(subType).index;
+                        // push this format into the vector
+                        device_info.supported_formats.push_back(format);
+                    }
+                    catch (std::out_of_range &e)
+                    {
+                        // ignore
+                    }
+                }
             }
             ++dwMediaTypeIndex;
         }
@@ -317,7 +319,7 @@ void ContextWMF::list_of_formats(std::vector<format_item_t> &list)
 {
     for (auto const &item : format_lookup)
     {
-        format_item_t value {item.second.index, item.second.name};
+        format_item_t value{item.second.index, item.second.name};
         list.push_back(value);
     }
 }
