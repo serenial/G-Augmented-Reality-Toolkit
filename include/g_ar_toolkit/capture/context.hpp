@@ -37,6 +37,7 @@ namespace g_ar_toolkit
         struct format_item_t {
             uint32_t index;
             std::string name;
+            std::string convertor_name;
         };
 
         class Context

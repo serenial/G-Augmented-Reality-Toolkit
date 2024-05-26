@@ -131,8 +131,9 @@ const std::unordered_map<__u32, format_item_t> capture::get_format_lookup()
     std::unordered_map<__u32, format_item_t> lookup;
     for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
     {
-        format_item_t value{i, formats_guid_and_names[i].second};
-        lookup.emplace(formats_guid_and_names[i].first, value);
+        auto [GUID, name, convertor] = formats_guid_and_names[i];
+        format_item_t value{i, name, convertor};
+        lookup.emplace(GUID, value);
     }
     return lookup;
 }

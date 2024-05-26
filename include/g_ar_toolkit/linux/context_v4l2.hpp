@@ -16,6 +16,7 @@ namespace g_ar_toolkit
 
         void lookup_support_formats_by_device_path(std::string, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &);
         const std::unordered_map<__u32, format_item_t> get_format_lookup();
+
         class ContextV4L2 : public g_ar_toolkit::capture::Context
         {
         const std::unordered_map<__u32, format_item_t> format_lookup;

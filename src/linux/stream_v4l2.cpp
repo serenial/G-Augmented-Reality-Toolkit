@@ -73,13 +73,7 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     // get the format-descritption of the first remaining format
     auto &desc = supported_formats.front().second.description;
 
-    usb_cam_parameters.pixel_format_name = std::string(std::begin(desc), std::find(std::begin(desc), std::end(desc), '\0'));
-
-// yuv422p - YUV422 - default, compatible with most MJPEG hardware encoders
-
-// yuv420p - YUV420 - may be required by H.264 and H.265 hardware encoders
-
-    // sepecify the av-format
+    usb_cam_parameters.pixel_format_name = format_lookup.at(supported_formats.front().first.pixel_format).convertor_name;
     usb_cam_parameters.av_device_format = "yuv422p";
 
     // parse values from options
