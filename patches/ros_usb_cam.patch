@@ -195,7 +195,7 @@ index 4cf1ba9..75fa684 100644
  }  // namespace conversions
  }  // namespace usb_cam
 diff --git a/include/usb_cam/usb_cam.hpp b/include/usb_cam/usb_cam.hpp
-index 1663e0f..34db0e5 100644
+index 1663e0f..37f922e 100644
 --- a/include/usb_cam/usb_cam.hpp
 +++ b/include/usb_cam/usb_cam.hpp
 @@ -78,23 +78,7 @@ using usb_cam::formats::M4202RGB;
@@ -223,16 +223,6 @@ index 1663e0f..34db0e5 100644
  
  typedef struct
  {
-@@ -179,6 +163,9 @@ public:
-   /// @brief Start the configured device
-   void start();
- 
-+  /// @brief Stop the configured device
-+  void stop();
-+
-   /// @brief shutdown camera
-   void shutdown(void);
- 
 diff --git a/src/conversions.cpp b/src/conversions.cpp
 new file mode 100644
 index 0000000..518fc7f
@@ -256,25 +246,10 @@ index 0000000..518fc7f
 +}
 \ No newline at end of file
 diff --git a/src/usb_cam.cpp b/src/usb_cam.cpp
-index b82cdf6..b43744c 100644
+index b82cdf6..56b07b1 100644
 --- a/src/usb_cam.cpp
 +++ b/src/usb_cam.cpp
-@@ -534,9 +534,13 @@ void UsbCam::start()
-   start_capturing();
- }
- 
-+void UsbCam::stop()
-+{
-+    stop_capturing();
-+}
-+
- void UsbCam::shutdown()
- {
--  stop_capturing();
-   uninit_device();
-   close_device();
- }
-@@ -731,4 +735,23 @@ bool UsbCam::set_v4l_parameter(const std::string & param, const std::string & va
+@@ -731,4 +731,23 @@ bool UsbCam::set_v4l_parameter(const std::string & param, const std::string & va
    return retcode;
  }
  

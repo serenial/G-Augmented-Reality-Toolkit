@@ -15,7 +15,11 @@ Stream *capture::create_platform_stream(std::string device_id, stream_type_t str
     return new StreamV4L2(device_id, stream_type, options);
 }
 
-StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_t options) : Stream(), usb_cam_ptr(std::make_unique<usb_cam::UsbCam>())
+StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_t options) 
+    : Stream(), 
+    usb_cam_ptr(std::make_unique<usb_cam::UsbCam>()), 
+    started(false), 
+    rgb_buffer(cv::Mat(stream_type.height, stream_type.width, CV_8UC3))
 {
     // lookup the device path
     std::vector<v4l2::devices::DEVICE_INFO> device_list;
@@ -96,9 +100,27 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
 
 StreamV4L2::~StreamV4L2()
 {
-    // deinit
+    usb_cam_ptr->shutdown();
 }
 
-void StreamV4L2::start_stream() {}
-void StreamV4L2::stop_stream() {}
-void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout) {}
+void StreamV4L2::start_stream() {
+    if(!started){
+        usb_cam_ptr->start_capturing();
+    }
+    started = true; 
+}
+
+void StreamV4L2::stop_stream() {
+    if(started){
+        usb_cam_ptr->stop_capturing();
+    }
+    started = false;
+}
+
+void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout) {
+    if(started){
+        usb_cam_ptr->get_image(reinterpret_cast<char*>(rgb_buffer.data));
+        cv::cvtColor(rgb_buffer,destination, cv::COLOR_RGB2BGRA);
+    }
+
+}

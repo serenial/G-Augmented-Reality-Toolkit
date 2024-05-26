@@ -36,6 +36,8 @@ namespace g_ar_toolkit
         private:
             const std::unique_ptr<usb_cam::UsbCam> usb_cam_ptr;
             usb_cam::parameters_t usb_cam_parameters;
+            bool started;
+            cv::Mat rgb_buffer;
         };
     }
 }
