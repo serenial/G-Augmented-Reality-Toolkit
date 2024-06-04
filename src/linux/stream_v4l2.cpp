@@ -15,11 +15,10 @@ Stream *capture::create_platform_stream(std::string device_id, stream_type_t str
     return new StreamV4L2(device_id, stream_type, options);
 }
 
-StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_t options) 
-    : Stream(), 
-    usb_cam_ptr(std::make_unique<usb_cam::UsbCam>()), 
-    started(false), 
-    rgb_buffer(cv::Mat(stream_type.height, stream_type.width, CV_8UC3))
+StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_t options)
+    : Stream(),
+      usb_cam_ptr(std::make_unique<usb_cam::UsbCam>()),
+      rgb_buffer(cv::Mat(stream_type.height, stream_type.width, CV_8UC3))
 {
     // lookup the device path
     std::vector<v4l2::devices::DEVICE_INFO> device_list;
@@ -33,6 +32,8 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
         throw std::invalid_argument("Unable to find a suitable matching device with device-id:\"" + device_id + "\".");
     }
 
+    usb_cam::parameters_t usb_cam_parameters;
+
     // set usb_cam_parameters
     usb_cam_parameters.camera_name = device_id;
     usb_cam_parameters.image_height = stream_type.height;
@@ -40,7 +41,7 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     usb_cam_parameters.framerate = stream_type.fps_numerator;
 
     // try to find a suitable format match
-    std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> supported_formats;
+    std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> supported_formats;
 
     const std::unordered_map<__u32, format_item_t> format_lookup = get_format_lookup();
 
@@ -52,7 +53,7 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
         uint32_t pixel_format = get_pixel_format_from_options(options);
 
         // remove any non-matching formats
-        supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const std::pair<v4l2_frmivalenum,v4l2_fmtdesc> &item)
+        supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const std::pair<v4l2_frmivalenum, v4l2_fmtdesc> &item)
                                                {
             bool match = stream_type.height == item.first.height 
             && stream_type.width == item.first.width
@@ -73,7 +74,7 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     {
         throw std::invalid_argument("Unable to find matching stream format for device with device-id:\"" + device_id + "\".");
     }
-    
+
     // get the format-descritption of the first remaining format
     auto &desc = supported_formats.front().second.description;
 
@@ -98,29 +99,22 @@ StreamV4L2::StreamV4L2(std::string device_id, stream_type_t stream_type, uint32_
     usb_cam_ptr->configure(usb_cam_parameters, io_method);
 }
 
-StreamV4L2::~StreamV4L2()
+void StreamV4L2::start_stream()
 {
-    usb_cam_ptr->shutdown();
+    usb_cam_ptr->start_capturing();
 }
 
-void StreamV4L2::start_stream() {
-    if(!started){
-        usb_cam_ptr->start_capturing();
-    }
-    started = true; 
+void StreamV4L2::stop_stream()
+{
+    usb_cam_ptr->stop_capturing();
 }
 
-void StreamV4L2::stop_stream() {
-    if(started){
-        usb_cam_ptr->stop_capturing();
-    }
-    started = false;
+void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
+{
+    usb_cam_ptr->get_image(reinterpret_cast<char *>(rgb_buffer.data));
+    cv::cvtColor(rgb_buffer, destination, cv::COLOR_RGB2BGRA);
 }
 
-void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout) {
-    if(started){
-        usb_cam_ptr->get_image(reinterpret_cast<char*>(rgb_buffer.data));
-        cv::cvtColor(rgb_buffer,destination, cv::COLOR_RGB2BGRA);
-    }
-
+StreamV4L2::~StreamV4L2(){
+ int x = 0;
 }

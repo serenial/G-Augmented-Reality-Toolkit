@@ -22,6 +22,7 @@ namespace g_ar_toolkit
             virtual void start_stream() = 0;
             virtual void stop_stream() = 0;
             virtual void capture_frame(cv::Mat &, std::chrono::milliseconds) = 0;
+            virtual ~Stream();
         };
 
         // stream factory

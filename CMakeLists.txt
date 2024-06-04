@@ -129,6 +129,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_str.cpp
   src/lv_interop/lv_enums.cpp
   src/capture/context.cpp
+  src/capture/stream.cpp
   src/image_create.cpp
   src/image_window.cpp
   src/image_resize.cpp

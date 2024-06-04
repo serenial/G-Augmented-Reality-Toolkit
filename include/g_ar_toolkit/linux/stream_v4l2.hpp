@@ -28,15 +28,13 @@ namespace g_ar_toolkit
         {
         public:
             StreamV4L2(std::string, stream_type_t, uint32_t);
-            ~StreamV4L2();
             void capture_frame(cv::Mat &, std::chrono::milliseconds);
             void start_stream();
             void stop_stream();
+            ~StreamV4L2();
 
         private:
             const std::unique_ptr<usb_cam::UsbCam> usb_cam_ptr;
-            usb_cam::parameters_t usb_cam_parameters;
-            bool started;
             cv::Mat rgb_buffer;
         };
     }

@@ -45,7 +45,9 @@ namespace g_ar_toolkit
         public:
             virtual void enumerate_devices(std::vector<device_info_t> &) =0;
             virtual void list_of_formats(std::vector<format_item_t>&) = 0;
+            virtual ~Context();
             Stream* open_stream(std::string, stream_type_t, uint32_t);
+
         };
 
         // context factory
