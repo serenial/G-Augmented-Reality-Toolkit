@@ -30,7 +30,7 @@ using LV_PixmapImagePtr_t = LV_Ptr_t<LV_PixmapImage_t>;
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 
-void copy_lv_mask_to_cv_mat(LV_PixmapImagePtr_t, size_t, cv::Mat &);
+static void copy_lv_mask_to_cv_mat(LV_PixmapImagePtr_t, size_t, cv::Mat &);
 
 extern "C"
 {
@@ -202,7 +202,7 @@ extern "C"
     }
 }
 
-void copy_lv_mask_to_cv_mat(LV_PixmapImagePtr_t pixmap_image_ptr, size_t number_of_mask_bytes, cv::Mat &mask)
+static void copy_lv_mask_to_cv_mat(LV_PixmapImagePtr_t pixmap_image_ptr, size_t number_of_mask_bytes, cv::Mat &mask)
 {
     auto mask_bytes_ptr = (*pixmap_image_ptr->mask_array_handle)->data_ptr();
     auto mask_bytes_end = mask_bytes_ptr + number_of_mask_bytes;

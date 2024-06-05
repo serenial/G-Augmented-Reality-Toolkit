@@ -76,11 +76,6 @@ void ContextV4L2::list_of_formats(std::vector<format_item_t> &list)
     }
 }
 
-ContextV4L2::~ContextV4L2()
-{
-    // de-init
-}
-
 void capture::lookup_support_formats_by_device_path(std::string path, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &v4l2_supported_formats)
 {
     int fd;

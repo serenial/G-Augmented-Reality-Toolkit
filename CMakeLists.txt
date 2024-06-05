@@ -44,7 +44,7 @@ if(WIN32)
   FetchContent_Declare(rosmsftcam
     GIT_REPOSITORY https://github.com/ms-iot/ros_msft_camera.git
     GIT_TAG fe2b4190a1cc8bb837286244a417e083493c198c # foxy-devel latest commit 2021/08/09
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch # remember to save the patch with UTF8 encoding 
     UPDATE_DISCONNECTED 1
   )
   FetchContent_MakeAvailable(rosmsftcam)
@@ -129,7 +129,6 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_str.cpp
   src/lv_interop/lv_enums.cpp
   src/capture/context.cpp
-  src/capture/stream.cpp
   src/image_create.cpp
   src/image_window.cpp
   src/image_resize.cpp

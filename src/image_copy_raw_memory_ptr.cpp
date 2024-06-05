@@ -20,7 +20,7 @@ using LV_RawMemoryPtrInfo_t = struct
 
 using LV_RawMemoryPtrInfoPtr_t = LV_Ptr_t<LV_RawMemoryPtrInfo_t>;
 
-cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t);
+static cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t);
 
 extern "C"
 {
@@ -118,7 +118,7 @@ extern "C"
     }
 }
 
-cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t info_ptr)
+static cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t info_ptr)
 {
     cv::MatStep step(info_ptr->step_dim_0);
     step[1] = info_ptr->step_dim_1;

@@ -52,7 +52,7 @@ namespace g_ar_toolkit
             std::exception_ptr last_exception;
             bool streaming;
             public:
-            StreamWMF(std::string, stream_type_t, uint32_t);
+            StreamWMF(const std::string&, stream_type_t, uint32_t);
             ~StreamWMF();
             void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
             void start_stream();

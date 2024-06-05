@@ -21,7 +21,7 @@ std::string lv_interop::lv_string_handle_to_string(LV_StringHandle_t handle)
     return std::string{(*handle)->data_ptr(), string_length};
 }
 
-LV_MgErr_t lv_interop::copy_std_string_to_lv_string_handle_ptr(std::string str, LV_StringHandlePtr_t handle_ptr)
+LV_MgErr_t lv_interop::copy_std_string_to_lv_string_handle_ptr(const std::string& str, LV_StringHandlePtr_t handle_ptr)
 {
     size_t str_start_len = (handle_ptr && *handle_ptr && **handle_ptr)? (**handle_ptr)->dims[0] : 0;
 

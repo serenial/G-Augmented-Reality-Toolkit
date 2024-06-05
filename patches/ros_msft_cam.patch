@@ -134,7 +134,7 @@ index 224f36a..0000000
 -
 -ament_package()
 diff --git a/src/wincapture.cpp b/src/wincapture.cpp
-index 6b53b00..fd7785b 100644
+index 6b53b00..654bea6 100644
 --- a/src/wincapture.cpp
 +++ b/src/wincapture.cpp
 @@ -120,7 +120,7 @@ namespace ros_win_camera
@@ -192,7 +192,7 @@ index 6b53b00..fd7785b 100644
  
                  m_u32SourceReaderFlags = MF_SOURCE_READER_CONTROLF_DRAIN;
  
-@@ -225,7 +225,7 @@ namespace ros_win_camera
+@@ -225,25 +225,27 @@ namespace ros_win_camera
          }
          catch (hresult_error const& ex)
          {
@@ -201,7 +201,21 @@ index 6b53b00..fd7785b 100644
              m_captureCallbackEvent(ex, L":Trying to read sample in callback", nullptr);
          }
          if (m_bStreamingStarted)
-@@ -243,7 +243,7 @@ namespace ros_win_camera
+         {
+             if (SUCCEEDED(hrStatus) && pSample)
+             {
+-                m_captureCallbackEvent(hresult_error(S_OK), L"Sample received", pSample);
++                // fixed - hresult_error() is OK, passing S_OK actually triggers error
++                m_captureCallbackEvent(hresult_error(/*S_OK*/), L"Sample received", pSample);
+             }
+ 
+             HRESULT hr = spSourceReader->ReadSample(MF_SOURCE_READER_FIRST_VIDEO_STREAM, m_u32SourceReaderFlags, NULL, NULL, NULL, NULL);
+             if (hr == MF_E_NOTACCEPTING)
+             {
+-                m_captureCallbackEvent(hresult_error(S_OK), L"Flush in progress", nullptr);
++                // fixed - hresult_error() is OK, passing S_OK actually triggers error
++                m_captureCallbackEvent(hresult_error(/*S_OK*/), L"Flush in progress", nullptr);
+             }
              else if (FAILED(hr))
              {
                  hresult_error ex(hr);
@@ -210,7 +224,16 @@ index 6b53b00..fd7785b 100644
                  m_captureCallbackEvent(ex, L":Trying to read sample in callback", nullptr);
              }
          }
-@@ -302,10 +302,10 @@ namespace ros_win_camera
+@@ -271,6 +273,8 @@ namespace ros_win_camera
+             {
+                 break;
+             }
++            // #fixed - detach spMediaType internal pointer so it can be used again
++            spMediaType.detach();
+             idx++;
+         }
+         spMediaType.copy_to(ppMediaType);
+@@ -302,10 +306,10 @@ namespace ros_win_camera
              winrt::com_ptr<IMFMediaType> spMediaType;
              UINT32 FRNum, FRDen;
              int idx = 0;
@@ -223,7 +246,7 @@ index 6b53b00..fd7785b 100644
                  HRESULT hr = spSourceReader->GetNativeMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, MF_SOURCE_READER_CURRENT_TYPE_INDEX, spMediaType.put());
  
                  check_hresult(MFSetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, width, height));
-@@ -320,7 +320,7 @@ namespace ros_win_camera
+@@ -320,7 +324,7 @@ namespace ros_win_camera
              {
                  if (bForceConversion)
                  {
@@ -232,7 +255,7 @@ index 6b53b00..fd7785b 100644
                      if (!FindMatchingMediaType(spMediaType.put(), width, height, frameRate, GUID_NULL))
                      {
                          if (!FindMatchingMediaType(spMediaType.put(), width, height, 0, GUID_NULL))
-@@ -351,13 +351,13 @@ namespace ros_win_camera
+@@ -351,13 +355,13 @@ namespace ros_win_camera
  
                  if (SUCCEEDED(hr))
                  {
