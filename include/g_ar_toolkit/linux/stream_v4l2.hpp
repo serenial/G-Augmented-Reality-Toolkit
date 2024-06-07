@@ -31,7 +31,7 @@ namespace g_ar_toolkit
             void capture_frame(cv::Mat &, std::chrono::milliseconds);
             void start_stream();
             void stop_stream();
-            ~StreamV4L2();
+            ~StreamV4L2() = default;
 
         private:
             const std::unique_ptr<usb_cam::UsbCam> usb_cam_ptr;

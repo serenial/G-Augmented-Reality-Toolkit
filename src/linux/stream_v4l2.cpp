@@ -114,7 +114,3 @@ void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds t
     usb_cam_ptr->get_image(reinterpret_cast<char *>(rgb_buffer.data));
     cv::cvtColor(rgb_buffer, destination, cv::COLOR_RGB2BGRA);
 }
-
-StreamV4L2::~StreamV4L2(){
- int x = 0;
-}
