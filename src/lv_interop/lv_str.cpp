@@ -14,7 +14,7 @@ std::string_view lv_interop::lv_string_handle_to_std_string_view(LV_StringHandle
 }
 
 
-std::string lv_string_handle_to_std_string(LV_StringHandle_t handle){
+std::string lv_interop::lv_string_handle_to_std_string(LV_StringHandle_t handle){
     return std::string(lv_string_handle_to_std_string_view(handle));
 }
 
