@@ -2,6 +2,7 @@
 #define G_AR_TK__CAPTURE_CONTEXT_HPP_
 
 #include <string>
+#include <string_view>
 #include <vector>
 #include <memory>
 #include <map>
@@ -46,7 +47,7 @@ namespace g_ar_toolkit
             virtual void enumerate_devices(std::vector<device_info_t> &) =0;
             virtual void list_of_formats(std::vector<format_item_t>&) = 0;
             virtual ~Context() = default;
-            Stream* open_stream(const std::string&, stream_type_t, uint32_t);
+            Stream* open_stream(std::string_view, stream_type_t, uint32_t);
 
         };
 

@@ -286,7 +286,7 @@ extern "C"
 
             cv::putText(
                 (*img),
-                lv_string_handle_to_string(text_handle),
+                lv_string_handle_to_std_string(text_handle),
                 cv::Point{origin_ptr->x, origin_ptr->y},
                 font_face_enum_to_cv_hershey_font(font_face),
                 font_scale,
@@ -315,7 +315,7 @@ extern "C"
         try
         {
             cv::Size size = cv::getTextSize(
-                lv_string_handle_to_string(text_handle),
+                lv_string_handle_to_std_string(text_handle),
                 font_face_enum_to_cv_hershey_font(font_face),
                 font_scale,
                 thickness,

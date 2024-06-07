@@ -10,12 +10,12 @@ using namespace g_ar_toolkit;
 using namespace capture;
 using namespace std::chrono_literals;
 
-Stream *capture::create_platform_stream(std::string device_id, stream_type_t stream_type, uint32_t options)
+Stream *capture::create_platform_stream(std::string_view device_id, stream_type_t stream_type, uint32_t options)
 {
     return new StreamV4L2(device_id, stream_type, options);
 }
 
-StreamV4L2::StreamV4L2(const std::string& device_id, stream_type_t stream_type, uint32_t options)
+StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type, uint32_t options)
     : Stream(),
       usb_cam_ptr(std::make_unique<usb_cam::UsbCam>()),
       rgb_buffer(cv::Mat(stream_type.height, stream_type.width, CV_8UC3))
@@ -29,7 +29,7 @@ StreamV4L2::StreamV4L2(const std::string& device_id, stream_type_t stream_type, 
 
     if (device_match == device_list.end())
     {
-        throw std::invalid_argument("Unable to find a suitable matching device with device-id:\"" + device_id + "\".");
+        throw std::invalid_argument("Unable to find a suitable matching device with device-id:\"" + std::string(device_id) + "\".");
     }
 
     usb_cam::parameters_t usb_cam_parameters;
@@ -72,7 +72,7 @@ StreamV4L2::StreamV4L2(const std::string& device_id, stream_type_t stream_type, 
 
     if (supported_formats.empty())
     {
-        throw std::invalid_argument("Unable to find matching stream format for device with device-id:\"" + device_id + "\".");
+        throw std::invalid_argument("Unable to find matching stream format for device with device-id:\"" + std::string(device_id) + "\".");
     }
 
     // get the format-descritption of the first remaining format

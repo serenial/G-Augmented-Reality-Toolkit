@@ -59,7 +59,7 @@ extern "C"
                 }
             }
 
-            auto input = cv::imread(lv_string_handle_to_string(path_string_handle), flags);
+            auto input = cv::imread(lv_string_handle_to_std_string(path_string_handle), flags);
 
             if (dst.is_greyscale())
             {

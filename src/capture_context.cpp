@@ -81,8 +81,8 @@ extern "C"
                         out_ptr->name = 0;
                         out_ptr->formats = 0;
                     }
-                    copy_std_string_to_lv_string_handle_ptr(in.device_id, &(out_ptr->id));
-                    copy_std_string_to_lv_string_handle_ptr(in.device_name, &(out_ptr->name));
+                    copy_std_string_view_to_lv_string_handle_ptr(in.device_id, &(out_ptr->id));
+                    copy_std_string_view_to_lv_string_handle_ptr(in.device_name, &(out_ptr->name));
                     copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<stream_type_with_format_t>, LV_StreamFormatParameters_t>(
                         in.supported_formats,
                         &(out_ptr->formats),
@@ -134,7 +134,7 @@ extern "C"
                         out_ptr->name = 0;
                     }
                     out_ptr->index = in.index;
-                    copy_std_string_to_lv_string_handle_ptr(in.name, &(out_ptr->name));
+                    copy_std_string_view_to_lv_string_handle_ptr(in.name, &(out_ptr->name));
                 },
                 [](LV_FormatListItem_t to_deallocate)
                 {

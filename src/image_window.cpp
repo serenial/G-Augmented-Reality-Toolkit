@@ -16,7 +16,7 @@ extern "C"
     {
         try
         {
-            cv::imshow(lv_string_handle_to_string(window_name_str_handle), lv_image(edvr_ref_ptr));
+            cv::imshow(lv_string_handle_to_std_string(window_name_str_handle), lv_image(edvr_ref_ptr));
         }
         catch (...)
         {
@@ -30,7 +30,7 @@ extern "C"
     {
         try
         {
-            cv::destroyWindow(lv_string_handle_to_string(window_name_str_handle));
+            cv::destroyWindow(lv_string_handle_to_std_string(window_name_str_handle));
         }
         catch (...)
         {

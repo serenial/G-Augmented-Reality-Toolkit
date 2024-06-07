@@ -27,7 +27,7 @@ namespace g_ar_toolkit
         class StreamV4L2 : public g_ar_toolkit::capture::Stream
         {
         public:
-            StreamV4L2(const std::string&, stream_type_t, uint32_t);
+            StreamV4L2(std::string_view, stream_type_t, uint32_t);
             void capture_frame(cv::Mat &, std::chrono::milliseconds);
             void start_stream();
             void stop_stream();

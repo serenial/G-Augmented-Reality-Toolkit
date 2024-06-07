@@ -17,7 +17,7 @@ using namespace capture;
 using namespace std::chrono_literals;
 using namespace ros_win_camera;
 
-Stream* capture::create_platform_stream(const std::string& device_id, stream_type_t stream_type, uint32_t option)
+Stream* capture::create_platform_stream(std::string_view device_id, stream_type_t stream_type, uint32_t option)
 {
     return new StreamWMF(device_id, stream_type, option);
 }
@@ -27,7 +27,7 @@ Stream* capture::create_platform_stream(const std::string& device_id, stream_typ
 // Specify all the Context Functionality inside a lambda which is controlled via
 // mutex/conditional_variable synchronization
 
-StreamWMF::StreamWMF(const std::string& device_id, stream_type_t stream_type, uint32_t option)
+StreamWMF::StreamWMF(std::string_view device_id, stream_type_t stream_type, uint32_t option)
     : Stream(), last_state(states::STARTING),
       buffer_mat(cv::Mat(stream_type.height, stream_type.width, CV_8UC4)),
       rows(stream_type.height),

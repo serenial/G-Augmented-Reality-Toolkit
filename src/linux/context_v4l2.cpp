@@ -76,11 +76,11 @@ void ContextV4L2::list_of_formats(std::vector<format_item_t> &list)
     }
 }
 
-void capture::lookup_support_formats_by_device_path(std::string path, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &v4l2_supported_formats)
+void capture::lookup_support_formats_by_device_path(std::string_view path, std::vector<std::pair<v4l2_frmivalenum,v4l2_fmtdesc>> &v4l2_supported_formats)
 {
     int fd;
     // Try and open device to test access
-    if ((fd = open(path.c_str(), O_RDONLY)) != -1)
+    if ((fd = open(std::string(path).c_str(), O_RDONLY)) != -1)
     {
         struct v4l2_fmtdesc current_format;
         struct v4l2_frmsizeenum current_size;

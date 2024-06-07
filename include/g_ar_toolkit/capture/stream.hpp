@@ -1,9 +1,7 @@
 #ifndef G_AR_TK__CAPTURE_STREAM_HPP_
 #define G_AR_TK__CAPTURE_STREAM_HPP_
 
-#include <memory>
-#include <string>
-#include <map>
+#include <string_view>
 #include <chrono>
 
 #include <opencv2/opencv.hpp>
@@ -27,7 +25,7 @@ namespace g_ar_toolkit
 
         // stream factory
         // this should be provided by the platform specific implementations
-        Stream *create_platform_stream(const std::string&, stream_type_t, uint32_t);
+        Stream *create_platform_stream(std::string_view, stream_type_t, uint32_t);
     }
 }
 
