@@ -96,21 +96,66 @@ StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type, ui
         break;
     }
 
-    usb_cam_ptr->configure(usb_cam_parameters, io_method);
+    try
+    {
+
+        usb_cam_ptr->configure(usb_cam_parameters, io_method);
+    }
+    catch (const char *str)
+    {
+        throw std::runtime_error(str);
+    }
+    catch (int err_no)
+    {
+        throw std::runtime_error(strerror(err_no));
+    }
 }
 
 void StreamV4L2::start_stream()
 {
-    usb_cam_ptr->start_capturing();
+    try
+    {
+        usb_cam_ptr->start_capturing();
+    }
+    catch (const char *str)
+    {
+        throw std::runtime_error(str);
+    }
+    catch (int err_no)
+    {
+        throw std::runtime_error(strerror(err_no));
+    }
 }
 
 void StreamV4L2::stop_stream()
 {
-    usb_cam_ptr->stop_capturing();
+    try
+    {
+        usb_cam_ptr->stop_capturing();
+    }
+    catch (const char *str)
+    {
+        throw std::runtime_error(str);
+    }
+    catch (int err_no)
+    {
+        throw std::runtime_error(strerror(err_no));
+    }
 }
 
 void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
 {
-    usb_cam_ptr->get_image(reinterpret_cast<char *>(rgb_buffer.data));
-    cv::cvtColor(rgb_buffer, destination, cv::COLOR_RGB2BGRA);
+    try
+    {
+        usb_cam_ptr->get_image(reinterpret_cast<char *>(rgb_buffer.data));
+        cv::cvtColor(rgb_buffer, destination, cv::COLOR_RGB2BGRA);
+    }
+    catch (const char *str)
+    {
+        throw std::runtime_error(str);
+    }
+    catch (int err_no)
+    {
+        throw std::runtime_error(strerror(err_no));
+    }
 }
