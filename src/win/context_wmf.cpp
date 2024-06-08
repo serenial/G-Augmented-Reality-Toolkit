@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "g_ar_toolkit/win/context_wmf.hpp"
-#include "g_ar_toolkit/win/context_wmf_formats.hpp"
 #include "g_ar_toolkit/capture/stream.hpp"
 
 using namespace g_ar_toolkit;
@@ -25,20 +24,9 @@ Context *capture::create_platform_context()
 // Specify all the Context Functionality inside a lambda which is controlled via
 // mutex/conditional_variable synchronization
 ContextWMF::ContextWMF() : Context(),
-                           last_state(states::STARTING),
-                           last_error(errors::NO_ERR),
-                           format_lookup(
-                               [&]()
-                               {
-                                   std::unordered_map<GUID, format_item_t, GUIDHash> lookup;
-                                   for (uint32_t i = 0; i < std::size(formats_guid_and_names); i++)
-                                   {
-                                       format_item_t value{i, formats_guid_and_names[i].second};
-                                       lookup.emplace(formats_guid_and_names[i].first, value);
-                                   }
-                                   return lookup;
-                               }()),
-                           ftr(std::async(std::launch::async,
+                           m_last_state(states::STARTING),
+                           m_last_error(errors::NO_ERR),
+                           m_ftr(std::async(std::launch::async,
                                           [&]()
                                           {
                                               bool comstartup_ok = false;
@@ -52,10 +40,10 @@ ContextWMF::ContextWMF() : Context(),
 
                                               {
                                                   // new lock scope
-                                                  std::lock_guard lk(mtx);
+                                                  std::lock_guard lk(m_mtx);
                                                   if (hr != S_OK && hr != S_FALSE)
                                                   {
-                                                      last_error = errors::COM_INIT_ERR;
+                                                      m_last_error = errors::COM_INIT_ERR;
                                                       goto done;
                                                   }
                                                   else
@@ -69,22 +57,22 @@ ContextWMF::ContextWMF() : Context(),
                                                   switch (hr)
                                                   {
                                                   case MF_E_BAD_STARTUP_VERSION:
-                                                      last_error = errors::MF_STARTUP_BAD_VER;
+                                                      m_last_error = errors::MF_STARTUP_BAD_VER;
                                                       break;
                                                   case S_OK:
                                                       mfstartup_ok = true;
                                                       break;
                                                   default:
-                                                      last_error = errors::MF_STARTUP_OTHER_ERR;
+                                                      m_last_error = errors::MF_STARTUP_OTHER_ERR;
                                                   }
                                                   // update state
-                                                  last_state = last_error == errors::NO_ERR ? states::WAITING_ON_ACTION : states::STOPPING;
+                                                  m_last_state = m_last_error == errors::NO_ERR ? states::WAITING_ON_ACTION : states::STOPPING;
                                               }
                                               // setup done
-                                              notifier.notify_one();
+                                              m_notifier.notify_one();
 
                                               // handle setup fail
-                                              if (last_error != errors::NO_ERR)
+                                              if (m_last_error != errors::NO_ERR)
                                               {
                                                   goto done;
                                               }
@@ -93,11 +81,11 @@ ContextWMF::ContextWMF() : Context(),
                                               // check for external changes to last_state
                                               while (1)
                                               {
-                                                  std::unique_lock<std::mutex> lk(mtx);
+                                                  std::unique_lock<std::mutex> lk(m_mtx);
                                                   // poll to see if the state has changed - wait 50ms
-                                                  notifier.wait(lk, [&]
-                                                                { return last_state != states::WAITING_ON_ACTION; });
-                                                  switch (last_state)
+                                                  m_notifier.wait(lk, [&]
+                                                                { return m_last_state != states::WAITING_ON_ACTION; });
+                                                  switch (m_last_state)
                                                   {
                                                   case states::STOPPING:
                                                       lk.unlock();
@@ -107,16 +95,16 @@ ContextWMF::ContextWMF() : Context(),
                                                       try
                                                       {
                                                           update_last_device_enumeration();
-                                                          last_error = errors::NO_ERR;
+                                                          m_last_error = errors::NO_ERR;
                                                       }
                                                       catch (winrt::hresult_error &e)
                                                       {
-                                                          last_error = errors::DEVICE_ENUM_ERROR;
+                                                          m_last_error = errors::DEVICE_ENUM_ERROR;
                                                       }
                                                       // update flags and signal completion
-                                                      last_state = states::WAITING_ON_ACTION;
+                                                      m_last_state = states::WAITING_ON_ACTION;
                                                       lk.unlock();
-                                                      notifier.notify_one();
+                                                      m_notifier.notify_one();
                                                       break;
                                                   default:
                                                       lk.unlock();
@@ -137,24 +125,24 @@ ContextWMF::ContextWMF() : Context(),
 
                                               // set state to STOPPED
                                               {
-                                                  std::lock_guard lk(mtx);
-                                                  last_state = states::STOPPED;
+                                                  std::lock_guard lk(m_mtx);
+                                                  m_last_state = states::STOPPED;
                                               }
-                                              notifier.notify_one();
+                                              m_notifier.notify_one();
 
                                               return hr;
                                           }))
 {
     // wait on cv to see if the co-thread initialized ok
-    std::unique_lock lk(mtx);
-    notifier.wait(lk, [&]
-                  { return last_state != states::STARTING; });
+    std::unique_lock lk(m_mtx);
+    m_notifier.wait(lk, [&]
+                  { return m_last_state != states::STARTING; });
 
-    if (last_state != states::WAITING_ON_ACTION)
+    if (m_last_state != states::WAITING_ON_ACTION)
     {
         const char *error_msg = "An unknown error occured whilst initializing the Context Process.";
 
-        switch (last_error)
+        switch (m_last_error)
         {
         case errors::COM_INIT_ERR:
             error_msg = "Unable to initiliaze COM components";
@@ -175,20 +163,20 @@ ContextWMF::ContextWMF() : Context(),
 ContextWMF::~ContextWMF()
 {
     {
-        std::unique_lock<std::mutex> lk(mtx);
-        if (last_state != states::STOPPED)
+        std::unique_lock<std::mutex> lk(m_mtx);
+        if (m_last_state != states::STOPPED)
         {
             // instruct thread to stop
-            last_state = states::STOPPING;
+            m_last_state = states::STOPPING;
             lk.unlock();
-            notifier.notify_one();
+            m_notifier.notify_one();
         }
         else
         {
             lk.unlock();
         }
         // wait on future to return
-        ftr.wait();
+        m_ftr.wait();
     }
 }
 
@@ -196,24 +184,24 @@ void ContextWMF::enumerate_devices(std::vector<device_info_t> &devices)
 {
     // "request" device list
     {
-        std::lock_guard lk(mtx);
-        last_state = states::LISTING_DEVICES;
+        std::lock_guard lk(m_mtx);
+        m_last_state = states::LISTING_DEVICES;
     }
-    notifier.notify_one();
+    m_notifier.notify_one();
 
     // wait for result
-    std::unique_lock lk(mtx);
-    notifier.wait(lk, [&]
-                  { return last_state != states::LISTING_DEVICES; });
+    std::unique_lock lk(m_mtx);
+    m_notifier.wait(lk, [&]
+                  { return m_last_state != states::LISTING_DEVICES; });
 
     // check error and copy result;
-    if (last_error == errors::DEVICE_ENUM_ERROR)
+    if (m_last_error == errors::DEVICE_ENUM_ERROR)
     {
         lk.unlock();
         throw std::runtime_error("A error occurred whilst attempting to enumerate devices");
     }
     // copy last enum into devices
-    devices = last_enumeration;
+    devices = m_last_enumeration;
     // release mutex
     lk.unlock();
 }
@@ -236,8 +224,8 @@ void ContextWMF::update_last_device_enumeration()
     // wrap ppDevices into unique pointer
     std::unique_ptr<IMFActivate **, CoTaskMemFreeDeleter<IMFActivate **>> spppDevices(&ppDevices);
 
-    last_enumeration.clear();
-    last_enumeration.reserve(device_count);
+    m_last_enumeration.clear();
+    m_last_enumeration.reserve(device_count);
 
     // for each device
     for (UINT i = 0; i < device_count; i++)
@@ -275,7 +263,7 @@ void ContextWMF::update_last_device_enumeration()
         HRESULT hr = S_OK;
         while (hr == S_OK)
         {
-            stream_type_with_format_t format;
+            stream_type_t format;
             winrt::com_ptr<IMFMediaType> spMediaType;
             hr = spSourceReader->GetNativeMediaType(0, dwMediaTypeIndex, spMediaType.put());
             if (hr == MF_E_NO_MORE_TYPES)
@@ -287,39 +275,18 @@ void ContextWMF::update_last_device_enumeration()
             else if (hr == S_OK)
             {
                 // get the format info
-                GUID subType;
                 if (spMediaType != NULL)
                 {
-                    // lookup name of format
-                    winrt::check_hresult(spMediaType->GetGUID(MF_MT_SUBTYPE, &subType));
                     // get format details
-                    winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &format.stream_type.width, &format.stream_type.height));
-                    winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &format.stream_type.fps_numerator, &format.stream_type.fps_denominator));
+                    winrt::check_hresult(MFGetAttributeSize(spMediaType.get(), MF_MT_FRAME_SIZE, &format.width, &format.height));
+                    winrt::check_hresult(MFGetAttributeRatio(spMediaType.get(), MF_MT_FRAME_RATE, &format.fps_numerator, &format.fps_denominator));
 
-                    try
-                    {
-                        format.pixel_format = format_lookup.at(subType).index;
-                        // push this format into the vector
-                        device_info.supported_formats.push_back(format);
-                    }
-                    catch (std::out_of_range &e)
-                    {
-                        // ignore
-                    }
+                    device_info.supported_formats.push_back(format);
                 }
             }
             ++dwMediaTypeIndex;
         }
 
-        last_enumeration.push_back(device_info);
-    }
-}
-
-void ContextWMF::list_of_formats(std::vector<format_item_t> &list)
-{
-    for (auto const &item : format_lookup)
-    {
-        format_item_t value{item.second.index, item.second.name};
-        list.push_back(value);
+        m_last_enumeration.push_back(device_info);
     }
 }

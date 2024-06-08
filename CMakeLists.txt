@@ -82,7 +82,6 @@ set(PUBLIC_HEADER_DIR include/${PROJECT_NAME})
 # Platform name should match the value in
 SET(PLATFORM_HEADER_FILES_Windows
   ${PUBLIC_HEADER_DIR}/win/context_wmf.hpp
-  ${PUBLIC_HEADER_DIR}/win/context_wmf_formats.hpp
   ${PUBLIC_HEADER_DIR}/win/stream_wmf.hpp
   ${rosmsftcam_SOURCE_DIR}/include/win_camera/wincapture.h
 )

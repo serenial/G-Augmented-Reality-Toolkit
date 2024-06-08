@@ -39,6 +39,12 @@ namespace g_ar_toolkit
     {
         class ContextWMF : public g_ar_toolkit::capture::Context
         {
+            
+        public:
+            ContextWMF();
+            ~ContextWMF();
+            void enumerate_devices(std::vector<device_info_t> &devices);
+        private:
             enum class states
             {
                 STARTING,
@@ -55,20 +61,13 @@ namespace g_ar_toolkit
                 MF_STARTUP_OTHER_ERR,
                 DEVICE_ENUM_ERROR
             };
-            states last_state;
-            errors last_error;
-            std::mutex mtx;
-            const std::unordered_map<GUID, format_item_t, GUIDHash> format_lookup;
-            const std::future<HRESULT> ftr;
-            std::condition_variable notifier;
-            std::vector<device_info_t> last_enumeration;
+            states m_last_state;
+            errors m_last_error;
+            std::mutex m_mtx;
+            const std::future<HRESULT> m_ftr;
+            std::condition_variable m_notifier;
+            std::vector<device_info_t> m_last_enumeration;
             void update_last_device_enumeration();
-
-        public:
-            ContextWMF();
-            ~ContextWMF();
-            void enumerate_devices(std::vector<device_info_t> &devices);
-            void list_of_formats(std::vector<format_item_t>&);
         };
     }
 
