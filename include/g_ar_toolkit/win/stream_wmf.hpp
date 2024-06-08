@@ -25,6 +25,12 @@ namespace g_ar_toolkit
     {
         class StreamWMF : public g_ar_toolkit::capture::Stream
         {
+        public:
+            StreamWMF(std::string_view, stream_type_t);
+            ~StreamWMF();
+            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
+            void start_stream();
+            void stop_stream();
         private:
             enum class states
             {
@@ -40,23 +46,18 @@ namespace g_ar_toolkit
                 STOPPED
             };
 
-            std::mutex mtx;
-            std::condition_variable notifier;
-            states last_state;
-            cv::Mat buffer_mat;
-            cv::Mat* dest_mat_ptr;
-            const std::future<void> ftr;
-            void on_sample(IMFSample *pSample);
-            winrt::event_token sample_handler_token;
-            const uint32_t rows,cols;
-            std::exception_ptr last_exception;
-            bool streaming;
-            public:
-            StreamWMF(std::string_view, stream_type_t, uint32_t);
-            ~StreamWMF();
-            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
-            void start_stream();
-            void stop_stream();
+            std::mutex m_mtx;
+            std::condition_variable m_notifier;
+            states m_last_state;
+            cv::Mat m_buffer_mat;
+            cv::Mat* m_dest_mat_ptr;
+            const std::future<void> m_ftr;
+            winrt::event_token m_sample_handler_token;
+            const uint32_t m_rows,m_cols;
+            std::exception_ptr m_last_exception;
+            bool m_streaming;
+
+            void on_sample(IMFSample *);
         };
 
     }

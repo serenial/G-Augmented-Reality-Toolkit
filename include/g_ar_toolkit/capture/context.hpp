@@ -22,41 +22,25 @@ namespace g_ar_toolkit
             uint32_t width, height, fps_numerator, fps_denominator;
         };
 
-        struct stream_type_with_format_t
-        {
-            stream_type_t stream_type;
-            uint32_t pixel_format;
-        };
-
         struct device_info_t
         {
             std::string device_id;
             std::string device_name;
-            std::vector<stream_type_with_format_t> supported_formats;
-        };
-
-        struct format_item_t {
-            uint32_t index;
-            std::string name;
-            std::string convertor_name;
+            std::vector<stream_type_t> supported_formats;
         };
 
         class Context
         {
         public:
             virtual void enumerate_devices(std::vector<device_info_t> &) =0;
-            virtual void list_of_formats(std::vector<format_item_t>&) = 0;
             virtual ~Context() = default;
-            Stream* open_stream(std::string_view, stream_type_t, uint32_t);
+            Stream* open_stream(std::string_view, stream_type_t);
 
         };
 
         // context factory
         // this should be provided by the platform specific implementation
         Context* create_platform_context();
-        
-        // utility functions
-        uint32_t get_pixel_format_from_options(uint32_t);
     }
 }
 

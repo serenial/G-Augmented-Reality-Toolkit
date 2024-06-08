@@ -25,7 +25,7 @@ namespace g_ar_toolkit
 
         // stream factory
         // this should be provided by the platform specific implementations
-        Stream *create_platform_stream(std::string_view, stream_type_t, uint32_t);
+        Stream *create_platform_stream(std::string_view, stream_type_t);
     }
 }
 
