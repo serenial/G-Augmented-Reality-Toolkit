@@ -50,14 +50,6 @@ if(WIN32)
   FetchContent_MakeAvailable(rosmsftcam)
   
 elseif(UNIX)
-  find_package(FFMPEG REQUIRED)
-  FetchContent_Declare(rosusbcam
-    GIT_REPOSITORY https://github.com/ros-drivers/usb_cam
-    GIT_TAG 52dd75fb78ae608a2c40eea60f6e8eac673b91e8 # ros2 latest commit 2024/05/01
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_usb_cam.patch
-    UPDATE_DISCONNECTED 1
-  )
-  FetchContent_MakeAvailable(rosusbcam)
 
   FetchContent_Declare(v4l2listdevices
     GIT_REPOSITORY https://github.com/improvess/v4l2-list-devices
@@ -96,19 +88,6 @@ SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/context_v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/context_v4l2_formats.hpp
   ${PUBLIC_HEADER_DIR}/linux/stream_v4l2.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/constants.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/conversions.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/usb_cam.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/utils.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/av_pixel_format_helper.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/m420.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/mjpeg.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/mono.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/pixel_format_base.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/rgb.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/utils.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/uyvy.hpp
-  ${rosusbcam_SOURCE_DIR}/include/usb_cam/formats/yuyv.hpp
   ${v4l2listdevices_SOURCE_DIR}/include/v4l2_list_devices/list_devices.hpp
 )
 
@@ -209,15 +188,7 @@ elseif(UNIX)
   # set linking flags required for static ffmpeg without --fPIC
   set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC
-    ${FFMPEG_INCLUDE_DIRS}
-    ${rosusbcam_SOURCE_DIR}/include
     ${v4l2listdevices_SOURCE_DIR}/include
-  )
-  target_link_directories(${PROJECT_NAME} PRIVATE
-    ${FFMPEG_LIBRARY_DIRS}
-  )
-  target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${FFMPEG_LIBRARIES}
   )
 endif()
 

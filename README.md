@@ -94,7 +94,7 @@ Welcome - please open an issue if you would like to contribute
 |---------|---------|
 | OpenCV 4 | Apache License 2.0 |
 | [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
-| [usb_cam](https://github.com/ros-drivers/usb_cam) (on Linux) | BSD License 2.0 |
+| [openpnp-capture](https://github.com/openpnp/openpnp-capture.git) (on Linux) | MIT |
 | [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
 | [tinyobjectloader](https://github.com/tinyobjloader/tinyobjloader) (not yet integrated) | MIT |
 | [Apriltag](https://github.com/AprilRobotics/apriltag) (not yet integrated) | BSD 2-Clause License |
