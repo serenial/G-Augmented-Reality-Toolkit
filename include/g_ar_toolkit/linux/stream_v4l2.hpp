@@ -4,6 +4,12 @@
 #ifdef __linux__
 
 #include <memory>
+#include <mutex>
+#include <condition_variable>
+#include <future>
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
 
 #include "../capture/stream.hpp"
 
@@ -21,6 +27,32 @@ namespace g_ar_toolkit
             ~StreamV4L2();
 
         private:
+            enum class states
+            {
+                STARTING,
+                WAITING_ON_ACTION,
+                WAITING_ON_STREAM_START,
+                WAITING_ON_STREAM_START_ACK,
+                WAITING_ON_CAPTURE,
+                WAITING_ON_CAPTURE_ACK,
+                WAITING_ON_STREAM_STOP,
+                WAITING_ON_STREAM_STOP_ACK,
+                STOPPING,
+                STOPPED
+            };
+
+
+
+            int m_fd; // device handle
+            std::mutex m_mtx;
+            std::condition_variable m_notifier;
+            states m_last_state;
+            cv::Mat m_buffer_mat;
+            cv::Mat *m_dest_mat_ptr;
+            //const std::future<void> m_ftr;
+            //const uint32_t m_rows, m_cols;
+            std::exception_ptr m_last_exception;
+            bool m_streaming;
         };
     }
 }

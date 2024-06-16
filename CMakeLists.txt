@@ -87,12 +87,14 @@ SET(PLATFORM_SOURCE_FILES_Windows
 SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/context_v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/stream_v4l2.hpp
+  ${PUBLIC_HEADER_DIR}/linux/mjpeg_decoder.hpp
   ${v4l2listdevices_SOURCE_DIR}/include/v4l2_list_devices/list_devices.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
   src/linux/context_v4l2.cpp
   src/linux/stream_v4l2.cpp
+  src/linux/mjpeg_decoder.cpp
 )
 
 # Add Project sources
