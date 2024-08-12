@@ -14,4 +14,6 @@ cv::HersheyFonts font_face_enum_to_cv_hershey_font(uint8_t);
 
 int image_flip_enum_to_image_flip_code(uint8_t);
 
+int find_chessboard_corners_enum_to_flag(uint8_t);
+
 #endif //G_AR_TK__INTEROP_LV_ARRAY_HPP_

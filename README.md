@@ -50,9 +50,10 @@ Then run the `vcpkg` bootstrap script in the `vcpkg` directory for your platform
 If you wish to modify the C++ code you will require the following for building the binaries
 
 * C++ Development Tools for Windows (VS 2022)
+* Ninja build tool
 * (Recommended) VSCode with C++ and CMake Tool Extensions installed
 
-### on Linux (Ubuntu)
+### on Linux (Ubuntu) - Still Under Development
 Install the dependencies using `apt`
 
 ```bash
@@ -62,10 +63,17 @@ sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg
 ### C++ Setup
 
 * Install dependencies
+
 _If using VSCode_
+
+> **Note**
+> Windows users should launch _VSCode_ or the build batchfile/script from the `x86 Native Tools Command Prompt ...` or `x64 Native Tools Command Prompt ...` (depending on desired bitness) to ensure the build tools can be located
+> _VSCode_ can be launced by simply running the `code` command
+
 * Use the `.vscode-example` directory as a template for a project `.vscode` directory and configure the *cmake/vcpkg* location
-* Use the VSCode CMake intergration tools to choose the build-kit, release type to match your system
+* Use the VSCode CMake intergration tools to choose the desored configuration (release/debug)
 * build the "install" target which should configure, build and install the binaries to `LabVIEW/bin`
+  
 _If not using VSCode_
 * Use the provided `<platform>-win-build.bat-example` batch files as a starting point. Adjust variables in the batch file and modify other values to suit your preferences. 
 * Run your modified batch file to build and install the .dll into the `LabVIEW/bin` directory

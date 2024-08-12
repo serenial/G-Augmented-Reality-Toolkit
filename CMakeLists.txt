@@ -1,21 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
 
-# Use static build on windows to generate one big binary
-# with all dependent .lib files bundled
-# this VCPKG flag needs to be set before the "project" directive
-# so every dependency is built for a static binary target
-if(NOT DEFINED VCPKG_TARGET_TRIPLET)
-  if(${CMAKE_GENERATOR} MATCHES "Visual Studio [0-9]+ [0-9]+")
-    if(CMAKE_GENERATOR_PLATFORM STREQUAL "win32")
-      set(VCPKG_TARGET_TRIPLET x86-windows-static)
-    else()
-      set(VCPKG_TARGET_TRIPLET x64-windows-static)
-    endif()
-  elseif(${CMAKE_GENERATOR} MATCHES "Unix Makefiles")
-    set(VCPKG_TARGET_TRIPLET x64-linux)
-  endif()
-endif()
-
 # Specify Project
 project(g_ar_toolkit VERSION 1.0.0 LANGUAGES C CXX)
 
@@ -130,6 +114,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_negate.cpp
   src/image_transform.cpp
   src/image_rotate.cpp
+  src/process_corners.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -212,6 +197,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_core
   opencv_imgproc
   opencv_highgui
+  opencv_calib3d
 )
 
 # Install Shared Library

@@ -1,9 +1,6 @@
 {
     "cmake.configureOnOpen": true,
     "cmake.configureOnEdit": false,
-    "cmake.configureSettings": {
-        "CMAKE_TOOLCHAIN_FILE": "vcpkg/scripts/buildsystems/vcpkg.cmake"
-    },
     "C_Cpp.default.compilerPath": "/usr/bin/g++",
     "files.associations": {
         "array": "cpp",

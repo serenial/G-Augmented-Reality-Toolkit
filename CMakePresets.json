@@ -1,0 +1,57 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "toolchainFile": "vcpkg/scripts/buildsystems/vcpkg.cmake",
+            "generator": "Ninja"
+        },
+        {
+            "name": "windows-base",
+            "inherits": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/windows-$penv{Platform}",
+            "cacheVariables": {"VCPKG_TARGET_TRIPLET":"$penv{Platform}-windows-static"},
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "windows-debug",
+            "hidden": false,
+            "inherits": "windows-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-release",
+            "inherits": "windows-base",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "VCPKG_BUILD_TYPE": "release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-debug-build",
+            "configurePreset": "windows-debug",
+            "targets": "install"
+        },
+        {
+            "name": "windows-release-build",
+            "configurePreset": "windows-release",
+            "targets": "install"
+        }
+    ]
+}

@@ -70,6 +70,26 @@ namespace g_ar_toolkit
             return (**handle_ptr)->dims;
         }
 
+        template <typename T>
+        auto array_handle_array_length(LV_Handle_t<LV_Array_t<2, T>> handle)
+        {
+            if (!handle || !(*handle))
+            {
+                return std::array<size_t,2>{ 0, 0 };
+            }
+            return (*handle)->dims;
+        }
+
+        template <typename T>
+        auto array_handle_array_length(LV_Handle_t<LV_Array_t<1, T>> handle)
+        {
+            if (!handle || !(*handle))
+            {
+                return 0;
+            }
+            return (*handle)->dims[0];
+        }
+
         template <typename T, typename U>
         void copy_with_allocation_to_1d_lv_array_handle_ptr(
             const T &collection,

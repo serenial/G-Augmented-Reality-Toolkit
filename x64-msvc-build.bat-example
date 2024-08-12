@@ -1,24 +1,20 @@
 set VCPKGROOT="vcpkg"
-set SCRIPT_DIR=%~dp0.
-set BUILD_DIR="%SCRIPT_DIR%\build"
+set SCRIPT_DIR="%~dp0."
 echo off
 set BUILD_TYPE=release
+
+@REM If you are using a different MSVC Version than 2022 you will need to modify this path
+call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat
 
 if "%1" == "" (
      echo *** Building release ***
      echo If a debug version is required supply the batch file with the argument "debug".
 )
 if "%1" == "debug" (
-    set BUILD_TYPE=DEBUG
+    set BUILD_TYPE=debug
     echo ** Building debug ***
 )
 
+cd %SCRIPT_DIR%
 
-mkdir %BUILD_DIR%
-cd %BUILD_DIR%
-
-cmake -DCMAKE_TOOLCHAIN_FILE:STRING="%VCPKGROOT:"=%\scripts\buildsystems\vcpkg.cmake" ^
- -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
- ../ -G "Visual Studio 17 2022" -T host=x64 -A x64 ^
- && cmake --build . --config %BUILD_TYPE% ^
- && cmake --install . --config %BUILD_TYPE%
+cmake --preset=windows-%BUILD_TYPE% && cmake --build --preset=windows-%BUILD_TYPE%-build
