@@ -89,6 +89,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_u32_colour.cpp
   src/lv_interop/lv_str.cpp
   src/lv_interop/lv_enums.cpp
+  src/lv_interop/lv_termination_critera.cpp
   src/capture/context.cpp
   src/image_create.cpp
   src/image_window.cpp
@@ -129,6 +130,7 @@ target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_u32_colour.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_str.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_array.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_termination_criteria.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/set_packing.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_edvr_managed_object.hpp

@@ -5,8 +5,10 @@
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
 	<Property Name="NI.SortType" Type="Int">3</Property>
-	<Property Name="NI_IconEditor" Type="Str">50 48 48 49 56 48 48 55 13 0 0 0 0 1 23 21 76 111 97 100 32 38 32 85 110 108 111 97 100 46 108 118 99 108 97 115 115 0 0 1 0 0 0 0 0 9 0 0 0 76 1 100 1 100 80 84 72 48 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 11 83 109 97 108 108 32 70 111 110 116 115 0 1 9 1 1
+	<Property Name="NI_IconEditor" Type="Str">50 48 48 49 56 48 48 55 13 0 0 0 0 1 23 21 76 111 97 100 32 38 32 85 110 108 111 97 100 46 108 118 99 108 97 115 115 0 0 1 0 0 0 0 0 9 0 0 0 76 1 100 1 100 80 84 72 48 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 11 83 109 97 108 108 32 70 111 110 116 115 0 1 9 1 1
+
 </Property>
 	<Item Name="Image.lvclass" Type="LVClass" URL="../Image/Image.lvclass"/>
+	<Item Name="CameraCalibration.lvclass" Type="LVClass" URL="../CameraCalibration/CameraCalibration/CameraCalibration.lvclass"/>
 	<Item Name="CameraManager.lvclass" Type="LVClass" URL="../CameraManager/CameraManager.lvclass"/>
 </Library>
