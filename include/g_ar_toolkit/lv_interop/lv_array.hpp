@@ -94,7 +94,7 @@ namespace g_ar_toolkit
         void copy_with_allocation_to_1d_lv_array_handle_ptr(
             const T &collection,
             LV_HandlePtr_t<LV_Array_t<1, U>> handle_ptr,
-            std::function<void(U *, bool, typename T::value_type)> copy = [](auto *out, bool, auto in)
+            std::function<void(U *, bool, typename T::value_type, size_t)> copy = [](auto *out, bool, auto in, size_t i)
             { *out = in; },
             std::function<void(U)> deallocate = [](auto for_deallocation) {})
         {
@@ -102,13 +102,14 @@ namespace g_ar_toolkit
 
             ensure_array_handle_ptr_can_hold_n_elements(handle_ptr, collection.size());
 
-            auto data_ptr = (**handle_ptr)->data_ptr();
+            auto start_ptr = (**handle_ptr)->data_ptr(); 
+            auto data_ptr = start_ptr;
 
             // transform and copy each element
             for (auto &element : collection)
             {
                 auto is_newly_allocated = (data_ptr - (**handle_ptr)->data_ptr()) >= handle_start_len;
-                copy(data_ptr, is_newly_allocated, element);
+                copy(data_ptr, is_newly_allocated, element, data_ptr-start_ptr);
                 data_ptr++;
             }
 

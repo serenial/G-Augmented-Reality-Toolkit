@@ -1,6 +1,7 @@
 {
     "dependencies": [
         "opencv",
+        "span-lite",
         {
             "name": "ffmpeg",
             "platform": "linux",
@@ -20,6 +21,10 @@
         {
             "name": "ffmpeg",
             "version": "6.1.1"
+        },
+        {
+            "name":"span-lite",
+            "version":"0.11.0#0"
         }
     ],
     "builtin-baseline": "943c5ef1c8f6b5e6ced092b242c8299caae2ff01"

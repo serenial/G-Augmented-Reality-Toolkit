@@ -114,3 +114,22 @@ int find_chessboard_corners_enum_to_flag(uint8_t enum_value)
 
     throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
 }
+
+int find_chessboard_corners_enum_to_flag_sb(uint8_t enum_value)
+{
+
+    const int flags[] = {
+        cv::CALIB_CB_NORMALIZE_IMAGE,
+        cv::CALIB_CB_EXHAUSTIVE,
+        cv::CALIB_CB_ACCURACY,
+        cv::CALIB_CB_LARGER,
+        cv::CALIB_CB_MARKER
+    };
+
+    if (enum_value < std::size(flags))
+    {
+        return flags[enum_value];
+    }
+
+    throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
+}

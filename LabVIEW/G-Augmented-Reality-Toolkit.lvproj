@@ -29,7 +29,7 @@
 		<Item Name="g_ar_toolkit.capture.lvlib" Type="Library" URL="../g_ar_toolkit.capture/g_ar_toolkit.capture.lvlib"/>
 		<Item Name="g_ar_toolkit.ar.lvlib" Type="Library" URL="../g_ar_toolkit.ar/g_ar_toolkit.ar.lvlib"/>
 		<Item Name="g_ar_toolkit.pointset_utils.lvlib" Type="Library" URL="../g_ar_toolkit.pointset_utils/g_ar_toolkit.pointset_utils.lvlib"/>
-		<Item Name="g_ar_toolkit.camera_calibration.lvlib" Type="Library" URL="../g_ar_toolkit.camera_calibration/g_ar_toolkit.camera_calibration.lvlib"/>
+		<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
 		<Item Name="g_ar_toolkit.test.lvlib" Type="Library" URL="../g_ar_toolkit.test/g_ar_toolkit.test.lvlib"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">

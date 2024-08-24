@@ -2,6 +2,8 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/calib3d.hpp>
 
+#include <cstring>
+
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
@@ -62,7 +64,7 @@ extern "C"
 
             cv::findChessboardCorners(src, pattern, corners, flags);
 
-            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<cv::Point2f>, LV_Corner_t>(corners, corners_handle_ptr, [](LV_Corner_t *out, bool _, cv::Point2f in)
+            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<cv::Point2f>, LV_Corner_t>(corners, corners_handle_ptr, [](LV_Corner_t *out, bool _, cv::Point2f in, size_t __)
                                                                                                   {
                 out->x = in.x;
                 out->y = in.y; });
@@ -73,8 +75,7 @@ extern "C"
         }
         return LV_ERR_noError;
     }
-
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_corner_sub_pix(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_refine_corner_sub_pix(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_Size_t *window_size_ptr,
@@ -100,10 +101,58 @@ extern "C"
                              cv::Size(zero_zone_ptr->width, zero_zone_ptr->height),
                              lv_termination_critera_ptr_to_cv_term_criteria(term_crit_ptr));
 
-            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<cv::Point2f>, LV_Corner_t>(corners, corners_handle_ptr, [](LV_Corner_t *out, bool _, cv::Point2f in)
+            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<cv::Point2f>, LV_Corner_t>(corners, corners_handle_ptr, [](LV_Corner_t *out, bool _, cv::Point2f in, size_t __)
                                                                                                   {
                 out->x = in.x;
                 out->y = in.y; });
+        }
+        catch (...)
+        {
+            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+        }
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_find_chessboard_corners_sb(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_EDVRReferencePtr_t src_edvr_ref_ptr,
+        LV_Chessboard_Points_t *points_ptr,
+        LV_Handle_t<LV_Array_t<1, uint8_t>> flags_array_handle,
+        LV_CornerArrayHldPtr_t corners_handle_ptr,
+        LV_HandlePtr_t<LV_Array_t<2, uint8_t>> meta_handle_ptr)
+    {
+        try
+        {
+            lv_image src(src_edvr_ref_ptr);
+
+            int flags = 0;
+
+            // accumulate array of enums into flags
+            for (size_t i = 0; i < array_handle_array_length(flags_array_handle); i++)
+            {
+                flags = flags | find_chessboard_corners_enum_to_flag_sb((*flags_array_handle)->data[i]);
+            }
+
+            std::vector<cv::Point2f> corners;
+
+            cv::Size pattern(points_ptr->points_per_row, points_ptr->points_per_col);
+
+            cv::Mat meta{pattern, CV_8UC1};
+
+            cv::findChessboardCornersSB(src, pattern, corners, flags, meta);
+
+            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<cv::Point2f>, LV_Corner_t>(corners, corners_handle_ptr, [&](LV_Corner_t *out, bool _, cv::Point2f in, size_t i)
+                                                                                                  {
+                out->x = in.x;
+                out->y = in.y; });
+
+            size_t meta_dims [] = {std::size_t(pattern.width), std::size_t(pattern.height)};
+            
+            ensure_array_handle_ptr_can_hold_n_elements<uint8_t,2>(meta_handle_ptr, meta_dims);
+            std::memcpy((**meta_handle_ptr)->data, meta.ptr(), meta.size().area());
+
+            (**meta_handle_ptr)->dims[0] = meta_dims[0];
+            (**meta_handle_ptr)->dims[1] = meta_dims[1];
         }
         catch (...)
         {

@@ -65,7 +65,7 @@ extern "C"
             copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<device_info_t>, LV_DeviceInfo_t>(
                 devices,
                 device_info_handle_ptr,
-                [](LV_DeviceInfo_t *out_ptr, bool newly_allocated, device_info_t in)
+                [](LV_DeviceInfo_t *out_ptr, bool newly_allocated, device_info_t in, size_t _)
                 {
                     if (newly_allocated)
                     {
@@ -78,7 +78,7 @@ extern "C"
                     copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<stream_type_t>, LV_StreamFormatParameters_t>(
                         in.supported_formats,
                         &(out_ptr->formats),
-                        [](LV_StreamFormatParameters_t *out_ptr, bool newly_allocated, stream_type_t in)
+                        [](LV_StreamFormatParameters_t *out_ptr, bool newly_allocated, stream_type_t in, size_t _)
                         {
                             out_ptr->fps_numerator = in.fps_numerator;
                             out_ptr->fps_denominator = in.fps_denominator;

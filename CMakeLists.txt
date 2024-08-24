@@ -23,6 +23,8 @@ endif()
 
 ## Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
+## Find C++17 patch for C++20 std::span
+find_package(span-lite CONFIG REQUIRED)
 
 if(WIN32)
   FetchContent_Declare(rosmsftcam
@@ -115,7 +117,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_negate.cpp
   src/image_transform.cpp
   src/image_rotate.cpp
-  src/process_corners.cpp
+  src/feature_detection.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -200,6 +202,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_imgproc
   opencv_highgui
   opencv_calib3d
+  nonstd::span-lite
 )
 
 # Install Shared Library
