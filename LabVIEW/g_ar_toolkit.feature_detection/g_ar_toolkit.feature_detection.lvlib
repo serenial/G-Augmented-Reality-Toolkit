@@ -20,15 +20,18 @@
 	</Item>
 	<Item Name="Private" Type="Folder">
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
+		<Item Name="ChessboardSquareLocation.ctl" Type="VI" URL="../ChessboardSquareLocation.ctl"/>
 		<Item Name="FindChessboardCorners.vim" Type="VI" URL="../FindChessboardCorners.vim"/>
 		<Item Name="FindChessboardCornersSectorBased.vim" Type="VI" URL="../FindChessboardCornersSectorBased.vim"/>
 	</Item>
 	<Item Name="Types" Type="Folder">
 		<Item Name="Chessboard Corner Info.ctl" Type="VI" URL="../Chessboard Corner Info.ctl"/>
+		<Item Name="Chessboard Square Marker.ctl" Type="VI" URL="../Chessboard Square Marker.ctl"/>
 		<Item Name="Find Chessboard Corners Flags.ctl" Type="VI" URL="../Find Chessboard Corners Flags.ctl"/>
 		<Item Name="Find Chessboard Corners Sector Based Flags.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Flags.ctl"/>
 		<Item Name="Find Chessboard Corners Sector Based Meta.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Meta.ctl"/>
 	</Item>
+	<Item Name="DrawChessboardRadon.vi" Type="VI" URL="../DrawChessboardRadon.vi"/>
 	<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 	<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 </Library>

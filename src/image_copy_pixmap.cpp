@@ -120,9 +120,9 @@ extern "C"
                     else
                     {
                         // apply lookup pixel-by-pixel as we are reading 4 channel lookup on a single channel source
-                        for (size_t row = 0; row < dst.height(); row++)
+                        for (size_t row = 0; row < rectangle.height; row++)
                         {
-                            for (size_t column = 0; column < dst.width(); column++)
+                            for (size_t column = 0; column < rectangle.width; column++)
                             {
                                 auto index = pixmap_image_data_mat.at<uint8_t>(row, column);
                                 working_mat_ptr->at<cv::Vec4b>(row, column) = lookup_table.at<cv::Vec4b>(index);

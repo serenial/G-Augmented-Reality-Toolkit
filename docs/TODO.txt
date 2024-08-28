@@ -1,5 +1,7 @@
 Refactor Tests
 
+Fix Copy Pixmap to handle rectangles with non (0,0) top left corners
+
 Calibration Functions
 
 * Chessboard Detection
