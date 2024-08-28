@@ -1,3 +1,5 @@
+#include <memory>
+
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -5,6 +7,7 @@
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_array.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
+#include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -39,7 +42,8 @@ extern "C"
         LV_PixmapImagePtr_t pixmap_image_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
-        LV_BooleanPtr_t has_mask_ptr)
+        LV_BooleanPtr_t has_mask_ptr,
+        LV_U32RGBColour_t background_value)
     {
         try
         {
@@ -50,7 +54,8 @@ extern "C"
             lv_image dst(dst_edvr_ref_ptr);
 
             cv::Mat working_mat;
-            cv::Mat *working_mat_ptr;
+
+            cv::Size required_dst_size(cv::Point2i{pixmap_image_ptr->rect.right, pixmap_image_ptr->rect.bottom});
 
             // create rectangle
             cv::Rect2i rectangle(cv::Point2i{pixmap_image_ptr->rect.left, pixmap_image_ptr->rect.top}, cv::Point2i{pixmap_image_ptr->rect.right, pixmap_image_ptr->rect.bottom});
@@ -62,21 +67,33 @@ extern "C"
 
             if (flatten_mask_to_dst)
             {
-                if (dst.size() != rectangle.size())
+                if (dst.size() != required_dst_size)
                 {
                     throw std::invalid_argument("The pixmap contains mask data but the destination image is not correctly initialized. " 
                                                 " Either use <b>Copy Pixmap to Image with Mask Output.vi</b> to copy the mask information"
                                                 " or intialize the destination image pixels to specify the background image.");
                 }
 
+                // just create a working mat that is the required rectangle size
                 working_mat = cv::Mat(rectangle.size(), dst.cv_type());
-                working_mat_ptr = &working_mat;
             }
             else
             {
-                dst.ensure_sized_to_match(rectangle);
-                working_mat_ptr = &(*dst);
+                dst.ensure_sized_to_match(required_dst_size);
+
+                if(required_dst_size != rectangle.size()){
+                // fill with specified background colour
+                    if(dst.is_bgra()){
+                        (*dst) = background_value.get_bgra();
+                    }
+                    else{
+                        (*dst) = background_value.get_blue();
+                    }
+                }
+                working_mat = (*dst)(rectangle);
             }
+
+            cv::Mat* working_mat_ptr = &(working_mat);
 
             auto data_ptr = (*pixmap_image_ptr->image_array_handle)->data_ptr();
 
@@ -171,15 +188,15 @@ extern "C"
                 }
 
                 // flatten the mask into the dst
-                cv::Mat mask(dst.size(), CV_8UC1);
+                cv::Mat mask(rectangle.size(), CV_8UC1);
                 copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, mask);
-                working_mat_ptr->copyTo((*dst), mask);
+                working_mat_ptr->copyTo((*dst)(rectangle), mask);
                 return LV_ERR_noError;
             }
 
             lv_image mask(mask_edvr_ref_ptr);
 
-            mask.ensure_sized_to_match(rectangle);
+            mask.ensure_sized_to_match(required_dst_size);
 
             // lv-mask is empty
             if (number_of_mask_bytes == 0)
@@ -191,7 +208,7 @@ extern "C"
             }
 
             // copy lv mask into mask-image
-            copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, *mask);
+            copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, (*mask)(rectangle));
         }
         catch (...)
         {
