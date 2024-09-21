@@ -10,6 +10,7 @@
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Draw Chessboard" Type="Folder">
 			<Item Name="DrawChessboard.vi" Type="VI" URL="../DrawChessboard.vi"/>
+			<Item Name="DrawChessboardRadon.vi" Type="VI" URL="../DrawChessboardRadon.vi"/>
 		</Item>
 		<Item Name="Find Chessboard Corners" Type="Folder">
 			<Item Name="FindChessboardCornersARGB.vi" Type="VI" URL="../FindChessboardCornersARGB.vi"/>
@@ -20,7 +21,12 @@
 	</Item>
 	<Item Name="Private" Type="Folder">
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
+		<Item Name="Chessboard Semi Circle Square Type.ctl" Type="VI" URL="../Chessboard Semi Circle Square Type.ctl"/>
+		<Item Name="Chessboard Teardrop Corner Type.ctl" Type="VI" URL="../Chessboard Teardrop Corner Type.ctl"/>
 		<Item Name="ChessboardSquareLocation.ctl" Type="VI" URL="../ChessboardSquareLocation.ctl"/>
+		<Item Name="DrawChessboardSemiCircleSquare.vi" Type="VI" URL="../DrawChessboardSemiCircleSquare.vi"/>
+		<Item Name="DrawChessboardSpotOnSquare.vi" Type="VI" URL="../DrawChessboardSpotOnSquare.vi"/>
+		<Item Name="DrawChessboardTearDropSquare.vi" Type="VI" URL="../DrawChessboardTearDropSquare.vi"/>
 		<Item Name="FindChessboardCorners.vim" Type="VI" URL="../FindChessboardCorners.vim"/>
 		<Item Name="FindChessboardCornersSectorBased.vim" Type="VI" URL="../FindChessboardCornersSectorBased.vim"/>
 	</Item>
@@ -31,7 +37,6 @@
 		<Item Name="Find Chessboard Corners Sector Based Flags.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Flags.ctl"/>
 		<Item Name="Find Chessboard Corners Sector Based Meta.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Meta.ctl"/>
 	</Item>
-	<Item Name="DrawChessboardRadon.vi" Type="VI" URL="../DrawChessboardRadon.vi"/>
 	<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 	<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 </Library>
