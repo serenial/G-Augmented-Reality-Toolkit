@@ -90,7 +90,7 @@ extern "C"
                         (*dst) = background_value.get_blue();
                     }
                 }
-                working_mat = (*dst)(rectangle);
+                working_mat = dst(rectangle);
             }
 
             cv::Mat* working_mat_ptr = &(working_mat);
@@ -190,7 +190,7 @@ extern "C"
                 // flatten the mask into the dst
                 cv::Mat mask(rectangle.size(), CV_8UC1);
                 copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, mask);
-                working_mat_ptr->copyTo((*dst)(rectangle), mask);
+                working_mat_ptr->copyTo(dst(rectangle), mask);
                 return LV_ERR_noError;
             }
 
@@ -208,7 +208,8 @@ extern "C"
             }
 
             // copy lv mask into mask-image
-            copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, (*mask)(rectangle));
+            cv::Mat mask_roi = mask(rectangle);
+            copy_lv_mask_to_cv_mat(pixmap_image_ptr, number_of_mask_bytes, mask_roi);
         }
         catch (...)
         {

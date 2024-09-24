@@ -43,7 +43,7 @@ extern "C"
 
             cv::Rect crop_rect(origin_ptr->x, origin_ptr->y, size_ptr->width, size_ptr->height);
 
-            (src.mat()(crop_rect)).copyTo(dst);
+            (src(crop_rect)).copyTo(dst);
         }
         catch (...)
         {

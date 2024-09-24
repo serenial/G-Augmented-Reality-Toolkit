@@ -40,7 +40,7 @@ extern "C"
             }
             else
             {
-                (*src)(cv::Rect(cv::Point(0, 0), raw_memory.size())).copyTo(raw_memory);
+                src(cv::Rect(cv::Point(0, 0), raw_memory.size())).copyTo(raw_memory);
             }
         }
         catch (...)

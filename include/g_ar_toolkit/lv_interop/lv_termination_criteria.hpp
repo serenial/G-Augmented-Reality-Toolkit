@@ -11,7 +11,7 @@ namespace g_ar_toolkit
     {
 
         // cv Termination Criteria
-        using LV_TerminationCritera_t = struct
+        struct LV_TerminationCritera_t
         {
             double epsilon;
             int32_t iterations;

@@ -32,7 +32,7 @@ extern "C"
     {
         try
         {
-            
+
             throw_if_edvr_ref_pointers_not_unique({src_parent_edvr_ref_ptr, src_child_edvr_ref_ptr, dst_edvr_ref_ptr, mask_edvr_ref_ptr});
             lv_image src_parent(src_parent_edvr_ref_ptr);
             lv_image src_child(src_child_edvr_ref_ptr);
@@ -44,14 +44,14 @@ extern "C"
             src_parent.copyTo(dst);
 
             // determine area to copy
-            cv::Rect child_rect(cv::Point(offset_ptr->x, offset_ptr->y),src_child.size());
-            cv::Rect parent_rect(cv::Point(0,0) , src_parent.size());
+            cv::Rect child_rect(cv::Point(offset_ptr->x, offset_ptr->y), src_child.size());
+            cv::Rect parent_rect(cv::Point(0, 0), src_parent.size());
 
             // intersecting area
             cv::Rect copy_rect = child_rect & parent_rect;
 
-            cv::Mat dst_rect = (*dst)(copy_rect);
-            cv::Mat src_rect =(*src_child)(cv::Rect(cv::Point(0,0), copy_rect.size()));
+            cv::Mat dst_rect = dst(copy_rect);
+            cv::Mat src_rect = src_child(cv::Rect(cv::Point(0, 0), copy_rect.size()));
 
             if (*has_mask_ptr)
             {
@@ -63,7 +63,6 @@ extern "C"
                 // copy without mask
                 src_rect.copyTo(dst_rect);
             }
-
         }
         catch (...)
         {

@@ -264,3 +264,7 @@ void lv_image::ensure_sized_to_match(cv::Size target_size)
         set_mat(cv::Mat(target_size, cv_type()));
     }
 }
+
+cv::Mat lv_image::operator()(cv::Rect2i rect){
+    return data->mat(rect);
+}

@@ -25,21 +25,47 @@
             }
         },
         {
-            "name": "windows-debug",
-            "hidden": false,
-            "inherits": "windows-base",
+            "name": "debug",
+            "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "windows-release",
-            "inherits": "windows-base",
-            "hidden": false,
+            "name": "release",
+            "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "VCPKG_BUILD_TYPE": "release"
             }
+        },
+        {
+            "name": "linux-desktop",
+            "inherits": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/linux-desktop",
+            "cacheVariables": {"VCPKG_TARGET_TRIPLET":"x64-linux"},
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name":"windows-debug",
+            "inherits": ["windows-base", "debug"]
+        },
+        {
+            "name":"windows-release",
+            "inherits": ["windows-base", "release"]
+        },
+        {
+            "name":"linux-desktop-debug",
+            "inherits": ["linux-desktop", "debug"]
+        },
+        {
+            "name":"linux-desktop-release",
+            "inherits": ["linux-desktop", "release"]
         }
     ],
     "buildPresets": [
@@ -51,6 +77,11 @@
         {
             "name": "windows-release-build",
             "configurePreset": "windows-release",
+            "targets": "install"
+        },
+        {
+            "name": "linux-desktop-debug-build",
+            "configurePreset": "linux-desktop-debug",
             "targets": "install"
         }
     ]

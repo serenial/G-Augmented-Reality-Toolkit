@@ -3,6 +3,9 @@
 
 #include "g_ar_toolkit/lv_interop/lv_termination_criteria.hpp"
 
+using namespace g_ar_toolkit;
+using namespace lv_interop;
+
 cv::TermCriteria g_ar_toolkit::lv_interop::lv_termination_critera_ptr_to_cv_term_criteria(LV_TerminationCritera_t *ptr)
 {
 

@@ -50,6 +50,7 @@ namespace g_ar_toolkit
         }
         void upgrade_to_mapped();
         void downgrade_from_mapped();
+        cv::Mat operator()(cv::Rect2i);
 
         // user-defined conversions to openCV's Input and Output Array types
         // this allows an Image instance to pretend to work like a cv::Mat
