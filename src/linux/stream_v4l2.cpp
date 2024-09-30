@@ -69,3 +69,6 @@ void StreamV4L2::stop_stream()
 void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
 {
 }
+
+// example?
+// https://www.marcusfolkesson.se/blog/capture-a-picture-with-v4l2/

@@ -51,7 +51,7 @@ namespace g_ar_toolkit
 
 
         int xioctl(int, int, void *);
-        void lookup_support_formats_by_device_path(std::string_view, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &);
+        void lookup_supported_formats_by_device_path(std::string_view, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &);
         
         // format lookup
 
@@ -59,6 +59,7 @@ namespace g_ar_toolkit
         std::optional<yuv_format_info_t> lookup_yuv_format(__u32);
         std::optional<yuv_interlaced_format_info_t> lookup_yuv_interlaced_format(__u32);
         std::optional<compressed_format_info_t> lookup_compressed_format(__u32);
+        bool format_is_supported(__u32);
     };
 }
 

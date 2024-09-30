@@ -35,7 +35,7 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
         {
             std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> v4l2_supported_formats;
 
-            lookup_support_formats_by_device_path(path, v4l2_supported_formats);
+            lookup_supported_formats_by_device_path(path, v4l2_supported_formats);
 
             for (const auto &v4l2_format : v4l2_supported_formats)
             {
@@ -59,7 +59,7 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
     }
 }
 
-void capture::lookup_support_formats_by_device_path(std::string_view path, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &v4l2_supported_formats)
+void capture::lookup_supported_formats_by_device_path(std::string_view path, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &v4l2_supported_formats)
 {
     int fd;
     // Try and open device to test access
@@ -76,6 +76,11 @@ void capture::lookup_support_formats_by_device_path(std::string_view path, std::
                  fd, VIDIOC_ENUM_FMT, &current_format) == 0;
              ++current_format.index)
         {
+            // check format is one of the supported ones
+            if(!format_is_supported(current_format.pixelformat)){
+                continue;
+            }
+
             current_size.index = 0;
             current_size.pixel_format = current_format.pixelformat;
 
@@ -174,4 +179,16 @@ std::optional<yuv_interlaced_format_info_t> capture::lookup_yuv_interlaced_forma
 {
     auto f = supported_yuv_interlaced_formats.find(format);
     return f == supported_yuv_interlaced_formats.end() ? std::nullopt : std::optional(f->second);
+}
+
+std::optional<compressed_format_info_t> lookup_compressed_format(__u32 format){
+    auto f = supported_compressed_formats.find(format);
+    return f == supported_compressed_formats.end() ? std::nullopt : std::optional(f->second); 
+}
+
+bool capture::format_is_supported(__u32 format){
+    return supported_rgb_formats.find(format) != supported_rgb_formats.end()
+    || supported_yuv_formats.find(format) != supported_yuv_formats.end()
+    || supported_yuv_interlaced_formats.find(format) != supported_yuv_interlaced_formats.end()
+    || supported_compressed_formats.find(format) != supported_compressed_formats.end();
 }
