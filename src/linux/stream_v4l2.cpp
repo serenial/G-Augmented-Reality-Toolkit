@@ -46,8 +46,7 @@ StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type)
             && stream_type.fps_numerator == item.first.discrete.denominator // frame interval so denominator => numerator
             && item.first.discrete.numerator == 1;
 
-            return !match; }),
-                                supported_formats.end());
+            return !match; }), supported_formats.end());
 
         if (!supported_formats.empty())
         {

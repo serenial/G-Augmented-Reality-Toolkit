@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <algorithm>
 
 #include "v4l2_list_devices/list_devices.hpp"
 #include "g_ar_toolkit/linux/context_v4l2.hpp"
@@ -23,6 +24,12 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 
     v4l2::devices::list(device_list);
 
+    // remove any devices which don't support streaming
+    device_list.erase(std::remove_if(device_list.begin(), device_list.end(), [](const v4l2::devices::DEVICE_INFO &device)
+                                     { return ! find_first_device_path_that_supports_streaming(device.device_paths).has_value(); }),
+                      device_list.end());
+
+    // enumerate supported formats for each device
     for (const auto &device : device_list)
     {
         device_info_t d;
@@ -61,9 +68,9 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
 
 void capture::lookup_supported_formats_by_device_path(std::string_view path, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &v4l2_supported_formats)
 {
-    int fd;
+    scoped_file_descriptor s_fd{path, O_RDONLY};
     // Try and open device to test access
-    if ((fd = open(std::string(path).c_str(), O_RDONLY)) != -1)
+    if (s_fd != -1)
     {
         struct v4l2_fmtdesc current_format;
         struct v4l2_frmsizeenum current_size;
@@ -73,11 +80,12 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
         current_format.index = 0;
         for (current_format.index = 0;
              xioctl(
-                 fd, VIDIOC_ENUM_FMT, &current_format) == 0;
+                 s_fd, VIDIOC_ENUM_FMT, &current_format) == 0;
              ++current_format.index)
         {
             // check format is one of the supported ones
-            if(!format_is_supported(current_format.pixelformat)){
+            if (!format_is_supported(current_format.pixelformat))
+            {
                 continue;
             }
 
@@ -86,7 +94,7 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
 
             for (current_size.index = 0;
                  xioctl(
-                     fd, VIDIOC_ENUM_FRAMESIZES, &current_size) == 0;
+                     s_fd, VIDIOC_ENUM_FRAMESIZES, &current_size) == 0;
                  ++current_size.index)
             {
                 current_interval.index = 0;
@@ -95,7 +103,7 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
                 current_interval.height = current_size.discrete.height;
                 for (current_interval.index = 0;
                      xioctl(
-                         fd, VIDIOC_ENUM_FRAMEINTERVALS, &current_interval) == 0;
+                         s_fd, VIDIOC_ENUM_FRAMEINTERVALS, &current_interval) == 0;
                      ++current_interval.index)
                 {
                     if (current_interval.type == V4L2_FRMIVAL_TYPE_DISCRETE)
@@ -105,7 +113,6 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
                 } // interval loop
             } // size loop
         } // fmt loop
-        close(fd);
     }
 }
 
@@ -181,14 +188,48 @@ std::optional<yuv_interlaced_format_info_t> capture::lookup_yuv_interlaced_forma
     return f == supported_yuv_interlaced_formats.end() ? std::nullopt : std::optional(f->second);
 }
 
-std::optional<compressed_format_info_t> lookup_compressed_format(__u32 format){
+std::optional<compressed_format_info_t> capture::lookup_compressed_format(__u32 format)
+{
     auto f = supported_compressed_formats.find(format);
-    return f == supported_compressed_formats.end() ? std::nullopt : std::optional(f->second); 
+    return f == supported_compressed_formats.end() ? std::nullopt : std::optional(f->second);
 }
 
-bool capture::format_is_supported(__u32 format){
-    return supported_rgb_formats.find(format) != supported_rgb_formats.end()
-    || supported_yuv_formats.find(format) != supported_yuv_formats.end()
-    || supported_yuv_interlaced_formats.find(format) != supported_yuv_interlaced_formats.end()
-    || supported_compressed_formats.find(format) != supported_compressed_formats.end();
+bool capture::format_is_supported(__u32 format)
+{
+    return supported_rgb_formats.find(format) != supported_rgb_formats.end() || supported_yuv_formats.find(format) != supported_yuv_formats.end() || supported_yuv_interlaced_formats.find(format) != supported_yuv_interlaced_formats.end() || supported_compressed_formats.find(format) != supported_compressed_formats.end();
+}
+
+scoped_file_descriptor::scoped_file_descriptor(std::string_view path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
+scoped_file_descriptor::~scoped_file_descriptor()
+{
+    if (m_fd != -1)
+    {
+        close(m_fd);
+        m_fd = -1;
+    }
+}
+
+std::optional<std::string> capture::find_first_device_path_that_supports_streaming(const std::vector<std::string> &paths)
+{
+    for (const auto &path : paths)
+    {
+        scoped_file_descriptor s_fd{path, O_RDONLY};
+        if (s_fd == -1)
+        {
+            continue;
+        }
+
+        struct v4l2_capability cap;
+        if (xioctl(s_fd, VIDIOC_QUERYCAP, &cap) == -1)
+        {
+            continue;
+        }
+
+        if (cap.capabilities & V4L2_CAP_STREAMING)
+        {
+            return path;
+        }
+    }
+
+    return std::nullopt;
 }
