@@ -69,6 +69,7 @@ namespace g_ar_toolkit
         public:
             scoped_file_descriptor() = delete;
             scoped_file_descriptor(const scoped_file_descriptor &) = delete;
+            scoped_file_descriptor(scoped_file_descriptor &&);
             scoped_file_descriptor(std::string_view, int flags);
             ~scoped_file_descriptor();
             operator int() const { return m_fd; }
@@ -77,7 +78,7 @@ namespace g_ar_toolkit
             int m_fd;
         };
 
-        std::optional<std::string> find_first_device_path_that_supports_streaming(const std::vector<std::string> &);
+        void remove_device_paths_without_streaming_support(std::vector<std::string>&);
     }
 }
 

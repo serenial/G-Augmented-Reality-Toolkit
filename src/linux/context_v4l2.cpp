@@ -25,8 +25,9 @@ void ContextV4L2::enumerate_devices(std::vector<device_info_t> &devices)
     v4l2::devices::list(device_list);
 
     // remove any devices which don't support streaming
-    device_list.erase(std::remove_if(device_list.begin(), device_list.end(), [](const v4l2::devices::DEVICE_INFO &device)
-                                     { return ! find_first_device_path_that_supports_streaming(device.device_paths).has_value(); }),
+    device_list.erase(std::remove_if(device_list.begin(), device_list.end(), [](v4l2::devices::DEVICE_INFO &device)
+                                     { remove_device_paths_without_streaming_support(device.device_paths);
+                                     return device.device_paths.empty(); }),
                       device_list.end());
 
     // enumerate supported formats for each device
@@ -208,28 +209,27 @@ scoped_file_descriptor::~scoped_file_descriptor()
         m_fd = -1;
     }
 }
-
-std::optional<std::string> capture::find_first_device_path_that_supports_streaming(const std::vector<std::string> &paths)
+scoped_file_descriptor::scoped_file_descriptor(scoped_file_descriptor &&other) : m_fd(other.m_fd)
 {
-    for (const auto &path : paths)
-    {
-        scoped_file_descriptor s_fd{path, O_RDONLY};
-        if (s_fd == -1)
-        {
-            continue;
-        }
+    other.m_fd = -1;
+}
 
-        struct v4l2_capability cap;
-        if (xioctl(s_fd, VIDIOC_QUERYCAP, &cap) == -1)
-        {
-            continue;
-        }
+void capture::remove_device_paths_without_streaming_support(std::vector<std::string> &paths)
+{
+    paths.erase(std::remove_if(paths.begin(), paths.end(), [](const std::string &path)
+                               {
+                                   scoped_file_descriptor s_fd{path, O_RDONLY};
+                                   if (s_fd == -1)
+                                   {
+                                       return true;
+                                   }
 
-        if (cap.capabilities & V4L2_CAP_STREAMING)
-        {
-            return path;
-        }
-    }
+                                   struct v4l2_capability cap;
+                                   if (xioctl(s_fd, VIDIOC_QUERYCAP, &cap) == -1)
+                                   {
+                                       return true;
+                                   }
 
-    return std::nullopt;
+                                   return !(cap.capabilities & V4L2_CAP_STREAMING);
+                               }));
 }

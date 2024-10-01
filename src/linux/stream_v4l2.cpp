@@ -15,8 +15,8 @@ Stream *capture::create_platform_stream(std::string_view device_id, stream_type_
     return new StreamV4L2(device_id, stream_type);
 }
 
-StreamV4L2::~StreamV4L2(){
-
+StreamV4L2::~StreamV4L2()
+{
 }
 
 StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type)
@@ -34,10 +34,21 @@ StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type)
         throw std::invalid_argument("Unable to find a suitable matching device with device-id:\"" + std::string(device_id) + "\".");
     }
 
+    // remove any device paths which don't support streaming
+    remove_device_paths_without_streaming_support(device_match->device_paths);
+
+    if (device_match->device_paths.empty())
+    {
+        throw std::invalid_argument("The device with device-id:\"" + std::string(device_id) + "\" does not support streaming.");
+    }
+
     std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> supported_formats;
 
     for (auto const &path : device_match->device_paths)
     {
+        // get the list of supported formats for this path
+        lookup_supported_formats_by_device_path(path, supported_formats);
+
         // remove any non-matching formats
         supported_formats.erase(std::remove_if(supported_formats.begin(), supported_formats.end(), [&](const std::pair<v4l2_frmivalenum, v4l2_fmtdesc> &item)
                                                {
@@ -46,15 +57,22 @@ StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type)
             && stream_type.fps_numerator == item.first.discrete.denominator // frame interval so denominator => numerator
             && item.first.discrete.numerator == 1;
 
-            return !match; }), supported_formats.end());
+            return !match; }),
+                                supported_formats.end());
 
         if (!supported_formats.empty())
         {
+            // valid formats so stop looping
             break;
         }
     }
 
-    
+    if(supported_formats.empty()){
+        throw std::invalid_argument("Unable to create the stream for device with device-id:\"" + std::string(device_id) + "\" with the dimensions and FPS requested.");
+    }
+
+    // try and request the format
+
 }
 
 void StreamV4L2::start_stream()
