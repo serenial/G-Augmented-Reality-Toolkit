@@ -12,6 +12,7 @@
 #include <opencv2/core/core.hpp>
 
 #include "../capture/stream.hpp"
+#include "./context_v4l2.hpp"
 
 namespace g_ar_toolkit
 {
@@ -27,6 +28,7 @@ namespace g_ar_toolkit
             ~StreamV4L2();
 
         private:
+            StreamV4L2(std::string_view, stream_type_t, std::pair<scoped_file_descriptor, __u32>);
             enum class states
             {
                 STARTING,
@@ -42,13 +44,14 @@ namespace g_ar_toolkit
             };
 
 
-
-            int m_fd; // device handle
+            const stream_type_t m_stream_type;
+            scoped_file_descriptor m_scoped_fd; // device handle
+            const __u32 m_pixel_format;
             std::mutex m_mtx;
             std::condition_variable m_notifier;
+
             states m_last_state;
             cv::Mat m_buffer_mat;
-            cv::Mat *m_dest_mat_ptr;
             //const std::future<void> m_ftr;
             //const uint32_t m_rows, m_cols;
             std::exception_ptr m_last_exception;
