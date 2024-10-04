@@ -1,8 +1,6 @@
-#include <unordered_map>
-#include <algorithm>
-
 #include "v4l2_list_devices/list_devices.hpp"
 #include "g_ar_toolkit/linux/context_v4l2.hpp"
+#include "g_ar_toolkit/linux/utils_v4l2.hpp"
 #include "g_ar_toolkit/linux/decoders_v4l2.hpp"
 
 using namespace g_ar_toolkit;
@@ -115,32 +113,6 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
             } // size loop
         } // fmt loop
     }
-}
-
-int capture::xioctl(int fh, int request, void *arg)
-{
-    int r;
-
-    do
-    {
-        r = ioctl(fh, request, arg);
-    } while ((r == -1) && (errno == EINTR));
-
-    return r;
-}
-
-scoped_file_descriptor::scoped_file_descriptor(std::string_view path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
-scoped_file_descriptor::~scoped_file_descriptor()
-{
-    if (m_fd != -1)
-    {
-        close(m_fd);
-        m_fd = -1;
-    }
-}
-scoped_file_descriptor::scoped_file_descriptor(scoped_file_descriptor &&other) : m_fd(other.m_fd)
-{
-    other.m_fd = -1;
 }
 
 void capture::remove_device_paths_without_streaming_support(std::vector<std::string> &paths)

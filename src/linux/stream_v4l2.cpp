@@ -6,6 +6,7 @@
 
 #include "g_ar_toolkit/linux/stream_v4l2.hpp"
 #include "g_ar_toolkit/linux/context_v4l2.hpp"
+#include "g_ar_toolkit/linux/utils_v4l2.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;

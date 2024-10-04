@@ -1,5 +1,5 @@
-#ifndef G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
-#define G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
+#ifndef G_AR_TK__CAPTURE_LV_STREAMV4L2_HPP_
+#define G_AR_TK__CAPTURE_LV_STREAMV4L2_HPP_
 
 #ifdef __linux__
 
@@ -12,7 +12,8 @@
 #include <opencv2/core/core.hpp>
 
 #include "../capture/stream.hpp"
-#include "./context_v4l2.hpp"
+#include "./decoders_v4l2.hpp"
+#include "./utils_v4l2.hpp"
 
 namespace g_ar_toolkit
 {
@@ -61,4 +62,4 @@ namespace g_ar_toolkit
 }
 
 #endif //__linux__
-#endif // G_AR_TK__INTEROP_LV_STREAMV4L2_HPP_
+#endif // G_AR_TK__CAPTURE_LV_STREAMV4L2_HPP_
