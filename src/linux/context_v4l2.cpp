@@ -3,7 +3,7 @@
 
 #include "v4l2_list_devices/list_devices.hpp"
 #include "g_ar_toolkit/linux/context_v4l2.hpp"
-#include "g_ar_toolkit/linux/mjpeg_decoder.hpp"
+#include "g_ar_toolkit/linux/decoders_v4l2.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;
@@ -85,7 +85,7 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
              ++current_format.index)
         {
             // check format is one of the supported ones
-            if (!format_is_supported(current_format.pixelformat))
+            if (!decoder::decoder_available(current_format.pixelformat))
             {
                 continue;
             }
@@ -117,48 +117,6 @@ void capture::lookup_supported_formats_by_device_path(std::string_view path, std
     }
 }
 
-namespace
-{
-
-    std::unordered_map<__u32, rgb_format_info_t> supported_rgb_formats = {
-        {V4L2_PIX_FMT_BGR24, {[](const cv::Mat &in, cv::Mat &out)
-                              { cv::cvtColor(in, out, cv::COLOR_BGR2BGRA); }, CV_8UC3}},
-        {V4L2_PIX_FMT_RGB24, {[](const cv::Mat &in, cv::Mat &out)
-                              { cv::cvtColor(in, out, cv::COLOR_RGB2BGRA); }, CV_8UC3}},
-        {V4L2_PIX_FMT_ABGR32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 0, 2, 1, 3, 2}), 4); }, CV_8UC4}},
-        {V4L2_PIX_FMT_XBGR32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({1, 0, 2, 1, 3, 2}), 3); }, CV_8UC4}},
-        {V4L2_PIX_FMT_BGRA32, {[](const cv::Mat &in, cv::Mat &out)
-                               { in.copyTo(out); }, CV_8UC4}},
-        {V4L2_PIX_FMT_BGRX32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({0, 0, 1, 1, 2, 2}), 3); }, CV_8UC4}},
-        {V4L2_PIX_FMT_RGBA32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({0, 2, 1, 1, 2, 0, 3, 3}), 4); }, CV_8UC4}},
-        {V4L2_PIX_FMT_RGBX32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 2, 2, 1}), 3); }, CV_8UC4}},
-        {V4L2_PIX_FMT_ARGB32, {[](const cv::Mat &in, cv::Mat &out)
-                               { cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 2, 2, 1, 3, 0}), 4); }, CV_8UC4}}};
-
-    std::unordered_map<__u32, yuv_interlaced_format_info_t> supported_yuv_interlaced_formats = {
-        {V4L2_PIX_FMT_NV12, {[](std::pair<const cv::Mat &, const cv::Mat &> planes, cv::Mat &out)
-                             { cv::cvtColorTwoPlane(planes.first, planes.second, out, cv::COLOR_YUV2BGRA_NV12); }}},
-        {V4L2_PIX_FMT_NV21, {[](std::pair<const cv::Mat &, const cv::Mat &> planes, cv::Mat &out)
-                             { cv::cvtColorTwoPlane(planes.first, planes.second, out, cv::COLOR_YUV2BGRA_NV21); }}}};
-
-    std::unordered_map<__u32, yuv_format_info_t> supported_yuv_formats = {
-        {V4L2_PIX_FMT_YUYV, {[](const cv::Mat &in, cv::Mat &out)
-                             { cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YUYV); }}},
-        {V4L2_PIX_FMT_YVYU, {[](const cv::Mat &in, cv::Mat &out)
-                             { cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YVYU); }}},
-        {V4L2_PIX_FMT_UYVY, {[](const cv::Mat &in, cv::Mat &out)
-                             { cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_UYVY); }}}};
-
-    std::unordered_map<__u32, compressed_format_info_t> supported_compressed_formats = {
-        {V4L2_PIX_FMT_MJPEG, {[]()
-                              { return std::make_unique<MJPEGDecoder>(); }}}};
-}
-
 int capture::xioctl(int fh, int request, void *arg)
 {
     int r;
@@ -169,35 +127,6 @@ int capture::xioctl(int fh, int request, void *arg)
     } while ((r == -1) && (errno == EINTR));
 
     return r;
-}
-
-std::optional<rgb_format_info_t> capture::lookup_rgb_format(__u32 format)
-{
-    auto f = supported_rgb_formats.find(format);
-    return f == supported_rgb_formats.end() ? std::nullopt : std::optional(f->second);
-}
-
-std::optional<yuv_format_info_t> capture::lookup_yuv_format(__u32 format)
-{
-    auto f = supported_yuv_formats.find(format);
-    return f == supported_yuv_formats.end() ? std::nullopt : std::optional(f->second);
-}
-
-std::optional<yuv_interlaced_format_info_t> capture::lookup_yuv_interlaced_format(__u32 format)
-{
-    auto f = supported_yuv_interlaced_formats.find(format);
-    return f == supported_yuv_interlaced_formats.end() ? std::nullopt : std::optional(f->second);
-}
-
-std::optional<compressed_format_info_t> capture::lookup_compressed_format(__u32 format)
-{
-    auto f = supported_compressed_formats.find(format);
-    return f == supported_compressed_formats.end() ? std::nullopt : std::optional(f->second);
-}
-
-bool capture::format_is_supported(__u32 format)
-{
-    return supported_rgb_formats.find(format) != supported_rgb_formats.end() || supported_yuv_formats.find(format) != supported_yuv_formats.end() || supported_yuv_interlaced_formats.find(format) != supported_yuv_interlaced_formats.end() || supported_compressed_formats.find(format) != supported_compressed_formats.end();
 }
 
 scoped_file_descriptor::scoped_file_descriptor(std::string_view path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};

@@ -28,9 +28,9 @@ namespace g_ar_toolkit
         public:
             StreamWMF(std::string_view, stream_type_t);
             ~StreamWMF();
-            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout);
-            void start_stream();
-            void stop_stream();
+            void capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout) override;
+            void start_stream() override;
+            void stop_stream() override;
         private:
             enum class states
             {

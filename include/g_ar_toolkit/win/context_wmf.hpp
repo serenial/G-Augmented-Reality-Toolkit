@@ -43,7 +43,7 @@ namespace g_ar_toolkit
         public:
             ContextWMF();
             ~ContextWMF();
-            void enumerate_devices(std::vector<device_info_t> &devices);
+            void enumerate_devices(std::vector<device_info_t> &devices) override;
         private:
             enum class states
             {

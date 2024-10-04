@@ -22,9 +22,9 @@ namespace g_ar_toolkit
         {
         public:
             StreamV4L2(std::string_view, stream_type_t);
-            void capture_frame(cv::Mat &, std::chrono::milliseconds);
-            void start_stream();
-            void stop_stream();
+            void capture_frame(cv::Mat &, std::chrono::milliseconds) override;
+            void start_stream() override;
+            void stop_stream() override;
             ~StreamV4L2();
 
         private:

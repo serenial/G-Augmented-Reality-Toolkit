@@ -22,47 +22,10 @@ namespace g_ar_toolkit
         {
         public:
             ContextV4L2();
-            void enumerate_devices(std::vector<device_info_t> &devices);
-        };
-
-        struct rgb_format_info_t
-        {
-            std::function<void(const cv::Mat &, cv::Mat &)> convert_colours;
-            int buffer_cv_type;
-        };
-
-        struct yuv_format_info_t
-        {
-            std::function<void(const cv::Mat &, cv::Mat &)> convert_colours;
-        };
-
-        struct yuv_interlaced_format_info_t
-        {
-            std::function<void(std::pair<const cv::Mat &, const cv::Mat &>, cv::Mat &)> convert_planes;
-        };
-
-        class CompressedDecoder
-        {
-        public:
-            virtual ~CompressedDecoder() = default;
-            virtual void decode(const cv::Mat &, cv::Mat &) = 0;
-        };
-
-        struct compressed_format_info_t
-        {
-            std::function<std::unique_ptr<CompressedDecoder>()> create_decoder;
+            void enumerate_devices(std::vector<device_info_t> &devices) override;
         };
 
         int xioctl(int, int, void *);
-        void lookup_supported_formats_by_device_path(std::string_view, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &);
-
-        // format lookup
-
-        std::optional<rgb_format_info_t> lookup_rgb_format(__u32);
-        std::optional<yuv_format_info_t> lookup_yuv_format(__u32);
-        std::optional<yuv_interlaced_format_info_t> lookup_yuv_interlaced_format(__u32);
-        std::optional<compressed_format_info_t> lookup_compressed_format(__u32);
-        bool format_is_supported(__u32);
 
         class scoped_file_descriptor
         {
@@ -79,6 +42,7 @@ namespace g_ar_toolkit
         };
 
         void remove_device_paths_without_streaming_support(std::vector<std::string>&);
+        void lookup_supported_formats_by_device_path(std::string_view, std::vector<std::pair<v4l2_frmivalenum, v4l2_fmtdesc>> &);
     }
 }
 
