@@ -75,15 +75,14 @@ bool decoder::decoder_available(__u32 pixel_format)
     return supported_simple_formats.find(pixel_format) != supported_simple_formats.end();
 }
 
-std::optional<decoder_simple> decoder_simple::create_decoder_simple(__u32 pixel_format, size_t width, size_t height)
-{
-    // check that we can actually construct this
-    auto match = supported_simple_formats.find(pixel_format);
-    if (match == supported_simple_formats.end())
-    {
-        return std::nullopt;
+std::unique_ptr<decoder> decoder::create(__u32 pixel_format, size_t width, size_t height){
+    // check for a simple decoder first
+    auto d = supported_simple_formats.find(pixel_format);
+    if(d!= supported_simple_formats.end()){
+        return std::make_unique<decoder_simple>(pixel_format, width, height);
     }
-    return decoder_simple(pixel_format, width, height);
+
+    throw std::invalid_argument("Unable to create a decoder for the specified pixel format");
 }
 
 void decoder_simple::decode(const uint8_t *data, cv::Mat &output)

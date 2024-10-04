@@ -6,6 +6,7 @@
 #include <exception>
 #include <functional>
 #include <optional>
+#include <memory>
 
 #include <linux/videodev2.h>
 
@@ -18,23 +19,26 @@ namespace g_ar_toolkit
     namespace capture
     {
         // abstract class to allow all the decoder types to be put in one bucket
-        class decoder{
-            public:
+        class decoder
+        {
+        public:
             decoder() = default;
-            virtual void decode(const uint8_t*, cv::Mat&) = 0;
+            virtual void decode(const uint8_t *, cv::Mat &) = 0;
             static bool decoder_available(__u32);
+            static std::unique_ptr<decoder> create(__u32, size_t, size_t);
         };
 
         // simple decoders which wrap some opencv channel manipulation logic and don't have any state
         // or allocations which must be explicitly managed
-        class decoder_simple : public decoder {
-            public:
-            std::optional<decoder_simple> create_decoder_simple(__u32, size_t, size_t);
+        class decoder_simple : public decoder
+        {
+        public:
             decoder_simple() = delete;
-            void decode(const uint8_t*, cv::Mat&) override;
-            private:
+            void decode(const uint8_t *, cv::Mat &) override;
             decoder_simple(__u32, size_t, size_t);
-            std::function<void(const uint8_t*, cv::Mat&, const cv::Size)> m_decoder_fn;
+
+        private:
+            std::function<void(const uint8_t *, cv::Mat &, const cv::Size)> m_decoder_fn;
             cv::Size m_mat_size;
         };
     }

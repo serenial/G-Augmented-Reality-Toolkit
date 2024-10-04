@@ -30,33 +30,20 @@ namespace g_ar_toolkit
 
         private:
             StreamV4L2(std::string_view, stream_type_t, std::pair<scoped_file_descriptor, __u32>);
-            enum class states
-            {
-                STARTING,
-                WAITING_ON_ACTION,
-                WAITING_ON_STREAM_START,
-                WAITING_ON_STREAM_START_ACK,
-                WAITING_ON_CAPTURE,
-                WAITING_ON_CAPTURE_ACK,
-                WAITING_ON_STREAM_STOP,
-                WAITING_ON_STREAM_STOP_ACK,
-                STOPPING,
-                STOPPED
-            };
 
+            void enqueue_buffer(int);
+            int dequeue_buffer();
 
             const stream_type_t m_stream_type;
+            const std::string_view m_device_id;
             scoped_file_descriptor m_scoped_fd; // device handle
             const __u32 m_pixel_format;
-            std::mutex m_mtx;
-            std::condition_variable m_notifier;
+            const std::unique_ptr<decoder> m_decoder;
+            const std::vector<scoped_mmap_buffer> m_buffer_list;
 
-            states m_last_state;
-            cv::Mat m_buffer_mat;
-            //const std::future<void> m_ftr;
-            //const uint32_t m_rows, m_cols;
-            std::exception_ptr m_last_exception;
-            bool m_streaming;
+            // std::mutex m_mtx;
+            // std::condition_variable m_notifier;
+            bool m_is_streaming;
         };
     }
 }

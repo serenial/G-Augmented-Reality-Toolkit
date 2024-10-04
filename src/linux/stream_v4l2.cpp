@@ -1,6 +1,9 @@
 #include <string>
 #include <algorithm>
 #include <utility>
+#include <vector>
+
+#include <sys/mman.h>
 
 #include "v4l2_list_devices/list_devices.hpp"
 
@@ -90,6 +93,56 @@ namespace
 
         throw std::runtime_error("Unable to configure the stream for device with device-id:\"" + std::string(device_id) + "\" with the dimensions and FPS requested.");
     }
+
+    std::vector<scoped_mmap_buffer> create_buffer_list(int fd, std::string_view device_id)
+    {
+
+        std::vector<scoped_mmap_buffer> buffer_list;
+
+        struct v4l2_requestbuffers req;
+        clear_struct(&req);
+        req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        req.memory = V4L2_MEMORY_MMAP;
+        int count = 1;
+
+        // try to find minimum number of buffers required starting with 2;
+        do
+        {
+            req.count = ++count;
+            if (xioctl(fd, VIDIOC_REQBUFS, &req) == -1)
+            {
+                throw std::runtime_error("Unable to query buffer requirements.");
+            }
+        } while (req.count != count && count < 128);
+
+        if (count != req.count)
+        {
+            throw std::runtime_error("Number of buffers exceeds maximum expected number.");
+        }
+
+        // reserve the buffer list length;
+        buffer_list.reserve(req.count);
+
+        for (int i = 0; i < req.count; i++)
+        {
+            struct v4l2_buffer buf;
+            clear_struct(&buf);
+
+            buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+            buf.memory = V4L2_MEMORY_MMAP;
+            buf.index = i;
+
+            if (xioctl(fd, VIDIOC_QUERYBUF, &buf) == -1)
+            {
+                throw std::runtime_error("Unable to allocate buffers.");
+            }
+
+            // create an mmap buffer - emplace it into the buffer_list
+            buffer_list.emplace_back(buf.length, PROT_READ | PROT_WRITE, MAP_SHARED, fd, buf.m.offset);
+        }
+
+        return buffer_list;
+    }
 }
 
 Stream *capture::create_platform_stream(std::string_view device_id, stream_type_t stream_type)
@@ -108,21 +161,101 @@ StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type) : 
 
 // private constructor that actually does the constructing
 StreamV4L2::StreamV4L2(std::string_view device_id, stream_type_t stream_type, std::pair<scoped_file_descriptor, __u32> fd)
-    : Stream(), m_stream_type(stream_type), m_scoped_fd(std::move(fd.first)), m_pixel_format(fd.second)
+    : Stream(), m_stream_type(stream_type), m_device_id(device_id), m_scoped_fd(std::move(fd.first)),
+      m_pixel_format(fd.second), m_decoder(decoder::create(fd.second, stream_type.width, stream_type.height)),
+      m_buffer_list(create_buffer_list(m_scoped_fd, device_id)), m_is_streaming(false)
 {
 }
 
 void StreamV4L2::start_stream()
 {
+    if (m_is_streaming)
+    {
+        return;
+    }
+
+    for (int i = 0; i < m_buffer_list.size(); i++)
+    {
+        enqueue_buffer(i);
+    }
+
+    // Start the stream
+    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    if (xioctl(m_scoped_fd, VIDIOC_STREAMON, &type) == -1)
+    {
+        throw std::runtime_error("Unable to start stream.");
+    }
+
+    m_is_streaming = true;
 }
 
 void StreamV4L2::stop_stream()
 {
+    if (!m_is_streaming)
+    {
+        return;
+    }
+
+    // Start the stream
+    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    if (xioctl(m_scoped_fd, VIDIOC_STREAMOFF, &type) == -1)
+    {
+        throw std::runtime_error("Unable to stop stream.");
+    }
+
+    m_is_streaming = false;
 }
 
 void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
 {
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point end = begin + timeout;
+
+    while(std::chrono::steady_clock::now() < end){
+        // try and dequeue buffer
+        int index = dequeue_buffer();
+        if(index >= 0  && index < m_buffer_list.size()){
+            // buffer dequeued OK
+            // do something with the image
+
+            // enqueue the buffer so it can be reused
+            enqueue_buffer(index);
+        }
+    }
 }
 
-// example?
-// https://www.marcusfolkesson.se/blog/capture-a-picture-with-v4l2/
+int StreamV4L2::dequeue_buffer()
+{
+    struct v4l2_buffer bufd;
+    clear_struct(&bufd);
+
+    bufd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    bufd.memory = V4L2_MEMORY_MMAP;
+    bufd.index = 0;
+
+    if (xioctl(m_scoped_fd, VIDIOC_DQBUF, &bufd) == -1)
+    {
+        if (errno == EAGAIN){
+            return -1;
+        }
+        throw std::runtime_error("Unable to dequeue buffer.");
+    }
+
+    return bufd.index;
+}
+
+void StreamV4L2::enqueue_buffer(int index)
+{
+
+    struct v4l2_buffer bufd;
+    clear_struct(&bufd);
+
+    bufd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    bufd.memory = V4L2_MEMORY_MMAP;
+    bufd.index = index;
+
+    if (xioctl(m_scoped_fd, VIDIOC_QBUF, &bufd) == -1)
+    {
+        throw std::runtime_error("Unable to enqueue buffer.");
+    }
+}
