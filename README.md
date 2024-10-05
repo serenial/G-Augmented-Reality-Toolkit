@@ -29,7 +29,7 @@ These have been provided to enable community experimentation and as a basis for 
 
 If you do have any feedback please open an issue to discuss.
 
-Unfortunately documentation is currently very sparese. Some information on interoperability is provided in [this document](docs/Interop.md).
+Unfortunately documentation is currently very sparse. Some information on interoperability is provided in [this document](docs/Interop.md).
 
 ## LabVIEW Developer Setup
 * Windows 10/11
