@@ -1,7 +1,7 @@
 ## Mapped Memory Access
 Mapped Memory Access allows for direct access to a G-ARTK image's data. This can be used to get the memory address of the data and the memory layout information.
 
-This means it can be use in the snippet below with a function which takes a pointer such as the LabVIEW Memory Manager function [MoveBlock](https://www.ni.com/docs/en-US/bundle/labview-api-ref/page/properties-and-methods/lv-manager/moveblock.html)
+This means it can be use as in the snippet below with a function which takes a pointer - like the LabVIEW Memory Manager function [MoveBlock](https://www.ni.com/docs/en-US/bundle/labview-api-ref/page/properties-and-methods/lv-manager/moveblock.html)
 
 ![Mapped Memory Access](snippets/mapped-memory-access.png "Mapped Memory Access")
 
