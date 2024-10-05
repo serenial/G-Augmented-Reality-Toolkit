@@ -152,6 +152,7 @@ Stream *capture::create_platform_stream(std::string_view device_id, stream_type_
 
 StreamV4L2::~StreamV4L2()
 {
+    stop_stream();
 }
 
 // call delegated constructor
@@ -208,6 +209,9 @@ void StreamV4L2::stop_stream()
 
 void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
 {
+    if(!m_is_streaming){
+        throw std::invalid_argument("Stream has not been started.");
+    }
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     std::chrono::steady_clock::time_point end = begin + timeout;
 
@@ -216,10 +220,11 @@ void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds t
         int index = dequeue_buffer();
         if(index >= 0  && index < m_buffer_list.size()){
             // buffer dequeued OK
-            // do something with the image
-
+            m_decoder->decode(m_buffer_list[index], destination);
             // enqueue the buffer so it can be reused
             enqueue_buffer(index);
+            // escape the loop
+            break;
         }
     }
 }
