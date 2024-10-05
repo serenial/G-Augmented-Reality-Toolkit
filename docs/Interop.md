@@ -21,3 +21,23 @@ Methods of copying to/from IMAQ images into the g-ar-tookit image format can be 
 Two utility VIs are provided to convert between 2D U32 ARGB image arrays and 3D pixel-byte arrays which are compatible with opencv-python image data
 
 ![Copy to IMAQ](snippets/python.png "Working with Python Node")
+
+Which interacts with the python code 
+
+```python
+import numpy as np
+import numpy.typing as npt
+import cv2
+
+def say_hello(image: npt.NDArray):
+
+    font = cv2.FONT_HERSHEY_SIMPLEX 
+    org = (10, 30)  
+    fontScale = 1
+    color = (255, 255, 255) 
+    thickness = 2
+
+    image = cv2.putText(image, 'Hello from Python', org, font,  
+                   fontScale, color, thickness, cv2.LINE_AA) 
+    return image
+```
