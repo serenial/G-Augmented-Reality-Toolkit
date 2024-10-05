@@ -32,7 +32,7 @@ namespace g_ar_toolkit
             StreamV4L2(std::string_view, stream_type_t, std::pair<scoped_file_descriptor, __u32>);
 
             void enqueue_buffer(int);
-            int dequeue_buffer();
+            int dequeue_buffer(size_t* n_bytes);
 
             const stream_type_t m_stream_type;
             const std::string_view m_device_id;
@@ -41,8 +41,6 @@ namespace g_ar_toolkit
             const std::unique_ptr<decoder> m_decoder;
             const std::vector<scoped_mmap_buffer> m_buffer_list;
 
-            // std::mutex m_mtx;
-            // std::condition_variable m_notifier;
             bool m_is_streaming;
         };
     }

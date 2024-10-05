@@ -23,7 +23,7 @@ namespace g_ar_toolkit
         {
         public:
             decoder() = default;
-            virtual void decode(const uint8_t *, cv::Mat &) = 0;
+            virtual void decode(const uint8_t *, cv::Mat &, size_t) = 0;
             static bool decoder_available(__u32);
             static std::unique_ptr<decoder> create(__u32, size_t, size_t);
         };
@@ -34,11 +34,11 @@ namespace g_ar_toolkit
         {
         public:
             decoder_simple() = delete;
-            void decode(const uint8_t *, cv::Mat &) override;
+            void decode(const uint8_t *, cv::Mat &, size_t) override;
             decoder_simple(__u32, size_t, size_t);
 
         private:
-            std::function<void(const uint8_t *, cv::Mat &, const cv::Size)> m_decoder_fn;
+            std::function<void(const uint8_t *, cv::Mat &, const cv::Size, const size_t)> m_decoder_fn;
             cv::Size m_mat_size;
         };
     }

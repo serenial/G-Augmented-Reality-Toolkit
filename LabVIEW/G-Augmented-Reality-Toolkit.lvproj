@@ -32,7 +32,6 @@
 		<Item Name="g_ar_toolkit.pointset_utils.lvlib" Type="Library" URL="../g_ar_toolkit.pointset_utils/g_ar_toolkit.pointset_utils.lvlib"/>
 		<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
 		<Item Name="g_ar_toolkit.test.lvlib" Type="Library" URL="../g_ar_toolkit.test/g_ar_toolkit.test.lvlib"/>
-		<Item Name="linux-cam.vi" Type="VI" URL="../../../linux-cam.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Clear Errors.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Clear Errors.vi"/>

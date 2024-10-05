@@ -1,26 +1,12 @@
 {
     "dependencies": [
         "opencv",
-        "span-lite",
-        {
-            "name": "ffmpeg",
-            "platform": "linux",
-            "default-features": false,
-            "features": [
-                "swscale",
-                "avcodec",
-                "avformat"
-            ]
-        }
+        "span-lite"
     ],
     "overrides": [
         {
             "name": "opencv",
             "version": "4.8.0"
-        },
-        {
-            "name": "ffmpeg",
-            "version": "6.1.1"
         },
         {
             "name":"span-lite",

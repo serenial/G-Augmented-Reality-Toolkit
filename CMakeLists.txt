@@ -176,7 +176,7 @@ elseif(UNIX)
   set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
   # set linking flags required for static ffmpeg without --fPIC
-  set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
+  # set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   target_include_directories(${PROJECT_NAME} PUBLIC
     ${v4l2listdevices_SOURCE_DIR}/include
   )

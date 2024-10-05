@@ -217,10 +217,11 @@ void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds t
 
     while(std::chrono::steady_clock::now() < end){
         // try and dequeue buffer
-        int index = dequeue_buffer();
+        size_t bytes;
+        int index = dequeue_buffer(&bytes);
         if(index >= 0  && index < m_buffer_list.size()){
             // buffer dequeued OK
-            m_decoder->decode(m_buffer_list[index], destination);
+            m_decoder->decode(m_buffer_list[index], destination, bytes);
             // enqueue the buffer so it can be reused
             enqueue_buffer(index);
             // escape the loop
@@ -229,7 +230,7 @@ void StreamV4L2::capture_frame(cv::Mat &destination, std::chrono::milliseconds t
     }
 }
 
-int StreamV4L2::dequeue_buffer()
+int StreamV4L2::dequeue_buffer(size_t * n_bytes)
 {
     struct v4l2_buffer bufd;
     clear_struct(&bufd);
@@ -244,6 +245,10 @@ int StreamV4L2::dequeue_buffer()
             return -1;
         }
         throw std::runtime_error("Unable to dequeue buffer.");
+    }
+
+    if(n_bytes){
+        *n_bytes = bufd.bytesused;
     }
 
     return bufd.index;
