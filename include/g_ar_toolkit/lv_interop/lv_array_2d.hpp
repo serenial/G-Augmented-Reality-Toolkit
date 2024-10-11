@@ -28,41 +28,8 @@ namespace g_ar_toolkit
 
         protected:
             LV_Handle_t<LV_Array_t<2, T>> m_handle;
-
-        private:
-            size_t required_bytes(std::array<int32_t, 2> n_elements)
-            {
-                return sizeof(LV_Array_t<2, T>) + sizeof(T) * ((n_elements[0] * n_elements[1]) - 1);
-            }
-
-            int32_t get_data_index(std::array<int32_t, 2> ex)
-            {
-                return extents()[1] * ex[0] + ex[1];
-            }
-
+            
         public:
-            LV_2DArrayHandle_t() : m_handle(nullptr) {}
-
-            T &operator[](std::array<int32_t, 2> i)
-            {
-                auto data_index = get_data_index(ex);
-                if (m_handle && i < data_index)
-                {
-                    return (*m_handle)->data[data_index];
-                }
-                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.")
-            }
-
-            T const &operator[](std::array<int32_t, 2> i) const
-            {
-                auto data_index = get_data_index(ex);
-                if (m_handle && i < data_index)
-                {
-                    return (*m_handle)->data[data_index];
-                }
-                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.")
-            }
-
             std::array<int32_t, 2> extents() const
             {
                 if (m_handle && (*m_handle))
@@ -72,9 +39,46 @@ namespace g_ar_toolkit
                 return std::array<int32_t, 2>{{0, 0}};
             }
 
+        private:
+            size_t required_bytes(std::array<int32_t, 2> n_elements)
+            {
+                return sizeof(LV_Array_t<2, T>) + sizeof(T) * ((n_elements[0] * n_elements[1]) - 1);
+            }
+
+            int32_t get_data_index(std::array<int32_t, 2> el)
+            {
+                return extents()[1] * el[0] + el[1];
+            }
+
+            bool element_is_in_data_range(std::array<int32_t, 2> el)
+            {
+                return get_data_index < get_data_index(extents());
+            }
+
+        public:
+            LV_2DArrayHandle_t() : m_handle(nullptr) {}
+
+            T &operator[](std::array<int32_t, 2> el)
+            {
+                if (m_handle && element_is_in_data_range(el))
+                {
+                    return (*m_handle)->data[get_data_index(el)];
+                }
+                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.");
+            }
+
+            T const &operator[](std::array<int32_t, 2> el) const
+            {
+                if (m_handle && element_is_in_data_range(el))
+                {
+                    return (*m_handle)->data[get_data_index(el)];
+                }
+                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.");
+            }
+
             T *data_handle() const noexcept
             {
-                return m_handle ? (*m_handle)->data_ptr() : nullptr;
+                return (*m_handle)->data_ptr();
             }
 
             void dispose()
@@ -145,7 +149,7 @@ namespace g_ar_toolkit
                 // copy row by row
                 for (int32_t r = 0; r < mat.rows; r++)
                 {
-                    std::memcpy(data_handle() + get_data_index({r, 0}), mat.ptr(r,0), mat.cols * sizeof(T));
+                    std::memcpy(data_handle() + get_data_index({r, 0}), mat.ptr(r, 0), mat.cols * sizeof(T));
                 }
             }
 

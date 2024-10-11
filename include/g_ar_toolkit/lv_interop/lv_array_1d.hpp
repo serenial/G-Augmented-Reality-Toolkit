@@ -8,6 +8,7 @@
 #include <numeric>
 #include <exception>
 #include <algorithm>
+#include <stdexcept>
 
 #include <opencv2/core/mat.hpp>
 
@@ -55,7 +56,7 @@ namespace g_ar_toolkit
                 {
                     return (*m_handle)->data[i];
                 }
-                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.")
+                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.");
             }
 
             T const &operator[](int i) const
@@ -64,7 +65,7 @@ namespace g_ar_toolkit
                 {
                     return (*m_handle)->data[i];
                 }
-                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.")
+                throw std::invalid_argument("Attempting to access LabVIEW Array Handle outside of bounds.");
             }
 
             std::size_t size() const
