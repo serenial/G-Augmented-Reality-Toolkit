@@ -6,17 +6,17 @@
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
-cv::TermCriteria g_ar_toolkit::lv_interop::lv_termination_critera_ptr_to_cv_term_criteria(LV_TerminationCritera_t *ptr)
+LV_TerminationCritera_t::operator cv::TermCriteria() const
 {
 
     std::bitset<2> type = 0b00;
 
-    if (std::isnan(ptr->epsilon))
+    if (std::isnan(m_epsilon))
     {
         type |= 0b01;
     }
 
-    if (ptr->iterations >= 0)
+    if (m_iterations >= 0)
     {
         type |= 0b10;
     }
@@ -24,11 +24,11 @@ cv::TermCriteria g_ar_toolkit::lv_interop::lv_termination_critera_ptr_to_cv_term
     switch (type.to_ulong())
     {
     case 0b01:
-        return cv::TermCriteria(cv::TermCriteria::EPS, 0, ptr->epsilon);
+        return cv::TermCriteria(cv::TermCriteria::EPS, 0, m_epsilon);
     case 0b10:
-        return cv::TermCriteria(cv::TermCriteria::COUNT, ptr->iterations, 0);
+        return cv::TermCriteria(cv::TermCriteria::COUNT, m_iterations, 0);
     case 0b11:
-        return cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, ptr->iterations, ptr->epsilon);
+        return cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, m_iterations, m_epsilon);
     }
 
     return cv::TermCriteria();

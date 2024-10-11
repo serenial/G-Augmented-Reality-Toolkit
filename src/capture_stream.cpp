@@ -4,7 +4,7 @@
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
-#include "g_ar_toolkit/lv_interop/lv_array.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_edvr_managed_object.hpp"
 #include "g_ar_toolkit_export.h"
 
@@ -38,7 +38,7 @@ extern "C"
             EDVRManagedObject<Context> context(edvr_capture_ctx_ref_ptr);
 
             // convert input to c++ types
-            std::string_view device_id = lv_string_handle_to_std_string_view(device_id_str_handle);
+            std::string_view device_id = device_id_str_handle;
             stream_type_t stream_type;
             stream_type.fps_numerator = stream_spec_ptr->fps;
             stream_type.height = stream_spec_ptr->height;
@@ -52,7 +52,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;
@@ -70,7 +70,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;
@@ -89,7 +89,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;
@@ -112,7 +112,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

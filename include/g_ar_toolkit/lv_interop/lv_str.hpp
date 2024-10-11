@@ -5,15 +5,23 @@
 #include <string_view>
 
 #include "./lv_types.hpp"
+#include "./lv_array_1d.hpp"
 
 namespace g_ar_toolkit
 {
     namespace lv_interop
     {
-        std::string_view lv_string_handle_to_std_string_view(LV_StringHandle_t);
-        std::string lv_string_handle_to_std_string(LV_StringHandle_t);
-        LV_MgErr_t copy_std_string_view_to_lv_string_handle_ptr(std::string_view, LV_StringHandlePtr_t);
+        class LV_StringHandle_t : public LV_1DArrayHandle_t<char>{
+            public:
+            operator std::string_view()  const;
+            operator const std::string()  const;
+            void copy_from(const std::string&);
+        };
+
+
     }
+
+    
 }
 
 #endif //G_AR_TK__INTEROP_LV_STR_HPP_

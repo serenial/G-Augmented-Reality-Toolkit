@@ -18,11 +18,15 @@
 			<Item Name="Image Example.vi" Type="VI" URL="../Image Example.vi"/>
 			<Item Name="Capture Example.vi" Type="VI" URL="../Capture Example.vi"/>
 			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../Mapped Pixel Pointer Example.vi"/>
+			<Item Name="Calibrate Camera.vi" Type="VI" URL="../Calibrate Camera.vi"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="bin" Type="Folder" URL="../bin">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
+		</Item>
+		<Item Name="test-images" Type="Folder" URL="../test-images">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
@@ -109,7 +113,6 @@
 				<Item Name="Get LV Class Default Value.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Default Value.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="g_ar_toolkit.1.64.so" Type="Document" URL="../bin/g_ar_toolkit.1.64.so"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">

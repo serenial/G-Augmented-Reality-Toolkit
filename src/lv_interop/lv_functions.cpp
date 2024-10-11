@@ -23,7 +23,13 @@ static LV_DSNewHandlePtr_t DSNewHandleImp = nullptr;
 static LV_DSSetHandleSizePtr_t DSSetHandleSizeImp = nullptr;
 static LV_DSGetHandleSizePtr_t DSGetHandleSizeImp = nullptr;
 
-extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_InstanceDataHandle_t instance_data_handle)
+// call this function when the .so is loaded on linux
+#if defined(__GNUC__) && !defined(_WIN32)
+__attribute__((constructor))
+#endif
+
+void
+g_ar_toolkit::import_lv_runtime_functions()
 {
     for (int i = 0; i < 2; i++)
     {
@@ -41,7 +47,7 @@ extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_Instanc
             DSSetHandleSizeImp &&
             DSGetHandleSizeImp)
         {
-            return LV_ERR_noError;
+            return;
         }
 
         if (i == 0)
@@ -58,7 +64,7 @@ extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_Instanc
             }
             if (!module)
             {
-                return LV_ERR_rfNotFound;
+                return;
             }
 
             EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(GetProcAddress(module, "EDVR_GetCurrentContext"));
@@ -77,7 +83,7 @@ extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_Instanc
 
             if (!module)
             {
-                return LV_ERR_rfNotFound;
+                return;
             }
 
             EDVR_GetCurrentContextImp = reinterpret_cast<LV_EDVRGetCurrentContextFnPtr_t>(dlsym(module, "EDVR_GetCurrentContext"));
@@ -94,9 +100,36 @@ extern "C" G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_intialize_functions(LV_Instanc
 #endif
         }
     }
-
-    return LV_ERR_bogusError;
 }
+
+#if defined(_WIN32)
+#if defined(_MSC_VER)
+#pragma warning(push, 3)
+#endif
+#include <windows.h>
+
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+{
+    switch (ul_reason_for_call)
+    {
+    case DLL_PROCESS_ATTACH:
+        import_lv_runtime_functions();
+        break;
+    case DLL_THREAD_ATTACH:
+        break;
+    case DLL_THREAD_DETACH:
+        break;
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return true;
+}
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+
+#endif
 
 LV_MgErr_t lv_interop::EDVR_GetCurrentContext(LV_Ptr_t<LV_EDVRContext_t> ctx_ptr)
 {

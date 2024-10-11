@@ -70,7 +70,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
         return LV_ERR_noError;
     }
@@ -106,7 +106,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
         return LV_ERR_noError;
     }

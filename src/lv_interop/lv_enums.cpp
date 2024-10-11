@@ -2,7 +2,10 @@
 
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 
-cv::BorderTypes border_type_enum_to_cv_border_type(uint8_t type)
+using namespace g_ar_toolkit;
+using namespace lv_interop;
+
+LV_EnumCVBoarderType_t::operator cv::BorderTypes() const
 {
     const cv::BorderTypes types[] = {
         cv::BorderTypes::BORDER_CONSTANT,
@@ -13,15 +16,15 @@ cv::BorderTypes border_type_enum_to_cv_border_type(uint8_t type)
         cv::BorderTypes::BORDER_DEFAULT,
         cv::BorderTypes::BORDER_ISOLATED};
 
-    if (type < std::size(types))
+    if (m_value < std::size(types))
     {
-        return types[type];
+        return types[m_value];
     }
 
     throw std::out_of_range("The supplied value for the Border Type does not map to a valid OpenCV value.");
 }
 
-cv::InterpolationFlags interpolation_flag_enum_to_cv_interpolation_flag(uint8_t flag)
+LV_EnumCVInterpolationFlag_t::operator cv::InterpolationFlags() const
 {
     const cv::InterpolationFlags flags[] = {
         cv::InterpolationFlags::INTER_NEAREST,
@@ -33,15 +36,15 @@ cv::InterpolationFlags interpolation_flag_enum_to_cv_interpolation_flag(uint8_t 
         cv::InterpolationFlags::INTER_NEAREST_EXACT,
         cv::InterpolationFlags::INTER_MAX};
 
-    if (flag < std::size(flags))
+    if (m_value < std::size(flags))
     {
-        return flags[flag];
+        return flags[m_value];
     }
 
     throw std::out_of_range("The supplied value for the Interpolation Flag does not map to a valid OpenCV value.");
 }
 
-cv::LineTypes line_types_enum_to_cv_linetype(uint8_t line_type)
+LV_EnumCVLineType_t::operator cv::LineTypes() const
 {
     const cv::LineTypes line_types[] =
         {
@@ -50,15 +53,15 @@ cv::LineTypes line_types_enum_to_cv_linetype(uint8_t line_type)
             cv::LINE_8,
             cv::LINE_AA};
 
-    if (line_type < std::size(line_types))
+    if (m_value < std::size(line_types))
     {
-        return line_types[line_type];
+        return line_types[m_value];
     }
 
     throw std::out_of_range("The supplied value for the line-type does not map to a valid OpenCV value.");
 }
 
-cv::HersheyFonts font_face_enum_to_cv_hershey_font(uint8_t font)
+LV_EnumCVHersheyFont_t::operator cv::HersheyFonts() const
 {
     const cv::HersheyFonts fonts[] =
         {
@@ -72,15 +75,15 @@ cv::HersheyFonts font_face_enum_to_cv_hershey_font(uint8_t font)
             cv::FONT_HERSHEY_SCRIPT_COMPLEX,
             cv::FONT_ITALIC};
 
-    if (font < std::size(fonts))
+    if (m_value < std::size(fonts))
     {
-        return fonts[font];
+        return fonts[m_value];
     }
 
     throw std::out_of_range("The supplied value for the font-face does not map to a valid OpenCV value.");
 }
 
-int image_flip_enum_to_image_flip_code(uint8_t flip_value)
+LV_EnumCVImageFlip_t::operator int() const
 {
     const int flip_codes[] =
         {
@@ -89,46 +92,66 @@ int image_flip_enum_to_image_flip_code(uint8_t flip_value)
             -1 // flip x and y
         };
 
-    if (flip_value < std::size(flip_codes))
+    if (m_value < std::size(flip_codes))
     {
-        return flip_codes[flip_value];
+        return flip_codes[m_value];
     }
 
     throw std::out_of_range("The supplied value for the image flip type does not map to a valid OpenCV value.");
 }
 
-int find_chessboard_corners_enum_to_flag(uint8_t enum_value)
+LV_EnumCVChessboardCorners_t::operator int() const
 {
 
     const int flags[] = {
         cv::CALIB_CB_ADAPTIVE_THRESH,
         cv::CALIB_CB_NORMALIZE_IMAGE,
         cv::CALIB_CB_FILTER_QUADS,
-        cv::CALIB_CB_FAST_CHECK
-    };
+        cv::CALIB_CB_FAST_CHECK};
 
-    if (enum_value < std::size(flags))
+    if (m_value < std::size(flags))
     {
-        return flags[enum_value];
+        return flags[m_value];
     }
 
     throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
 }
 
-int find_chessboard_corners_enum_to_flag_sb(uint8_t enum_value)
+LV_EnumCVChessboardCornersSB_t::operator int() const
 {
-
     const int flags[] = {
         cv::CALIB_CB_NORMALIZE_IMAGE,
         cv::CALIB_CB_EXHAUSTIVE,
         cv::CALIB_CB_ACCURACY,
         cv::CALIB_CB_LARGER,
-        cv::CALIB_CB_MARKER
-    };
+        cv::CALIB_CB_MARKER};
 
-    if (enum_value < std::size(flags))
+    if (m_value < std::size(flags))
     {
-        return flags[enum_value];
+        return flags[m_value];
+    }
+
+    throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
+}
+
+LV_EnumCVCameraCalibrationFlags_t::operator int() const
+{
+    const int flags[] = {
+        cv::CALIB_USE_INTRINSIC_GUESS,
+        cv::CALIB_FIX_PRINCIPAL_POINT,
+        cv::CALIB_FIX_ASPECT_RATIO,
+        cv::CALIB_ZERO_TANGENT_DIST,
+        cv::CALIB_FIX_FOCAL_LENGTH,
+        cv::CALIB_FIX_K1,
+        cv::CALIB_RATIONAL_MODEL,
+        cv::CALIB_THIN_PRISM_MODEL,
+        cv::CALIB_FIX_S1_S2_S3_S4,
+        cv::CALIB_TILTED_MODEL,
+        cv::CALIB_FIX_TAUX_TAUY};
+
+    if (m_value < std::size(flags))
+    {
+        return flags[m_value];
     }
 
     throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");

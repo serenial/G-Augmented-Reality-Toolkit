@@ -115,7 +115,7 @@ LV_EDVRDataPtr_t lv_image::create_new_edvr_data_ptr()
         // wait for the locked flag to be cleared
         // note - DVR Delete calls lock_callback_fn first so only check we aren't locked from CPP side
         data->cv.wait(lk, [&]
-                      { return data->locked == NONE || data->locked == LABVIEW;});
+                      { return data->locked == NONE || data->locked == LABVIEW; });
         // free the lock
         lk.unlock();
         // delete data
@@ -197,17 +197,17 @@ void lv_image::downgrade_from_mapped()
     data->cv.notify_all();
 }
 
-bool lv_image::is_bgra()
+bool lv_image::is_bgra() const
 {
     return mat().channels() == 4;
 }
 
-size_t lv_image::width()
+size_t lv_image::width() const
 {
     return mat().cols;
 }
 
-size_t lv_image::height()
+size_t lv_image::height() const
 {
     return mat().rows;
 }
@@ -217,47 +217,42 @@ void lv_image::set_mat(cv::Mat new_mat)
     data->mat = new_mat;
 }
 
-cv::Mat lv_image::clone()
+cv::Mat lv_image::clone() const
 {
     return data->mat.clone();
 }
 
-void lv_image::copyTo(cv::_OutputArray dst)
+void lv_image::copyTo(cv::_OutputArray dst) const
 {
     data->mat.copyTo(dst);
 }
 
-void lv_image::copyTo(cv::_OutputArray dst, cv::_InputArray mask)
+void lv_image::copyTo(cv::_OutputArray dst, cv::_InputArray mask) const
 {
     data->mat.copyTo(dst, mask);
 }
 
-cv::Mat const &lv_image::mat()
+cv::Mat const &lv_image::mat() const
 {
     return data->mat;
 }
 
-bool lv_image::is_greyscale()
+bool lv_image::is_greyscale() const
 {
     return !(is_bgra());
 }
 
-cv::Size lv_image::size()
+cv::Size lv_image::size() const
 {
     return mat().size();
 }
 
-cv::Size LV_ImageSize_t::size()
-{
-    return cv::Size(width, height);
-}
-
-int lv_image::cv_type()
+int lv_image::cv_type() const
 {
     return mat().type();
 }
 
-void lv_image::ensure_sized_to_match(cv::Size target_size)
+void lv_image::ensure_sized_to_match(const cv::Size &target_size)
 {
     if (size() != target_size)
     {
@@ -265,6 +260,12 @@ void lv_image::ensure_sized_to_match(cv::Size target_size)
     }
 }
 
-cv::Mat lv_image::operator()(cv::Rect2i rect){
+void lv_image::ensure_sized_to_match(const lv_image &other)
+{
+    auto x = other.size();
+}
+
+cv::Mat lv_image::operator()(cv::Rect2i rect) const
+{
     return data->mat(rect);
 }

@@ -11,15 +11,6 @@ namespace g_ar_toolkit
 {
     using namespace lv_interop;
 
-#include "./set_packing.hpp"
-    struct LV_ImageSize_t
-    {
-        uint16_t width, height;
-        cv::Size size();
-    };
-    using LV_ImageSizePtr_t = LV_Ptr_t<LV_ImageSize_t>;
-#include "./reset_packing.hpp"
-
     // an Image class which can interact with EDVR references and the persistant data that they refer to
     class lv_image
     {
@@ -30,27 +21,23 @@ namespace g_ar_toolkit
         lv_image(LV_EDVRReferencePtr_t);
         // destructor
         ~lv_image();
-        bool is_bgra();
-        bool is_greyscale();
-        cv::Mat const &mat();
+        bool is_bgra() const;
+        bool is_greyscale() const;
+        cv::Mat const &mat() const;
         // add some cv::Mat methods for ease of use
-        size_t width();
-        size_t height();
-        cv::Size size();
-        cv::Mat clone();
-        int cv_type();
-        void copyTo(cv::_OutputArray);
-        void copyTo(cv::_OutputArray, cv::_InputArray);
+        size_t width() const;
+        size_t height() const;
+        cv::Size size() const;
+        cv::Mat clone() const;
+        int cv_type() const;
+        void copyTo(cv::_OutputArray) const;
+        void copyTo(cv::_OutputArray, cv::_InputArray) const;
         void set_mat(cv::Mat);
-        void ensure_sized_to_match(cv::Size);
-        template <typename T>
-        void ensure_sized_to_match(T x)
-        {
-            ensure_sized_to_match(x.size());
-        }
+        void ensure_sized_to_match(const cv::Size&);
+        void ensure_sized_to_match(const lv_image&);
         void upgrade_to_mapped();
         void downgrade_from_mapped();
-        cv::Mat operator()(cv::Rect2i);
+        cv::Mat operator()(cv::Rect2i) const;
 
         // user-defined conversions to openCV's Input and Output Array types
         // this allows an Image instance to pretend to work like a cv::Mat

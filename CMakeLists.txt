@@ -23,8 +23,6 @@ endif()
 
 ## Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
-## Find C++17 patch for C++20 std::span
-find_package(span-lite CONFIG REQUIRED)
 
 if(WIN32)
   FetchContent_Declare(rosmsftcam
@@ -94,6 +92,9 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_str.cpp
   src/lv_interop/lv_enums.cpp
   src/lv_interop/lv_termination_critera.cpp
+  src/lv_interop/lv_point_correspondence.cpp
+  src/lv_interop/lv_camera_parameters.cpp
+  src/lv_interop/lv_vec_types.cpp
   src/capture/context.cpp
   src/image_create.cpp
   src/image_window.cpp
@@ -119,7 +120,8 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_negate.cpp
   src/image_transform.cpp
   src/image_rotate.cpp
-  src/feature_detection.cpp
+  src/feature_detection_chessboard.cpp
+  src/ar_camera_calibration.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -133,7 +135,8 @@ target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_picture.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_u32_colour.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_str.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_1d.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_2d.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_termination_criteria.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/set_packing.hpp
@@ -144,6 +147,9 @@ target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_image.hpp
   ${PUBLIC_HEADER_DIR}/capture/context.hpp
   ${PUBLIC_HEADER_DIR}/capture/stream.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_point_correspondence.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_camera_parameters.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_vec_types.hpp
   "${PLATFORM_HEADER_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -204,7 +210,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_imgproc
   opencv_highgui
   opencv_calib3d
-  nonstd::span-lite
 )
 
 # Install Shared Library

@@ -15,7 +15,7 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        uint8_t flip_mode)
+        LV_EnumCVImageFlip_t flip_mode)
     {
         try
         {
@@ -26,11 +26,11 @@ extern "C"
 
             dst.ensure_sized_to_match(src);
 
-            cv::flip(src, dst, image_flip_enum_to_image_flip_code(flip_mode));
+            cv::flip(src, dst, flip_mode);
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
         return LV_ERR_noError;
     }

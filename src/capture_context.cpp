@@ -2,7 +2,7 @@
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
-#include "g_ar_toolkit/lv_interop/lv_array.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_edvr_managed_object.hpp"
 #include "g_ar_toolkit_export.h"
 
@@ -25,7 +25,7 @@ using LV_DeviceInfo_t = struct
 {
     LV_StringHandle_t id;
     LV_StringHandle_t name;
-    LV_Handle_t<LV_Array_t<1, LV_StreamFormatParameters_t>> formats;
+    LV_1DArrayHandle_t<LV_StreamFormatParameters_t> formats;
 };
 
 using LV_DeviceInfoHandlePtr_t = LV_HandlePtr_t<LV_Array_t<1, LV_DeviceInfo_t>>;
@@ -43,7 +43,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -52,7 +52,7 @@ extern "C"
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_capture_context_enumerate(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
-        LV_DeviceInfoHandlePtr_t device_info_handle_ptr)
+        LV_1DArrayHandle_t<LV_DeviceInfo_t> device_info_handle)
     {
         try
         {
@@ -62,41 +62,28 @@ extern "C"
 
             context.get_object()->enumerate_devices(devices);
 
-            copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<device_info_t>, LV_DeviceInfo_t>(
-                devices,
-                device_info_handle_ptr,
-                [](LV_DeviceInfo_t *out_ptr, bool newly_allocated, device_info_t in, size_t _)
-                {
-                    if (newly_allocated)
-                    {
-                        out_ptr->id = 0;
-                        out_ptr->name = 0;
-                        out_ptr->formats = 0;
-                    }
-                    copy_std_string_view_to_lv_string_handle_ptr(in.device_id, &(out_ptr->id));
-                    copy_std_string_view_to_lv_string_handle_ptr(in.device_name, &(out_ptr->name));
-                    copy_with_allocation_to_1d_lv_array_handle_ptr<std::vector<stream_type_t>, LV_StreamFormatParameters_t>(
-                        in.supported_formats,
-                        &(out_ptr->formats),
-                        [](LV_StreamFormatParameters_t *out_ptr, bool newly_allocated, stream_type_t in, size_t _)
-                        {
-                            out_ptr->fps_numerator = in.fps_numerator;
-                            out_ptr->fps_denominator = in.fps_denominator;
-                            out_ptr->height = in.height;
-                            out_ptr->width = in.width; } // no-deallcoator required for these types
-                    );
-                },
-                [](LV_DeviceInfo_t to_deallocate)
-                {
+            device_info_handle.copy_from(devices, [](auto device, auto dest)
+                                         {
+                                            dest->id.copy_from(device.device_id);
+                                            dest->name.copy_from(device.device_name);
+
+                                            dest->formats.copy_from(device.supported_formats, [](auto const &f, auto dest_f)
+                                                                     {  
+                                                                        dest_f->width = f.width;
+                                                                        dest_f->height = f.height;
+                                                                        dest_f->fps_numerator = f.fps_numerator;
+                                                                        dest_f->fps_denominator = f.fps_denominator;
+                                                                     }); 
+                                            }, [](LV_DeviceInfo_t to_deallocate)
+                                         {
                     // dispose of unused string and array handles
-                    DSDisposeHandle(reinterpret_cast<LV_UHandle_t>(to_deallocate.id));
-                    DSDisposeHandle(reinterpret_cast<LV_UHandle_t>(to_deallocate.name));
-                    DSDisposeHandle(reinterpret_cast<LV_UHandle_t>(to_deallocate.formats));
-                });
+                    to_deallocate.id.dispose();
+                    to_deallocate.name.dispose();
+                    to_deallocate.formats.dispose(); });
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
