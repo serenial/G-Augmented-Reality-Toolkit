@@ -37,33 +37,6 @@ namespace g_ar_toolkit
         using LV_InstanceDataPtr_t = void *;
         using LV_InstanceDataHandle_t = LV_Ptr_t<LV_InstanceDataPtr_t>;
 
-        template <size_t n_dims, typename T>
-        struct LV_Array_t
-        {
-            int32_t dims[n_dims];
-            T data[1];
-
-            T* data_ptr(){
-                return reinterpret_cast<T*>(&data[0]);
-            }
-        };
-
-        // LabVIEW allocated strings - the same as a 1D array but with more relevant member names
-        using LV_String_t = LV_Array_t<1,char>;
-        using LV_StringPtr_t = LV_Ptr_t<LV_String_t>;
-        using LV_StringHandle_t = LV_Handle_t<LV_String_t>;
-        using LV_StringHandlePtr_t = LV_HandlePtr_t<LV_String_t>;
-
-        // LabVIEW Error Cluster type
-        struct LV_ErrorCluster_t
-        {
-            LV_Boolean_t status;
-            LV_MgErr_t code;
-            LV_StringHandle_t source;
-        };
-
-        using LV_ErrorClusterPtr_t = LV_Ptr_t<LV_ErrorCluster_t>;
-
         // LabVIEW EDVR structure types
 
         // a dimension specifier used to specify the size of this dimension

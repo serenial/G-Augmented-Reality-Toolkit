@@ -7,6 +7,8 @@
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
+#include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
+
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -20,8 +22,8 @@ extern "C"
         LV_2x3MatrixPtr_t<double> affine_mat,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_ImageSizePtr_t dst_size_ptr,
-        uint8_t interpolation_mode,
-        uint8_t border_type,
+        LV_EnumCVInterpolationFlag_t interpolation_mode,
+        LV_EnumCVBoarderType_t border_type,
         LV_U32RGBColour_t border_colour)
     {
         try
@@ -35,14 +37,14 @@ extern "C"
             dst.ensure_sized_to_match(*dst_size_ptr);
 
             cv::warpAffine(
-                src, dst, M, dst_size_ptr->size(),
-                interpolation_flag_enum_to_cv_interpolation_flag(interpolation_mode),
-                border_type_enum_to_cv_border_type(border_type),
+                src, dst, M, *dst_size_ptr,
+                interpolation_mode,
+                border_type,
                 dst.is_bgra() ? border_colour.get_bgra() : border_colour.get_blue());
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
         return LV_ERR_noError;
     }
@@ -53,8 +55,8 @@ extern "C"
         LV_3x3MatrixPtr_t<double> warp_mat,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_ImageSizePtr_t dst_size_ptr,
-        uint8_t interpolation_mode,
-        uint8_t border_type,
+        LV_EnumCVInterpolationFlag_t interpolation_mode,
+        LV_EnumCVBoarderType_t border_type,
         LV_U32RGBColour_t border_colour)
     {
         try
@@ -68,14 +70,14 @@ extern "C"
             dst.ensure_sized_to_match(*dst_size_ptr);
 
             cv::warpPerspective(
-                src, dst, M, dst_size_ptr->size(),
-                interpolation_flag_enum_to_cv_interpolation_flag(interpolation_mode),
-                border_type_enum_to_cv_border_type(border_type),
+                src, dst, M, *dst_size_ptr,
+                interpolation_mode,
+                border_type,
                 dst.is_bgra() ? border_colour.get_bgra() : border_colour.get_blue());
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
         return LV_ERR_noError;
     }

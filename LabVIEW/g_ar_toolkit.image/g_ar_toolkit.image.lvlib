@@ -230,7 +230,6 @@
 			<Item Name="Line Type.ctl" Type="VI" URL="../Line Type.ctl"/>
 			<Item Name="Raw Memory Information Dimension.ctl" Type="VI" URL="../Raw Memory Information Dimension.ctl"/>
 			<Item Name="Raw Memory Information.ctl" Type="VI" URL="../Raw Memory Information.ctl"/>
-			<Item Name="Rectangle.ctl" Type="VI" URL="../Rectangle.ctl"/>
 			<Item Name="Poly Lines Shape Draw Mode.ctl" Type="VI" URL="../Poly Lines Shape Draw Mode.ctl"/>
 			<Item Name="Fill-Poly Points Type.ctl" Type="VI" URL="../Fill-Poly Points Type.ctl"/>
 			<Item Name="Ellipse Angles.ctl" Type="VI" URL="../Ellipse Angles.ctl"/>

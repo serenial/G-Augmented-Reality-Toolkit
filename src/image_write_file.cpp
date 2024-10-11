@@ -25,7 +25,7 @@ extern "C"
         {
             lv_image src(src_edvr_ref_ptr);
 
-            std::filesystem::path dst_path = lv_string_handle_to_std_string_view(path_string_handle);
+            std::filesystem::path dst_path = static_cast<std::string_view>(path_string_handle);
 
             // if save_alpha then check filetype
             // avoid to lower case with std::set search
@@ -45,7 +45,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

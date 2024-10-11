@@ -13,11 +13,10 @@ namespace g_ar_toolkit
         // cv Termination Criteria
         struct LV_TerminationCritera_t
         {
-            double epsilon;
-            int32_t iterations;
+            double m_epsilon;
+            int32_t m_iterations;
+            operator cv::TermCriteria() const;
         };
-
-        cv::TermCriteria lv_termination_critera_ptr_to_cv_term_criteria(LV_TerminationCritera_t *);
     }
 }
 

@@ -2,6 +2,9 @@
 #define G_AR_TK__INTEROP_LV_U32_COLOUR_HPP_
 
 #include <opencv2/core/types.hpp>
+
+#include "./lv_image.hpp"
+
 #include "./set_packing.hpp"
 
 namespace g_ar_toolkit
@@ -23,10 +26,12 @@ namespace g_ar_toolkit
                 return !(l == r);
             };
 
-            cv::Scalar get_bgr();
-            cv::Scalar get_bgra();
-            cv::Scalar get_hsv();
-            cv::Scalar get_blue();
+            cv::Scalar get_bgr() const;
+            cv::Scalar get_bgra() const;
+            cv::Scalar get_hsv() const;
+            cv::Scalar get_blue() const;
+
+            cv::Scalar colour_for_image_type(const lv_image&) const;
         };
     }
 }

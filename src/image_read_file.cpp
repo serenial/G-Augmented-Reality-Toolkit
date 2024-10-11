@@ -59,7 +59,7 @@ extern "C"
                 }
             }
 
-            auto input = cv::imread(lv_string_handle_to_std_string(path_string_handle), flags);
+            auto input = cv::imread(path_string_handle, flags);
 
             if (dst.is_greyscale())
             {
@@ -93,7 +93,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

@@ -5,7 +5,7 @@
 
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
-#include "g_ar_toolkit/lv_interop/lv_array.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 #include "g_ar_toolkit_export.h"
@@ -213,7 +213,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

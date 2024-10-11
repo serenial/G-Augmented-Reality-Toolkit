@@ -6,7 +6,7 @@
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
 #include "g_ar_toolkit/lv_interop/lv_picture.hpp"
-#include "g_ar_toolkit/lv_interop/lv_array.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit_export.h"
 
@@ -44,7 +44,7 @@ extern "C"
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
         LV_PictureTopLeftPtr_t top_left_ptr,
-        LV_StringHandlePtr_t lv_str_handle_ptr,
+        LV_StringHandle_t lv_str_handle,
         LV_PictureOpHeaderPtr_t op_header_ptr,
         LV_BooleanPtr_t use_mask_ptr)
     {
@@ -83,9 +83,7 @@ extern "C"
             }
 
             // size source string-handle to hold our image data
-            ensure_array_handle_ptr_can_hold_n_elements(lv_str_handle_ptr,total_data_length);
-
-            (**lv_str_handle_ptr)->dims[0] = total_data_length;
+            lv_str_handle.size_to_fit(total_data_length);
 
             // use some magic numbers to set the header
             op_header_ptr->op_code = use_mask ? 40 : 29; // draw rgb data
@@ -100,7 +98,7 @@ extern "C"
 
             // get a pointer to the point in the "string" bytes where the rgb pixel data starts
             // we can then wrap this in a cv::Mat to make copying data to it easier
-            auto dst_data_ptr = ((**lv_str_handle_ptr)->data) + SIZEOF_LV_FLATTENED_PICTURE_OP_HEADER_BYTES;
+            auto dst_data_ptr = lv_str_handle.begin() + SIZEOF_LV_FLATTENED_PICTURE_OP_HEADER_BYTES;
 
             if (src.is_bgra())
             {
@@ -174,7 +172,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+           error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

@@ -4,18 +4,86 @@
 #include <opencv2/core/base.hpp>
 #include <opencv2/imgproc.hpp>
 
-cv::BorderTypes border_type_enum_to_cv_border_type(uint8_t);
+#include "./lv_array_1d.hpp"
 
-cv::InterpolationFlags interpolation_flag_enum_to_cv_interpolation_flag(uint8_t);
+namespace g_ar_toolkit
+{
+    namespace lv_interop
+    {
 
-cv::LineTypes line_types_enum_to_cv_linetype(uint8_t);
+#include "./set_packing.hpp"
 
-cv::HersheyFonts font_face_enum_to_cv_hershey_font(uint8_t);
+        class LV_EnumCVBoarderType_t
+        {
+        public:
+            operator cv::BorderTypes() const;
 
-int image_flip_enum_to_image_flip_code(uint8_t);
+        private:
+            uint8_t m_value;
+        };
 
-int find_chessboard_corners_enum_to_flag(uint8_t);
+        class LV_EnumCVInterpolationFlag_t
+        {
+        public:
+            operator cv::InterpolationFlags() const;
 
-int find_chessboard_corners_enum_to_flag_sb(uint8_t);
+        private:
+            uint8_t m_value;
+        };
 
-#endif //G_AR_TK__INTEROP_LV_ARRAY_HPP_
+        class LV_EnumCVLineType_t
+        {
+        public:
+            operator cv::LineTypes() const;
+
+        private:
+            uint8_t m_value;
+        };
+
+        class LV_EnumCVHersheyFont_t
+        {
+        public:
+            operator cv::HersheyFonts() const;
+
+        private:
+            uint8_t m_value;
+        };
+
+        class LV_EnumCVInt_t
+        {
+        public:
+            template <typename T>
+            static int combine(LV_1DArrayHandle_t<T> handle)
+            {
+                static_assert(std::is_base_of<LV_EnumCVInt_t, T>::value, "Type is not derived from LV_EnumCVInt_t");
+
+                // convert and accumulate flags
+                return std::accumulate(handle.begin(), handle.end(), int(0), std::bit_or<int>());
+            }
+
+        protected:
+            uint8_t m_value;
+        };
+
+        struct LV_EnumCVImageFlip_t : public LV_EnumCVInt_t
+        {
+            operator int() const;
+        };
+        struct LV_EnumCVChessboardCorners_t : public LV_EnumCVInt_t
+        {
+            operator int() const;
+        };
+        struct LV_EnumCVChessboardCornersSB_t : public LV_EnumCVInt_t
+        {
+            operator int() const;
+        };
+        struct LV_EnumCVCameraCalibrationFlags_t : public LV_EnumCVInt_t
+        {
+            operator int() const;
+        };
+
+#include "./reset_packing.hpp"
+    }
+}
+
+#endif // G_AR_TK__INTEROP_LV_ENUMS_HPP_

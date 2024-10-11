@@ -1,6 +1,7 @@
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
+#include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -18,7 +19,7 @@ extern "C"
         try
         {
             // create an image instance - this will initialize all the persistant data and EDVR structure
-            lv_image img(edvr_ref_ptr, cv::Size(image_size_ptr->width, image_size_ptr->height), *is_bgra_ptr);
+            lv_image img(edvr_ref_ptr, *image_size_ptr, *is_bgra_ptr);
             if (img.is_bgra())
             {
                 (*img) = init_value.get_bgra();
@@ -30,7 +31,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+           error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;

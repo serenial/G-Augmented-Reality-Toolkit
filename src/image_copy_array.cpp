@@ -1,10 +1,11 @@
 #include <stdexcept>
 #include <opencv2/imgproc.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_array.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
+#include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
@@ -23,13 +24,13 @@ extern "C"
         {
             lv_image dst(dst_edvr_ref_ptr);
             // wrap raw pointer in Mat to make copy easy
-            cv::Mat wrapped(array_size_ptr->size(), dst.cv_type(), array_ptr);
+            cv::Mat wrapped(*array_size_ptr, dst.cv_type(), array_ptr);
 
             switch (array_third_dim)
             {
             case 3:
                 // 3D U8 Array with backwards pixel order
-                dst.ensure_sized_to_match(array_size_ptr->size());
+                dst.ensure_sized_to_match(*array_size_ptr);
                 // swap channels into dst
                 cv::cvtColor(wrapped, dst, cv::COLOR_BGR2BGRA);
                 break;
@@ -45,7 +46,7 @@ extern "C"
         }
         catch (...)
         {
-            return caught_exception_to_lv_err(std::current_exception(), error_cluster_ptr, __func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
         }
 
         return LV_ERR_noError;
