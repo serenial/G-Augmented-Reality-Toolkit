@@ -70,9 +70,9 @@
 		</Item>
 		<Item Name="ARGB Image Get Channel" Type="Folder">
 			<Item Name="ARGBImageGetChannelAlpha.vi" Type="VI" URL="../ARGBImageGetChannelAlpha.vi"/>
+			<Item Name="ARGBImageGetChannelBlue.vi" Type="VI" URL="../ARGBImageGetChannelBlue.vi"/>
 			<Item Name="ARGBImageGetChannelGreen.vi" Type="VI" URL="../ARGBImageGetChannelGreen.vi"/>
 			<Item Name="ARGBImageGetChannelRed.vi" Type="VI" URL="../ARGBImageGetChannelRed.vi"/>
-			<Item Name="ARGBImagGetChannelBlue.vi" Type="VI" URL="../ARGBImagGetChannelBlue.vi"/>
 		</Item>
 		<Item Name="ARGB Image Set Channel" Type="Folder">
 			<Item Name="ARGBImageSetChannelAlpha.vi" Type="VI" URL="../ARGBImageSetChannelAlpha.vi"/>

@@ -1,6 +1,4 @@
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
-#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;

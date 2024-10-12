@@ -75,6 +75,17 @@ cv::Mat LV_Vec3Double_t::as_cv_mat()
     return cv::Mat{1, 3, CV_64F, &m_x};
 }
 
+cv::Vec3d LV_Vec3Double_t::to_vec3d()
+{
+    return *this;
+}
+
+cv::Vec3f LV_Vec3Double_t::to_vec3f()
+{
+    return *this;
+}
+
+
 LV_Vec3Double_t::operator cv::Mat()
 {
     return as_cv_mat();

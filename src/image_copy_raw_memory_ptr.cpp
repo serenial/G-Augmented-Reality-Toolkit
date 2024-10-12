@@ -1,4 +1,4 @@
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_edvr_managed_object.hpp"

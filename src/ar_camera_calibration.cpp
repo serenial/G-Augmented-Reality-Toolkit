@@ -4,7 +4,6 @@
 #include <opencv2/core.hpp>
 #include <opencv2/calib3d.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
@@ -20,6 +19,9 @@ using namespace lv_interop;
 
 namespace
 {
+    // define a type which is an LV 1d-array of rvecs or tvecs
+    // and add a method which converts those vecs to non-owning cv:Mats
+    // which point directly to the LV-managed memory
     struct LV_1DVecArrayHandle_t : public LV_1DArrayHandle_t<LV_Vec3Double_t>
     {
         std::vector<cv::Mat> as_cv_mats()
@@ -41,7 +43,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_camera_calibration(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_camera_calibration(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_PointCorrespondencesArrayHandle_t point_correspondence_handle,
         LV_ImageSizePtr_t size_ptr,

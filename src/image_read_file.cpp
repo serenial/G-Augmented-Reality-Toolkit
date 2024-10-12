@@ -1,7 +1,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"

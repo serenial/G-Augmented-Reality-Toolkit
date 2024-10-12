@@ -4,7 +4,6 @@
 #include <stdexcept>
 
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
-#include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;

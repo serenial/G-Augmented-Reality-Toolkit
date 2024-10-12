@@ -3,7 +3,7 @@
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit_export.h"
 

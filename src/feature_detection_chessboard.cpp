@@ -6,7 +6,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/calib3d.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
@@ -22,7 +22,7 @@ using namespace lv_interop;
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_find_chessboard_corners(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_find_chessboard_corners(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_ImageSizePtr_t pattern_ptr,
@@ -50,7 +50,7 @@ extern "C"
         }
         return LV_ERR_noError;
     }
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_refine_corner_sub_pix(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_refine_corner_sub_pix(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_WindowSizePtr_t window_size_ptr,
@@ -80,7 +80,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_find_chessboard_corners_sb(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_find_chessboard_corners_sb(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_ImageSizePtr_t pattern_ptr,

@@ -48,6 +48,8 @@ namespace g_ar_toolkit
             operator cv::Point3f() const;
             operator cv::Mat();
             cv::Mat as_cv_mat();
+            cv::Vec3d to_vec3d();
+            cv::Vec3f to_vec3f();
             LV_Vec3Double_t& operator=(const cv::Vec3d&);
             LV_Vec3Double_t& operator=(const cv::Vec3f&);
             LV_Vec3Double_t& operator=(const cv::Point3d&);

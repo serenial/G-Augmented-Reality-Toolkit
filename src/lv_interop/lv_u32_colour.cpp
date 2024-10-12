@@ -1,5 +1,6 @@
 #include <tuple>
 #include <opencv2/opencv.hpp>
+
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 
 using namespace g_ar_toolkit;

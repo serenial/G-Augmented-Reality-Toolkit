@@ -9,16 +9,10 @@
 
 </Property>
 	<Item Name="Termination Criteria.lvclass" Type="LVClass" URL="../Termination Criteria/Termination Criteria.lvclass"/>
-	<Item Name="Camera Distortion Coefficients.ctl" Type="VI" URL="../Camera Distortion Coefficients.ctl"/>
-	<Item Name="Camera Matrix.ctl" Type="VI" URL="../Camera Matrix.ctl"/>
-	<Item Name="Camera Parameters.ctl" Type="VI" URL="../Camera Parameters.ctl"/>
 	<Item Name="Image Point (Float).ctl" Type="VI" URL="../Image Point (Float).ctl"/>
 	<Item Name="Image Point (Integer).ctl" Type="VI" URL="../Image Point (Integer).ctl"/>
 	<Item Name="Image Size (Integer).ctl" Type="VI" URL="../Image Size (Integer).ctl"/>
 	<Item Name="Window Size (Integer).ctl" Type="VI" URL="../Window Size (Integer).ctl"/>
 	<Item Name="Object Point (Float).ctl" Type="VI" URL="../Object Point (Float).ctl"/>
-	<Item Name="tvec.ctl" Type="VI" URL="../tvec.ctl"/>
-	<Item Name="rvec.ctl" Type="VI" URL="../rvec.ctl"/>
 	<Item Name="Transform Object Point by Transformation Matrix.vi" Type="VI" URL="../../g_ar_toolkit.pointset_utils/Transform Object Point by Transformation Matrix.vi"/>
-	<Item Name="Pose.ctl" Type="VI" URL="../Pose.ctl"/>
 </Library>

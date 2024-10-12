@@ -1,6 +1,6 @@
 #include <opencv2/imgproc.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit_export.h"
@@ -18,12 +18,11 @@ extern "C"
     {
         try
         {
-            
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
-            cv::cvtColor(src,dst,cv::COLOR_BGR2GRAY); // Alpha channel will be ignored
+            cv::cvtColor(src,dst,cv::COLOR_GRAY2BGRA);
         }
         catch (...)
         {
