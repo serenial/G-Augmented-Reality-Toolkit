@@ -1,11 +1,16 @@
 {
     "dependencies": [
-        "opencv"
+        "opencv",
+        "tinyobjloader"
     ],
     "overrides": [
         {
             "name": "opencv",
             "version": "4.8.0"
+        },
+        {
+            "name":"tinyobjloader",
+            "version":"2.0.0rc13"
         }
     ],
     "builtin-baseline": "943c5ef1c8f6b5e6ced092b242c8299caae2ff01"

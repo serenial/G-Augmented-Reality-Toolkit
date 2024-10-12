@@ -23,6 +23,8 @@ endif()
 
 ## Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
+## Find tinyobjloader
+find_package(tinyobjloader CONFIG REQUIRED)
 
 if(WIN32)
   FetchContent_Declare(rosmsftcam
@@ -211,6 +213,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_imgproc
   opencv_highgui
   opencv_calib3d
+  tinyobjloader::tinyobjloader
 )
 
 # Install Shared Library
