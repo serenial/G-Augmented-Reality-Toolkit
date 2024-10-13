@@ -45,6 +45,7 @@ LV_ImageSize_t& LV_ImageSize_t::operator=(const cv::Size2i& size){
     return *this;
 }
 
+
 LV_WindowSize_t::operator cv::Size2i() const
 {
     return cv::Size2i{m_width, m_height};
@@ -113,5 +114,13 @@ LV_Vec3Double_t& LV_Vec3Double_t::operator=(const cv::Point3f &p){
     m_x = p.x;
     m_y = p.y;
     m_z = p.z;
+    return *this;
+}
+ 
+
+LV_Vec3Double_t& LV_Vec3Double_t::operator=(const float a [3]){
+    m_x = a[0];
+    m_y = a[1];
+    m_z = a[2];
     return *this;
 }

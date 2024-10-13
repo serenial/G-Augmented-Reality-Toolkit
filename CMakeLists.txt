@@ -125,6 +125,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/feature_detection_chessboard.cpp
   src/ar_camera_calibration.cpp
   src/ar_project_points.cpp
+  src/ar_obj_loader.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 

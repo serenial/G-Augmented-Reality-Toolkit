@@ -106,3 +106,8 @@ Welcome - please open an issue if you would like to contribute
 | [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) | MIT |
 | [Apriltag](https://github.com/AprilRobotics/apriltag) (not yet integrated) | BSD 2-Clause License |
 
+## 3D Models
+
+| Model | Licence | Source |
+|-------|---------|--------|
+| Spot  | https://creativecommons.org/publicdomain/zero/1.0/ | https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/ |

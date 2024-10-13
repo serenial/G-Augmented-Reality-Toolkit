@@ -54,6 +54,8 @@ namespace g_ar_toolkit
             LV_Vec3Double_t& operator=(const cv::Vec3f&);
             LV_Vec3Double_t& operator=(const cv::Point3d&);
             LV_Vec3Double_t& operator=(const cv::Point3f&);
+            LV_Vec3Double_t& operator=(const float[3]);
+            
         };
 
 
