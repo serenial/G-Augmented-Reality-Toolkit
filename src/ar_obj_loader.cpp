@@ -684,14 +684,14 @@ extern "C"
             if (success)
             {
                 // copy objects
-                object_array_handle.copy_from(objects, [](auto from, auto to)
+                object_array_handle.copy_element_by_element_from(objects, [](auto from, auto to)
                                               {
                     to->name_handle.copy_from(from.name);
                     to->material_id =  from.material_id; }, [](auto to_deallocate)
                                               { to_deallocate.name_handle.dispose(); });
 
                 // copy verticies
-                vertex_arrays_handle.copy_from(shape_verticies, [](auto from, auto to)
+                vertex_arrays_handle.copy_element_by_element_from(shape_verticies, [](auto from, auto to)
                                                {
                                                    // std::vector is a long list of values which have the same format as LV_ObjPoint_t
 
@@ -712,7 +712,7 @@ extern "C"
                                                { to_deallocate.dispose(); });
 
                 // copy materials
-                material_array_handle.copy_from(materials, [](auto from, auto to)
+                material_array_handle.copy_element_by_element_from(materials, [](auto from, auto to)
                                                 {
                                                     *to = from;
                                                 },

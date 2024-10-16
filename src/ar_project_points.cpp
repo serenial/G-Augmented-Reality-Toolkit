@@ -37,9 +37,7 @@ extern "C"
                 image_points
             );
 
-            image_points_handle.copy_from(image_points, [](auto from, auto to){
-                *to = from;
-            });
+            image_points_handle.copy_element_by_element_from(image_points);
         }
         catch (...)
         {
