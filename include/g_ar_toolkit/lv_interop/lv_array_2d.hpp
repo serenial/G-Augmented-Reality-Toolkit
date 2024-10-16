@@ -129,7 +129,7 @@ namespace g_ar_toolkit
             }
 
             // copy from for cv::Mat
-            void copy_from(cv::Mat mat)
+            void copy_memory_from(cv::Mat mat)
             {
 
                 if (sizeof(T) != mat.elemSize())

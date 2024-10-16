@@ -1,6 +1,5 @@
 #include <opencv2/imgproc.hpp>
 
-
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
@@ -12,6 +11,69 @@
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
+
+namespace
+{
+
+#include "g_ar_toolkit/lv_interop/set_packing.hpp"
+
+    class LV_EnumCVLineType_t
+    {
+    private:
+        uint8_t m_value;
+
+    public:
+        operator cv::LineTypes() const
+        {
+            const cv::LineTypes line_types[] =
+                {
+                    cv::FILLED,
+                    cv::LINE_4,
+                    cv::LINE_8,
+                    cv::LINE_AA};
+
+            if (m_value < std::size(line_types))
+            {
+                return line_types[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the line-type does not map to a valid OpenCV value.");
+        }
+    };
+
+    class LV_EnumCVHersheyFont_t
+    {
+    private:
+        uint8_t m_value;
+
+    public:
+        operator cv::HersheyFonts() const
+        {
+            const cv::HersheyFonts fonts[] =
+                {
+                    cv::FONT_HERSHEY_SIMPLEX,
+                    cv::FONT_HERSHEY_PLAIN,
+                    cv::FONT_HERSHEY_DUPLEX,
+                    cv::FONT_HERSHEY_COMPLEX,
+                    cv::FONT_HERSHEY_TRIPLEX,
+                    cv::FONT_HERSHEY_COMPLEX_SMALL,
+                    cv::FONT_HERSHEY_SCRIPT_SIMPLEX,
+                    cv::FONT_HERSHEY_SCRIPT_COMPLEX,
+                    cv::FONT_ITALIC};
+
+            if (m_value < std::size(fonts))
+            {
+                return fonts[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the font-face does not map to a valid OpenCV value.");
+        }
+    };
+
+
+#include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+
+}
 
 extern "C"
 {
@@ -70,7 +132,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -99,7 +161,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -134,7 +196,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -163,7 +225,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -192,7 +254,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -230,7 +292,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -265,7 +327,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -293,7 +355,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
@@ -315,7 +377,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;

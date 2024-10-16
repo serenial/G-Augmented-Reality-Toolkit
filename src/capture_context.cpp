@@ -62,12 +62,12 @@ extern "C"
 
             context.get_object()->enumerate_devices(devices);
 
-            device_info_handle.copy_from(devices, [](auto device, auto dest)
+            device_info_handle.copy_element_by_element_from(devices, [](auto device, auto dest)
                                          {
                                             dest->id.copy_from(device.device_id);
                                             dest->name.copy_from(device.device_name);
 
-                                            dest->formats.copy_from(device.supported_formats, [](auto const &f, auto dest_f)
+                                            dest->formats.copy_element_by_element_from(device.supported_formats, [](auto const &f, auto dest_f)
                                                                      {  
                                                                         dest_f->width = f.width;
                                                                         dest_f->height = f.height;

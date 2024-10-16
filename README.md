@@ -71,7 +71,7 @@ _If using VSCode_
 > _VSCode_ can be launced by simply running the `code` command
 
 * Use the `.vscode-example` directory as a template for a project `.vscode` directory and configure the *cmake/vcpkg* location
-* Use the VSCode CMake intergration tools to choose the desored configuration (release/debug)
+* Use the VSCode CMake intergration tools to choose the desired configuration (release/debug)
 * build the "install" target which should configure, build and install the binaries to `LabVIEW/bin`
   
 _If not using VSCode_
@@ -100,11 +100,11 @@ Welcome - please open an issue if you would like to contribute
 ## C++ 3rd-Party Libraries
 | Library | Licence |
 |---------|---------|
-| OpenCV 4 | Apache License 2.0 |
+| [OpenCV 4](https://github.com/opencv/opencv) | Apache License 2.0 |
 | [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
 | [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
 | [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) | MIT |
-| [Apriltag](https://github.com/AprilRobotics/apriltag) (not yet integrated) | BSD 2-Clause License |
+| [Apriltag](https://github.com/AprilRobotics/apriltag) | BSD 2-Clause License |
 
 ## 3D Models
 

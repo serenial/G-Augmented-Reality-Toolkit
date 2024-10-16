@@ -6,7 +6,6 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/calib3d.hpp>
 
-
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
@@ -19,6 +18,49 @@
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
+
+namespace
+{
+    struct LV_EnumCVChessboardCorners_t : public LV_EnumCVInt_t
+    {
+        operator int() const
+        {
+
+            const int flags[] = {
+                cv::CALIB_CB_ADAPTIVE_THRESH,
+                cv::CALIB_CB_NORMALIZE_IMAGE,
+                cv::CALIB_CB_FILTER_QUADS,
+                cv::CALIB_CB_FAST_CHECK};
+
+            if (m_value < std::size(flags))
+            {
+                return flags[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
+        }
+    };
+
+    struct LV_EnumCVChessboardCornersSB_t : public LV_EnumCVInt_t
+    {
+        operator int() const
+        {
+            const int flags[] = {
+                cv::CALIB_CB_NORMALIZE_IMAGE,
+                cv::CALIB_CB_EXHAUSTIVE,
+                cv::CALIB_CB_ACCURACY,
+                cv::CALIB_CB_LARGER,
+                cv::CALIB_CB_MARKER};
+
+            if (m_value < std::size(flags))
+            {
+                return flags[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
+        }
+    };
+}
 
 extern "C"
 {
@@ -40,9 +82,7 @@ extern "C"
 
             cv::findChessboardCorners(src, *pattern_ptr, corners, LV_EnumCVInt_t::combine(flags_array_handle));
 
-            corners_handle.copy_from(corners, [](auto from, auto to){
-                *to = from;
-            });
+            corners_handle.copy_element_by_element_from(corners);
         }
         catch (...)
         {
@@ -69,9 +109,7 @@ extern "C"
 
             cv::cornerSubPix(src, corners, *window_size_ptr, *zero_zone_ptr, *term_crit_ptr);
 
-            corners_handle.copy_from(corners, [](auto from, auto to){
-                *to = from;
-            });
+            corners_handle.copy_element_by_element_from(corners);
         }
         catch (...)
         {
@@ -101,11 +139,9 @@ extern "C"
 
             cv::findChessboardCornersSB(src, *pattern_ptr, corners, LV_EnumCVInt_t::combine(flags_array_handle), meta);
 
-            corners_handle.copy_from(corners, [](auto from, auto to){
-                *to = from;
-            });
+            corners_handle.copy_element_by_element_from(corners);
 
-            meta_handle_ptr.copy_from(meta);
+            meta_handle_ptr.copy_memory_from(meta);
         }
         catch (...)
         {

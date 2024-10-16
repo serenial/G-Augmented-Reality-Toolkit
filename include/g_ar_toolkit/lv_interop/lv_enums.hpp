@@ -31,24 +31,6 @@ namespace g_ar_toolkit
             uint8_t m_value;
         };
 
-        class LV_EnumCVLineType_t
-        {
-        public:
-            operator cv::LineTypes() const;
-
-        private:
-            uint8_t m_value;
-        };
-
-        class LV_EnumCVHersheyFont_t
-        {
-        public:
-            operator cv::HersheyFonts() const;
-
-        private:
-            uint8_t m_value;
-        };
-
         class LV_EnumCVInt_t
         {
         public:
@@ -63,23 +45,6 @@ namespace g_ar_toolkit
 
         protected:
             uint8_t m_value;
-        };
-
-        struct LV_EnumCVImageFlip_t : public LV_EnumCVInt_t
-        {
-            operator int() const;
-        };
-        struct LV_EnumCVChessboardCorners_t : public LV_EnumCVInt_t
-        {
-            operator int() const;
-        };
-        struct LV_EnumCVChessboardCornersSB_t : public LV_EnumCVInt_t
-        {
-            operator int() const;
-        };
-        struct LV_EnumCVCameraCalibrationFlags_t : public LV_EnumCVInt_t
-        {
-            operator int() const;
         };
 
 #include "./reset_packing.hpp"

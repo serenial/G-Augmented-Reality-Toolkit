@@ -125,7 +125,7 @@ namespace g_ar_toolkit
 
             // copy from for non fundamental types that requires each element to be copied in turn
             template <class ElementType, typename CopyFunction = std::function<void(const ElementType &, T *)>>
-            void copy_from(std::vector<ElementType> vector, CopyFunction copy_fn, std::function<void(T)> deallocator = [](T el) {})
+            void copy_element_by_element_from(std::vector<ElementType> vector, CopyFunction copy_fn = [](auto from, auto to){ *to = from;}, std::function<void(T)> deallocator = [](T el) {})
             {
                 size_to_fit(vector.size(), deallocator);
 
@@ -140,7 +140,7 @@ namespace g_ar_toolkit
 
             // copy from for contiguous fundamental types which can be copied in a block
             template <class ElementType>
-            void copy_from(std::vector<ElementType> vector)
+            void copy_memory_from(std::vector<ElementType> vector)
             {
                 // memcpy only works with fundamental types
                 static_assert(std::is_fundamental_v<ElementType> == true, "Default copying is only compatible for fundamental value types. Specify the copy function [](auto from, auto to){ /* do conversion */}");
@@ -149,7 +149,7 @@ namespace g_ar_toolkit
             }
 
             // copy from for cv::Mat
-            void copy_from(cv::Mat mat)
+            void copy_memory_from(cv::Mat mat)
             {
 
                 size_t n_elements = mat.rows * mat.cols * mat.channels();

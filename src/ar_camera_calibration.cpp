@@ -19,6 +19,34 @@ using namespace lv_interop;
 
 namespace
 {
+
+#include "g_ar_toolkit/lv_interop/set_packing.hpp"
+    struct LV_EnumCVCameraCalibrationFlags_t : public LV_EnumCVInt_t
+    {
+        operator int() const
+        {
+            const int flags[] = {
+                cv::CALIB_USE_INTRINSIC_GUESS,
+                cv::CALIB_FIX_PRINCIPAL_POINT,
+                cv::CALIB_FIX_ASPECT_RATIO,
+                cv::CALIB_ZERO_TANGENT_DIST,
+                cv::CALIB_FIX_FOCAL_LENGTH,
+                cv::CALIB_FIX_K1,
+                cv::CALIB_RATIONAL_MODEL,
+                cv::CALIB_THIN_PRISM_MODEL,
+                cv::CALIB_FIX_S1_S2_S3_S4,
+                cv::CALIB_TILTED_MODEL,
+                cv::CALIB_FIX_TAUX_TAUY};
+
+            if (m_value < std::size(flags))
+            {
+                return flags[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the chessboard corner detection flag does not map to a valid OpenCV value.");
+        }
+    };
+
     // define a type which is an LV 1d-array of rvecs or tvecs
     // and add a method which converts those vecs to non-owning cv:Mats
     // which point directly to the LV-managed memory
@@ -29,7 +57,8 @@ namespace
             std::vector<cv::Mat> out;
             out.reserve(size());
 
-            for(auto &v : *this){
+            for (auto &v : *this)
+            {
                 out.push_back(v);
             }
 
@@ -39,6 +68,9 @@ namespace
 
     using LV_1DRVecArrayHandle_t = LV_1DVecArrayHandle_t;
     using LV_1DTVecArrayHandle_t = LV_1DVecArrayHandle_t;
+
+
+#include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 }
 
 extern "C"
@@ -78,7 +110,7 @@ extern "C"
                 LV_EnumCVInt_t::combine(flags_array_handle),
                 *term_crit_ptr);
 
-            rms_handle_ptr.copy_from(rms);
+            rms_handle_ptr.copy_memory_from(rms);
         }
         catch (...)
         {
