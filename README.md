@@ -89,7 +89,7 @@ _If not using VSCode_
 - [x] Apriltag Integration
 - [x] OpenCV to LabVIEW 3D Control transformations
 - [x] Example Code
-  [x] OpenCV image rectification
+- [x] OpenCV image rectification
 - [ ] Documentation
 - [ ] Camera Property Control
 
