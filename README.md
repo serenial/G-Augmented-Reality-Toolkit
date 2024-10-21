@@ -2,7 +2,7 @@
 
 An Augmented-Reality Toolkit for LabVIEW.
 
-This toolkit ~~is~~ will eventually be a single solution to building Augmented Reality functionality with LabVIEW encompassing webcam capture, image processing and AR marker detection and 3D rendering using LabVIEW's built-in 3D picture functionality.
+This toolkit is a complete solution for building Augmented Reality functionality with LabVIEW encompassing webcam capture, image processing and AR marker detection and 3D rendering using LabVIEW's built-in 3D picture functionality.
 
 Whilst the intended application is around AR this toolkit also provides
 * A system-native open-source webcam driver for LabVIEW
@@ -15,9 +15,8 @@ Whilst the intended application is around AR this toolkit also provides
 If you would like to learn more about AR in LabVIEW and the motivations behind this library then [checkout this talk from gdev-con (eur) 2023](https://youtu.be/N7MVxLI1WsQ?si=qfJQf3qi_rYwaQ_8)
 
 And how can this look in LabVIEW?
-This is a simple example based on proof-of-concept code which is being polished and integrated into the toolkit.
 
-![Am animated-gif of a AR cow floating in-front of a chessboard in LabVIEW](docs/demo.gif "an example of a simple AR application in LabVIEW (built using proof-of-concept code not in this toolkit yet)")
+![Am animated-gif of a AR cow floating in-front of a chessboard in LabVIEW](docs/demo.gif "an example of the Image Processing Pipeline to produce AR experiences with LabVIEW")
 
 ## 🎉 Pre-Release Version 1.0.0 🎉
 
@@ -57,7 +56,7 @@ If you wish to modify the C++ code you will require the following for building t
 Install the dependencies using `apt`
 
 ```bash
-sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev  libxinerama-dev libxrandr-dev
+sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev
 ``` 
 
 ### C++ Setup
@@ -85,13 +84,14 @@ _If not using VSCode_
 - [x] Basic LV-C++ Interoperability with an EDVR based image type
 - [x] OpenCV basic image manipulation
 - [x] Basic Windows Media Framework Camera Driver Integration
-- [ ] Linux Webcam Driver and Linux Build Tooling (Work-in-progress)
-- [ ] OpenCV 3dCalib routines
-- [ ] Apriltag Integration
-- [ ] OpenCV to LabVIEW 3D Control transformations
-- [ ] Example Code
+- [x] Basic Linux Webcam Driver Integration
+- [x] OpenCV 3dCalib routines
+- [x] Apriltag Integration
+- [x] OpenCV to LabVIEW 3D Control transformations
+- [x] Example Code
+  [x] OpenCV image rectification
 - [ ] Documentation
-- [ ] Windows Media Framework Camera Property Control
+- [ ] Camera Property Control
 
 
 ## Contributions
@@ -111,3 +111,9 @@ Welcome - please open an issue if you would like to contribute
 | Model | Licence | Source |
 |-------|---------|--------|
 | Spot  | https://creativecommons.org/publicdomain/zero/1.0/ | https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/ |
+
+## Test Images
+
+| Image | Licence | Source |
+|-------|---------|--------|
+| tag36h11-mosaic  | BSD 2-Clause Licence | https://github.com/AprilRobotics/apriltag-imgs

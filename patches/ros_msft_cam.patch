@@ -1,9 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-deleted file mode 100644
-index 224f36a..0000000
+index 224f36a..0390737 100644
 --- a/CMakeLists.txt
-+++ /dev/null
-@@ -1,129 +0,0 @@
++++ b/CMakeLists.txt
+@@ -1,129 +1,20 @@
 -cmake_minimum_required(VERSION 3.15.3)
 -project(win_camera)
 -
@@ -133,6 +132,27 @@ index 224f36a..0000000
 -)
 -
 -ament_package()
++add_library(rosmsftcam OBJECT)
++# winrt only supports C++17 std
++set_property(TARGET rosmsftcam PROPERTY CXX_STANDARD 17)
++target_sources(rosmsftcam PRIVATE src/wincapture.cpp)
++
++target_include_directories(rosmsftcam PUBLIC
++  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include"
++  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>/include"
++)
++
++target_link_libraries(rosmsftcam PRIVATE
++    mf
++    mfplat
++    Mfreadwrite
++    mfuuid
++    Rpcrt4
++    runtimeobject
++    Mfsensorgroup
++    shlwapi
++)
+\ No newline at end of file
 diff --git a/src/wincapture.cpp b/src/wincapture.cpp
 index 6b53b00..38ff335 100644
 --- a/src/wincapture.cpp

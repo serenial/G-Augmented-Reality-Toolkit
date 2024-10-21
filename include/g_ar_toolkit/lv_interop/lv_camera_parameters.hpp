@@ -3,7 +3,8 @@
 
 #include <opencv2/core.hpp>
 
-#include "g_ar_toolkit/lv_interop/lv_types.hpp"
+#include "./lv_types.hpp"
+#include "./lv_mat.hpp"
 
 namespace g_ar_toolkit
 {
@@ -11,14 +12,9 @@ namespace g_ar_toolkit
     {
 #include "./set_packing.hpp"
 
-        class LV_CameraMatrix_t{
-            public:
-            operator cv::Mat();
-            cv::Mat as_cv_mat();
-            private:
-            double m_value [9];
-        };
 
+
+        using LV_CameraMatrix_t = LV_3x3Matrix_t;
         using LV_CameraMatrixPtr_t = LV_Ptr_t<LV_CameraMatrix_t>;
 
         class LV_CameraDistortion_t{

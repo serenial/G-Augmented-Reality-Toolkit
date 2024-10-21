@@ -19,6 +19,7 @@
 		<Item Name="Build Square Marker Object Points.vi" Type="VI" URL="../Build Square Marker Object Points.vi"/>
 	</Item>
 	<Item Name="Types" Type="Folder">
+		<Item Name="Point Correspondence Set.ctl" Type="VI" URL="../Point Correspondence Set.ctl"/>
 		<Item Name="Camera Distortion Coefficients.ctl" Type="VI" URL="../Camera Distortion Coefficients.ctl"/>
 		<Item Name="Camera Matrix.ctl" Type="VI" URL="../Camera Matrix.ctl"/>
 		<Item Name="Camera Parameters.ctl" Type="VI" URL="../Camera Parameters.ctl"/>
@@ -26,18 +27,20 @@
 		<Item Name="rvec.ctl" Type="VI" URL="../rvec.ctl"/>
 		<Item Name="tvec.ctl" Type="VI" URL="../../g_ar_toolkit.common/tvec.ctl"/>
 		<Item Name="Model Bounding Box.ctl" Type="VI" URL="../Model Bounding Box.ctl"/>
-		<Item Name="Square Corners.ctl" Type="VI" URL="../Square Corners.ctl"/>
 	</Item>
 	<Item Name="Camera Calibration and Rectification" Type="Folder">
 		<Item Name="Calibrate Camera.vi" Type="VI" URL="../Calibrate Camera.vi"/>
 		<Item Name="Camera Calibration Flags.ctl" Type="VI" URL="../Camera Calibration Flags.ctl"/>
 		<Item Name="Point Correspondence Sets.ctl" Type="VI" URL="../Point Correspondence Sets.ctl"/>
-		<Item Name="Point Correspondence Set.ctl" Type="VI" URL="../Point Correspondence Set.ctl"/>
+		<Item Name="Camera Parameters Estimate.ctl" Type="VI" URL="../Camera Parameters Estimate.ctl"/>
 	</Item>
 	<Item Name="Matrix" Type="Folder">
+		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
 		<Item Name="Camera Parameter to 3D Projection Matrix.vi" Type="VI" URL="../Camera Parameter to 3D Projection Matrix.vi"/>
 		<Item Name="Flip Transform-Matrix Handedness.vi" Type="VI" URL="../Flip Transform-Matrix Handedness.vi"/>
 		<Item Name="Transformation Matrix to 3D Model View Matrix.vi" Type="VI" URL="../Transformation Matrix to 3D Model View Matrix.vi"/>
+		<Item Name="Pose to Transformation Matrix.vi" Type="VI" URL="../Pose to Transformation Matrix.vi"/>
+		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Solve PnP" Type="Folder">
@@ -49,6 +52,10 @@
 			<Item Name="SolvePnP-IPPE.vi" Type="VI" URL="../SolvePnP-IPPE.vi"/>
 			<Item Name="SolvePnP-IterativeGuess.vi" Type="VI" URL="../SolvePnP-IterativeGuess.vi"/>
 			<Item Name="SolvePnP-Iterative.vi" Type="VI" URL="../SolvePnP-Iterative.vi"/>
+		</Item>
+		<Item Name="Rodrigues" Type="Folder">
+			<Item Name="RodriguesRVecToRMat.vi" Type="VI" URL="../RodriguesRVecToRMat.vi"/>
+			<Item Name="RodriguesRMatToRVec.vi" Type="VI" URL="../RodriguesRMatToRVec.vi"/>
 		</Item>
 	</Item>
 	<Item Name="Project Points.vi" Type="VI" URL="../Project Points.vi"/>

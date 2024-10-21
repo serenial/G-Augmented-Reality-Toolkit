@@ -1,6 +1,6 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <Library LVVersion="20008000">
-	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*6!!!*Q(C=\&gt;7B&lt;BN"%-&lt;RLV6!K7'9:;GE&gt;(#:M:F@96\"..!]#BAJI+!FFPI%2O8$APU+@I*+V``/D;/IKB,36F760;^T`P:W^O?\]U7K^E[[UP23_X"JGV_V-&gt;Y(M4]_4ZV0'`;_-X3J-)`8;^-\U[&lt;'J`F6S6RE(K]_ZE`T^,HGT`.\`5PS&gt;,T7@U:@TO?&lt;8NNL_\`&lt;T9M`AD`_/XCD]3#C*TXI4D?.:;=E4`)E4`)E4`)A$`)A$`)A$X)H&gt;X)H&gt;X)H&gt;X)D.X)D.X)D.`,;S%5O=J&amp;$3B:0&amp;EK+*A73A[%I?5M]C3@R*"Y_+P%EHM34?")0BSDR**\%EXA3$^/5?"*0YEE]C9&gt;3*=H;S0%E(MIL]!3?Q".Y!A^,+P!%A'#RI("1");#Q7!H]!3?Q-/O!E`A#4S"*`!QL-!4?!*0Y!E]4+GT%K5:'TE?SMDR/"\(YXA=$[8F?"S0YX%]DI@FZ(A=DY.Q&amp;H3+1Z!TS4H!_?"Y(!^`Z(A=D_.R0)[(I&lt;J#8G&gt;G;-:'DM@Q'"\$9XA-$S6E?!S0Y4%]BI?S-DS'R`!9(M0$5D)]BM@Q'""D5:;85=S9;"RE");(6^UN6F=J3G+V38XTKG^+^=WGPIH5.Y@[IKMPJPICK5___K3K4Z&lt;[*+C`H"KNRKA855]?"_L-_YF_J"`I?`K/PK7P[3P[9ET^T1??TW?&gt;4C=&gt;DU=&gt;$A@N^XPN&gt;DNNNVONVWON6CMN&amp;IP(R]#3\@'"-$_8&lt;NC`P`\W]/F[?@@V3]&lt;HD]O\_`@,WZ(`B@`0`]#T57`V&gt;!X/U1_4&gt;W[R!!!!!!</Property>
+	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*7!!!*Q(C=\&gt;5B&lt;BN2%-&lt;RLV6!K7'9:;GE&gt;(#:L_!LT!&amp;-4!0.IY#2!AJ;9KEH-#I@&amp;OQL_!36NP]X/Y[CKEJ)7V66XPIZ[_`NG`@T\HID68MH87F[K8WYN/WPWBDPA^A@H[@/JSV\XRG[6*D([\8NH7F&lt;Y^0]KG1O-I^8(`/H?@J=]_@ZP@YF?4J?[T_D,_@T4;`NN@X@\?&lt;&amp;(]%@`RW]U8A1U:-?&gt;+?&lt;RL*4EC&gt;ZEC&gt;ZEC&gt;ZE!&gt;ZE!&gt;ZE!?ZETOZETOZETOZE2OZE2OZE2NZ&lt;?1C&amp;\H))37,*QMF2:-#S=&amp;1F,QFHM34?")0(Z6Y%E`C34S*BU/5?"*0YEE]C9&gt;J3DS**`%EHM2$K:*E&lt;?2Y%A`F&amp;8A#4_!*0)'(*26Y!E#Q7&amp;!Y+!*$Q7#Q%XA#4_"B6Y%H]!3?Q".Y'&amp;&lt;A#4S"*`!%(K&lt;579H3D)U=$W8E?"S0YX%]DI@3=DS/R`%Y(M@$=H)]DM&gt;"/!M[R3()G?1=Y(RQ0)[(0X)]DM@R/"\(QV"&gt;);]T-T2D)]&gt;D?!S0Y4%]BI=3-DS'R`!9(M.$72E?QW.Y$)`B93E:(M.D?!S)M3D,SSBG4$1/-A,$Q[PO&amp;KOL&amp;#7RWK3_?&gt;5XJ@JG5^^%[JN$@&gt;(6&amp;V.^E&gt;1H8XV3V3&gt;,@2,58U[.6G05C[AHDQ.VZPV%0^)0^$V^2^`1V`16@4'G`O9$T_?T4K?4DM?D$I?$^PO^&gt;LO&gt;.JO.VOOV6KO6&amp;IP&amp;YW.AS@&lt;Y1*C@3T@MXV^`?`BUP&lt;T\_C8D]]@FX@X\Z?X)`],`ZX`AW;CX?LI'Z_A(_#V^Y1!!!!!</Property>
 	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
@@ -14,5 +14,6 @@
 	<Item Name="Image Size (Integer).ctl" Type="VI" URL="../Image Size (Integer).ctl"/>
 	<Item Name="Window Size (Integer).ctl" Type="VI" URL="../Window Size (Integer).ctl"/>
 	<Item Name="Object Point (Float).ctl" Type="VI" URL="../Object Point (Float).ctl"/>
+	<Item Name="Square Corners.ctl" Type="VI" URL="../Square Corners.ctl"/>
 	<Item Name="Transform Object Point by Transformation Matrix.vi" Type="VI" URL="../../g_ar_toolkit.pointset_utils/Transform Object Point by Transformation Matrix.vi"/>
 </Library>
