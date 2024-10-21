@@ -20,6 +20,8 @@
 			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../examples/Mapped Pixel Pointer Example.vi"/>
 			<Item Name="Calibrate Camera.vi" Type="VI" URL="../examples/Calibrate Camera.vi"/>
 			<Item Name="Load Obj File.vi" Type="VI" URL="../examples/Load Obj File.vi"/>
+			<Item Name="Detect AprilTags.vi" Type="VI" URL="../examples/Detect AprilTags.vi"/>
+			<Item Name="Spot Chessboard AR.vi" Type="VI" URL="../examples/Spot Chessboard AR.vi"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>

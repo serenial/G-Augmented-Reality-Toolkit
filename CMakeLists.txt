@@ -13,7 +13,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # set to use Multithreaded Static Runtime
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-  ## vcpkg has some issues with not loading the static libs
+  # # vcpkg has some issues with not loading the static libs
   # so manually fix the MSVC runtime components used
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
@@ -21,22 +21,22 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set(OpenCV_SHARED OFF)
 endif()
 
-## Find OpenCV
+# # Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
-## Find tinyobjloader
+
+# # Find tinyobjloader
 find_package(tinyobjloader CONFIG REQUIRED)
 
 if(WIN32)
   FetchContent_Declare(rosmsftcam
     GIT_REPOSITORY https://github.com/ms-iot/ros_msft_camera.git
     GIT_TAG fe2b4190a1cc8bb837286244a417e083493c198c # foxy-devel latest commit 2021/08/09
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch # remember to save the patch with UTF8 encoding 
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch # remember to save the patch with UTF8 encoding
     UPDATE_DISCONNECTED 1
   )
   FetchContent_MakeAvailable(rosmsftcam)
-  
-elseif(UNIX)
 
+elseif(UNIX)
   FetchContent_Declare(v4l2listdevices
     GIT_REPOSITORY https://github.com/improvess/v4l2-list-devices
     GIT_TAG 9e4b0bb6c4e52ee174fe0055c1ba654de9c0ace7 # main latest commit 2022/06/09
@@ -44,8 +44,15 @@ elseif(UNIX)
     UPDATE_DISCONNECTED 1
   )
   FetchContent_MakeAvailable(v4l2listdevices)
-
 endif()
+
+FetchContent_Declare(apriltag
+  GIT_REPOSITORY https://github.com/AprilRobotics/apriltag.git
+  GIT_TAG v3.4.2 # main latest commit 2024/05/13
+  PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/apriltag.patch
+  UPDATE_DISCONNECTED 1
+)
+FetchContent_MakeAvailable(apriltag)
 
 # specify shared-library target
 add_library(${PROJECT_NAME} SHARED)
@@ -61,13 +68,11 @@ set(PUBLIC_HEADER_DIR include/${PROJECT_NAME})
 SET(PLATFORM_HEADER_FILES_Windows
   ${PUBLIC_HEADER_DIR}/win/context_wmf.hpp
   ${PUBLIC_HEADER_DIR}/win/stream_wmf.hpp
-  ${rosmsftcam_SOURCE_DIR}/include/win_camera/wincapture.h
 )
 
 SET(PLATFORM_SOURCE_FILES_Windows
   src/win/context_wmf.cpp
   src/win/stream_wmf.cpp
-  ${rosmsftcam_SOURCE_DIR}/src/wincapture.cpp
 )
 
 SET(PLATFORM_HEADER_FILES_Linux
@@ -75,7 +80,6 @@ SET(PLATFORM_HEADER_FILES_Linux
   ${PUBLIC_HEADER_DIR}/linux/stream_v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/decoders_v4l2.hpp
   ${PUBLIC_HEADER_DIR}/linux/utils_v4l2.hpp
-  ${v4l2listdevices_SOURCE_DIR}/include/v4l2_list_devices/list_devices.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
@@ -97,6 +101,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_point_correspondence.cpp
   src/lv_interop/lv_camera_parameters.cpp
   src/lv_interop/lv_vec_types.cpp
+  src/lv_interop/lv_mat.cpp
   src/capture/context.cpp
   src/image_create.cpp
   src/image_window.cpp
@@ -123,10 +128,12 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_transform.cpp
   src/image_rotate.cpp
   src/feature_detection_chessboard.cpp
+  src/feature_detection_apriltag.cpp
   src/ar_camera_calibration.cpp
   src/ar_project_points.cpp
   src/ar_obj_loader.cpp
   src/ar_solve_pnp.cpp
+  src/ar_rodrigues.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -170,26 +177,15 @@ target_include_directories(${PROJECT_NAME}
 # plaform specific definitions
 if(WIN32)
   # windows.h definitions
-  target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX)
-  target_include_directories(${PROJECT_NAME} PUBLIC ${rosmsftcam_SOURCE_DIR}/include)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068)
   target_link_libraries(${PROJECT_NAME} PRIVATE
-    mf
-    mfplat
-    Mfreadwrite
-    mfuuid
-    Rpcrt4
-    runtimeobject
-    Mfsensorgroup
-    shlwapi
+    rosmsftcam
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
   set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
-
-  # set linking flags required for static ffmpeg without --fPIC
-  # set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
-  target_include_directories(${PROJECT_NAME} PUBLIC
-    ${v4l2listdevices_SOURCE_DIR}/include
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+    v4l2listdevices
   )
 endif()
 
@@ -216,6 +212,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_highgui
   opencv_calib3d
   tinyobjloader::tinyobjloader
+  apriltag
 )
 
 # Install Shared Library

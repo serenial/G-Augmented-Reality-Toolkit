@@ -37,6 +37,7 @@
 		<Item Name="Find Chessboard Corners Sector Based Flags.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Flags.ctl"/>
 		<Item Name="Find Chessboard Corners Sector Based Meta.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Meta.ctl"/>
 	</Item>
+	<Item Name="AprilTagDetector.lvclass" Type="LVClass" URL="../ApriltagDetector/AprilTagDetector.lvclass"/>
 	<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 	<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 </Library>

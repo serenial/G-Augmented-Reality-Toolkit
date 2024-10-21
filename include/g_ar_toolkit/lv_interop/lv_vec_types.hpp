@@ -20,6 +20,7 @@ namespace g_ar_toolkit
             operator cv::Point2d() const;
             LV_ImagePointFloat_t& operator=(const cv::Point2f &);
             LV_ImagePointFloat_t& operator=(const cv::Point2d &);
+            LV_ImagePointFloat_t& operator=(const double[2]);
         };
 
         struct LV_ImagePointInt_t{

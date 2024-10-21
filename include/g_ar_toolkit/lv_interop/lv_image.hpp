@@ -41,9 +41,10 @@ namespace g_ar_toolkit
 
         // user-defined conversions to openCV's Input and Output Array types
         // this allows an Image instance to pretend to work like a cv::Mat
-        operator cv::_InputArray() { return data->mat; }
-        operator cv::_OutputArray() { return data->mat; }
-        operator cv::Mat *() { return &(data->mat); }
+        operator cv::_InputArray();
+        operator cv::_OutputArray();
+        operator cv::Mat*();
+        operator const cv::Mat&();
 
     private:
         enum lock_state_t
