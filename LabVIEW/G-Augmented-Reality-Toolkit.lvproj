@@ -22,6 +22,7 @@
 			<Item Name="Load Obj File.vi" Type="VI" URL="../examples/Load Obj File.vi"/>
 			<Item Name="Detect AprilTags.vi" Type="VI" URL="../examples/Detect AprilTags.vi"/>
 			<Item Name="Spot Chessboard AR.vi" Type="VI" URL="../examples/Spot Chessboard AR.vi"/>
+			<Item Name="AR Example.lvlib" Type="Library" URL="../examples/AR Example/AR Example.lvlib"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
@@ -130,6 +131,7 @@
 				<Item Name="Read BMP File Data.vi" Type="VI" URL="/&lt;vilib&gt;/picture/bmp.llb/Read BMP File Data.vi"/>
 				<Item Name="Read BMP File.vi" Type="VI" URL="/&lt;vilib&gt;/picture/bmp.llb/Read BMP File.vi"/>
 				<Item Name="Get LV Class Default Value.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Default Value.vi"/>
+				<Item Name="LVPointTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVPointTypeDef.ctl"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 		</Item>
