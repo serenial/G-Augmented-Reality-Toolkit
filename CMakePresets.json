@@ -20,7 +20,6 @@
         {
             "name": "windows-debug",
             "inherits": "base",
-            "hidden": true,
             "binaryDir": "${sourceDir}/build/windows-$penv{Platform}",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "$penv{Platform}-windows-static",
@@ -35,7 +34,6 @@
         {
             "name": "linux-desktop-debug",
             "inherits": "base",
-            "hidden": true,
             "binaryDir": "${sourceDir}/build/linux-desktop",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x64-linux",
