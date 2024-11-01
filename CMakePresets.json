@@ -13,9 +13,9 @@
                 "CMAKE_TOOLCHAIN_FILE": {
                     "value": "vcpkg/scripts/buildsystems/vcpkg.cmake",
                     "type": "FILEPATH"
-                },
-                "generator": "Ninja"
-            }
+                }
+            },
+            "generator": "Ninja"
         },
         {
             "name": "windows-debug",
@@ -65,25 +65,25 @@
             "name": "windows-debug-build",
             "configurePreset": "windows-debug",
             "targets": "install",
-            "configuration": "debug"
+            "configuration": "Debug"
         },
         {
             "name": "windows-release-build",
             "configurePreset": "windows-release",
             "targets": "install",
-            "configuration": "release"
+            "configuration": "Release"
         },
         {
             "name": "linux-desktop-debug-build",
             "configurePreset": "linux-desktop-debug",
             "targets": "install",
-            "configuration": "debug"
+            "configuration": "Debug"
         },
         {
             "name": "linux-desktop-release-build",
             "configurePreset": "linux-desktop-release",
             "targets": "install",
-            "configuration": "release"
+            "configuration": "Release"
         }
     ]
 }

@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2a6bc1e..5415124 100644
+index 2a6bc1e..b550821 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,219 +1,41 @@
+@@ -1,219 +1,44 @@
 -cmake_minimum_required(VERSION 3.16)
 -project(apriltag VERSION 3.4.2 LANGUAGES C)
 -
@@ -86,43 +86,12 @@ index 2a6bc1e..5415124 100644
 -set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION 3 VERSION ${PROJECT_VERSION})
 -set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 -set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
-+add_library(apriltag STATIC)
-+
-+target_sources(apriltag PRIVATE
-+    apriltag.c
-+    apriltag_quad_thresh.c
-+    common/homography.c
-+    common/image_u8.c
-+    common/g2d.c
-+    common/image_u8x3.c
-+    common/image_u8x4.c
-+    common/matd.c
-+    common/pnm.c
-+    common/pam.c
-+    common/workerpool.c
-+    common/zarray.c
-+    common/zhash.c
-+    common/time_util.c
-+    common/zmaxheap.c
-+    common/svd22.c
-+    common/pthreads_cross.c
-+    tag16h5.c
-+    tag25h9.c
-+    tag36h11.c
-+    tagCircle21h7.c
-+    tagCircle49h12.c
-+    tagCustom48h12.c
-+    tagStandard41h12.c
-+    tagStandard52h13.c
-+)
- 
- 
+-
+-
 -include(GNUInstallDirs)
 -target_include_directories(${PROJECT_NAME} PUBLIC
 -    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>"
-+target_include_directories(apriltag PUBLIC
-+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+-    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 -    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>/apriltag")
 -
 -
@@ -153,7 +122,34 @@ index 2a6bc1e..5415124 100644
 -        "CMake/apriltagConfig.cmake.in"
 -        "${project_config}"
 -        INSTALL_DESTINATION "${config_install_dir}"
-+    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>/apriltag"
++add_library(apriltag STATIC)
++
++target_sources(apriltag PRIVATE
++  apriltag.c
++  apriltag_quad_thresh.c
++  common/homography.c
++  common/image_u8.c
++  common/g2d.c
++  common/image_u8x3.c
++  common/image_u8x4.c
++  common/matd.c
++  common/pnm.c
++  common/pam.c
++  common/workerpool.c
++  common/zarray.c
++  common/zhash.c
++  common/time_util.c
++  common/zmaxheap.c
++  common/svd22.c
++  common/pthreads_cross.c
++  tag16h5.c
++  tag25h9.c
++  tag36h11.c
++  tagCircle21h7.c
++  tagCircle49h12.c
++  tagCustom48h12.c
++  tagStandard41h12.c
++  tagStandard52h13.c
  )
  
 -# Configure '<PROJECT-NAME>ConfigVersion.cmake'
@@ -246,7 +242,12 @@ index 2a6bc1e..5415124 100644
 -    else()
 -        message(STATUS "OpenCV not found: Not building demo")
 -    endif(OpenCV_FOUND)
--
++target_include_directories(apriltag PUBLIC
++  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
++  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
++  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>/apriltag"
++)
+ 
 -    # install example programs
 -    install(TARGETS apriltag_demo RUNTIME DESTINATION bin)
 -endif()
@@ -257,6 +258,11 @@ index 2a6bc1e..5415124 100644
 -if(BUILD_TESTING)
 -    add_subdirectory(test)
 -endif()
++if(MSVC)
++  # disable unknown paramgma warnings
++  target_compile_options(apriltag PRIVATE /wd4068)
++endif()
+\ No newline at end of file
 diff --git a/common/time_util.h b/common/time_util.h
 index c184049..8fc97bc 100644
 --- a/common/time_util.h
