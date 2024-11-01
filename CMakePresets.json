@@ -9,15 +9,23 @@
         {
             "name": "base",
             "hidden": true,
-            "toolchainFile": "vcpkg/scripts/buildsystems/vcpkg.cmake",
-            "generator": "Ninja"
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "vcpkg/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                },
+                "generator": "Ninja"
+            }
         },
         {
-            "name": "windows-base",
+            "name": "windows-debug",
             "inherits": "base",
             "hidden": true,
             "binaryDir": "${sourceDir}/build/windows-$penv{Platform}",
-            "cacheVariables": {"VCPKG_TARGET_TRIPLET":"$penv{Platform}-windows-static"},
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "$penv{Platform}-windows-static",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -25,26 +33,14 @@
             }
         },
         {
-            "name": "debug",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "release",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_BUILD_TYPE": "release"
-            }
-        },
-        {
-            "name": "linux-desktop",
+            "name": "linux-desktop-debug",
             "inherits": "base",
             "hidden": true,
             "binaryDir": "${sourceDir}/build/linux-desktop",
-            "cacheVariables": {"VCPKG_TARGET_TRIPLET":"x64-linux"},
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -52,37 +48,44 @@
             }
         },
         {
-            "name":"windows-debug",
-            "inherits": ["windows-base", "debug"]
+            "name": "windows-release",
+            "inherits": "windows-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         },
         {
-            "name":"windows-release",
-            "inherits": ["windows-base", "release"]
-        },
-        {
-            "name":"linux-desktop-debug",
-            "inherits": ["linux-desktop", "debug"]
-        },
-        {
-            "name":"linux-desktop-release",
-            "inherits": ["linux-desktop", "release"]
+            "name": "linux-desktop-release",
+            "inherits": "linux-desktop-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         }
     ],
     "buildPresets": [
         {
             "name": "windows-debug-build",
             "configurePreset": "windows-debug",
-            "targets": "install"
+            "targets": "install",
+            "configuration": "debug"
         },
         {
             "name": "windows-release-build",
             "configurePreset": "windows-release",
-            "targets": "install"
+            "targets": "install",
+            "configuration": "release"
         },
         {
             "name": "linux-desktop-debug-build",
             "configurePreset": "linux-desktop-debug",
-            "targets": "install"
+            "targets": "install",
+            "configuration": "debug"
+        },
+        {
+            "name": "linux-desktop-release-build",
+            "configurePreset": "linux-desktop-release",
+            "targets": "install",
+            "configuration": "release"
         }
     ]
 }

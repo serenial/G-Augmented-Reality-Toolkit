@@ -17,7 +17,7 @@ using namespace lv_interop;
 
 using LV_PictureTopLeft_t = struct
 {
-    int16_t left, top;
+    int16_t top,left;
 };
 
 using LV_PictureOpHeader_t = struct
