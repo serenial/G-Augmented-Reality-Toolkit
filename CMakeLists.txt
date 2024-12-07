@@ -18,8 +18,11 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-  set(OpenCV_SHARED OFF)
 endif()
+
+set(OpenCV_SHARED OFF)
+# https://github.com/opencv/opencv/wiki/Compact-build-advice
+set(ENABLE_LTO ON)
 
 # # Find OpenCV
 find_package(OpenCV 4.8.0 REQUIRED)
@@ -27,16 +30,7 @@ find_package(OpenCV 4.8.0 REQUIRED)
 # # Find tinyobjloader
 find_package(tinyobjloader CONFIG REQUIRED)
 
-if(WIN32)
-  FetchContent_Declare(rosmsftcam
-    GIT_REPOSITORY https://github.com/ms-iot/ros_msft_camera.git
-    GIT_TAG fe2b4190a1cc8bb837286244a417e083493c198c # foxy-devel latest commit 2021/08/09
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/ros_msft_cam.patch # remember to save the patch with UTF8 encoding
-    UPDATE_DISCONNECTED 1
-  )
-  FetchContent_MakeAvailable(rosmsftcam)
-
-elseif(UNIX)
+if(UNIX)
   FetchContent_Declare(v4l2listdevices
     GIT_REPOSITORY https://github.com/improvess/v4l2-list-devices
     GIT_TAG 9e4b0bb6c4e52ee174fe0055c1ba654de9c0ace7 # main latest commit 2022/06/09
@@ -66,27 +60,27 @@ set(PUBLIC_HEADER_DIR include/${PROJECT_NAME})
 # define platform specific headers and source
 # Platform name should match the value in
 SET(PLATFORM_HEADER_FILES_Windows
-  ${PUBLIC_HEADER_DIR}/win/context_wmf.hpp
-  ${PUBLIC_HEADER_DIR}/win/stream_wmf.hpp
+  ${PUBLIC_HEADER_DIR}/capture/win/utils.hpp
+  ${PUBLIC_HEADER_DIR}/capture/win/source_reader.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Windows
-  src/win/context_wmf.cpp
-  src/win/stream_wmf.cpp
+  src/capture/win/context.cpp
+  src/capture/win/stream.cpp
+  src/capture/win/utils.cpp
+  src/capture/win/source_reader.cpp
 )
 
 SET(PLATFORM_HEADER_FILES_Linux
-  ${PUBLIC_HEADER_DIR}/linux/context_v4l2.hpp
-  ${PUBLIC_HEADER_DIR}/linux/stream_v4l2.hpp
-  ${PUBLIC_HEADER_DIR}/linux/decoders_v4l2.hpp
-  ${PUBLIC_HEADER_DIR}/linux/utils_v4l2.hpp
+  ${PUBLIC_HEADER_DIR}/capture/linux/decoders.hpp
+  ${PUBLIC_HEADER_DIR}/capture/linux/utils.hpp
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
-  src/linux/context_v4l2.cpp
-  src/linux/stream_v4l2.cpp
-  src/linux/decoders_v4l2.cpp
-  src/linux/utils_v4l2.cpp
+  src/capture/linux/context.cpp
+  src/capture/linux/stream.cpp
+  src/capture/linux/decoders.cpp
+  src/capture/linux/utils.cpp
 )
 
 # Add Project sources
@@ -102,7 +96,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_camera_parameters.cpp
   src/lv_interop/lv_vec_types.cpp
   src/lv_interop/lv_mat.cpp
-  src/capture/context.cpp
+  src/capture/stream.cpp
   src/image_create.cpp
   src/image_window.cpp
   src/image_resize.cpp
@@ -141,27 +135,26 @@ target_sources(${PROJECT_NAME} PRIVATE
 # target_include_dirs still required
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   FILES
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_functions.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_types.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_error.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_picture.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_u32_colour.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_str.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_1d.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_2d.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_termination_criteria.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/set_packing.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_edvr_managed_object.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_fixed_size_matrix.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_enums.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_fixed_size_matrix.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_image.hpp
-  ${PUBLIC_HEADER_DIR}/capture/context.hpp
-  ${PUBLIC_HEADER_DIR}/capture/stream.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_point_correspondence.hpp
-  ${PUBLIC_HEADER_DIR}/lv_interop/lv_camera_parameters.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_termination_criteria.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/set_packing.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_vec_types.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_u32_colour.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_edvr_managed_object.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_str.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_enums.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_camera_parameters.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_picture.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_1d.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_functions.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_mat.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_array_2d.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/lv_error.hpp
+  ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
+  ${PUBLIC_HEADER_DIR}/capture/stream.hpp
+  ${PUBLIC_HEADER_DIR}/capture/context.hpp
   "${PLATFORM_HEADER_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -179,13 +172,27 @@ if(WIN32)
   # windows.h definitions
   target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068)
   target_link_libraries(${PROJECT_NAME} PRIVATE
-    rosmsftcam
+      mf
+      mfplat
+      Mfreadwrite
+      mfuuid
+      Strmiids
+      Rpcrt4
+      runtimeobject
+      Mfsensorgroup
+      shlwapi
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
   set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
   target_link_libraries(${PROJECT_NAME} PRIVATE
     v4l2listdevices
+  )
+  target_compile_options(${PROJECT_NAME} PRIVATE
+    "$<$<COMPILE_LANGUAGE:CXX>:-fdata-sections;-ffunction-sections>"
+  )
+  target_link_options(${PROJECT_NAME} PRIVATE
+  "$<$<COMPILE_LANGUAGE:CXX>:-Wl,--gc-sections>"
   )
 endif()
 

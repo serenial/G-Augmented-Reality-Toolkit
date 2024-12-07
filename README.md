@@ -56,7 +56,7 @@ If you wish to modify the C++ code you will require the following for building t
 Install the dependencies using `apt`
 
 ```bash
-sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev
+sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
 ``` 
 
 ### C++ Setup
@@ -89,10 +89,12 @@ _If not using VSCode_
 - [x] Apriltag Integration
 - [x] OpenCV to LabVIEW 3D Control transformations
 - [x] Example Code
-- [x] OpenCV image rectification
+- [ ] OpenCV image rectification
 - [ ] Documentation
-- [ ] Camera Property Control
-
+- [ ] Improve Testing Code Coverage
+- [x] Camera Property Control
+- [ ] Shape Detection
+- [ ] Barcode Reading
 
 ## Contributions
 Welcome - please open an issue if you would like to contribute

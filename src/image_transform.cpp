@@ -3,11 +3,11 @@
 
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
-#include "g_ar_toolkit/lv_interop/lv_fixed_size_matrix.hpp"
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
+#include "g_ar_toolkit/lv_interop/lv_mat.hpp"
 
 #include "g_ar_toolkit_export.h"
 
@@ -19,7 +19,7 @@ extern "C"
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_warp_affine(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
-        LV_2x3MatrixPtr_t<double> affine_mat,
+        LV_2x3MatrixPtr_t affine_mat_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_ImageSizePtr_t dst_size_ptr,
         LV_EnumCVInterpolationFlag_t interpolation_mode,
@@ -32,12 +32,10 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
-            auto M = cv_matx_from_lv_fixed_sized_matrix_ptr(affine_mat);
-
             dst.ensure_sized_to_match(*dst_size_ptr);
 
             cv::warpAffine(
-                src, dst, M, *dst_size_ptr,
+                src, dst, affine_mat_ptr->as_cv_mat(), *dst_size_ptr,
                 interpolation_mode,
                 border_type,
                 dst.is_bgra() ? border_colour.get_bgra() : border_colour.get_blue());
@@ -52,7 +50,7 @@ extern "C"
         G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_warp_perspective(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
-        LV_3x3MatrixPtr_t<double> warp_mat,
+        LV_3x3MatrixPtr_t warp_mat_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_ImageSizePtr_t dst_size_ptr,
         LV_EnumCVInterpolationFlag_t interpolation_mode,
@@ -65,12 +63,10 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
-            auto M = cv_matx_from_lv_fixed_sized_matrix_ptr(warp_mat);
-
             dst.ensure_sized_to_match(*dst_size_ptr);
 
             cv::warpPerspective(
-                src, dst, M, *dst_size_ptr,
+                src, dst, warp_mat_ptr->as_cv_mat(), *dst_size_ptr,
                 interpolation_mode,
                 border_type,
                 dst.is_bgra() ? border_colour.get_bgra() : border_colour.get_blue());

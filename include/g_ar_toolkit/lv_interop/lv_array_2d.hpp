@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_ARRAY_2D_HPP_
-#define G_AR_TK__INTEROP_LV_ARRAY_2D_HPP_
+#pragma once
 
 #include <vector>
 #include <array>
@@ -163,5 +162,3 @@ namespace g_ar_toolkit
 }
 
 #include "./reset_packing.hpp"
-
-#endif // G_AR_TK__INTEROP_LV_ARRAY_2D_HPP_

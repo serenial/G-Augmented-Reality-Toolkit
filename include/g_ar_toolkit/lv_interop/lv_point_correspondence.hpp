@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_POINT_CORRESPONDENCE_HPP_
-#define G_AR_TK__INTEROP_LV_POINT_CORRESPONDENCE_HPP_
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -45,5 +44,3 @@ namespace g_ar_toolkit
 #include "./reset_packing.hpp"
     }
 }
-
-#endif // G_AR_TK__INTEROP_LV_POINT_CORRESPONDENCE_HPP_

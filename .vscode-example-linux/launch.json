@@ -9,7 +9,8 @@
             "type": "cppdbg",
             "program": "/usr/local/natinst/LabVIEW-2024-64/labview",
             "request": "attach",
-            "processId":"${command:pickProcess}"
+            "processId":"${command:pickProcess}",
+            "MIMode": "gdb"
         }
 
     ]

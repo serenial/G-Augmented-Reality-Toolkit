@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_FUNCTIONS_HPP_
-#define G_AR_TK__INTEROP_LV_FUNCTIONS_HPP_
+#pragma once
 
 #ifdef _WIN32
 // include windows.h
@@ -114,5 +113,3 @@ namespace g_ar_toolkit
 
     void import_lv_runtime_functions();
 }
-
-#endif //G_AR_TK__INTEROP_LV_FUNCTIONS_HPP_

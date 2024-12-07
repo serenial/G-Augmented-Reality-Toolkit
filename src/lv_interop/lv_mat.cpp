@@ -12,3 +12,13 @@ LV_3x3Matrix_t::operator cv::Mat()
 {
     return as_cv_mat();
 }
+
+cv::Mat LV_2x3Matrix_t::as_cv_mat()
+{
+    return cv::Mat{2, 3, CV_64F, &(m_value[0])};
+}
+
+LV_2x3Matrix_t::operator cv::Mat()
+{
+    return as_cv_mat();
+}
