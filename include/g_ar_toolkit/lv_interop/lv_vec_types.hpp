@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_VEC_TYPES_HPP_
-#define G_AR_TK__INTEROP_LV_VEC_TYPES_HPP_
+#pragma once
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
@@ -77,5 +76,3 @@ using LV_ObjectPointFloatPtr_t = LV_Ptr_t<LV_ObjectPointFloat_t>;
     }
 
 }
-
-#endif // G_AR_TK__INTEROP_LV_VEC_TYPES_HPP_

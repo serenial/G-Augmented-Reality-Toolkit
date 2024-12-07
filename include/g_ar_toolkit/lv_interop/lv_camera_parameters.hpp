@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_CAMERA_PARAMETERS_HPP_
-#define G_AR_TK__INTEROP_LV_CAMERA_PARAMETERS_HPP_
+#pragma once
 
 #include <opencv2/core.hpp>
 
@@ -31,5 +30,3 @@ namespace g_ar_toolkit
 #include "./reset_packing.hpp"
     }
 }
-
-#endif // G_AR_TK__INTEROP_LV_CAMERA_PARAMETERS_HPP_

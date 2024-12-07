@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_ERROR_HPP_
-#define G_AR_TK__INTEROP_LV_ERROR_HPP_
+#pragma once
 
 #include <exception>
 #include <stdexcept>
@@ -29,5 +28,3 @@ namespace g_ar_toolkit
     }
 
 }
-
-#endif // G_AR_TK__INTEROP_LV_ERROR_HPP_

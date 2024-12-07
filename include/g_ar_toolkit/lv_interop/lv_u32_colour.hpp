@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_U32_COLOUR_HPP_
-#define G_AR_TK__INTEROP_LV_U32_COLOUR_HPP_
+#pragma once
 
 #include <opencv2/core/types.hpp>
 
@@ -37,5 +36,3 @@ namespace g_ar_toolkit
 }
 
 #include "./reset_packing.hpp"
-
-#endif //G_AR_TK__INTEROP_LV_U32_COLOUR_HPP_

@@ -1,23 +1,22 @@
 Refactor Tests
 
-Fix Copy Pixmap to handle rectangles with non (0,0) top left corners
-
 Calibration Functions
 
 * Chessboard Detection
-* Compute Calibration
 * Get Calibration Matrix
 * Apply Calibration
+
+Image Operations
+* blur (Median, gaussian, )
+* adaptive threshold
+* Find Contours
+* Hough Circles
 
 3D Functions
 
 * SolvePnP (RANSAC, USAC, UPnP, SQPnP...)
-* ProjectPoints
-* EstimateHomograpy
-* Rodrigues
+* EstimateHomograpy?
 
 Utility
 Quaternion Rotation Format?
 Quaternion Rotation Average?
-Point-Set Optimization
-Plane-Fitting

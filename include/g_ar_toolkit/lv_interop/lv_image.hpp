@@ -1,5 +1,4 @@
-#ifndef G_AR_TK__INTEROP_LV_IMAGE_HPP_
-#define G_AR_TK__INTEROP_LV_IMAGE_HPP_
+#pragma once
 
 #include <mutex>
 #include <condition_variable>
@@ -79,5 +78,3 @@ namespace g_ar_toolkit
         image_persistant_data *const data;
     };
 }
-
-#endif //G_AR_TK__INTEROP_LV_IMAGE_HPP_
