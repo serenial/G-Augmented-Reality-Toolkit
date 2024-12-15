@@ -266,7 +266,6 @@ extern "C"
         LV_1DArrayHandle_t<LV_ImagePointInt_t> points_array_handle,
         LV_BooleanPtr_t is_convex_ptr,
         LV_U32RGBColour_t colour,
-        int32_t thickness,
         LV_EnumCVLineType_t line_type)
     {
         try

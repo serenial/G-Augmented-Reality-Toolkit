@@ -203,7 +203,7 @@ extern "C"
                 throw std::invalid_argument("Image should be greyscale.");
             }
 
-            tag_detector.get_object()->detect_tags(image, detections_handle);
+            tag_detector->detect_tags(image, detections_handle);
             
         }
         catch (...)

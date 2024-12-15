@@ -111,5 +111,6 @@ namespace g_ar_toolkit
         };
     }
 
-    void import_lv_runtime_functions();
+    void on_shared_library_load();
+    void on_shared_library_unload();
 }

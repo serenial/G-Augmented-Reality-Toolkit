@@ -56,7 +56,7 @@ If you wish to modify the C++ code you will require the following for building t
 Install the dependencies using `apt`
 
 ```bash
-sudo apt install build-essential g++ python3 bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+sudo apt install build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
 ``` 
 
 ### C++ Setup
@@ -88,13 +88,13 @@ _If not using VSCode_
 - [x] OpenCV 3dCalib routines
 - [x] Apriltag Integration
 - [x] OpenCV to LabVIEW 3D Control transformations
-- [x] Example Code
+- [x] Camera Property Control
+- [x] Shape Detection
+- [x] Barcode Reading
 - [ ] OpenCV image rectification
+- [ ] Example Code
 - [ ] Documentation
 - [ ] Improve Testing Code Coverage
-- [x] Camera Property Control
-- [ ] Shape Detection
-- [ ] Barcode Reading
 
 ## Contributions
 Welcome - please open an issue if you would like to contribute
@@ -103,10 +103,12 @@ Welcome - please open an issue if you would like to contribute
 | Library | Licence |
 |---------|---------|
 | [OpenCV 4](https://github.com/opencv/opencv) | Apache License 2.0 |
-| [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
-| [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
 | [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) | MIT |
 | [Apriltag](https://github.com/AprilRobotics/apriltag) | BSD 2-Clause License |
+| [whereami](https://github.com/gpakosz/whereami.git) | MIT |
+| [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
+| [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
+| [WeChat QR/Barcode Reader Models](https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode) (optional)| Apache License 2.0 |
 
 ## 3D Models
 
@@ -118,4 +120,7 @@ Welcome - please open an issue if you would like to contribute
 
 | Image | Licence | Source |
 |-------|---------|--------|
-| tag36h11-mosaic  | BSD 2-Clause Licence | https://github.com/AprilRobotics/apriltag-imgs
+| tag36h11-mosaic.png  | BSD 2-Clause Licence | https://github.com/AprilRobotics/apriltag-imgs |
+| exampled_coins.jpg | MIT | https://github.com/JamesMc86/Python-and-LabVIEW-Presentation |
+| barcode_book.jpg | Apache License 2.0 | https://docs.opencv.org/4.10.0/barcode_book.jpg |
+| Qr-code-ver-10.svg|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.svg |

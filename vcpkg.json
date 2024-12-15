@@ -1,7 +1,14 @@
 {
   "dependencies": [
-    "opencv4",
-    "tinyobjloader"
+    {
+      "name": "opencv4",
+      "features": [
+        "contrib"
+      ]
+    },
+    {
+      "name": "tinyobjloader"
+    }
   ],
   "overrides": [
     {

@@ -16,6 +16,14 @@ namespace g_ar_toolkit
     namespace lv_interop
     {
 
+        struct LV_EDVRInvalidException : public std::exception
+        {
+            const char *what() const throw()
+            {
+                return "Invalid Reference - ensure the object referenced has been created and is still valid.";
+            };
+        };
+        
         // an which can interact with EDVR references and the persistant data that they refer to
         // similar to Image but only uses the EDVR for lifetime management and never assigns
         // any memory to the EDVR-sub-array
@@ -126,7 +134,7 @@ namespace g_ar_toolkit
                 auto err = EDVR_AddRefWithContext(*edvr_ref_ptr, ctx, &data_ptr);
                 if (err)
                 {
-                    throw std::runtime_error("Unable to dereference the supplied EDVR Refnum to valid data in this application-context.");
+                    throw LV_EDVRInvalidException();
                 }
                 return data_ptr;
             }
@@ -179,7 +187,7 @@ namespace g_ar_toolkit
                 }
             }
 
-            T* get_object()
+            T* operator->()
             {
                 return data->object;
             }

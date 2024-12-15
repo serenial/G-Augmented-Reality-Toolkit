@@ -46,6 +46,20 @@ namespace g_ar_toolkit
             uint8_t m_value;
         };
 
+        class LV_EnumBlockSize_t{
+            public:
+            operator int() const{
+                // 0 -> 3
+                // 1 -> 5
+                // 2 -> 7
+                // ...
+                return (m_value *2) + 3;
+            }
+            private:
+            uint8_t m_value;
+        };
+
+
 #include "./reset_packing.hpp"
     }
 }

@@ -13,109 +13,169 @@
 
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/capture/stream.hpp"
-#include "g_ar_toolkit/capture/context.hpp"
+#include "g_ar_toolkit/capture/enumerator.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;
 using namespace lv_interop;
 
+namespace
+{
 #include "g_ar_toolkit/lv_interop/set_packing.hpp"
 
-struct LV_StreamSpec_t
-{
-    uint32_t width, height, fps;
-};
-
-struct LV_CameraParamInfo_t
-{
-    bool supported;
-    int32_t max, min, step, default_value;
-    LV_CameraParamInfo_t &operator=(const Stream::param_info_t &p)
+    class LV_StreamFormatParameters_t
     {
-        default_value = p.default_value;
-        max = p.max;
-        min = p.min;
-        step = p.step;
-        supported = p.is_supported;
-        return *this;
-    }
-    LV_CameraParamInfo_t(): supported(false){};
-};
+        uint32_t width, height, fps_numerator, fps_denominator;
 
-using LV_CameraParamInfoPtr_t = LV_Ptr_t<LV_CameraParamInfo_t>;
-
-class LV_CameraParam_t
-{
-private:
-    uint8_t m_value;
-
-public:
-    operator Stream::camera_parameters const()
-    {
-        const Stream::camera_parameters parameters[] =
-            {
-                Stream::camera_parameters::EXPOSURE,
-                Stream::camera_parameters::FOCUS,
-                Stream::camera_parameters::ZOOM,
-                Stream::camera_parameters::GAIN,
-                Stream::camera_parameters::WHITE_BALANCE_TEMPERATURE,
-                Stream::camera_parameters::BRIGHTNESS,
-                Stream::camera_parameters::CONTRAST,
-                Stream::camera_parameters::SATURATION,
-                Stream::camera_parameters::GAMMA,
-                Stream::camera_parameters::HUE,
-                Stream::camera_parameters::SHARPNESS,
-                Stream::camera_parameters::BACKLIGHT_COMPENSATION,
-                Stream::camera_parameters::POWER_LINE_FREQUENCY};
-
-        if (m_value < std::size(parameters))
+    public:
+        LV_StreamFormatParameters_t &operator=(const Stream::stream_type_t stream_type)
         {
-            return parameters[m_value];
+            width = stream_type.width;
+            height = stream_type.height;
+            fps_numerator = stream_type.fps_numerator;
+            fps_denominator = stream_type.fps_denominator;
+            return *this;
         }
+    };
 
-        throw std::out_of_range("The supplied value for the camera parameter does not map to a camera-parameter value.");
-    }
-};
-
-class LV_CameraAutoMode_t
-{
-private:
-    uint8_t m_value;
-
-public:
-    operator Stream::camera_auto_parameters const()
+    // array allocation for this struct should use PtrSized type!
+    using LV_DeviceInfo_t = struct
     {
-        const Stream::camera_auto_parameters modes[] =
-            {
-                Stream::camera_auto_parameters::AUTO_EXPOSURE,
-                Stream::camera_auto_parameters::AUTO_FOCUS,
-                Stream::camera_auto_parameters::AUTO_WHITE_BALANCE,
-                Stream::camera_auto_parameters::AUTO_GAIN};
+        LV_StringHandle_t id;
+        LV_StringHandle_t name;
+        LV_1DArrayHandle_t<LV_StreamFormatParameters_t> formats;
+    };
 
-        if (m_value < std::size(modes))
+    using LV_DeviceInfoHandlePtr_t = LV_HandlePtr_t<LV_Array_t<1, LV_DeviceInfo_t>>;
+
+    struct LV_StreamSpec_t
+    {
+        uint32_t width, height, fps;
+    };
+
+    struct LV_CameraParamInfo_t
+    {
+        bool supported;
+        int32_t max, min, step, default_value;
+        LV_CameraParamInfo_t &operator=(const Stream::param_info_t &p)
         {
-            return modes[m_value];
+            default_value = p.default_value;
+            max = p.max;
+            min = p.min;
+            step = p.step;
+            supported = p.is_supported;
+            return *this;
         }
+        LV_CameraParamInfo_t() : supported(false) {};
+    };
 
-        throw std::out_of_range("The supplied value for the camera auto mode does not map to a camera-auto-mode value.");
-    }
-};
+    using LV_CameraParamInfoPtr_t = LV_Ptr_t<LV_CameraParamInfo_t>;
+
+    class LV_CameraParam_t
+    {
+    private:
+        uint8_t m_value;
+
+    public:
+        operator Stream::camera_parameters const()
+        {
+            const Stream::camera_parameters parameters[] =
+                {
+                    Stream::camera_parameters::EXPOSURE,
+                    Stream::camera_parameters::FOCUS,
+                    Stream::camera_parameters::ZOOM,
+                    Stream::camera_parameters::GAIN,
+                    Stream::camera_parameters::WHITE_BALANCE_TEMPERATURE,
+                    Stream::camera_parameters::BRIGHTNESS,
+                    Stream::camera_parameters::CONTRAST,
+                    Stream::camera_parameters::SATURATION,
+                    Stream::camera_parameters::GAMMA,
+                    Stream::camera_parameters::HUE,
+                    Stream::camera_parameters::SHARPNESS,
+                    Stream::camera_parameters::BACKLIGHT_COMPENSATION,
+                    Stream::camera_parameters::POWER_LINE_FREQUENCY};
+
+            if (m_value < std::size(parameters))
+            {
+                return parameters[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the camera parameter does not map to a camera-parameter value.");
+        }
+    };
+
+    class LV_CameraAutoMode_t
+    {
+    private:
+        uint8_t m_value;
+
+    public:
+        operator Stream::camera_auto_parameters const()
+        {
+            const Stream::camera_auto_parameters modes[] =
+                {
+                    Stream::camera_auto_parameters::AUTO_EXPOSURE,
+                    Stream::camera_auto_parameters::AUTO_FOCUS,
+                    Stream::camera_auto_parameters::AUTO_WHITE_BALANCE,
+                    Stream::camera_auto_parameters::AUTO_GAIN};
+
+            if (m_value < std::size(modes))
+            {
+                return modes[m_value];
+            }
+
+            throw std::out_of_range("The supplied value for the camera auto mode does not map to a camera-auto-mode value.");
+        }
+    };
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 
+}
+
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_capture_stream_create(
+
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_stream_enumerate_devices(
         LV_ErrorClusterPtr_t error_cluster_ptr,
-        LV_EDVRReferencePtr_t edvr_capture_ctx_ref_ptr,
+        LV_1DArrayHandle_t<LV_DeviceInfo_t> device_info_handle)
+    {
+        try
+        {
+            Enumerator enumerator{};
+
+            std::vector<Enumerator::device_info_t> devices;
+
+            enumerator.enumerate_devices(devices);
+
+            device_info_handle.copy_element_by_element_from(devices, [](auto device, auto dest)
+                                                            {
+                                            dest->id.copy_from(device.device_id);
+                                            dest->name.copy_from(device.device_name);
+                                            dest->formats.copy_element_by_element_from(device.supported_formats, 
+                                                [](auto const &f, auto dest_f){*dest_f=f;})
+                    ; }, [](LV_DeviceInfo_t to_deallocate)
+                                                            {
+                    // dispose of unused string and array handles
+                    to_deallocate.id.dispose();
+                    to_deallocate.name.dispose();
+                    to_deallocate.formats.dispose(); });
+        }
+        catch (...)
+        {
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
+        }
+
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_stream_create(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_strm_ref_ptr,
         LV_StringHandle_t device_id_str_handle,
         LV_Ptr_t<LV_StreamSpec_t> stream_spec_ptr)
     {
         try
         {
-            EDVRManagedObject<Context> context(edvr_capture_ctx_ref_ptr);
-
             // convert input to c++ types
             std::string_view device_id = device_id_str_handle;
             Stream::stream_type_t stream_type;
@@ -124,10 +184,9 @@ extern "C"
             stream_type.width = stream_spec_ptr->width;
             stream_type.fps_denominator = 1;
 
-            // create stream using context
-            auto stream_object = context.get_object()->open_stream(device_id, stream_type);
             // wrap stream object into EDVRManaged Object - Use volatile to avoid compiler optimization
-            volatile EDVRManagedObject<Stream> stream(edvr_strm_ref_ptr, std::move(stream_object));
+
+            volatile EDVRManagedObject<Stream> stream(edvr_strm_ref_ptr,  new Stream(device_id, stream_type));
         }
         catch (...)
         {
@@ -145,7 +204,7 @@ extern "C"
         {
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
 
-            stream.get_object()->start_stream();
+            stream->start_stream();
         }
         catch (...)
         {
@@ -164,7 +223,7 @@ extern "C"
 
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
 
-            stream.get_object()->stop_stream();
+            stream->stop_stream();
         }
         catch (...)
         {
@@ -187,7 +246,7 @@ extern "C"
 
             lv_image dst(edvr_image_ref_ptr);
 
-            stream.get_object()->capture_frame(*dst, std::chrono::milliseconds{timeout_ms});
+            stream->capture_frame(*dst, std::chrono::milliseconds{timeout_ms});
         }
         catch (...)
         {
@@ -209,7 +268,7 @@ extern "C"
 
             Stream::param_info_t info;
 
-            stream.get_object()->get_camera_parameter_info(cam_param, &info);
+            stream->get_camera_parameter_info(cam_param, &info);
 
             *cam_param_info_ptr = info;
         }
@@ -236,7 +295,7 @@ extern "C"
 
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
 
-            *value = stream.get_object()->get_camera_parameter(cam_param);
+            *value = stream->get_camera_parameter(cam_param);
         }
         catch (...)
         {
@@ -258,14 +317,14 @@ extern "C"
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
 
             Stream::param_info_t info;
-            stream.get_object()->get_camera_parameter_info(cam_param, &info);
+            stream->get_camera_parameter_info(cam_param, &info);
 
             int32_t quantized = std::round((*value - info.min) / info.step) * info.step + info.min;
             int32_t clamped = std::clamp(quantized, info.min, info.max);
 
             *value = clamped;
 
-            stream.get_object()->set_camera_parameter(cam_param, clamped);
+            stream->set_camera_parameter(cam_param, clamped);
         }
         catch (...)
         {
@@ -286,7 +345,7 @@ extern "C"
         {
 
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-            *is_automatic = stream.get_object()->get_camera_auto_mode(cam_auto_param);
+            *is_automatic = stream->get_camera_auto_mode(cam_auto_param);
             *is_supported = true;
         }
         catch (Stream::auto_param_error &e)
@@ -301,7 +360,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-        G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_stream_set_auto_param_value(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_stream_set_auto_param_value(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_stream_ref_ptr,
         LV_CameraAutoMode_t cam_auto_param,
@@ -311,7 +370,7 @@ extern "C"
         {
 
             EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-            stream.get_object()->set_camera_auto_mode(cam_auto_param, *use_automatic);
+            stream->set_camera_auto_mode(cam_auto_param, *use_automatic);
         }
         catch (...)
         {
