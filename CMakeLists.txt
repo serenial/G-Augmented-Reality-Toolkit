@@ -213,10 +213,7 @@ elseif(UNIX)
     v4l2listdevices
   )
   target_compile_options(${PROJECT_NAME} PRIVATE
-    "-fdata-sections" "-ffunction-sections"
-  )
-  target_link_options(${PROJECT_NAME} PRIVATE
-    "--gc-sections"
+    "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
   )
 endif()
 
