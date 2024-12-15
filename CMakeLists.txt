@@ -6,8 +6,12 @@ project(g_ar_toolkit VERSION 1.0.0 LANGUAGES C CXX)
 include(GenerateExportHeader)
 include(FetchContent)
 
+# export a json file with the compile commands
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
 # # Install directory
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_LIST_DIR}/LabVIEW)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_LIST_DIR}/LabVIEW/g_ar_toolkit.common)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # set to use Multithreaded Static Runtime
@@ -21,15 +25,19 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif()
 
 set(OpenCV_SHARED OFF)
+
 # https://github.com/opencv/opencv/wiki/Compact-build-advice
 set(ENABLE_LTO ON)
 
 # # Find OpenCV
-find_package(OpenCV 4.8.0 REQUIRED)
+find_package(OpenCV 4.10.0 REQUIRED)
 
 # # Find tinyobjloader
 find_package(tinyobjloader CONFIG REQUIRED)
 
+
+# # These dependencies managed outside of vcpkg are accesses from their repos but a snapshot of them is included in
+# #  third-party
 if(UNIX)
   FetchContent_Declare(v4l2listdevices
     GIT_REPOSITORY https://github.com/improvess/v4l2-list-devices
@@ -48,6 +56,15 @@ FetchContent_Declare(apriltag
 )
 FetchContent_MakeAvailable(apriltag)
 
+FetchContent_Declare(
+  whereami
+  GIT_REPOSITORY https://github.com/gpakosz/whereami.git
+  GIT_TAG f5e3eac441acbb4ec1fe3e2c32646248ae463398 # latest commit as of Jun 9, 2024
+  PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/whereami.patch # ensure patch UTF8 encoded!
+  UPDATE_DISCONNECTED ON # prevents trying to patch multiple times
+)
+FetchContent_MakeAvailable(whereami)
+
 # specify shared-library target
 add_library(${PROJECT_NAME} SHARED)
 
@@ -65,7 +82,7 @@ SET(PLATFORM_HEADER_FILES_Windows
 )
 
 SET(PLATFORM_SOURCE_FILES_Windows
-  src/capture/win/context.cpp
+  src/capture/win/enumerator.cpp
   src/capture/win/stream.cpp
   src/capture/win/utils.cpp
   src/capture/win/source_reader.cpp
@@ -77,7 +94,7 @@ SET(PLATFORM_HEADER_FILES_Linux
 )
 
 SET(PLATFORM_SOURCE_FILES_Linux
-  src/capture/linux/context.cpp
+  src/capture/linux/enumerator.cpp
   src/capture/linux/stream.cpp
   src/capture/linux/decoders.cpp
   src/capture/linux/utils.cpp
@@ -98,6 +115,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_mat.cpp
   src/capture/stream.cpp
   src/image_create.cpp
+  src/image_blur.cpp
   src/image_window.cpp
   src/image_resize.cpp
   src/image_draw_picture.cpp
@@ -112,22 +130,28 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_greyscale_to_argb.cpp
   src/image_insert.cpp
   src/image_argb_channel_operations.cpp
+  src/image_canny.cpp
   src/image_copy.cpp
   src/image_copy_raw_memory_ptr.cpp
   src/image_copy_pixmap.cpp
   src/image_copy_array.cpp
-  src/capture_context.cpp
   src/capture_stream.cpp
   src/image_negate.cpp
   src/image_transform.cpp
   src/image_rotate.cpp
+  src/image_threshold.cpp
   src/feature_detection_chessboard.cpp
   src/feature_detection_apriltag.cpp
+  src/feature_detection_contours.cpp
+  src/feature_detection_hough.cpp
+  src/feature_detection_barcode.cpp
+  src/feature_detection_we_chat_qr.cpp
   src/ar_camera_calibration.cpp
   src/ar_project_points.cpp
   src/ar_obj_loader.cpp
   src/ar_solve_pnp.cpp
   src/ar_rodrigues.cpp
+  src/shape_utils.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -154,7 +178,7 @@ target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS
   ${PUBLIC_HEADER_DIR}/lv_interop/lv_error.hpp
   ${PUBLIC_HEADER_DIR}/lv_interop/reset_packing.hpp
   ${PUBLIC_HEADER_DIR}/capture/stream.hpp
-  ${PUBLIC_HEADER_DIR}/capture/context.hpp
+  ${PUBLIC_HEADER_DIR}/capture/enumerator.hpp
   "${PLATFORM_HEADER_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
 
@@ -172,15 +196,15 @@ if(WIN32)
   # windows.h definitions
   target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068)
   target_link_libraries(${PROJECT_NAME} PRIVATE
-      mf
-      mfplat
-      Mfreadwrite
-      mfuuid
-      Strmiids
-      Rpcrt4
-      runtimeobject
-      Mfsensorgroup
-      shlwapi
+    mf
+    mfplat
+    Mfreadwrite
+    mfuuid
+    Strmiids
+    Rpcrt4
+    runtimeobject
+    Mfsensorgroup
+    shlwapi
   )
 elseif(UNIX)
   # don't use "lib"-prefix on linux
@@ -189,10 +213,10 @@ elseif(UNIX)
     v4l2listdevices
   )
   target_compile_options(${PROJECT_NAME} PRIVATE
-    "$<$<COMPILE_LANGUAGE:CXX>:-fdata-sections;-ffunction-sections>"
+    "-fdata-sections" "-ffunction-sections"
   )
   target_link_options(${PROJECT_NAME} PRIVATE
-  "$<$<COMPILE_LANGUAGE:CXX>:-Wl,--gc-sections>"
+    "--gc-sections"
   )
 endif()
 
@@ -218,8 +242,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_imgproc
   opencv_highgui
   opencv_calib3d
+  opencv_objdetect
+  opencv_wechat_qrcode
   tinyobjloader::tinyobjloader
   apriltag
+  whereami
 )
 
 # Install Shared Library

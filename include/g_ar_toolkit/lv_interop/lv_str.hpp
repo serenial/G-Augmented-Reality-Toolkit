@@ -16,8 +16,6 @@ namespace g_ar_toolkit
             operator const std::string()  const;
             void copy_from(const std::string&);
         };
-
-
     }
 
     

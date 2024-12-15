@@ -12,14 +12,17 @@
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
 		<Property Name="NI.SortType" Type="Int">0</Property>
 		<Item Name="Typedefs" Type="Folder">
+			<Item Name="AdaptiveThresholdMethod.ctl" Type="VI" URL="../AdaptiveThresholdMethod.ctl"/>
 			<Item Name="ARGBChannels.ctl" Type="VI" URL="../ARGBChannels.ctl"/>
 			<Item Name="BitwiseOperation.ctl" Type="VI" URL="../BitwiseOperation.ctl"/>
 			<Item Name="ExtractOptions.ctl" Type="VI" URL="../ExtractOptions.ctl"/>
 			<Item Name="Matrix(2x3).ctl" Type="VI" URL="../Matrix(2x3).ctl"/>
 			<Item Name="Matrix(3x3).ctl" Type="VI" URL="../Matrix(3x3).ctl"/>
+			<Item Name="Threshold Types.ctl" Type="VI" URL="../Threshold Types.ctl"/>
 			<Item Name="Vector(2 Element).ctl" Type="VI" URL="../Vector(2 Element).ctl"/>
 			<Item Name="Vector(3 Element).ctl" Type="VI" URL="../Vector(3 Element).ctl"/>
 		</Item>
+		<Item Name="AdaptiveThreshold.vi" Type="VI" URL="../AdaptiveThreshold.vi"/>
 		<Item Name="AddWeightedCore.vim" Type="VI" URL="../AddWeightedCore.vim"/>
 		<Item Name="ARGBColourToU32.vi" Type="VI" URL="../ARGBColourToU32.vi"/>
 		<Item Name="ARGBExtractChannel.vi" Type="VI" URL="../ARGBExtractChannel.vi"/>
@@ -27,6 +30,8 @@
 		<Item Name="ARGBSetChannelValueCore.vi" Type="VI" URL="../ARGBSetChannelValueCore.vi"/>
 		<Item Name="BitwiseImageOperationCore.vim" Type="VI" URL="../BitwiseImageOperationCore.vim"/>
 		<Item Name="BitwiseNOTImageCore.vim" Type="VI" URL="../BitwiseNOTImageCore.vim"/>
+		<Item Name="BlurGaussianCore.vim" Type="VI" URL="../BlurGaussianCore.vim"/>
+		<Item Name="BlurMedianCore.vim" Type="VI" URL="../BlurMedianCore.vim"/>
 		<Item Name="CopyImageToRawMemoryCore.vim" Type="VI" URL="../CopyImageToRawMemoryCore.vim"/>
 		<Item Name="CopyPixmapToImageCore.vim" Type="VI" URL="../CopyPixmapToImageCore.vim"/>
 		<Item Name="CopyRawMemoryToImageCore.vim" Type="VI" URL="../CopyRawMemoryToImageCore.vim"/>
@@ -53,14 +58,10 @@
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
 		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
-		<Item Name="UserLockAndGetRawPointerCore.vim" Type="VI" URL="../UserLockAndGetRawPointerCore.vim"/>
+		<Item Name="ThresholdCore.vi" Type="VI" URL="../ThresholdCore.vi"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
 		<Item Name="WarpPerspectiveCore.vim" Type="VI" URL="../WarpPerspectiveCore.vim"/>
 		<Item Name="WriteImageFileCore.vim" Type="VI" URL="../WriteImageFileCore.vim"/>
-	</Item>
-	<Item Name="Mapped Memory Access Image" Type="Folder">
-		<Item Name="Mapped Memory Access Image ARGB.lvclass" Type="LVClass" URL="../Mapped Memory Access Image ARGB/Mapped Memory Access Image ARGB.lvclass"/>
-		<Item Name="Mapped Memory Access Image Greyscale.lvclass" Type="LVClass" URL="../Mapped Memory Access Image Greyscale/Mapped Memory Access Image Greyscale.lvclass"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Property Name="NI.SortType" Type="Int">0</Property>
@@ -95,6 +96,12 @@
 			<Item Name="BitwiseORWithMaskGreyscale.vi" Type="VI" URL="../BitwiseORWithMaskGreyscale.vi"/>
 			<Item Name="BitwiseXORGreyscale.vi" Type="VI" URL="../BitwiseXORGreyscale.vi"/>
 			<Item Name="BitwiseXORWithMaskGreyscale.vi" Type="VI" URL="../BitwiseXORWithMaskGreyscale.vi"/>
+		</Item>
+		<Item Name="Blur" Type="Folder">
+			<Item Name="BlurGaussianARGB.vi" Type="VI" URL="../BlurGaussianARGB.vi"/>
+			<Item Name="BlurGaussianGreyscale.vi" Type="VI" URL="../BlurGaussianGreyscale.vi"/>
+			<Item Name="BlurMedianARGB.vi" Type="VI" URL="../BlurMedianARGB.vi"/>
+			<Item Name="BlurMedianGreyscale.vi" Type="VI" URL="../BlurMedianGreyscale.vi"/>
 		</Item>
 		<Item Name="Copy" Type="Folder">
 			<Item Name="CopyImageARGBMaskARGB.vi" Type="VI" URL="../CopyImageARGBMaskARGB.vi"/>
@@ -201,6 +208,12 @@
 			<Item Name="ShowWindowARGB.vi" Type="VI" URL="../ShowWindowARGB.vi"/>
 			<Item Name="ShowWindowGreyscale.vi" Type="VI" URL="../ShowWindowGreyscale.vi"/>
 		</Item>
+		<Item Name="Threshold" Type="Folder">
+			<Item Name="AdaptiveThresholdGaussian.vi" Type="VI" URL="../AdaptiveThresholdGaussian.vi"/>
+			<Item Name="AdaptiveThresholdMean.vi" Type="VI" URL="../AdaptiveThresholdMean.vi"/>
+			<Item Name="ThresholdBinary.vi" Type="VI" URL="../ThresholdBinary.vi"/>
+			<Item Name="ThresholdOtsu.vi" Type="VI" URL="../ThresholdOtsu.vi"/>
+		</Item>
 		<Item Name="Warp Affine" Type="Folder">
 			<Item Name="WarpAffineARGB.vi" Type="VI" URL="../WarpAffineARGB.vi"/>
 			<Item Name="WarpAffineGreyscale.vi" Type="VI" URL="../WarpAffineGreyscale.vi"/>
@@ -216,11 +229,15 @@
 			<Item Name="WriteImageFileGreyscale.vi" Type="VI" URL="../WriteImageFileGreyscale.vi"/>
 		</Item>
 	</Item>
+	<Item Name="Mapped Memory Access Image" Type="Folder">
+		<Item Name="Mapped Memory Access Image ARGB.lvclass" Type="LVClass" URL="../Mapped Memory Access Image ARGB/Mapped Memory Access Image ARGB.lvclass"/>
+		<Item Name="Mapped Memory Access Image Greyscale.lvclass" Type="LVClass" URL="../Mapped Memory Access Image Greyscale/Mapped Memory Access Image Greyscale.lvclass"/>
+	</Item>
 	<Item Name="API" Type="Folder">
 		<Item Name="Types" Type="Folder">
+			<Item Name="Kernel Block Size.ctl" Type="VI" URL="../Kernel Block Size.ctl"/>
 			<Item Name="Alpha Handling.ctl" Type="VI" URL="../Alpha Handling.ctl"/>
 			<Item Name="ARGB Colour.ctl" Type="VI" URL="../ARGB Colour.ctl"/>
-			<Item Name="Border Type.ctl" Type="VI" URL="../Border Type.ctl"/>
 			<Item Name="Destination Sizing Mode.ctl" Type="VI" URL="../Destination Sizing Mode.ctl"/>
 			<Item Name="Image Draw Offset.ctl" Type="VI" URL="../Image Draw Offset.ctl"/>
 			<Item Name="Image Read Size.ctl" Type="VI" URL="../Image Read Size.ctl"/>
@@ -236,6 +253,8 @@
 			<Item Name="Font Face.ctl" Type="VI" URL="../Font Face.ctl"/>
 			<Item Name="Text Drawing Settings.ctl" Type="VI" URL="../Text Drawing Settings.ctl"/>
 			<Item Name="Flip Mode.ctl" Type="VI" URL="../Flip Mode.ctl"/>
+			<Item Name="Border Type.ctl" Type="VI" URL="../Border Type.ctl"/>
+			<Item Name="Canny Aperture Size.ctl" Type="VI" URL="../Canny Aperture Size.ctl"/>
 		</Item>
 		<Item Name="Create" Type="Folder">
 			<Property Name="NI.SortType" Type="Int">3</Property>
@@ -258,14 +277,16 @@
 			<Item Name="Destroy All Image Windows.vi" Type="VI" URL="../Destroy All Image Windows.vi"/>
 		</Item>
 		<Item Name="Colour Channel" Type="Folder">
-			<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
 			<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
+			<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
 			<Item Name="ARGB Image Get Channel.vi" Type="VI" URL="../ARGB Image Get Channel.vi"/>
 			<Item Name="ARGB Image Set Channel.vi" Type="VI" URL="../ARGB Image Set Channel.vi"/>
 			<Item Name="ARGB Image Set Channel Value.vi" Type="VI" URL="../ARGB Image Set Channel Value.vi"/>
 		</Item>
 		<Item Name="Operations" Type="Folder">
+			<Item Name="Threshold.vi" Type="VI" URL="../Threshold.vi"/>
 			<Item Name="Crop.vi" Type="VI" URL="../Crop.vi"/>
+			<Item Name="Blur.vi" Type="VI" URL="../Blur.vi"/>
 			<Item Name="Flip.vi" Type="VI" URL="../Flip.vi"/>
 			<Item Name="Rotate.vi" Type="VI" URL="../Rotate.vi"/>
 			<Item Name="Warp Affine.vi" Type="VI" URL="../Warp Affine.vi"/>
@@ -278,6 +299,7 @@
 			<Item Name="Negate Greyscale Image.vi" Type="VI" URL="../Negate Greyscale Image.vi"/>
 			<Item Name="In-Range Image.vi" Type="VI" URL="../In-Range Image.vi"/>
 			<Item Name="Insert Image.vi" Type="VI" URL="../Insert Image.vi"/>
+			<Item Name="Canny Edge.vi" Type="VI" URL="../Canny Edge.vi"/>
 		</Item>
 		<Item Name="Utility" Type="Folder">
 			<Item Name="Get Text Size.vi" Type="VI" URL="../Get Text Size.vi"/>

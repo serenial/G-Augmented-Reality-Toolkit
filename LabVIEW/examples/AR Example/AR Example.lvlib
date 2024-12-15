@@ -11,4 +11,5 @@
 	<Item Name="App.lvclass" Type="LVClass" URL="../App/App.lvclass"/>
 	<Item Name="UI.lvclass" Type="LVClass" URL="../UI/UI.lvclass"/>
 	<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
+	<Item Name=".gitignore" Type="Document" URL="../.gitignore"/>
 </Library>

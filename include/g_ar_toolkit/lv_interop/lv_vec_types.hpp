@@ -20,6 +20,7 @@ namespace g_ar_toolkit
             LV_ImagePointFloat_t& operator=(const cv::Point2f &);
             LV_ImagePointFloat_t& operator=(const cv::Point2d &);
             LV_ImagePointFloat_t& operator=(const double[2]);
+            LV_ImagePointFloat_t& operator=(const float*);
         };
 
         struct LV_ImagePointInt_t{
@@ -55,9 +56,7 @@ namespace g_ar_toolkit
             LV_Vec3Double_t& operator=(const cv::Point3d&);
             LV_Vec3Double_t& operator=(const cv::Point3f&);
             LV_Vec3Double_t& operator=(const float[3]);
-            
         };
-
 
 using LV_ImagePointFloatPtr_t = LV_Ptr_t<LV_ImagePointFloat_t>;
 using LV_ImagePointIntPtr_t = LV_Ptr_t<LV_ImagePointInt_t>;

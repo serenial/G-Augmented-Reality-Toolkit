@@ -17,6 +17,7 @@ using namespace lv_interop;
 
 namespace
 {
+#include "g_ar_toolkit/lv_interop/set_packing.hpp"
     struct LV_EnumCVSolvePnPFlags_t : public LV_EnumCVInt_t
     {
         operator int() const
@@ -39,6 +40,7 @@ namespace
             throw std::out_of_range("The supplied value for the solve-PnP flag does not map to a valid OpenCV value.");
         }
     };
+#include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 }
 
 extern "C"

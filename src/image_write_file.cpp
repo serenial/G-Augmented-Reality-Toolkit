@@ -41,7 +41,6 @@ extern "C"
             cv::Mat bgr(src.size(), CV_8UC3);
             cv::cvtColor(src, bgr, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
             cv::imwrite(dst_path.string(), bgr);
-            return LV_ERR_noError;
         }
         catch (...)
         {

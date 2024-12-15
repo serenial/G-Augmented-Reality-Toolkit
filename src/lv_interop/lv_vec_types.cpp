@@ -13,6 +13,7 @@ LV_ImagePointFloat_t::operator cv::Point2d() const
     return cv::Point2d{m_x, m_y};
 }
 
+
 LV_ImagePointFloat_t& LV_ImagePointFloat_t::operator=(const cv::Point2f &point){
     m_x = point.x;
     m_y = point.y;
@@ -28,6 +29,12 @@ LV_ImagePointFloat_t& LV_ImagePointFloat_t::operator=(const cv::Point2d &point){
 LV_ImagePointFloat_t& LV_ImagePointFloat_t::operator=(const double array[2]){
     m_x = array[0];
     m_y = array[1];
+    return *this;
+}
+
+LV_ImagePointFloat_t& LV_ImagePointFloat_t::operator=(const float* element_ptr){
+    m_x = *element_ptr++;
+    m_y = *element_ptr;
     return *this;
 }
 

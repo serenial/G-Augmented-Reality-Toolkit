@@ -9,7 +9,7 @@
 #include <winrt/base.h>
 
 #include "g_ar_toolkit/capture/stream.hpp"
-#include "g_ar_toolkit/capture/context.hpp"
+#include "g_ar_toolkit/capture/enumerator.hpp"
 #include "g_ar_toolkit/capture/win/source_reader.hpp"
 
 using namespace g_ar_toolkit;
@@ -188,7 +188,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                {
                                case states::STOPPING:
 
-                                   camera->stop_streaming();
+                                   if (camera)
+                                   {
+                                       camera->stop_streaming();
+                                   }
 
                                    lk.unlock();
                                    goto done;
@@ -197,6 +200,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        camera->start_streaming();
                                    }
                                    catch (...)
@@ -212,6 +219,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        camera->stop_streaming();
                                    }
                                    catch (...)
@@ -227,6 +238,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        auto info = camera->get_source_parameter(stream_param_to_source_reader_param(m_camera_parameter_arg).value());
                                        m_last_param_info.default_value = info.default_value;
                                        m_last_param_info.step = info.step;
@@ -248,6 +263,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        m_last_auto_param_is_automatic = camera->get_source_parameter_auto_mode(stream_auto_param_to_source_reader_auto_param(m_camera_auto_parameter_arg).value());
                                    }
                                    catch (...)
@@ -263,6 +282,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        camera->set_source_parameter(stream_param_to_source_reader_param(m_camera_parameter_arg).value(), m_last_param_value);
                                    }
                                    catch (...)
@@ -274,10 +297,14 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    m_notifier.notify_all();
                                    break;
 
-                                case states::WAITING_ON_STREAM_PARAM_AUTO_SET:
+                               case states::WAITING_ON_STREAM_PARAM_AUTO_SET:
                                    try
                                    {
                                        m_last_exception = nullptr;
+                                       if (!camera)
+                                       {
+                                           throw std::runtime_error("The internal Camera-Object is no longer valid.");
+                                       }
                                        camera->set_source_parameter_auto_mode(stream_auto_param_to_source_reader_auto_param(m_camera_auto_parameter_arg).value(), m_last_auto_param_is_automatic);
                                    }
                                    catch (...)
@@ -300,8 +327,11 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                            {
                                std::lock_guard lk(m_mtx);
                                m_last_state = states::STOPPED;
-                               // release the camera
-                               camera->Release();
+                               if (camera)
+                               {
+                                   // release the camera
+                                   camera->Release();
+                               }
                            }
                            m_notifier.notify_all();
                        }))
@@ -420,7 +450,7 @@ void Stream::stop_stream()
     lk.unlock();
 }
 
-Stream::get_camera_parameter_info(Stream::camera_parameters param, Stream::param_info_t* info)
+void Stream::get_camera_parameter_info(Stream::camera_parameters param, Stream::param_info_t *info)
 {
     info->is_supported = true;
     // create new scope, request param
@@ -526,7 +556,7 @@ bool Stream::get_camera_auto_mode(Stream::camera_auto_parameters param)
 
 void Stream::set_camera_auto_mode(camera_auto_parameters param, bool automatic)
 {
-        bool is_auto = false;
+    bool is_auto = false;
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);

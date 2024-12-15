@@ -1,20 +1,20 @@
 Refactor Tests
 
 Calibration Functions
-
-* Chessboard Detection
-* Get Calibration Matrix
-* Apply Calibration
+* Calibrator object
 
 Image Operations
-* blur (Median, gaussian, )
-* adaptive threshold
-* Find Contours
-* Hough Circles
+* Morphology?
+
+Feature Detections
+* Blob Detection
+
+Shape
+* Moments?
 
 3D Functions
 
-* SolvePnP (RANSAC, USAC, UPnP, SQPnP...)
+* SolvePnP (RANSAC, USAC)
 * EstimateHomograpy?
 
 Utility

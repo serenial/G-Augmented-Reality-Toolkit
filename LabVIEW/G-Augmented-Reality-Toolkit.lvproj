@@ -16,19 +16,19 @@
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="examples" Type="Folder">
 			<Item Name="Image Example.vi" Type="VI" URL="../examples/Image Example.vi"/>
-			<Item Name="Param Test.vi" Type="VI" URL="../examples/Param Test.vi"/>
 			<Item Name="Capture Example.vi" Type="VI" URL="../examples/Capture Example.vi"/>
 			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../examples/Mapped Pixel Pointer Example.vi"/>
 			<Item Name="Calibrate Camera.vi" Type="VI" URL="../examples/Calibrate Camera.vi"/>
 			<Item Name="Load Obj File.vi" Type="VI" URL="../examples/Load Obj File.vi"/>
 			<Item Name="Detect AprilTags.vi" Type="VI" URL="../examples/Detect AprilTags.vi"/>
 			<Item Name="Spot Chessboard AR.vi" Type="VI" URL="../examples/Spot Chessboard AR.vi"/>
+			<Item Name="Shape Example.vi" Type="VI" URL="../examples/Shape Example.vi"/>
+			<Item Name="Find Circles.vi" Type="VI" URL="../examples/Find Circles.vi"/>
+			<Item Name="Example Barcode.vi" Type="VI" URL="../examples/Example Barcode.vi"/>
+			<Item Name="Example QR Code.vi" Type="VI" URL="../examples/Example QR Code.vi"/>
 			<Item Name="AR Example.lvlib" Type="Library" URL="../examples/AR Example/AR Example.lvlib"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
-			<Property Name="NI.DISK" Type="Bool">true</Property>
-		</Item>
-		<Item Name="bin" Type="Folder" URL="../bin">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="test-images" Type="Folder" URL="../test-images">
@@ -37,13 +37,21 @@
 		<Item Name="models" Type="Folder" URL="../models">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
+		<Item Name="third-party" Type="Folder" URL="../third-party">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
+		</Item>
+		<Item Name="bin" Type="Folder" URL="../g_ar_toolkit.common/bin">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
+		</Item>
 		<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
+		<Item Name="g_ar_toolkit.shape.lvlib" Type="Library" URL="../g_ar_toolkit.shape/g_ar_toolkit.shape.lvlib"/>
 		<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
 		<Item Name="g_ar_toolkit.capture.lvlib" Type="Library" URL="../g_ar_toolkit.capture/g_ar_toolkit.capture.lvlib"/>
 		<Item Name="g_ar_toolkit.ar.lvlib" Type="Library" URL="../g_ar_toolkit.ar/g_ar_toolkit.ar.lvlib"/>
 		<Item Name="g_ar_toolkit.pointset_utils.lvlib" Type="Library" URL="../g_ar_toolkit.pointset_utils/g_ar_toolkit.pointset_utils.lvlib"/>
 		<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
 		<Item Name="g_ar_toolkit.test.lvlib" Type="Library" URL="../g_ar_toolkit.test/g_ar_toolkit.test.lvlib"/>
+		<Item Name=".lvversion" Type="Document" URL="../.lvversion"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Clear Errors.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Clear Errors.vi"/>
@@ -134,67 +142,69 @@
 				<Item Name="usereventprio.ctl" Type="VI" URL="/&lt;vilib&gt;/event_ctls.llb/usereventprio.ctl"/>
 				<Item Name="Test Suite.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Astemes/LUnit/Test Suite.lvclass"/>
 				<Item Name="Get LV Class Path.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Path.vi"/>
-				<Item Name="Trim Whitespace One-Sided.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace One-Sided.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="lvanlys.so" Type="Document" URL="/&lt;resource&gt;/lvanlys.so"/>
-			<Item Name="g_ar_toolkit.1.32.dll" Type="Document" URL="../bin/g_ar_toolkit.1.32.dll"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
-				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
 				<Property Name="Bld_buildCacheID" Type="Str">{2D2DC497-4EC7-44A6-9CE9-936A5A75204D}</Property>
 				<Property Name="Bld_buildSpecName" Type="Str">Source Distribution</Property>
-				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_excludedDirectory[0]" Type="Path">vi.lib</Property>
 				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[1]" Type="Path">resource/objmgr</Property>
 				<Property Name="Bld_excludedDirectory[1].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[2]" Type="Path">/var/cache/natinst/InstCache/24.0</Property>
-				<Property Name="Bld_excludedDirectory[3]" Type="Path">/home/john/natinst/LabVIEW Data/2024(64-bit)/ExtraVILib</Property>
+				<Property Name="Bld_excludedDirectory[2]" Type="Path">/C/ProgramData/National Instruments/InstCache/20.0</Property>
+				<Property Name="Bld_excludedDirectory[3]" Type="Path">/C/Users/john/Documents/LabVIEW Data/2020(32-bit)/ExtraVILib</Property>
 				<Property Name="Bld_excludedDirectory[4]" Type="Path">instr.lib</Property>
 				<Property Name="Bld_excludedDirectory[4].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[5]" Type="Path">user.lib</Property>
 				<Property Name="Bld_excludedDirectory[5].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_excludeDependentDLLs" Type="Bool">true</Property>
 				<Property Name="Bld_excludeDependentPPLs" Type="Bool">true</Property>
 				<Property Name="Bld_localDestDir" Type="Path">../build/source-distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_postActionVIID" Type="Ref">/My Computer/utility/Post-Build Action.vi</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{335EEF3B-14B7-4A77-85E2-594933016307}</Property>
 				<Property Name="Bld_removeVIObj" Type="Int">1</Property>
-				<Property Name="Bld_version.build" Type="Int">6</Property>
-				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="DestinationCount" Type="Int">3</Property>
+				<Property Name="Bld_version.patch" Type="Int">3</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
 				<Property Name="Destination[1].path" Type="Path">../build/source-distribution/data</Property>
-				<Property Name="Destination[2].destName" Type="Str">Example Directory</Property>
-				<Property Name="Destination[2].path" Type="Path">../build/source-distribution/examples</Property>
-				<Property Name="Destination[2].preserveHierarchy" Type="Bool">true</Property>
-				<Property Name="SourceCount" Type="Int">12</Property>
-				<Property Name="Source[0].itemID" Type="Str">{5530C325-9957-11EF-8669-0242FB4FE91D}</Property>
+				<Property Name="Destination[2].destName" Type="Str">Destination Directory (Flat)</Property>
+				<Property Name="Destination[2].path" Type="Path">../build/source-distribution</Property>
+				<Property Name="DestinationCount" Type="Int">3</Property>
+				<Property Name="Source[0].itemID" Type="Str">{5FC80583-FCC6-48EF-8828-330E32E31F2C}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
-				<Property Name="Source[10].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[10].Container.applyInclusion" Type="Bool">true</Property>
-				<Property Name="Source[10].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[10].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[10].itemID" Type="Ref">/My Computer/test-images</Property>
-				<Property Name="Source[10].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[10].type" Type="Str">Container</Property>
-				<Property Name="Source[11].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[11].Container.applyInclusion" Type="Bool">true</Property>
-				<Property Name="Source[11].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[11].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[11].itemID" Type="Ref">/My Computer/models</Property>
-				<Property Name="Source[11].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[11].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/g_ar_toolkit.image.lvlib</Property>
 				<Property Name="Source[1].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[1].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[1].type" Type="Str">Library</Property>
+				<Property Name="Source[10].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[10].itemID" Type="Ref">/My Computer/g_ar_toolkit.shape.lvlib</Property>
+				<Property Name="Source[10].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[10].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[10].type" Type="Str">Library</Property>
+				<Property Name="Source[11].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[11].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[11].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[11].itemID" Type="Ref">/My Computer/bin</Property>
+				<Property Name="Source[11].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[11].type" Type="Str">Container</Property>
+				<Property Name="Source[12].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[12].itemID" Type="Ref">/My Computer/utility/g-ar-toolkit.lvproj.xml</Property>
+				<Property Name="Source[12].newName" Type="Str">g-ar-toolkit.lvproj</Property>
+				<Property Name="Source[12].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[13].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[13].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[13].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[13].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[13].itemID" Type="Ref">/My Computer/third-party</Property>
+				<Property Name="Source[13].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[13].type" Type="Str">Container</Property>
 				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[2].itemID" Type="Ref">/My Computer/g_ar_toolkit.capture.lvlib</Property>
 				<Property Name="Source[2].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -204,38 +214,44 @@
 				<Property Name="Source[3].Container.applyInclusion" Type="Bool">true</Property>
 				<Property Name="Source[3].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[3].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[3].itemID" Type="Ref">/My Computer/bin</Property>
+				<Property Name="Source[3].itemID" Type="Ref">/My Computer/examples</Property>
 				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[3].type" Type="Str">Container</Property>
-				<Property Name="Source[4].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[4].Container.applyInclusion" Type="Bool">true</Property>
-				<Property Name="Source[4].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[4].destinationIndex" Type="Int">2</Property>
-				<Property Name="Source[4].itemID" Type="Ref">/My Computer/examples</Property>
+				<Property Name="Source[4].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[4].itemID" Type="Ref">/My Computer/g_ar_toolkit.common.lvlib</Property>
+				<Property Name="Source[4].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[4].type" Type="Str">Container</Property>
+				<Property Name="Source[4].type" Type="Str">Library</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[5].itemID" Type="Ref">/My Computer/bin/.gitkeep</Property>
+				<Property Name="Source[5].itemID" Type="Ref">/My Computer/g_ar_toolkit.ar.lvlib</Property>
+				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[5].type" Type="Str">Library</Property>
 				<Property Name="Source[6].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[6].itemID" Type="Ref">/My Computer/g_ar_toolkit.common.lvlib</Property>
+				<Property Name="Source[6].itemID" Type="Ref">/My Computer/g_ar_toolkit.pointset_utils.lvlib</Property>
 				<Property Name="Source[6].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[6].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[6].type" Type="Str">Library</Property>
 				<Property Name="Source[7].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[7].itemID" Type="Ref">/My Computer/g_ar_toolkit.ar.lvlib</Property>
+				<Property Name="Source[7].itemID" Type="Ref">/My Computer/g_ar_toolkit.feature_detection.lvlib</Property>
 				<Property Name="Source[7].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[7].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[7].type" Type="Str">Library</Property>
+				<Property Name="Source[8].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[8].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[8].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[8].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[8].itemID" Type="Ref">/My Computer/g_ar_toolkit.pointset_utils.lvlib</Property>
-				<Property Name="Source[8].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[8].itemID" Type="Ref">/My Computer/test-images</Property>
 				<Property Name="Source[8].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[8].type" Type="Str">Library</Property>
+				<Property Name="Source[8].type" Type="Str">Container</Property>
+				<Property Name="Source[9].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[9].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[9].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[9].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[9].itemID" Type="Ref">/My Computer/g_ar_toolkit.feature_detection.lvlib</Property>
-				<Property Name="Source[9].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[9].itemID" Type="Ref">/My Computer/models</Property>
 				<Property Name="Source[9].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[9].type" Type="Str">Library</Property>
+				<Property Name="Source[9].type" Type="Str">Container</Property>
+				<Property Name="SourceCount" Type="Int">14</Property>
 			</Item>
 		</Item>
 	</Item>

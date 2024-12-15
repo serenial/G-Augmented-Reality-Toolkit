@@ -48,6 +48,10 @@ namespace g_ar_toolkit
 
         public:
             LV_1DArrayHandle_t() : m_handle(nullptr) {}
+            
+            bool empty() const {
+                return size() == 0;
+            }
 
             T &operator[](int i)
             {
@@ -70,6 +74,11 @@ namespace g_ar_toolkit
             std::size_t size() const
             {
                 return m_handle && (*m_handle) ? (*m_handle)->dims[0] : 0;
+            }
+
+            std::size_t is_nullptr() const
+            {
+                return m_handle == nullptr;
             }
 
             T *begin() const noexcept

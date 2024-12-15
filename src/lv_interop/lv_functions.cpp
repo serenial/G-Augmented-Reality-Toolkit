@@ -3,24 +3,55 @@
 #include <iterator>
 #include <stdexcept>
 
+#include <whereami.h>
+
 #include "g_ar_toolkit/lv_interop/lv_functions.hpp"
+#include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
+#include "g_ar_toolkit/lv_interop/lv_str.hpp"
+#include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
-// static function pointers
-static LV_EDVRGetCurrentContextFnPtr_t EDVR_GetCurrentContextImp = nullptr;
-static LV_EDVRCreateReferenceFnPtr_t EDVR_CreateReferenceImp = nullptr;
-static LV_EDVRAddRefWithContextFnPtr_t EDVR_AddRefWithContextImp = nullptr;
-static LV_EDVRReleaseRefWithContextFnPtr_t EDVR_ReleaseRefWithContextImp = nullptr;
-static LV_PostLVUserEventFnPtr_t PostLVUserEventImp = nullptr;
-static LV_NumericArrayResizeFnPtr_t NumericArrayResizeImp = nullptr;
-static LV_DSDisposeHandleFnPtr_t DSDisposeHandleImp = nullptr;
-static LV_DSCheckHandlePtr_t DSCheckHandleImp = nullptr;
-static LV_DSNewHandlePtr_t DSNewHandleImp = nullptr;
-static LV_DSSetHandleSizePtr_t DSSetHandleSizeImp = nullptr;
-static LV_DSGetHandleSizePtr_t DSGetHandleSizeImp = nullptr;
+namespace
+{
+    // module path
+    struct module
+    {
+        std::string path;
+        module()
+        {
+            if (path.empty())
+            {
+                // get This Module's Path (.dll or .so path)
+                int module_path_length = wai_getModulePath(nullptr, 0, nullptr);
+
+                if (module_path_length > 0)
+                {
+                    // size string
+                    path.resize(module_path_length);
+                    // copy value into string
+                    wai_getModulePath(path.data(), module_path_length, nullptr);
+                }
+            }
+        }
+    };
+
+    static module m;
+    // static function pointers
+    static LV_EDVRGetCurrentContextFnPtr_t EDVR_GetCurrentContextImp = nullptr;
+    static LV_EDVRCreateReferenceFnPtr_t EDVR_CreateReferenceImp = nullptr;
+    static LV_EDVRAddRefWithContextFnPtr_t EDVR_AddRefWithContextImp = nullptr;
+    static LV_EDVRReleaseRefWithContextFnPtr_t EDVR_ReleaseRefWithContextImp = nullptr;
+    static LV_PostLVUserEventFnPtr_t PostLVUserEventImp = nullptr;
+    static LV_NumericArrayResizeFnPtr_t NumericArrayResizeImp = nullptr;
+    static LV_DSDisposeHandleFnPtr_t DSDisposeHandleImp = nullptr;
+    static LV_DSCheckHandlePtr_t DSCheckHandleImp = nullptr;
+    static LV_DSNewHandlePtr_t DSNewHandleImp = nullptr;
+    static LV_DSSetHandleSizePtr_t DSSetHandleSizeImp = nullptr;
+    static LV_DSGetHandleSizePtr_t DSGetHandleSizeImp = nullptr;
+}
 
 // call this function when the .so is loaded on linux
 #if defined(__GNUC__) && !defined(_WIN32)
@@ -28,8 +59,9 @@ __attribute__((constructor))
 #endif
 
 void
-g_ar_toolkit::import_lv_runtime_functions()
+g_ar_toolkit::on_shared_library_load()
 {
+    // Import functions from LabVIEW IDE or LabVIEW Runtime
     for (int i = 0; i < 2; i++)
     {
         // check if the function pointers already populated
@@ -101,6 +133,15 @@ g_ar_toolkit::import_lv_runtime_functions()
     }
 }
 
+#if defined(__GNUC__) && !defined(_WIN32)
+__attribute__((destructor))
+#endif
+void
+g_ar_toolkit::on_shared_library_unload()
+{
+    // nothing to cleanup
+}
+
 #if defined(_WIN32)
 #if defined(_MSC_VER)
 #pragma warning(push, 3)
@@ -112,13 +153,14 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        import_lv_runtime_functions();
+        on_shared_library_load();
         break;
     case DLL_THREAD_ATTACH:
         break;
     case DLL_THREAD_DETACH:
         break;
     case DLL_PROCESS_DETACH:
+        on_shared_library_unload();
         break;
     }
     return true;
@@ -225,5 +267,27 @@ void lv_interop::throw_if_edvr_ref_pointers_not_unique(std::initializer_list<LV_
     if (last != end)
     {
         throw std::invalid_argument("image references must be unique. This function cannot operate in-place.");
+    }
+}
+
+extern "C"
+{
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_get_module_path(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_StringHandle_t path_handle)
+    {
+        try
+        {
+            if (path_handle.is_nullptr())
+            {
+                throw std::runtime_error("Path Handle is a null_ptr.");
+            }
+            path_handle.copy_from(m.path);
+        }
+        catch (...)
+        {
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
+        }
+        return LV_ERR_noError;
     }
 }

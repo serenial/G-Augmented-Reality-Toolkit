@@ -55,7 +55,7 @@ extern "C"
                     flags += cv::IMREAD_REDUCED_COLOR_8;
                     break;
                 default:
-                    flags += cv::IMREAD_UNCHANGED;
+                    flags += cv::IMREAD_ANYCOLOR;
                 }
             }
 

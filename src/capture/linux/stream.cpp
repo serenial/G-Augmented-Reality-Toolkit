@@ -8,7 +8,6 @@
 #include "v4l2_list_devices/list_devices.hpp"
 
 #include "g_ar_toolkit/capture/stream.hpp"
-#include "g_ar_toolkit/capture/context.hpp"
 #include "g_ar_toolkit/capture/linux/utils.hpp"
 #include "g_ar_toolkit/capture/linux/decoders.hpp"
 

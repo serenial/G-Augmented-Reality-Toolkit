@@ -63,7 +63,6 @@ extern "C"
             {
                 cv::inRange(src, lower_colour.get_blue(), upper_colour.get_blue(), dst);
             }
-            return LV_ERR_noError;
         }
         catch (...)
         {
