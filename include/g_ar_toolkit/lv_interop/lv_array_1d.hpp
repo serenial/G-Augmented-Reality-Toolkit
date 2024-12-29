@@ -43,7 +43,8 @@ namespace g_ar_toolkit
         private:
             size_t required_bytes(size_t n_elements)
             {
-                return sizeof(LV_Array_t<1, T>) + sizeof(T) * (n_elements - 1);
+                size_t data_header_size = reinterpret_cast<uintptr_t>((*m_handle)->data_ptr()) - reinterpret_cast<uintptr_t>(*m_handle);
+                return data_header_size + sizeof(T) * n_elements;
             }
 
         public:

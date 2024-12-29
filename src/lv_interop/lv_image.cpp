@@ -51,7 +51,9 @@ lv_image::~lv_image()
 lv_image::operator cv::_InputArray() { return data->mat; }
 lv_image::operator cv::_OutputArray() { return data->mat; }
 lv_image::operator cv::Mat *() { return &(data->mat); }
-lv_image::operator const cv::Mat &() { return data->mat; }
+lv_image::operator const cv::Mat &() const { return data->mat; }
+lv_image::operator cv::Mat &() { return data->mat; }
+
 
 LV_EDVRContext_t lv_image::get_ctx()
 {

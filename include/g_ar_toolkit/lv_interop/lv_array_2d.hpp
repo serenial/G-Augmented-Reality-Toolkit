@@ -41,7 +41,9 @@ namespace g_ar_toolkit
         private:
             size_t required_bytes(std::array<int32_t, 2> n_elements)
             {
-                return sizeof(LV_Array_t<2, T>) + sizeof(T) * ((n_elements[0] * n_elements[1]) - 1);
+                
+                size_t data_header_size = reinterpret_cast<uintptr_t>((*m_handle)->data_ptr()) - reinterpret_cast<uintptr_t>(*m_handle);
+                return data_header_size + sizeof(T) * n_elements[0] * n_elements[1];
             }
 
             int32_t get_data_index(std::array<int32_t, 2> el)

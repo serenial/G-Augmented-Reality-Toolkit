@@ -35,6 +35,9 @@ find_package(OpenCV 4.10.0 REQUIRED)
 # # Find tinyobjloader
 find_package(tinyobjloader CONFIG REQUIRED)
 
+# # Find eigen3
+find_package(eigen3 CONFIG REQUIRED)
+
 
 # # These dependencies managed outside of vcpkg are accesses from their repos but a snapshot of them is included in
 # #  third-party
@@ -140,6 +143,8 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_transform.cpp
   src/image_rotate.cpp
   src/image_threshold.cpp
+  src/image_rectification.cpp
+  src/image_distortion.cpp
   src/feature_detection_chessboard.cpp
   src/feature_detection_apriltag.cpp
   src/feature_detection_contours.cpp
@@ -151,6 +156,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/ar_obj_loader.cpp
   src/ar_solve_pnp.cpp
   src/ar_rodrigues.cpp
+  src/ar_quaternion.cpp
   src/shape_utils.cpp
   "${PLATFORM_SOURCE_FILES_${CMAKE_HOST_SYSTEM_NAME}}"
 )
@@ -244,6 +250,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   tinyobjloader::tinyobjloader
   apriltag
   whereami
+  Eigen3::Eigen
 )
 
 # Install Shared Library

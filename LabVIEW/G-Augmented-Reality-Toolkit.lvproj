@@ -17,6 +17,7 @@
 		<Item Name="examples" Type="Folder">
 			<Item Name="Image Example.vi" Type="VI" URL="../examples/Image Example.vi"/>
 			<Item Name="Capture Example.vi" Type="VI" URL="../examples/Capture Example.vi"/>
+			<Item Name="Rectify Image Example.vi" Type="VI" URL="../examples/Rectify Image Example.vi"/>
 			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../examples/Mapped Pixel Pointer Example.vi"/>
 			<Item Name="Calibrate Camera.vi" Type="VI" URL="../examples/Calibrate Camera.vi"/>
 			<Item Name="Load Obj File.vi" Type="VI" URL="../examples/Load Obj File.vi"/>
@@ -122,7 +123,6 @@
 				<Item Name="Bit-array To Byte-array.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pictutil.llb/Bit-array To Byte-array.vi"/>
 				<Item Name="Create Mask.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pictutil.llb/Create Mask.vi"/>
 				<Item Name="Color to RGB.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/Color to RGB.vi"/>
-				<Item Name="RGB to Color.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/RGB to Color.vi"/>
 				<Item Name="NI_AALPro.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALPro.lvlib"/>
 				<Item Name="NI_Gmath.lvlib" Type="Library" URL="/&lt;vilib&gt;/gmath/NI_Gmath.lvlib"/>
 				<Item Name="Draw Oval.vi" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Draw Oval.vi"/>
@@ -142,6 +142,7 @@
 				<Item Name="usereventprio.ctl" Type="VI" URL="/&lt;vilib&gt;/event_ctls.llb/usereventprio.ctl"/>
 				<Item Name="Test Suite.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Astemes/LUnit/Test Suite.lvclass"/>
 				<Item Name="Get LV Class Path.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Path.vi"/>
+				<Item Name="RGB to Color.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/RGB to Color.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 		</Item>

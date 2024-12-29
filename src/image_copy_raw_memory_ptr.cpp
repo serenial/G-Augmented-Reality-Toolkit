@@ -8,20 +8,40 @@ using namespace g_ar_toolkit;
 using namespace lv_interop;
 using namespace std::rel_ops;
 
-#include "g_ar_toolkit/lv_interop/set_packing.hpp"
-using LV_RawMemoryPtrInfo_t = struct
+namespace
 {
-    uint64_t ptr;
-    uint16_t size_dim_0;
-    int32_t step_dim_0;
-    uint16_t size_dim_1;
-    int32_t step_dim_1;
-};
+#include "g_ar_toolkit/lv_interop/set_packing.hpp"
+    class LV_RawMemoryPtrInfo_t
+    {
+    public:
+        operator cv::Mat() const;
+        LV_RawMemoryPtrInfo_t &operator=(const lv_image &);
+        LV_RawMemoryPtrInfo_t() = delete;
 
-using LV_RawMemoryPtrInfoPtr_t = LV_Ptr_t<LV_RawMemoryPtrInfo_t>;
+    private:
+        uint64_t m_ptr;
+        uint16_t m_size_dim_0;
+        int32_t m_step_dim_0;
+        uint16_t m_size_dim_1;
+        int32_t m_step_dim_1;
+    };
+#include "g_ar_toolkit/lv_interop/set_packing.hpp"
 
-static cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t);
+    using LV_RawMemoryPtrInfoPtr_t = LV_Ptr_t<LV_RawMemoryPtrInfo_t>;
 
+    // create an EDVRManagedObject to manage the lifetime of the image lock
+    // define a destructor that will user unlock the image
+    class Locked_Image_t
+    {
+    public:
+        Locked_Image_t(LV_EDVRReferencePtr_t);
+        ~Locked_Image_t();
+        void copy_memory_info(LV_RawMemoryPtrInfoPtr_t) const;
+
+    private:
+        const std::unique_ptr<lv_image> m_img_ptr;
+    };
+}
 extern "C"
 {
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_copy_to_raw_memory(
@@ -32,7 +52,7 @@ extern "C"
         try
         {
             lv_image src(src_edvr_ref_ptr);
-            auto raw_memory = wrap_raw_memory_as_cv_mat(dst_info_ptr);
+            cv::Mat raw_memory = *dst_info_ptr;
 
             if (src.size().area() <= raw_memory.size().area())
             {
@@ -45,7 +65,7 @@ extern "C"
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
         return LV_ERR_noError;
     }
@@ -58,13 +78,13 @@ extern "C"
         try
         {
             lv_image dst(dst_edvr_ref_ptr);
-            auto raw_memory = wrap_raw_memory_as_cv_mat(src_info_ptr);
+            cv::Mat raw_memory = *src_info_ptr;
 
             raw_memory.copyTo(dst);
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
         return LV_ERR_noError;
     }
@@ -77,51 +97,47 @@ extern "C"
     {
         try
         {
-            // create an EDVRManagedObject to manage the lifetime of the image lock
-            // define a destructor that will user unlock the image
-            class locked_image_lifetime_manager
-            {
-                const std::unique_ptr<lv_image> img_ptr;
 
-            public:
-                locked_image_lifetime_manager(LV_EDVRReferencePtr_t img_edvr_ref_ptr)
-                    : img_ptr(std::make_unique<lv_image>(img_edvr_ref_ptr))
-                {
-                    img_ptr->upgrade_to_mapped();
-                }
-                ~locked_image_lifetime_manager()
-                {
-                    img_ptr->downgrade_from_mapped();
-                }
-                void get_memory_info(LV_RawMemoryPtrInfoPtr_t src_info_ptr)
-                {
-                    src_info_ptr->ptr = reinterpret_cast<uint64_t>(img_ptr->mat().data);
-                    src_info_ptr->size_dim_0 = img_ptr->height();
-                    src_info_ptr->size_dim_1 = img_ptr->width();
-                    src_info_ptr->step_dim_0 = img_ptr->mat().step[0];
-                    src_info_ptr->step_dim_1 = img_ptr->mat().step[1];
-                }
-            };
+            EDVRManagedObject<Locked_Image_t> locked(lock_lifetime_edvr_ref_ptr, new Locked_Image_t(src_edvr_ref_ptr));
 
-            locked_image_lifetime_manager *lifetime_mgr = new locked_image_lifetime_manager(src_edvr_ref_ptr);
-
-            EDVRManagedObject<locked_image_lifetime_manager>(lock_lifetime_edvr_ref_ptr, lifetime_mgr);
-
-            lifetime_mgr->get_memory_info(src_info_ptr);
+            locked->copy_memory_info(src_info_ptr);
         }
         catch (...)
         {
-            error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;
     }
 }
 
-static cv::Mat wrap_raw_memory_as_cv_mat(LV_RawMemoryPtrInfoPtr_t info_ptr)
+LV_RawMemoryPtrInfo_t::operator cv::Mat() const
 {
-    cv::MatStep step(info_ptr->step_dim_0);
-    step[1] = info_ptr->step_dim_1;
-    cv::Mat wrapped(info_ptr->size_dim_0, info_ptr->size_dim_1, CV_8UC(step[1]), reinterpret_cast<void *>(info_ptr->ptr), step);
-    return wrapped;
+    cv::MatStep step(m_step_dim_0);
+    step[1] = m_step_dim_1;
+    return cv::Mat(m_size_dim_0, m_size_dim_1, CV_8UC(step[1]), reinterpret_cast<void *>(m_ptr), step);
+}
+
+LV_RawMemoryPtrInfo_t &LV_RawMemoryPtrInfo_t::operator=(const lv_image &img)
+{
+    m_ptr = reinterpret_cast<uint64_t>(img.mat().data);
+    m_size_dim_0 = img.height();
+    m_size_dim_1 = img.width();
+    m_step_dim_0 = img.mat().step[0];
+    m_step_dim_1 = img.mat().step[1];
+    return *this;
+}
+
+Locked_Image_t::Locked_Image_t(LV_EDVRReferencePtr_t img_edvr_ref_ptr)
+    : m_img_ptr(std::make_unique<lv_image>(img_edvr_ref_ptr))
+{
+    m_img_ptr->upgrade_to_mapped();
+}
+Locked_Image_t::~Locked_Image_t()
+{
+    m_img_ptr->downgrade_from_mapped();
+}
+void Locked_Image_t::copy_memory_info(LV_RawMemoryPtrInfoPtr_t src_info_ptr) const
+{
+    *src_info_ptr = *m_img_ptr;
 }

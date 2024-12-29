@@ -3,21 +3,11 @@
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
+#include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
-
-#include "g_ar_toolkit/lv_interop/set_packing.hpp"
-
-using LV_PointI32_t = struct
-{
-    int32_t x, y;
-};
-
-using LV_PointI32Ptr_t = LV_Ptr_t<LV_PointI32_t>;
-
-#include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 
 extern "C"
 {
@@ -28,7 +18,7 @@ extern "C"
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
         LV_BooleanPtr_t has_mask_ptr,
-        LV_PointI32Ptr_t offset_ptr)
+        LV_ImagePointIntPtr_t offset_ptr)
     {
         try
         {
@@ -44,7 +34,7 @@ extern "C"
             src_parent.copyTo(dst);
 
             // determine area to copy
-            cv::Rect child_rect(cv::Point(offset_ptr->x, offset_ptr->y), src_child.size());
+            cv::Rect child_rect(*offset_ptr, src_child.size());
             cv::Rect parent_rect(cv::Point(0, 0), src_parent.size());
 
             // intersecting area

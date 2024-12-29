@@ -25,12 +25,18 @@ namespace g_ar_toolkit
                 return !(l == r);
             };
 
+            LV_U32RGBColour_t& operator++();
+
             cv::Scalar get_bgr() const;
             cv::Scalar get_bgra() const;
             cv::Scalar get_hsv() const;
             cv::Scalar get_blue() const;
 
             cv::Scalar colour_for_image_type(const lv_image&) const;
+
+            LV_U32RGBColour_t& adjust(float fractional_change);
+
+            LV_U32RGBColour_t();
         };
     }
 }

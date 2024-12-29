@@ -11,6 +11,9 @@
 		<Item Name="Transform Object Point by Transformation Matrix.vi" Type="VI" URL="../../g_ar_toolkit.pointset_utils/Transform Object Point by Transformation Matrix.vi"/>
 	</Item>
 	<Item Name="Types" Type="Folder">
+		<Item Name="Camera Distortion Coefficients.ctl" Type="VI" URL="../Camera Distortion Coefficients.ctl"/>
+		<Item Name="Camera Matrix.ctl" Type="VI" URL="../Camera Matrix.ctl"/>
+		<Item Name="Camera Parameters.ctl" Type="VI" URL="../Camera Parameters.ctl"/>
 		<Item Name="Image Point (Float).ctl" Type="VI" URL="../Image Point (Float).ctl"/>
 		<Item Name="Image Point (Integer).ctl" Type="VI" URL="../Image Point (Integer).ctl"/>
 		<Item Name="Image Size (Integer).ctl" Type="VI" URL="../Image Size (Integer).ctl"/>

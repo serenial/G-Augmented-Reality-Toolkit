@@ -38,12 +38,18 @@ namespace g_ar_toolkit
         void downgrade_from_mapped();
         cv::Mat operator()(cv::Rect2i) const;
 
+        template<class T, class... Targs >
+        T& at(Targs... arguments){
+          return data->mat.at<T>(arguments...);  
+        }
+
         // user-defined conversions to openCV's Input and Output Array types
         // this allows an Image instance to pretend to work like a cv::Mat
         operator cv::_InputArray();
         operator cv::_OutputArray();
         operator cv::Mat*();
-        operator const cv::Mat&();
+        operator const cv::Mat&() const;
+        operator cv::Mat&();
 
     private:
         enum lock_state_t

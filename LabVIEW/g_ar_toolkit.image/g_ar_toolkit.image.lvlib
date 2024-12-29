@@ -32,6 +32,7 @@
 		<Item Name="BitwiseNOTImageCore.vim" Type="VI" URL="../BitwiseNOTImageCore.vim"/>
 		<Item Name="BlurGaussianCore.vim" Type="VI" URL="../BlurGaussianCore.vim"/>
 		<Item Name="BlurMedianCore.vim" Type="VI" URL="../BlurMedianCore.vim"/>
+		<Item Name="CopyImageToPixmapCore.vim" Type="VI" URL="../CopyImageToPixmapCore.vim"/>
 		<Item Name="CopyImageToRawMemoryCore.vim" Type="VI" URL="../CopyImageToRawMemoryCore.vim"/>
 		<Item Name="CopyPixmapToImageCore.vim" Type="VI" URL="../CopyPixmapToImageCore.vim"/>
 		<Item Name="CopyRawMemoryToImageCore.vim" Type="VI" URL="../CopyRawMemoryToImageCore.vim"/>
@@ -59,9 +60,14 @@
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
 		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
 		<Item Name="ThresholdCore.vi" Type="VI" URL="../ThresholdCore.vi"/>
+		<Item Name="UndistortCore.vim" Type="VI" URL="../UndistortCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
 		<Item Name="WarpPerspectiveCore.vim" Type="VI" URL="../WarpPerspectiveCore.vim"/>
 		<Item Name="WriteImageFileCore.vim" Type="VI" URL="../WriteImageFileCore.vim"/>
+	</Item>
+	<Item Name="Mapped Memory Access Image" Type="Folder">
+		<Item Name="Mapped Memory Access Image ARGB.lvclass" Type="LVClass" URL="../Mapped Memory Access Image ARGB/Mapped Memory Access Image ARGB.lvclass"/>
+		<Item Name="Mapped Memory Access Image Greyscale.lvclass" Type="LVClass" URL="../Mapped Memory Access Image Greyscale/Mapped Memory Access Image Greyscale.lvclass"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Property Name="NI.SortType" Type="Int">0</Property>
@@ -119,6 +125,12 @@
 		<Item Name="Copy Image to Memory Address" Type="Folder">
 			<Item Name="CopyImageToRawMemoryARGB.vi" Type="VI" URL="../CopyImageToRawMemoryARGB.vi"/>
 			<Item Name="CopyImageToRawMemoryGreyscale.vi" Type="VI" URL="../CopyImageToRawMemoryGreyscale.vi"/>
+		</Item>
+		<Item Name="Copy Image to Pixmap" Type="Folder">
+			<Item Name="CopyImageToPixmapARGBNoMask.vi" Type="VI" URL="../CopyImageToPixmapARGBNoMask.vi"/>
+			<Item Name="CopyImageToPixmapARGBWithMask.vi" Type="VI" URL="../CopyImageToPixmapARGBWithMask.vi"/>
+			<Item Name="CopyImageToPixmapGreyscaleNoMask.vi" Type="VI" URL="../CopyImageToPixmapGreyscaleNoMask.vi"/>
+			<Item Name="CopyImageToPixmapGreyscaleWithMask.vi" Type="VI" URL="../CopyImageToPixmapGreyscaleWithMask.vi"/>
 		</Item>
 		<Item Name="Copy Memory Address to Image" Type="Folder">
 			<Item Name="CopyRawMemoryToImageARGB.vi" Type="VI" URL="../CopyRawMemoryToImageARGB.vi"/>
@@ -214,6 +226,10 @@
 			<Item Name="ThresholdBinary.vi" Type="VI" URL="../ThresholdBinary.vi"/>
 			<Item Name="ThresholdOtsu.vi" Type="VI" URL="../ThresholdOtsu.vi"/>
 		</Item>
+		<Item Name="Undistort" Type="Folder">
+			<Item Name="UndistortImageARGB.vi" Type="VI" URL="../UndistortImageARGB.vi"/>
+			<Item Name="UndistortImageGreyscale.vi" Type="VI" URL="../UndistortImageGreyscale.vi"/>
+		</Item>
 		<Item Name="Warp Affine" Type="Folder">
 			<Item Name="WarpAffineARGB.vi" Type="VI" URL="../WarpAffineARGB.vi"/>
 			<Item Name="WarpAffineGreyscale.vi" Type="VI" URL="../WarpAffineGreyscale.vi"/>
@@ -228,10 +244,6 @@
 			<Item Name="WritePNGFileWithAlpha.vi" Type="VI" URL="../WritePNGFileWithAlpha.vi"/>
 			<Item Name="WriteImageFileGreyscale.vi" Type="VI" URL="../WriteImageFileGreyscale.vi"/>
 		</Item>
-	</Item>
-	<Item Name="Mapped Memory Access Image" Type="Folder">
-		<Item Name="Mapped Memory Access Image ARGB.lvclass" Type="LVClass" URL="../Mapped Memory Access Image ARGB/Mapped Memory Access Image ARGB.lvclass"/>
-		<Item Name="Mapped Memory Access Image Greyscale.lvclass" Type="LVClass" URL="../Mapped Memory Access Image Greyscale/Mapped Memory Access Image Greyscale.lvclass"/>
 	</Item>
 	<Item Name="API" Type="Folder">
 		<Item Name="Types" Type="Folder">
@@ -263,6 +275,7 @@
 		<Item Name="Copy To/From" Type="Folder">
 			<Item Name="Copy.vi" Type="VI" URL="../Copy.vi"/>
 			<Item Name="Copy Pixmap to Image.vi" Type="VI" URL="../Copy Pixmap to Image.vi"/>
+			<Item Name="Copy Image to Pixmap.vi" Type="VI" URL="../Copy Image to Pixmap.vi"/>
 			<Item Name="Copy Memory Address to Image.vi" Type="VI" URL="../Copy Memory Address to Image.vi"/>
 			<Item Name="Copy Image to Memory Address.vi" Type="VI" URL="../Copy Image to Memory Address.vi"/>
 			<Item Name="Copy Array to Image.vi" Type="VI" URL="../Copy Array to Image.vi"/>
@@ -300,6 +313,7 @@
 			<Item Name="In-Range Image.vi" Type="VI" URL="../In-Range Image.vi"/>
 			<Item Name="Insert Image.vi" Type="VI" URL="../Insert Image.vi"/>
 			<Item Name="Canny Edge.vi" Type="VI" URL="../Canny Edge.vi"/>
+			<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 		</Item>
 		<Item Name="Utility" Type="Folder">
 			<Item Name="Get Text Size.vi" Type="VI" URL="../Get Text Size.vi"/>
@@ -309,6 +323,7 @@
 			<Item Name="ARGB Data to Pixel Values Array.vi" Type="VI" URL="../ARGB Data to Pixel Values Array.vi"/>
 			<Item Name="2DArrayToImageSize.vim" Type="VI" URL="../2DArrayToImageSize.vim"/>
 			<Item Name="Image Size.vi" Type="VI" URL="../Image Size.vi"/>
+			<Item Name="Compute Colour Pair.vi" Type="VI" URL="../Compute Colour Pair.vi"/>
 		</Item>
 		<Item Name="Drawing" Type="Folder">
 			<Item Name="Draw Image To Picture.vi" Type="VI" URL="../Draw Image To Picture.vi"/>
@@ -320,5 +335,7 @@
 			<Item Name="Get Mapped Memory Access Information.vi" Type="VI" URL="../Get Mapped Memory Access Information.vi"/>
 			<Item Name="Release Mapped Memory Access.vi" Type="VI" URL="../Release Mapped Memory Access.vi"/>
 		</Item>
+		<Item Name="ImageDistorter.lvclass" Type="LVClass" URL="../ImageDistorter/ImageDistorter.lvclass"/>
+		<Item Name="ImageRectifier.lvclass" Type="LVClass" URL="../ImageRectifier/ImageRectifier.lvclass"/>
 	</Item>
 </Library>
