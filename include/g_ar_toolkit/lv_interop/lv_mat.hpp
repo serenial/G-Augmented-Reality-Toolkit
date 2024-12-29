@@ -1,6 +1,7 @@
 #pragma once
 
 #include <opencv2/core.hpp>
+#include <eigen3/Eigen/Core>
 
 #include "g_ar_toolkit/lv_interop/lv_types.hpp"
 
@@ -10,11 +11,16 @@ namespace g_ar_toolkit
     {
 #include "./set_packing.hpp"
 
+using eigen_map_3x3_t = Eigen::Map<Eigen::Matrix<double, 3, 3, Eigen::RowMajor>>;
+
         class LV_3x3Matrix_t
         {
         public:
             operator cv::Mat();
+            operator eigen_map_3x3_t();
             cv::Mat as_cv_mat();
+            eigen_map_3x3_t as_eigen_map();
+            LV_3x3Matrix_t& operator=(Eigen::Matrix3d);
 
         private:
             double m_value[9];

@@ -2,40 +2,37 @@
 
 #include <opencv2/imgproc.hpp>
 
-
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
 #include "g_ar_toolkit/lv_interop/lv_picture.hpp"
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
+#include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
+namespace
+{
 #include "g_ar_toolkit/lv_interop/set_packing.hpp"
 
-using LV_PictureTopLeft_t = struct
-{
-    int16_t left, top;
-};
+    using LV_PictureOpHeader_t = struct
+    {
+        int16_t op_code;
+        int32_t length, image_bytes_length;
+        int16_t top, left, bottom, right;
+        int16_t bitwidth;
+        uint32_t default_foreground, default_background;
+    };
 
-using LV_PictureOpHeader_t = struct
-{
-    int16_t op_code;
-    int32_t length, image_bytes_length;
-    int16_t top, left, bottom, right;
-    int16_t bitwidth;
-    uint32_t default_foreground, default_background;
-};
+    using LV_PictureOpHeaderPtr_t = LV_Ptr_t<LV_PictureOpHeader_t>;
 
-using LV_PictureTopLeftPtr_t = LV_Ptr_t<LV_PictureTopLeft_t>;
-using LV_PictureOpHeaderPtr_t = LV_Ptr_t<LV_PictureOpHeader_t>;
-
-// Platform independent size of LV_PictureOpHeader_t when flattened by LV
-const uint8_t SIZEOF_LV_FLATTENED_PICTURE_OP_HEADER_BYTES = 28; 
+    // Platform independent size of LV_PictureOpHeader_t when flattened by LV
+    const uint8_t SIZEOF_LV_FLATTENED_PICTURE_OP_HEADER_BYTES = 28;
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+}
 
 extern "C"
 {
@@ -43,7 +40,7 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
-        LV_PictureTopLeftPtr_t top_left_ptr,
+        LV_ImagePointIntPtr_t top_left_ptr,
         LV_StringHandle_t lv_str_handle,
         LV_PictureOpHeaderPtr_t op_header_ptr,
         LV_BooleanPtr_t use_mask_ptr)
@@ -77,7 +74,7 @@ extern "C"
             if (use_mask)
             {
                 auto qr = std::div(src.width(), 16);
-                mask_row_length = qr.quot*2 + (qr.rem ? 2 : 0);
+                mask_row_length = qr.quot * 2 + (qr.rem ? 2 : 0);
                 mask_bytes_length = mask_row_length * src.height();
                 total_data_length += mask_bytes_length;
             }
@@ -91,10 +88,10 @@ extern "C"
             op_header_ptr->bitwidth = src.is_bgra() ? 24 : 8;
             op_header_ptr->default_background = 0x00FFFFFF; // white
             op_header_ptr->default_foreground = 0x00000000; // black
-            op_header_ptr->top = top_left_ptr->top;
-            op_header_ptr->left = top_left_ptr->left;
-            op_header_ptr->bottom = top_left_ptr->top + src.height();
-            op_header_ptr->right = top_left_ptr->left + src.width();
+            op_header_ptr->top = top_left_ptr->m_y;
+            op_header_ptr->left = top_left_ptr->m_x;
+            op_header_ptr->bottom = op_header_ptr->top + src.height();
+            op_header_ptr->right = op_header_ptr->left + src.width();
 
             // get a pointer to the point in the "string" bytes where the rgb pixel data starts
             // we can then wrap this in a cv::Mat to make copying data to it easier
@@ -106,7 +103,8 @@ extern "C"
 
                 // set the first two bytes to zero which is a uint16_t value representing that the colour table is not used (length 0)
 
-                for(size_t i=0;i<2;i++){
+                for (size_t i = 0; i < 2; i++)
+                {
                     *dst_data_ptr = 0;
                     dst_data_ptr++;
                 }
@@ -172,7 +170,7 @@ extern "C"
         }
         catch (...)
         {
-           error_cluster_ptr->copy_from_exception(std::current_exception(),__func__);
+            error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
         }
 
         return LV_ERR_noError;

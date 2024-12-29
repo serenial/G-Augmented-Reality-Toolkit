@@ -91,10 +91,9 @@ _If not using VSCode_
 - [x] Camera Property Control
 - [x] Shape Detection
 - [x] Barcode Reading
-- [ ] OpenCV image rectification
+- [x] OpenCV image rectification
 - [ ] Example Code
 - [ ] Documentation
-- [ ] Improve Testing Code Coverage
 
 ## Contributions
 Welcome - please open an issue if you would like to contribute
@@ -105,13 +104,15 @@ Welcome - please open an issue if you would like to contribute
 | [OpenCV 4](https://github.com/opencv/opencv) | Apache License 2.0 |
 | [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) | MIT |
 | [Apriltag](https://github.com/AprilRobotics/apriltag) | BSD 2-Clause License |
+| [Apriltag Generation](https://github.com/AprilRobotics/apriltag-generation) (if usage includes AprilTag Generation VIs) | BSD 2-Clause Licence |
 | [whereami](https://github.com/gpakosz/whereami.git) | MIT |
 | [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
 | [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
-| [WeChat QR/Barcode Reader Models](https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode) (optional)| Apache License 2.0 |
+| [WeChat QR/Barcode Reader Models](https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode) | Apache License 2.0 |
+| [eigen](https://gitlab.com/libeigen/eigen) | Mozilla Public License 2.0 |
+| [Averaging Quaternions](https://github.com/tolgabirdal/averaging_quaternions) | MIT |
 
 ## 3D Models
-
 | Model | Licence | Source |
 |-------|---------|--------|
 | Spot  | https://creativecommons.org/publicdomain/zero/1.0/ | https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/ |
@@ -123,4 +124,4 @@ Welcome - please open an issue if you would like to contribute
 | tag36h11-mosaic.png  | BSD 2-Clause Licence | https://github.com/AprilRobotics/apriltag-imgs |
 | exampled_coins.jpg | MIT | https://github.com/JamesMc86/Python-and-LabVIEW-Presentation |
 | barcode_book.jpg | Apache License 2.0 | https://docs.opencv.org/4.10.0/barcode_book.jpg |
-| Qr-code-ver-10.svg|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.svg |
+| Qr-code-ver-10.png|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.png |

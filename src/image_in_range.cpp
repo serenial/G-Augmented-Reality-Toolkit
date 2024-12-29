@@ -41,20 +41,20 @@ extern "C"
                     // we need to in-range using the hsv colour space so the values work in a human-friendly way
                     cv::Mat hsv;
                     cv::Scalar lower_hsv, upper_hsv;
-                    cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
+                    cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV_FULL);
                     cv::inRange(hsv, lower_colour.get_hsv(), upper_colour.get_hsv(), dst);
                 }
                 else
                 {
-                    auto colour = lower_colour.get_bgr();
                     if (ignore_alpha)
-                    {
+                    {   auto colour = lower_colour.get_bgr();
                         cv::Mat bgr(src.size(), CV_8UC3);
                         cv::cvtColor(src, bgr, cv::COLOR_BGRA2BGR);
                         cv::inRange(bgr, colour, colour, dst);
                     }
                     else
                     {
+                        auto colour = lower_colour.get_bgra();
                         cv::inRange(src, colour, colour, dst);
                     }
                 }

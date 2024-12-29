@@ -28,6 +28,7 @@ namespace g_ar_toolkit
             LV_PointCorrespondence_t() = delete;
             std::vector<cv::Point2f> image_points_vec() const;
             std::vector<cv::Point3f> object_points_vec() const;
+            size_t number_of_points() const;
         };
 
         class LV_PointCorrespondencesArrayHandle_t{

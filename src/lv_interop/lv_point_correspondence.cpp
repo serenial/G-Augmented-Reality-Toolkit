@@ -27,6 +27,16 @@ std::vector<cv::Point3f> LV_PointCorrespondence_t::object_points_vec() const{
     return points;
 }
 
+size_t LV_PointCorrespondence_t::number_of_points() const{
+    auto size = m_image_points_handle.size();
+
+    if(m_object_points_handle.size() != size){
+        throw std::invalid_argument("The number of Object Points and the number of Image Points do not match.");
+    }
+
+    return size;
+}
+
 std::vector<std::vector<cv::Point2f>> LV_PointCorrespondencesArrayHandle_t::image_points_vecs() const{
 
     std::vector<std::vector<cv::Point2f>> points_vecs;
