@@ -80,20 +80,6 @@ _If not using VSCode_
 >![NOTE] 
 > When building code you will have to close the LabVIEW project and potentially exit LabVIEW to avoid file locking of the binaries.
 
-## To Do:
-- [x] Basic LV-C++ Interoperability with an EDVR based image type
-- [x] OpenCV basic image manipulation
-- [x] Basic Windows Media Framework Camera Driver Integration
-- [x] Basic Linux Webcam Driver Integration
-- [x] OpenCV 3dCalib routines
-- [x] Apriltag Integration
-- [x] OpenCV to LabVIEW 3D Control transformations
-- [x] Camera Property Control
-- [x] Shape Detection
-- [x] Barcode Reading
-- [x] OpenCV image rectification
-- [ ] Example Code
-- [ ] Documentation
 
 ## Contributions
 Welcome - please open an issue if you would like to contribute
@@ -125,3 +111,19 @@ Welcome - please open an issue if you would like to contribute
 | exampled_coins.jpg | MIT | https://github.com/JamesMc86/Python-and-LabVIEW-Presentation |
 | barcode_book.jpg | Apache License 2.0 | https://docs.opencv.org/4.10.0/barcode_book.jpg |
 | Qr-code-ver-10.png|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.png |
+
+## To Do:
+- [x] Basic LV-C++ Interoperability with an EDVR based image type
+- [x] OpenCV basic image manipulation
+- [x] Basic Windows Media Framework Camera Driver Integration
+- [x] Basic Linux Webcam Driver Integration
+- [x] OpenCV 3dCalib routines
+- [x] Apriltag Integration
+- [x] OpenCV to LabVIEW 3D Control transformations
+- [x] Camera Property Control
+- [x] Shape Detection
+- [x] Barcode Reading
+- [x] OpenCV image rectification
+- [ ] Example Code
+- [ ] Documentation
+- [ ] SBOM - probably waiting on progress linked to (this discussion on vcpkg)[https://github.com/microsoft/vcpkg/discussions/29318]

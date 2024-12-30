@@ -153,7 +153,7 @@ void SourceReader::stop_streaming()
     // wait for the config-stop event to complete
     event_completion.wait(ul);
 
-    m_capture_callback_event(hresult_error(MF_E_END_OF_STREAM), nullptr);
+    m_capture_callback_event(callback_events::END_OF_STREAM, nullptr);
 }
 
 void SourceReader::start_streaming()
@@ -221,29 +221,28 @@ HRESULT SourceReader::OnReadSample(
         }
         if (MF_SOURCE_READERF_ENDOFSTREAM & dw_stream_flags)
         {
-            m_capture_callback_event(hresult_error(MF_E_END_OF_STREAM), nullptr);
+            m_capture_callback_event(callback_events::END_OF_STREAM, nullptr);
         }
     }
     catch (hresult_error const &ex)
     {
-        m_capture_callback_event(ex, nullptr);
+        m_capture_callback_event(callback_events::EXCEPTION, nullptr);
     }
     if (m_streaming_started)
     {
         if (SUCCEEDED(hr_status) && p_sample)
         {
-            m_capture_callback_event(hresult_error(), p_sample);
+            m_capture_callback_event(callback_events::SAMPLE, p_sample);
         }
 
         HRESULT hr = m_source_reader->ReadSample(MF_SOURCE_READER_FIRST_VIDEO_STREAM, m_source_reader_flags, NULL, NULL, NULL, NULL);
         if (hr == MF_E_NOTACCEPTING)
         {
-            m_capture_callback_event(hresult_error(), nullptr);
+            m_capture_callback_event(callback_events::NOT_ACCEPTING, nullptr);
         }
         else if (FAILED(hr))
         {
-            hresult_error ex(hr);
-            m_capture_callback_event(ex, nullptr);
+            m_capture_callback_event(callback_events::EXCEPTION, nullptr);
         }
     }
     return S_OK;

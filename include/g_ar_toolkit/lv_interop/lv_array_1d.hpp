@@ -8,12 +8,12 @@
 #include <exception>
 #include <algorithm>
 #include <stdexcept>
+#include <cstddef>
 
 #include <opencv2/core/mat.hpp>
 
 #include "./lv_types.hpp"
 #include "./lv_functions.hpp"
-
 
 #include "./set_packing.hpp"
 
@@ -41,16 +41,21 @@ namespace g_ar_toolkit
             LV_Handle_t<LV_Array_t<1, T>> m_handle;
 
         private:
+            constexpr size_t header_bytes()
+            {
+                LV_Array_t<1, T> s;
+                return offsetof(s, data);
+            }
             size_t required_bytes(size_t n_elements)
             {
-                size_t data_header_size = reinterpret_cast<uintptr_t>((*m_handle)->data_ptr()) - reinterpret_cast<uintptr_t>(*m_handle);
-                return data_header_size + sizeof(T) * n_elements;
+                return header_bytes() + sizeof(T) * n_elements;
             }
 
         public:
             LV_1DArrayHandle_t() : m_handle(nullptr) {}
-            
-            bool empty() const {
+
+            bool empty() const
+            {
                 return size() == 0;
             }
 
@@ -134,7 +139,9 @@ namespace g_ar_toolkit
 
             // copy from for non fundamental types that requires each element to be copied in turn
             template <class ElementType, typename CopyFunction = std::function<void(const ElementType &, T *)>>
-            void copy_element_by_element_from(std::vector<ElementType> vector, CopyFunction copy_fn = [](auto from, auto to){ *to = from;}, std::function<void(T)> deallocator = [](T el) {})
+            void copy_element_by_element_from(std::vector<ElementType> vector, CopyFunction copy_fn = [](auto from, auto to)
+                                                                               { *to = from; },
+                                              std::function<void(T)> deallocator = [](T el) {})
             {
                 size_to_fit(vector.size(), deallocator);
 

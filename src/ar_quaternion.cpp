@@ -110,7 +110,7 @@ extern "C"
             // see https://tbirdal.blogspot.com/2019/10/i-allocate-this-post-to-providing.html for more information
             // this code is based on https://github.com/tolgabirdal/averaging_quaternions released under the MIT licence
 
-            Eigen::Matrix4d accumulator = Eigen::Matrix4d::Zero();
+            Eigen::Matrix4d A = Eigen::Matrix4d::Zero();
 
             double summed_weights(0);
 
@@ -130,10 +130,12 @@ extern "C"
                 summed_weights += weight;
 
                 // accumulate outer-vector-product
-                accumulator += weight * (vec * vec.adjoint());
+                A = weight * (vec * vec.adjoint()) + A;
             }
 
-            Eigen::SelfAdjointEigenSolver<Eigen::Matrix4d> solver(accumulator / summed_weights);
+            A = (1/summed_weights)*A;
+
+            Eigen::SelfAdjointEigenSolver<Eigen::Matrix4d> solver(A);
 
             *result_ptr = solver.eigenvectors().col(3).normalized();
         }

@@ -112,18 +112,16 @@ namespace g_ar_toolkit
         private:
             enum class states
             {
-                STARTING,
-                WAITING_ON_ACTION,
-                WAITING_ON_STREAM_START,
-                WAITING_ON_CAPTURE,
-                WAITING_ON_CAPTURE_ACK,
-                WAITING_ON_STREAM_STOP,
-                WAITING_ON_STREAM_PARAM_GET,
-                WAITING_ON_STREAM_PARAM_AUTO_GET,
-                WAITING_ON_STREAM_PARAM_SET,
-                WAITING_ON_STREAM_PARAM_AUTO_SET,
-                STOPPING,
-                STOPPED
+                WAITING_ON_INITIALIZED,
+                NOTHING_PENDING,
+                WAITING_ON_STREAM_STARTED,
+                WAITING_ON_STREAM_STOPPED,
+                WAITING_ON_NEXT_SAMPLE_CAPTURED,
+                WAITING_ON_STREAM_PARAM_READ,
+                WAITING_ON_STREAM_PARAM_AUTO_READ,
+                WAITING_ON_STREAM_PARAM_UPDATED,
+                WAITING_ON_STREAM_PARAM_AUTO_UPDATED,
+                WAITING_ON_DEINITIALIZED
             };
 
             std::mutex m_mtx;

@@ -45,8 +45,15 @@ namespace g_ar_toolkit
         class SourceReader : public IMFSourceReaderCallback
         {
         public:
+            enum class callback_events{
+                END_OF_STREAM,
+                EXCEPTION,
+                SAMPLE,
+                NOT_ACCEPTING
+            };
+
             // force calling create
-            using sample_handler_t = winrt::delegate<winrt::hresult_error, IMFSample *>;
+            using sample_handler_t = winrt::delegate<callback_events, IMFSample *>;
             static SourceReader *create(std::string_view device_id, int32_t width, int32_t height, float frameRate, sample_handler_t sample_handler);
 
             // IUnknown methods

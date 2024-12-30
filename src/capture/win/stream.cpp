@@ -75,7 +75,7 @@ namespace
 // mutex/conditional_variable synchronization
 
 Stream::Stream(std::string_view device_id, stream_type_t stream_type)
-    : m_last_state(states::STARTING),
+    : m_last_state(states::WAITING_ON_INITIALIZED),
       m_buffer_mat(cv::Mat(stream_type.height, stream_type.width, CV_8UC4)),
       m_rows(stream_type.height),
       m_cols(stream_type.width),
@@ -95,108 +95,146 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        stream_type.width,
                                        stream_type.height,
                                        1.0f,
-                                       [&](winrt::hresult_error ex, IMFSample *pSample)
+                                       [&](SourceReader::callback_events event, IMFSample *pSample)
                                        {
-                // sample handler callback function
-                if (pSample)
-                {
-                    // check if someone is waiting for a sample
-                    std::unique_lock<std::mutex> lk(m_mtx);
-                    if (m_last_state == states::WAITING_ON_CAPTURE)
-                    {
-                        try
-                        {
-                            m_last_exception = nullptr;
-                            // copy sample to dest_mat_ptr
-                            if (m_dest_mat_ptr)
-                            {
-                                winrt::com_ptr<IMFMediaBuffer> media_buf;
-                                winrt::com_ptr<IMF2DBuffer2> media_buf_2d;
-                                BYTE *pix;
-                                LONG stride;
+                                           switch (event)
+                                           {
+                                           case SourceReader::callback_events::END_OF_STREAM:
+                                           {
+                                               // stream finished
+                                               break;
+                                           }
+                                           case SourceReader::callback_events::EXCEPTION:
+                                           {
+                                               // similar to END_OF_STREAM but throw exception
+                                               std::unique_lock lk(m_mtx);
+                                               m_last_exception = std::make_exception_ptr(std::runtime_error("The camera has reported and error and has stopped streaming."));
+                                               lk.unlock();
+                                               m_notifier.notify_one();
+                                           }
+                                           case SourceReader::callback_events::NOT_ACCEPTING:
+                                           {
+                                               // similar to END_OF_STREAM but throw exception
+                                               std::unique_lock lk(m_mtx);
+                                               m_last_exception = std::make_exception_ptr(std::runtime_error("The camera has reported it is not excepting more requests at this time."));
+                                               lk.unlock();
+                                               m_notifier.notify_one();
+                                           }
+                                           case SourceReader::callback_events::SAMPLE:
+                                           {
+                                               if (pSample)
+                                               {
+                                                   // check if someone is waiting for a sample
+                                                   std::unique_lock<std::mutex> lk(m_mtx);
+                                                   if (m_last_state == states::WAITING_ON_NEXT_SAMPLE_CAPTURED)
+                                                   {
+                                                       try
+                                                       {
+                                                           m_last_exception = nullptr;
+                                                           // copy sample to dest_mat_ptr
+                                                           if (m_dest_mat_ptr)
+                                                           {
+                                                               winrt::com_ptr<IMFMediaBuffer> media_buf;
+                                                               winrt::com_ptr<IMF2DBuffer2> media_buf_2d;
+                                                               BYTE *pix;
+                                                               LONG stride;
 
-                                winrt::check_hresult(pSample->GetBufferByIndex(0, media_buf.put()));
-                                media_buf_2d = media_buf.as<IMF2DBuffer2>();
+                                                               winrt::check_hresult(pSample->GetBufferByIndex(0, media_buf.put()));
+                                                               media_buf_2d = media_buf.as<IMF2DBuffer2>();
 
-                                winrt::check_hresult(media_buf_2d->Lock2D(&pix, &stride));
+                                                               winrt::check_hresult(media_buf_2d->Lock2D(&pix, &stride));
 
-                                bool y_flipped = false;
-                                if (stride < 0)
-                                {
-                                    stride = -stride;
-                                    y_flipped = true;
-                                }
+                                                               bool y_flipped = false;
+                                                               if (stride < 0)
+                                                               {
+                                                                   stride = -stride;
+                                                                   y_flipped = true;
+                                                               }
 
-                                // wrap the buffer into a cv::Mat (no copy)
-                                cv::Mat mat_from_ptr(m_rows, m_cols, CV_8UC4, pix, stride);
+                                                               // wrap the buffer into a cv::Mat (no copy)
+                                                               cv::Mat mat_from_ptr(m_rows, m_cols, CV_8UC4, pix, stride);
 
-                                // handle writing mat_from_ptr into dest_mat_ptr - trying to avoid allocations/copies
-                                cv::Mat *src = &mat_from_ptr;
-                                if (y_flipped)
-                                {
-                                    cv::flip(mat_from_ptr, m_buffer_mat, 0);
-                                    src = &m_buffer_mat;
-                                }
-                                src->copyTo(*m_dest_mat_ptr);
+                                                               // handle writing mat_from_ptr into dest_mat_ptr - trying to avoid allocations/copies
+                                                               cv::Mat *src = &mat_from_ptr;
+                                                               if (y_flipped)
+                                                               {
+                                                                   cv::flip(mat_from_ptr, m_buffer_mat, 0);
+                                                                   src = &m_buffer_mat;
+                                                               }
+                                                               src->copyTo(*m_dest_mat_ptr);
 
-                                winrt::check_hresult(media_buf_2d->Unlock2D());
-                            }
-                        }
-                        catch (...)
-                        {
-                            m_last_exception = std::current_exception();
-                        }
-                        m_last_state = states::WAITING_ON_ACTION;
-                        lk.unlock();
-                        m_notifier.notify_all();
-                    }
-                }
-                else
-                {
-                    if ((HRESULT)ex.code().value == MF_E_END_OF_STREAM)
-                    {
-                        std::unique_lock lk(m_mtx);
-                        m_last_state = states::WAITING_ON_ACTION;
-                        lk.unlock();
-                        m_notifier.notify_all();
-                    }
-                } }));
+                                                               winrt::check_hresult(media_buf_2d->Unlock2D());
+                                                           }
+                                                       }
+                                                       catch (...)
+                                                       {
+                                                           m_last_exception = std::current_exception();
+                                                       }
+                                                       m_last_state = states::NOTHING_PENDING;
+                                                       lk.unlock();
+                                                       m_notifier.notify_one();
+                                                   }
+                                               }
+                                               break;
+                                           }
+                                           }
+                                       }));
 
                                    // update state
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                }
                                catch (...)
                                {
                                    m_last_exception = std::current_exception();
-                                   // update state
-                                   m_last_state = states::STOPPING;
                                }
-                           }
-                           // setup done
+                           } // setup done - exit initialization section scoped_lock
+
                            m_notifier.notify_one();
 
                            // main thread loop
                            // check for external changes to last_state
-                           while (1)
+                           bool looping = true;
+                           while (looping)
                            {
                                std::unique_lock<std::mutex> lk(m_mtx);
                                // wait for the state to change
                                m_notifier.wait(lk, [&]
-                                               { return m_last_state != states::WAITING_ON_ACTION; });
+                                               { switch(m_last_state){
+                            case states::NOTHING_PENDING:
+                            case states::WAITING_ON_NEXT_SAMPLE_CAPTURED: // handled in callback
+                            return false;
+                            case states::WAITING_ON_DEINITIALIZED: // shouldn't be here!
+                            looping = false;
+                            // fall into default
+                            default:
+                            return true;
+                        } });
 
                                switch (m_last_state)
                                {
-                               case states::STOPPING:
-
-                                   if (camera)
+                               case states::WAITING_ON_DEINITIALIZED:
+                               {
+                                   try
                                    {
-                                       camera->stop_streaming();
+                                       m_last_exception = nullptr;
+                                       if (camera)
+                                       {
+                                           camera->stop_streaming();
+                                       }
+                                       camera->Release();
                                    }
-
+                                   catch (...)
+                                   {
+                                       m_last_exception = std::current_exception();
+                                   }
+                                   m_last_state = states::WAITING_ON_INITIALIZED;
+                                   looping = false;
                                    lk.unlock();
-                                   goto done;
+                                   break;
+                               }
 
-                               case states::WAITING_ON_STREAM_START:
+                               case states::WAITING_ON_STREAM_STARTED:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -210,12 +248,14 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
+                               }
 
-                               case states::WAITING_ON_STREAM_STOP:
+                               case states::WAITING_ON_STREAM_STOPPED:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -229,12 +269,13 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
-
-                               case states::WAITING_ON_STREAM_PARAM_GET:
+                               }
+                               case states::WAITING_ON_STREAM_PARAM_READ:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -254,12 +295,13 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
-
-                               case states::WAITING_ON_STREAM_PARAM_AUTO_GET:
+                               }
+                               case states::WAITING_ON_STREAM_PARAM_AUTO_READ:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -273,12 +315,14 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
+                               }
 
-                               case states::WAITING_ON_STREAM_PARAM_SET:
+                               case states::WAITING_ON_STREAM_PARAM_UPDATED:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -292,12 +336,14 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
+                               }
 
-                               case states::WAITING_ON_STREAM_PARAM_AUTO_SET:
+                               case states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED:
+                               {
                                    try
                                    {
                                        m_last_exception = nullptr;
@@ -311,65 +357,50 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_ACTION;
+                                   m_last_state = states::NOTHING_PENDING;
                                    lk.unlock();
-                                   m_notifier.notify_all();
+                                   m_notifier.notify_one();
                                    break;
+                               }
 
-                               default:
-                                   // WAITING_ON_CAPTURE handled by Capture-Sample-Handler callback
+                               case states::WAITING_ON_INITIALIZED:
+                               case states::WAITING_ON_NEXT_SAMPLE_CAPTURED:
+                                   // these should never be hit!
                                    lk.unlock();
                                }
                            }
-
-                       done:
-                           // set state to STOPPED
-                           {
-                               std::lock_guard lk(m_mtx);
-                               m_last_state = states::STOPPED;
-                               if (camera)
-                               {
-                                   // release the camera
-                                   camera->Release();
-                               }
-                           }
-                           m_notifier.notify_all();
                        }))
 {
     // wait on cv to see if the co-thread initialized ok
     std::unique_lock lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::STARTING; });
+                    { return m_last_state != states::WAITING_ON_INITIALIZED; });
 
-    if (m_last_state != states::WAITING_ON_ACTION)
+    if (m_last_exception)
     {
         lk.unlock();
-        if (m_last_exception)
-        {
-            std::rethrow_exception(m_last_exception);
-        }
+        std::rethrow_exception(m_last_exception);
     }
     lk.unlock();
 }
 
 Stream::~Stream()
 {
+
+    std::unique_lock<std::mutex> lk(m_mtx);
+    if (m_last_state != states::WAITING_ON_INITIALIZED)
     {
-        std::unique_lock<std::mutex> lk(m_mtx);
-        if (m_last_state != states::STOPPED)
-        {
-            // instruct thread to stop
-            m_last_state = states::STOPPING;
-            lk.unlock();
-            m_notifier.notify_all();
-        }
-        else
-        {
-            lk.unlock();
-        }
-        // wait on future to return
-        m_ftr.wait();
+        // instruct thread to stop
+        m_last_state = states::WAITING_ON_DEINITIALIZED;
+        lk.unlock();
+        m_notifier.notify_one();
     }
+    else
+    {
+        lk.unlock();
+    }
+    // wait on future to return
+    m_ftr.wait();
 }
 
 void Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
@@ -384,20 +415,19 @@ void Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
         }
         m_dest_mat_ptr = &destination;
         // signal to start waiting for a capture
-        m_last_state = states::WAITING_ON_CAPTURE;
+        m_last_state = states::WAITING_ON_NEXT_SAMPLE_CAPTURED;
         // wait timeout for state to change
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     if (m_notifier.wait_for(lk, timeout, [&]
-                            { return m_last_state != states::WAITING_ON_CAPTURE; }))
+                            { return m_last_state != states::WAITING_ON_NEXT_SAMPLE_CAPTURED; }))
         // reset dest_mat_ptr
         m_dest_mat_ptr = nullptr;
     if (m_last_exception)
     {
-        m_last_state = states::STOPPING;
         lk.unlock();
         std::rethrow_exception(m_last_exception);
     }
@@ -410,17 +440,16 @@ void Stream::start_stream()
     {
         std::lock_guard lk(m_mtx);
         // signal to start streaming
-        m_last_state = states::WAITING_ON_STREAM_START;
-        m_notifier.notify_all();
+        m_last_state = states::WAITING_ON_STREAM_STARTED;
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_START; });
+                    { return m_last_state != states::WAITING_ON_STREAM_STARTED; });
     if (m_last_exception)
     {
-        m_last_state = states::STOPPING;
         lk.unlock();
         std::rethrow_exception(m_last_exception);
     }
@@ -433,17 +462,16 @@ void Stream::stop_stream()
     {
         std::lock_guard lk(m_mtx);
         // signal to stop streaming
-        m_last_state = states::WAITING_ON_STREAM_STOP;
-        m_notifier.notify_all();
+        m_last_state = states::WAITING_ON_STREAM_STOPPED;
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_STOP; });
+                    { return m_last_state != states::WAITING_ON_STREAM_STOPPED; });
     if (m_last_exception)
     {
-        m_last_state = states::STOPPING;
         lk.unlock();
         std::rethrow_exception(m_last_exception);
     }
@@ -456,25 +484,25 @@ void Stream::get_camera_parameter_info(Stream::camera_parameters param, Stream::
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
-        m_last_state = states::WAITING_ON_STREAM_PARAM_GET;
+        m_last_state = states::WAITING_ON_STREAM_PARAM_READ;
         m_camera_parameter_arg = param;
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_GET; });
+                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_READ; });
 
     if (m_last_exception)
     {
         info->is_supported = false;
     }
-    lk.unlock();
     info->default_value = m_last_param_info.default_value;
     info->max = m_last_param_info.max;
     info->min = m_last_param_info.min;
     info->step = m_last_param_info.step;
+    lk.unlock();
 }
 
 int32_t Stream::get_camera_parameter(Stream::camera_parameters param)
@@ -483,15 +511,15 @@ int32_t Stream::get_camera_parameter(Stream::camera_parameters param)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
-        m_last_state = states::WAITING_ON_STREAM_PARAM_GET;
+        m_last_state = states::WAITING_ON_STREAM_PARAM_READ;
         m_camera_parameter_arg = param;
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_GET; });
+                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_READ; });
 
     if (m_last_exception)
     {
@@ -508,16 +536,16 @@ void Stream::set_camera_parameter(Stream::camera_parameters param, int32_t value
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
-        m_last_state = states::WAITING_ON_STREAM_PARAM_SET;
+        m_last_state = states::WAITING_ON_STREAM_PARAM_UPDATED;
         m_camera_parameter_arg = param;
         m_last_param_value = value;
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_SET; });
+                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_UPDATED; });
 
     if (m_last_exception)
     {
@@ -533,19 +561,18 @@ bool Stream::get_camera_auto_mode(Stream::camera_auto_parameters param)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
-        m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_GET;
+        m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED;
         m_camera_auto_parameter_arg = param;
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_GET; });
+                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED; });
 
     if (m_last_exception)
     {
-        m_last_state = states::STOPPING;
         lk.unlock();
         throw Stream::auto_param_error{param, "Automatic/Manual control of parameter %s not supported."};
     }
@@ -560,20 +587,19 @@ void Stream::set_camera_auto_mode(camera_auto_parameters param, bool automatic)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
-        m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_SET;
+        m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED;
         m_camera_auto_parameter_arg = param;
         m_last_auto_param_is_automatic = automatic;
-        m_notifier.notify_all();
+        m_notifier.notify_one();
     }
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
     m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_SET; });
+                    { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED; });
 
     if (m_last_exception)
     {
-        m_last_state = states::STOPPING;
         lk.unlock();
         throw Stream::auto_param_error{param, "Automatic/Manual control of parameter %s not supported."};
     }
