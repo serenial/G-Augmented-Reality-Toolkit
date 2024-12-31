@@ -50,7 +50,7 @@ namespace g_ar_toolkit
             }
             static constexpr size_t data_memeber_offset_bytes(){
                 LV_Array_t<n_dims, T> tmp;
-                return reinterpret_cast<size_t>(reinterpret_cast<uintptr_t>(&tmp.data[0]) - reinterpret_cast<uintptr_t>(&tmp));
+                return size_t(reinterpret_cast<uintptr_t>(&tmp.data[0]) - reinterpret_cast<uintptr_t>(&tmp));
             }
             private:
             // make the default constructor private so it can still be used internally
