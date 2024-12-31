@@ -5,8 +5,8 @@
 #pragma once
 
 #include <string>
-#include <stddef.h>
 #include <type_traits>
+#include <stddef.h>
 
 #include "./set_packing.hpp"
 
@@ -21,10 +21,10 @@ namespace g_ar_toolkit
         using LV_Handle_t = T **;
         template <typename T>
         using LV_HandlePtr_t = T ***;
-        
+
         // LabVIEW Manager Functions Error Type
         using LV_MgErr_t = int32_t;
-        
+
         // LabVIEW Boolean
         using LV_Boolean_t = uint8_t;
         using LV_BooleanPtr_t = LV_Ptr_t<LV_Boolean_t>;
@@ -35,6 +35,27 @@ namespace g_ar_toolkit
         using LV_MagicCookie_t = uint32_t;
         using LV_InstanceDataPtr_t = void *;
         using LV_InstanceDataHandle_t = LV_Ptr_t<LV_InstanceDataPtr_t>;
+
+        // labview multi dimension arrays
+
+        template <size_t n_dims, typename T>
+        struct LV_Array_t
+        {
+            int32_t dims[n_dims];
+            T data[1];
+
+            T *data_ptr()
+            {
+                return reinterpret_cast<T *>(&data[0]);
+            }
+            static constexpr size_t data_memeber_offset_bytes(){
+                LV_Array_t<n_dims, T> tmp;
+                return reinterpret_cast<size_t>(reinterpret_cast<uintptr_t>(&tmp.data[0]) - reinterpret_cast<uintptr_t>(&tmp));
+            }
+            private:
+            // make the default constructor private so it can still be used internally
+            LV_Array_t(){}
+        };
 
         // LabVIEW EDVR structure types
 
@@ -82,8 +103,8 @@ namespace g_ar_toolkit
 
         using LV_EDVRReferencePtr_t = LV_Ptr_t<LV_EDVRReference_t>;
         using LV_EDVRDataHandle_t = LV_Handle_t<LV_EDVRData_t>;
-        
-        // LV Manager Function 
+
+        // LV Manager Function
 
         using LV_UserEventRef_t = LV_MagicCookie_t;
         using LV_UHandle_t = LV_Handle_t<uint8_t>;

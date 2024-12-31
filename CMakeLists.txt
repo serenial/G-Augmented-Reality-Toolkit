@@ -36,7 +36,7 @@ find_package(OpenCV 4.10.0 REQUIRED)
 find_package(tinyobjloader CONFIG REQUIRED)
 
 # # Find eigen3
-find_package(eigen3 CONFIG REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED)
 
 
 # # These dependencies managed outside of vcpkg are accesses from their repos but a snapshot of them is included in

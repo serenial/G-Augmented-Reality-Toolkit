@@ -21,18 +21,6 @@ namespace g_ar_toolkit
 {
     namespace lv_interop
     {
-        template <size_t n_dims, typename T>
-        struct LV_Array_t
-        {
-            int32_t dims[n_dims];
-            T data[1];
-
-            T *data_ptr()
-            {
-                return reinterpret_cast<T *>(&data[0]);
-            }
-        };
-
         template <class T>
         class LV_1DArrayHandle_t
         {
@@ -41,14 +29,9 @@ namespace g_ar_toolkit
             LV_Handle_t<LV_Array_t<1, T>> m_handle;
 
         private:
-            constexpr size_t header_bytes()
-            {
-                LV_Array_t<1, T> s;
-                return offsetof(s, data);
-            }
             size_t required_bytes(size_t n_elements)
             {
-                return header_bytes() + sizeof(T) * n_elements;
+                return LV_Array_t<1,T>::data_memeber_offset_bytes() + sizeof(T) * n_elements;
             }
 
         public:

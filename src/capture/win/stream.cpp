@@ -203,7 +203,7 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                             case states::NOTHING_PENDING:
                             case states::WAITING_ON_NEXT_SAMPLE_CAPTURED: // handled in callback
                             return false;
-                            case states::WAITING_ON_DEINITIALIZED: // shouldn't be here!
+                            case states::WAITING_ON_INITIALIZED: // shouldn't be here!
                             looping = false;
                             // fall into default
                             default:
