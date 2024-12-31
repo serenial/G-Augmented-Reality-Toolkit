@@ -22,7 +22,7 @@ namespace
         ImageRectifier(cv::Mat camera_mat, cv::Mat distortion_coeffs, cv::Size input_size, double alpha);
         ImageRectifier() = delete;
         void rectify(const cv::Mat &src, cv::Mat &dst, bool use_fixed_point_maps, bool crop_to_valid) const;
-        void copy_new_camera_mat_to(cv::Mat &) const;
+        void copy_new_camera_mat_to(cv::Mat) const;
         cv::Rect get_valid_pixel_rect() const;
 
     private:
@@ -97,7 +97,7 @@ ImageRectifier::ImageRectifier(cv::Mat camera_mat, cv::Mat distortion_coeffs, cv
     cv::convertMaps(m_map1_float, m_map2_float, m_map1_fixed, m_map2_fixed, CV_16SC2, false);
 }
 
-void ImageRectifier::copy_new_camera_mat_to(cv::Mat &dst) const
+void ImageRectifier::copy_new_camera_mat_to(cv::Mat dst) const
 {
     m_new_camera_mat.copyTo(dst);
 }

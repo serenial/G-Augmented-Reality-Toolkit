@@ -40,15 +40,9 @@ namespace g_ar_toolkit
             }
 
         private:
-
-            constexpr size_t header_bytes()
-            {
-                LV_Array_t<2, T> s;
-                return offsetof(s, data);
-            }
             size_t required_bytes(std::array<int32_t, 2> n_elements)
             {
-                return header_bytes() + sizeof(T) * n_elements[0] * n_elements[1];
+                return LV_Array_t<2,T>::data_memeber_offset_bytes()+ sizeof(T) * n_elements[0] * n_elements[1];
             }
 
             int32_t get_data_index(std::array<int32_t, 2> el)
