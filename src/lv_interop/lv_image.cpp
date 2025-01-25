@@ -16,14 +16,14 @@ lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, cv::Size size, bool is_ab
 
 {
     data->mat = cv::Mat(size, is_abgr ? CV_8UC4 : CV_8UC1);
-    lock(data, CPP);
+    image_persistant_data_t::lock(data, image_persistant_data_t::lock_states::CPP);
 }
 
 lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr) : edvr_ref_ptr(edvr_ref_ptr), ctx(get_ctx()),
                                                          edvr_data_ptr(get_edvr_data_ptr()),
                                                          data(get_metadata())
 {
-    lock(data, CPP);
+    image_persistant_data_t::lock(data, image_persistant_data_t::lock_states::CPP);
 }
 
 lv_image::~lv_image()
@@ -39,7 +39,7 @@ lv_image::~lv_image()
     edvr_data_ptr->sub_array.dimension_specifier[1] = {static_cast<size_t>(data->mat.cols), static_cast<ptrdiff_t>(data->mat.step[1])};
 
     // unlock
-    unlock(data, CPP);
+    image_persistant_data_t::unlock(data, image_persistant_data_t::lock_states::CPP);
 
     // release ref if originally added
     if (ctx)
@@ -53,7 +53,6 @@ lv_image::operator cv::_OutputArray() { return data->mat; }
 lv_image::operator cv::Mat *() { return &(data->mat); }
 lv_image::operator const cv::Mat &() const { return data->mat; }
 lv_image::operator cv::Mat &() { return data->mat; }
-
 
 LV_EDVRContext_t lv_image::get_ctx()
 {
@@ -77,58 +76,13 @@ LV_EDVRDataPtr_t lv_image::create_new_edvr_data_ptr()
         throw std::runtime_error("Unable to create a data-reference to associate with the supplied EDVR Refnum.");
     }
 
-    // initialize  image_persistant_data object
-    image_persistant_data *image_meta_ptr = new image_persistant_data();
-
     // set the metadata_ptr of the new edvr data pointer
-    data_ptr->metadata_ptr = reinterpret_cast<uintptr_t>(image_meta_ptr);
+    data_ptr->metadata_ptr = reinterpret_cast<uintptr_t>(new image_persistant_data_t());
 
     // set the callback functions
-    data_ptr->lock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
-    {
-        // LabVIEW is trying to obtain the data referenced by the EDVR
-        try
-        {
-            auto data = reinterpret_cast<image_persistant_data *>(ptr->metadata_ptr);
-            lock(data, LABVIEW);
-        }
-        catch (...)
-        {
-            return LV_ERR_bogusError;
-        }
-
-        return LV_ERR_noError;
-    };
-
-    data_ptr->unlock_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
-    {
-        try
-        {
-            auto data = reinterpret_cast<image_persistant_data *>(ptr->metadata_ptr);
-            unlock(data, LABVIEW);
-        }
-        catch (...)
-        {
-            return LV_ERR_bogusError;
-        }
-        return LV_ERR_noError;
-    };
-
-    data_ptr->delete_callback_fn_ptr = [](LV_EDVRDataPtr_t ptr)
-    {
-        auto data = reinterpret_cast<image_persistant_data *>(ptr->metadata_ptr);
-        // obtain the mutex
-        std::unique_lock lk(data->m);
-        // wait for the locked flag to be cleared
-        // note - DVR Delete calls lock_callback_fn first so only check we aren't locked from CPP side
-        data->cv.wait(lk, [&]
-                      { return data->locked == NONE || data->locked == LABVIEW; });
-        // free the lock
-        lk.unlock();
-        // delete data
-        delete data;
-        ptr->metadata_ptr = reinterpret_cast<uintptr_t>(nullptr);
-    };
+    data_ptr->lock_callback_fn_ptr = &lv_image::on_labview_lock;
+    data_ptr->unlock_callback_fn_ptr = &lv_image::on_labview_unlock;
+    data_ptr->delete_callback_fn_ptr = &lv_image::on_labview_delete;
 
     return data_ptr;
 }
@@ -144,12 +98,12 @@ LV_EDVRDataPtr_t lv_image::get_edvr_data_ptr()
     return data_ptr;
 }
 
-lv_image::image_persistant_data *lv_image::get_metadata()
+lv_image::image_persistant_data_t *lv_image::get_metadata()
 {
-    return reinterpret_cast<image_persistant_data *>(edvr_data_ptr->metadata_ptr);
+    return reinterpret_cast<image_persistant_data_t *>(edvr_data_ptr->metadata_ptr);
 }
 
-void lv_image::lock(image_persistant_data *d, lock_state_t transistion_to)
+void lv_image::image_persistant_data_t::lock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_to)
 {
     // obtain the mutex
     std::unique_lock lk(d->m);
@@ -157,12 +111,12 @@ void lv_image::lock(image_persistant_data *d, lock_state_t transistion_to)
     // this will lead to deadlocks if CPP or CPP_MAPPED but that is probably desired behaviour
     d->cv.wait(lk, [&]
                { return d->locked == NONE; });
-    d->locked = transistion_to;
+    d->locked = transition_to;
     lk.unlock();
     d->cv.notify_all();
 }
 
-void lv_image::unlock(image_persistant_data *d, lock_state_t transition_from)
+void lv_image::image_persistant_data_t::unlock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_from)
 {
     {
         // obtain the mutex
@@ -181,9 +135,9 @@ void lv_image::upgrade_to_mapped()
     {
         // obtain the mutex
         std::lock_guard lk(data->m);
-        if (data->locked == CPP)
+        if (data->locked == image_persistant_data_t::lock_states::CPP)
         {
-            data->locked = CPP_MAPPED;
+            data->locked = image_persistant_data_t::lock_states::CPP_MAPPED;
         };
     }
     // scoped-unlock and notify
@@ -195,13 +149,59 @@ void lv_image::downgrade_from_mapped()
     {
         // obtain the mutex
         std::lock_guard lk(data->m);
-        if (data->locked == CPP_MAPPED)
+        if (data->locked == image_persistant_data_t::lock_states::CPP_MAPPED)
         {
-            data->locked = CPP;
+            data->locked = image_persistant_data_t::lock_states::CPP;
         };
     }
     // scoped-unlock and notify
     data->cv.notify_all();
+}
+
+LV_MgErr_t lv_image::on_labview_lock(LV_EDVRDataPtr_t ptr)
+{
+    // LabVIEW is trying to obtain the data referenced by the EDVR
+    try
+    {
+        auto data = reinterpret_cast<image_persistant_data_t *>(ptr->metadata_ptr);
+        image_persistant_data_t::lock(data, image_persistant_data_t::lock_states::LABVIEW);
+    }
+    catch (...)
+    {
+        return LV_ERR_bogusError;
+    }
+
+    return LV_ERR_noError;
+}
+
+LV_MgErr_t lv_image::on_labview_unlock(LV_EDVRDataPtr_t ptr)
+{
+    try
+    {
+        auto data = reinterpret_cast<image_persistant_data_t *>(ptr->metadata_ptr);
+        image_persistant_data_t::unlock(data, image_persistant_data_t::lock_states::LABVIEW);
+    }
+    catch (...)
+    {
+        return LV_ERR_bogusError;
+    }
+    return LV_ERR_noError;
+}
+
+void lv_image::on_labview_delete(LV_EDVRDataPtr_t ptr)
+{
+    auto data = reinterpret_cast<image_persistant_data_t *>(ptr->metadata_ptr);
+    // obtain the mutex
+    std::unique_lock lk(data->m);
+    // wait for the locked flag to be cleared
+    // note - DVR Delete calls lock_callback_fn first so only check we aren't locked from CPP side
+    data->cv.wait(lk, [&]
+                  { return data->locked == image_persistant_data_t::lock_states::NONE || data->locked == image_persistant_data_t::lock_states::LABVIEW; });
+    // free the lock
+    lk.unlock();
+    // delete data
+    delete data;
+    ptr->metadata_ptr = reinterpret_cast<uintptr_t>(nullptr);
 }
 
 bool lv_image::is_bgra() const

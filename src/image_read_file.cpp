@@ -78,7 +78,7 @@ extern "C"
                 {
                     dst.set_mat(cv::Mat(input.size(), CV_8UC4));
                 }
-                cv::mixChannels(std::begin({input, alpha}), 2, static_cast<cv::Mat *>(dst), 1, std::begin({0, 0, 0, 1, 0, 2, 1, 3}), 4);
+                cv::mixChannels(std::begin({input, alpha}), 2, dst, 1, std::begin({0, 0, 1, 1, 2, 2, 4, 3}), 4);
             }
             break;
             case 3:

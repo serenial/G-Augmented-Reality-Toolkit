@@ -25,11 +25,9 @@ namespace g_ar_toolkit
         template <class T>
         class LV_2DArrayHandle_t
         {
-
-        protected:
-            LV_Handle_t<LV_Array_t<2, T>> m_handle;
-            
         public:
+            LV_2DArrayHandle_t() : m_handle(nullptr) {}
+
             std::array<int32_t, 2> extents() const
             {
                 if (m_handle && (*m_handle))
@@ -39,24 +37,11 @@ namespace g_ar_toolkit
                 return std::array<int32_t, 2>{{0, 0}};
             }
 
-        private:
-            size_t required_bytes(std::array<int32_t, 2> n_elements)
+            cv::Size size() const
             {
-                return LV_Array_t<2,T>::data_memeber_offset_bytes()+ sizeof(T) * n_elements[0] * n_elements[1];
+                std::array<int32_t, 2> dims = extents();
+                return cv::Size(dims[1], dims[0]);
             }
-
-            int32_t get_data_index(std::array<int32_t, 2> el)
-            {
-                return extents()[1] * el[0] + el[1];
-            }
-
-            bool element_is_in_data_range(std::array<int32_t, 2> el)
-            {
-                return get_data_index < get_data_index(extents());
-            }
-
-        public:
-            LV_2DArrayHandle_t() : m_handle(nullptr) {}
 
             T &operator[](std::array<int32_t, 2> el)
             {
@@ -157,6 +142,24 @@ namespace g_ar_toolkit
             {
                 auto ex = extents();
                 return cv::Mat{ex[0], ex[1], type, data_handle()};
+            }
+
+        private:
+            LV_Handle_t<LV_Array_t<2, T>> m_handle;
+
+            size_t required_bytes(std::array<int32_t, 2> n_elements)
+            {
+                return LV_Array_t<2, T>::data_member_offset_bytes() + sizeof(T) * n_elements[0] * n_elements[1];
+            }
+
+            int32_t get_data_index(std::array<int32_t, 2> el)
+            {
+                return extents()[1] * el[0] + el[1];
+            }
+
+            bool element_is_in_data_range(std::array<int32_t, 2> el)
+            {
+                return get_data_index < get_data_index(extents());
             }
         };
     }

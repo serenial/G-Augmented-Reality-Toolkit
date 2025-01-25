@@ -1,0 +1,12 @@
+= Image Data Sinks
+: description : Image Data Sinks provide a means of copying or exporting G Augmented Reality Toolkit Images to other image or data types
+: keywords : file I/O, copy, pixmap
+:figure-caption!:
+
+== Draw Image to Picture.vi
+
+== Write Image to File.vi
+
+== Copy Image to Pixmap.vi
+
+== Copy Image to Memory Address.vi

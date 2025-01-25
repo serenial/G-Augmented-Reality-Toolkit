@@ -25,18 +25,9 @@ namespace g_ar_toolkit
         class LV_1DArrayHandle_t
         {
 
-        protected:
-            LV_Handle_t<LV_Array_t<1, T>> m_handle;
-
-        private:
-            size_t required_bytes(size_t n_elements)
-            {
-                return LV_Array_t<1,T>::data_memeber_offset_bytes() + sizeof(T) * n_elements;
-            }
-
         public:
             LV_1DArrayHandle_t() : m_handle(nullptr) {}
-
+            
             bool empty() const
             {
                 return size() == 0;
@@ -205,6 +196,14 @@ namespace g_ar_toolkit
 
                 return output_vector;
             }
+        private:
+            LV_Handle_t<LV_Array_t<1, T>> m_handle;
+
+            size_t required_bytes(size_t n_elements)
+            {
+                return LV_Array_t<1,T>::data_member_offset_bytes() + sizeof(T) * n_elements;
+            }
+
         };
     }
 }

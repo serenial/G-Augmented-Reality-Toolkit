@@ -9,12 +9,7 @@
         {
             "name": "base",
             "hidden": true,
-            "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": {
-                    "value": "vcpkg/scripts/buildsystems/vcpkg.cmake",
-                    "type": "FILEPATH"
-                }
-            },
+            "toolchainFile": "vcpkg/scripts/buildsystems/vcpkg.cmake",
             "generator": "Ninja"
         },
         {

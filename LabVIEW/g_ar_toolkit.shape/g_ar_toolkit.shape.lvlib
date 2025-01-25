@@ -9,9 +9,11 @@
 </Property>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Approximate Polygon" Type="Folder">
-			<Item Name="ApproximatePolyDouglasPeucker.vi" Type="VI" URL="../ApproximatePolyDouglasPeucker.vi"/>
+			<Item Name="Approximate Polygon (Convex Hull).vi" Type="VI" URL="../Approximate Polygon (Convex Hull).vi"/>
+			<Item Name="Approximate Polygon (Douglas-Peucker).vi" Type="VI" URL="../Approximate Polygon (Douglas-Peucker).vi"/>
 		</Item>
 	</Item>
+	<Item Name="Approximate Polygon.vi" Type="VI" URL="../Approximate Polygon.vi"/>
 	<Item Name="Contour Arc Length.vi" Type="VI" URL="../Contour Arc Length.vi"/>
 	<Item Name="Contour Area.vi" Type="VI" URL="../Contour Area.vi"/>
 	<Item Name="Contour Convex Hull.vi" Type="VI" URL="../Contour Convex Hull.vi"/>

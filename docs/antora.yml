@@ -1,0 +1,5 @@
+name: g-ar-tk
+version: ~
+title: G Augmented-Reality Toolkit
+nav:
+- modules/ROOT/nav.adoc

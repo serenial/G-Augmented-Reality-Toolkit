@@ -83,10 +83,11 @@
 		<Item Name="Hough Circle Parameters.ctl" Type="VI" URL="../Hough Circle Parameters.ctl"/>
 		<Item Name="Hough Circle Result.ctl" Type="VI" URL="../Hough Circle Result.ctl"/>
 	</Item>
-	<Item Name="AprilTagDetector.lvclass" Type="LVClass" URL="../ApriltagDetector/AprilTagDetector.lvclass"/>
-	<Item Name="BarcodeDetector.lvclass" Type="LVClass" URL="../BarcodeDetector/BarcodeDetector.lvclass"/>
-	<Item Name="QRDetector.lvclass" Type="LVClass" URL="../QRDetector/QRDetector.lvclass"/>
+	<Item Name="AprilTag Detector.lvclass" Type="LVClass" URL="../Apriltag Detector/AprilTag Detector.lvclass"/>
+	<Item Name="Barcode Detector.lvclass" Type="LVClass" URL="../Barcode Detector/Barcode Detector.lvclass"/>
+	<Item Name="QR Code Detector.lvclass" Type="LVClass" URL="../QR Code Detector/QR Code Detector.lvclass"/>
 	<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
+	<Item Name="AprilTag ID List.vi" Type="VI" URL="../AprilTag ID List.vi"/>
 	<Item Name="Find Contours.vi" Type="VI" URL="../Find Contours.vi"/>
 	<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
 	<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>

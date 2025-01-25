@@ -53,7 +53,7 @@ endif()
 
 FetchContent_Declare(apriltag
   GIT_REPOSITORY https://github.com/AprilRobotics/apriltag.git
-  GIT_TAG v3.4.2 # main latest commit 2024/05/13
+  GIT_TAG fc2a7b20a49fc8b211709280e337a76a30db3042 # main latest commit 2024/12/22
   PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/apriltag.patch
   UPDATE_DISCONNECTED 1
 )
@@ -117,9 +117,9 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/lv_interop/lv_vec_types.cpp
   src/lv_interop/lv_mat.cpp
   src/capture/stream.cpp
-  src/image_create.cpp
+  src/capture.cpp
+  src/image_new.cpp
   src/image_blur.cpp
-  src/image_window.cpp
   src/image_resize.cpp
   src/image_draw_picture.cpp
   src/image_draw.cpp
@@ -138,13 +138,15 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/image_copy_raw_memory_ptr.cpp
   src/image_copy_pixmap.cpp
   src/image_copy_array.cpp
-  src/capture_stream.cpp
   src/image_negate.cpp
   src/image_transform.cpp
   src/image_rotate.cpp
   src/image_threshold.cpp
   src/image_rectification.cpp
   src/image_distortion.cpp
+  src/image_undistort.cpp
+  src/image_morphology.cpp
+  src/image_find_nonzero.cpp
   src/feature_detection_chessboard.cpp
   src/feature_detection_apriltag.cpp
   src/feature_detection_contours.cpp
@@ -243,10 +245,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}.${C
 target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_core
   opencv_imgproc
-  opencv_highgui
   opencv_calib3d
   opencv_objdetect
   opencv_wechat_qrcode
+  opencv_imgcodecs
   tinyobjloader::tinyobjloader
   apriltag
   whereami

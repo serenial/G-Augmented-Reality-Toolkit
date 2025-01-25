@@ -1,90 +1,41 @@
-# G-Augmented-Reality-Toolkit (Work in Progress)
+# G-Augmented-Reality-Toolkit
 
-An Augmented-Reality Toolkit for LabVIEW.
+A Webcam based Augmented-Reality Toolkit for LabVIEW
 
-This toolkit is a complete solution for building Augmented Reality functionality with LabVIEW encompassing webcam capture, image processing and AR marker detection and 3D rendering using LabVIEW's built-in 3D picture functionality.
+This toolkit is a complete solution for building Augmented Reality functionality with LabVIEW encompassing image capture, processing and AR marker detection with 3D rendering using LabVIEW's native 3D rendering.
 
 Whilst the intended application is around AR this toolkit also provides
-* A system-native open-source webcam driver for LabVIEW
+* A system-native open-source webcam/capture-card driver for LabVIEW
 * Integration of OpenCV routines for basic image manipulation
 * Access to OpenCV camera calibration and image rectification
 * Utilites for fitting 3D points to planes and combining 3D point-maps
 
-## What is Augmented Reality?
+## Supported Platforms
+The LabVIEW code is written in LabVIEW 2020 SP1 and provides binaries for the following platforms:
 
-If you would like to learn more about AR in LabVIEW and the motivations behind this library then [checkout this talk from gdev-con (eur) 2023](https://youtu.be/N7MVxLI1WsQ?si=qfJQf3qi_rYwaQ_8)
+| Platform | Supported |
+|----------|-----------|
+| Windows x86 | ✅ |
+| Windows x64 | ✅ |
+| Linux x64 | ✅ |
+| NI-LinuxRT x64 | Planned |
+| NI-LinuxRT ARM | Not Planned |
+| MacOS (x86-64 or Apple Silicon) | Not Supported |
+ 
+## Installation
+This library is distributed on VIPM #TODO:link or the zipped source can be downloaded from the release section for use on a per-project basis.
 
-And how can this look in LabVIEW?
+## Getting Started and Docs
+A Getting Started Tutorial is provided alongside the full documentation for the toolkit #TODO:Link
 
-![Am animated-gif of a AR cow floating in-front of a chessboard in LabVIEW](docs/demo.gif "an example of the Image Processing Pipeline to produce AR experiences with LabVIEW")
+## Licence
+This source is distributed under Zero Clause BSD to make it as easy to use and integrate as possible.
 
-## 🎉 Pre-Release Version 1.0.0 🎉
+Whilst no attribution is required for this code, it depends on the following open source components which will have different licencincg terms which you will have to meet to comply with copyright law.
 
-A pre-release version is available in the releases section.
+Full SBOM provision is in progress but is [waiting on support from the C++ package manger used by this toolkit](https://github.com/microsoft/vcpkg-tool/pull/1514)
 
-This contains the current state of the project (at tag 1.0.0-pre) with built binaries for 32 and 64 bit windows.
-
-These have been provided to enable community experimentation and as a basis for feedback.
-
-If you do have any feedback please open an issue to discuss.
-
-Unfortunately documentation is currently very sparse. Some information on interoperability is provided in [this document](docs/Interop.md).
-
-## LabVIEW Developer Setup
-* Windows 10/11
-* LabVIEW 2020
-* VIPM
-* LUnit (for tests - install via VIPM)
-
-## C++ Developer Setup 
-
-Setup `vcpkg` buildtool in the vcpkg submodule with 
-```bash
-git submodule init
-git submodule update
-```
-Then run the `vcpkg` bootstrap script in the `vcpkg` directory for your platform (`.bat` for Windows or `.sh` for Linux)
-
-### on Windows
-If you wish to modify the C++ code you will require the following for building the binaries
-
-* C++ Development Tools for Windows (VS 2022)
-* Ninja build tool
-* (Recommended) VSCode with C++ and CMake Tool Extensions installed
-
-### on Linux (Ubuntu) - Still Under Development
-Install the dependencies using `apt`
-
-```bash
-sudo apt install build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
-``` 
-
-### C++ Setup
-
-* Install dependencies
-
-_If using VSCode_
-
-> **Note**
-> Windows users should launch _VSCode_ or the build batchfile/script from the `x86 Native Tools Command Prompt ...` or `x64 Native Tools Command Prompt ...` (depending on desired bitness) to ensure the build tools can be located
-> _VSCode_ can be launced by simply running the `code` command
-
-* Use the `.vscode-example` directory as a template for a project `.vscode` directory and configure the *cmake/vcpkg* location
-* Use the VSCode CMake intergration tools to choose the desired configuration (release/debug)
-* build the "install" target which should configure, build and install the binaries to `LabVIEW/bin`
-  
-_If not using VSCode_
-* Use the provided `<platform>-win-build.bat-example` batch files as a starting point. Adjust variables in the batch file and modify other values to suit your preferences. 
-* Run your modified batch file to build and install the .dll into the `LabVIEW/bin` directory
-
->![NOTE] 
-> When building code you will have to close the LabVIEW project and potentially exit LabVIEW to avoid file locking of the binaries.
-
-
-## Contributions
-Welcome - please open an issue if you would like to contribute
-
-## C++ 3rd-Party Libraries
+### 3rd-Party Libraries
 | Library | Licence |
 |---------|---------|
 | [OpenCV 4](https://github.com/opencv/opencv) | Apache License 2.0 |
@@ -98,12 +49,17 @@ Welcome - please open an issue if you would like to contribute
 | [eigen](https://gitlab.com/libeigen/eigen) | Mozilla Public License 2.0 |
 | [Averaging Quaternions](https://github.com/tolgabirdal/averaging_quaternions) | MIT |
 
-## 3D Models
+### Other Items
+
+The following are distrubuted with the source for use with examples or testing etc
+
+*Models*
+
 | Model | Licence | Source |
 |-------|---------|--------|
 | Spot  | https://creativecommons.org/publicdomain/zero/1.0/ | https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/ |
 
-## Test Images
+*Test Images*
 
 | Image | Licence | Source |
 |-------|---------|--------|
@@ -112,18 +68,20 @@ Welcome - please open an issue if you would like to contribute
 | barcode_book.jpg | Apache License 2.0 | https://docs.opencv.org/4.10.0/barcode_book.jpg |
 | Qr-code-ver-10.png|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.png |
 
-## To Do:
-- [x] Basic LV-C++ Interoperability with an EDVR based image type
-- [x] OpenCV basic image manipulation
-- [x] Basic Windows Media Framework Camera Driver Integration
-- [x] Basic Linux Webcam Driver Integration
-- [x] OpenCV 3dCalib routines
-- [x] Apriltag Integration
-- [x] OpenCV to LabVIEW 3D Control transformations
-- [x] Camera Property Control
-- [x] Shape Detection
-- [x] Barcode Reading
-- [x] OpenCV image rectification
-- [ ] Example Code
-- [ ] Documentation
-- [ ] SBOM - probably waiting on progress linked to (this discussion on vcpkg)[https://github.com/microsoft/vcpkg/discussions/29318]
+## Contributions
+Contributions to this toolkit are welcome. Please open an issue to discuss any bug/features or to share any interesting projects you have used this toolkit for.
+
+## Developer Tooling
+The tooling for LabVIEW development of this toolkit can be installed by the included `.vipc` file.
+
+A `.lvversion` file is included to maintain the source version for users of LV2024Q3 onwards but building of packeges will require LabVIEW 2020 SP1.
+
+Those interested in modifying and building the `C++` code will need to setup their system as described in the documentation #TODO:link
+
+Those wanting to modify and build the docs locally will need to follow the instructions here #TODO:link
+
+## Related Toolkits and Code
+[G-Image](https://github.com/dataflowg/g-image) - A cross-platform LabVIEW library for loading, saving, and processing images.
+[3DEngine](https://github.com/neilpate/3DEngine) - A LabVIEW native 3D engine
+[G<sup>2</sup>CPU](https://www.g2cpu.com/) - A high performance computing toolkit (community version is avaliable).
+[Haro3D by HaroTek](https://www.vipm.io/package/harotek_lib_haro3d/) - A toolkit with support for AR type hardware

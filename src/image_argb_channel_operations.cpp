@@ -81,7 +81,7 @@ extern "C"
 
             from_to[channel * 2] = 5;
 
-            cv::mixChannels(std::begin({src.mat(), single_channel.mat()}), 2, static_cast<cv::Mat *>(src), 1, from_to, 8);
+            cv::mixChannels(std::begin({src.mat(), single_channel.mat()}), 2, src, 1, from_to, 8);
         }
         catch (...)
         {

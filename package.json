@@ -1,0 +1,11 @@
+{
+    "name": "my-docs-site",
+    "description": "My Docs Site",
+    "private": true,
+    "devDependencies": {
+        "@antora/lunr-extension": "1.0.0-alpha.8",
+        "antora": "3.0.3",
+        "asciidoctor-kroki": "0.15.4",
+        "gulp": "^5.0.0"
+    }
+}

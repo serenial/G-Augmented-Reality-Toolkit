@@ -67,6 +67,12 @@ namespace
         }
         return {};
     }
+
+    std::exception_ptr convert_hresult_exception(winrt::hresult_error const &ex)
+    {
+        return std::make_exception_ptr(std::system_error(std::error_code(ex.code(), std::system_category()), winrt::to_string(ex.message())));
+    }
+
 }
 
 // Use a thread to manage all Stream Operations as this provides more control over
@@ -76,7 +82,6 @@ namespace
 
 Stream::Stream(std::string_view device_id, stream_type_t stream_type)
     : m_last_state(states::WAITING_ON_INITIALIZED),
-      m_buffer_mat(cv::Mat(stream_type.height, stream_type.width, CV_8UC4)),
       m_rows(stream_type.height),
       m_cols(stream_type.width),
       m_last_exception(nullptr),
@@ -84,6 +89,7 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                        [&]()
                        {
                            winrt::com_ptr<SourceReader> camera;
+                           bool initialized_ok = true;
                            {
                                // new lock scope
                                std::lock_guard lk(m_mtx);
@@ -94,7 +100,7 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        device_id,
                                        stream_type.width,
                                        stream_type.height,
-                                       1.0f,
+                                       stream_type.fps_numerator / stream_type.fps_denominator,
                                        [&](SourceReader::callback_events event, IMFSample *pSample)
                                        {
                                            switch (event)
@@ -155,16 +161,20 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                                                cv::Mat mat_from_ptr(m_rows, m_cols, CV_8UC4, pix, stride);
 
                                                                // handle writing mat_from_ptr into dest_mat_ptr - trying to avoid allocations/copies
-                                                               cv::Mat *src = &mat_from_ptr;
                                                                if (y_flipped)
                                                                {
-                                                                   cv::flip(mat_from_ptr, m_buffer_mat, 0);
-                                                                   src = &m_buffer_mat;
+                                                                   cv::flip(mat_from_ptr, *m_dest_mat_ptr, 0);
                                                                }
-                                                               src->copyTo(*m_dest_mat_ptr);
-
+                                                               else
+                                                               {
+                                                                   mat_from_ptr.copyTo(*m_dest_mat_ptr);
+                                                               }
                                                                winrt::check_hresult(media_buf_2d->Unlock2D());
                                                            }
+                                                       }
+                                                       catch (winrt::hresult_error const &ex)
+                                                       {
+                                                           m_last_exception = convert_hresult_exception(ex);
                                                        }
                                                        catch (...)
                                                        {
@@ -183,9 +193,17 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    // update state
                                    m_last_state = states::NOTHING_PENDING;
                                }
+                               catch (winrt::hresult_error const &ex)
+                               {
+                                   m_last_exception = convert_hresult_exception(ex);
+                                   m_last_state = states::INTERNAL_THREAD_TERMINATED;
+                                   initialized_ok = false;
+                               }
                                catch (...)
                                {
                                    m_last_exception = std::current_exception();
+                                   m_last_state = states::INTERNAL_THREAD_TERMINATED;
+                                   initialized_ok = false;
                                }
                            } // setup done - exit initialization section scoped_lock
 
@@ -193,8 +211,7 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
 
                            // main thread loop
                            // check for external changes to last_state
-                           bool looping = true;
-                           while (looping)
+                           while (initialized_ok)
                            {
                                std::unique_lock<std::mutex> lk(m_mtx);
                                // wait for the state to change
@@ -203,8 +220,6 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                             case states::NOTHING_PENDING:
                             case states::WAITING_ON_NEXT_SAMPLE_CAPTURED: // handled in callback
                             return false;
-                            case states::WAITING_ON_INITIALIZED: // shouldn't be here!
-                            looping = false;
                             // fall into default
                             default:
                             return true;
@@ -223,14 +238,18 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        }
                                        camera->Release();
                                    }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
+                                   }
                                    catch (...)
                                    {
                                        m_last_exception = std::current_exception();
                                    }
-                                   m_last_state = states::WAITING_ON_INITIALIZED;
-                                   looping = false;
+                                   m_last_state = states::INTERNAL_THREAD_TERMINATED;
                                    lk.unlock();
-                                   break;
+                                   m_notifier.notify_one();
+                                   return;
                                }
 
                                case states::WAITING_ON_STREAM_STARTED:
@@ -243,6 +262,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                            throw std::runtime_error("The internal Camera-Object is no longer valid.");
                                        }
                                        camera->start_streaming();
+                                   }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
                                    }
                                    catch (...)
                                    {
@@ -264,6 +287,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                            throw std::runtime_error("The internal Camera-Object is no longer valid.");
                                        }
                                        camera->stop_streaming();
+                                   }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
                                    }
                                    catch (...)
                                    {
@@ -291,6 +318,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        m_last_param_info.is_supported = info.is_supported;
                                        m_last_param_value = info.value;
                                    }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
+                                   }
                                    catch (...)
                                    {
                                        m_last_exception = std::current_exception();
@@ -310,6 +341,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                            throw std::runtime_error("The internal Camera-Object is no longer valid.");
                                        }
                                        m_last_auto_param_is_automatic = camera->get_source_parameter_auto_mode(stream_auto_param_to_source_reader_auto_param(m_camera_auto_parameter_arg).value());
+                                   }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
                                    }
                                    catch (...)
                                    {
@@ -332,6 +367,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        }
                                        camera->set_source_parameter(stream_param_to_source_reader_param(m_camera_parameter_arg).value(), m_last_param_value);
                                    }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
+                                   }
                                    catch (...)
                                    {
                                        m_last_exception = std::current_exception();
@@ -353,6 +392,10 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                        }
                                        camera->set_source_parameter_auto_mode(stream_auto_param_to_source_reader_auto_param(m_camera_auto_parameter_arg).value(), m_last_auto_param_is_automatic);
                                    }
+                                   catch (winrt::hresult_error const &ex)
+                                   {
+                                       m_last_exception = convert_hresult_exception(ex);
+                                   }
                                    catch (...)
                                    {
                                        m_last_exception = std::current_exception();
@@ -363,9 +406,7 @@ Stream::Stream(std::string_view device_id, stream_type_t stream_type)
                                    break;
                                }
 
-                               case states::WAITING_ON_INITIALIZED:
-                               case states::WAITING_ON_NEXT_SAMPLE_CAPTURED:
-                                   // these should never be hit!
+                               default:
                                    lk.unlock();
                                }
                            }
@@ -408,6 +449,7 @@ void Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
     // create new scope, setup for and request capture
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         if (destination.rows != m_rows || destination.cols != m_cols)
         {
             // resize destination
@@ -439,6 +481,7 @@ void Stream::start_stream()
     // create new scope, request stream start
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         // signal to start streaming
         m_last_state = states::WAITING_ON_STREAM_STARTED;
         m_notifier.notify_one();
@@ -461,6 +504,7 @@ void Stream::stop_stream()
     // create new scope, request stream stop
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         // signal to stop streaming
         m_last_state = states::WAITING_ON_STREAM_STOPPED;
         m_notifier.notify_one();
@@ -484,6 +528,7 @@ void Stream::get_camera_parameter_info(Stream::camera_parameters param, Stream::
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         m_last_state = states::WAITING_ON_STREAM_PARAM_READ;
         m_camera_parameter_arg = param;
         m_notifier.notify_one();
@@ -511,6 +556,7 @@ int32_t Stream::get_camera_parameter(Stream::camera_parameters param)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         m_last_state = states::WAITING_ON_STREAM_PARAM_READ;
         m_camera_parameter_arg = param;
         m_notifier.notify_one();
@@ -536,6 +582,7 @@ void Stream::set_camera_parameter(Stream::camera_parameters param, int32_t value
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         m_last_state = states::WAITING_ON_STREAM_PARAM_UPDATED;
         m_camera_parameter_arg = param;
         m_last_param_value = value;
@@ -561,6 +608,7 @@ bool Stream::get_camera_auto_mode(Stream::camera_auto_parameters param)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED;
         m_camera_auto_parameter_arg = param;
         m_notifier.notify_one();
@@ -587,6 +635,7 @@ void Stream::set_camera_auto_mode(camera_auto_parameters param, bool automatic)
     // create new scope, request param
     {
         std::lock_guard lk(m_mtx);
+        throw_if_internal_thread_terminated();
         m_last_state = states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED;
         m_camera_auto_parameter_arg = param;
         m_last_auto_param_is_automatic = automatic;
@@ -604,4 +653,12 @@ void Stream::set_camera_auto_mode(camera_auto_parameters param, bool automatic)
         throw Stream::auto_param_error{param, "Automatic/Manual control of parameter %s not supported."};
     }
     lk.unlock();
+}
+
+void Stream::throw_if_internal_thread_terminated() const
+{
+    if (m_last_state == states::INTERNAL_THREAD_TERMINATED)
+    {
+        throw std::runtime_error("The internal camera control thread had terminated unexpectedly.");
+    }
 }

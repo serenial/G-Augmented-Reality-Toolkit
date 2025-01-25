@@ -2,8 +2,19 @@
   "dependencies": [
     {
       "name": "opencv4",
+      "default-features": false,
       "features": [
-        "contrib"
+        "calib3d",
+        "fs",
+        "intrinsics",
+        "jpeg",
+        "png",
+        "quirc",
+        "thread",
+        "tiff",
+        "webp",
+        "contrib",
+        "dnn"
       ]
     },
     {
@@ -16,7 +27,7 @@
   "overrides": [
     {
       "name": "opencv4",
-      "version": "4.10.0#0"
+      "version": "4.10.0#2"
     },
     {
       "name": "tinyobjloader",
