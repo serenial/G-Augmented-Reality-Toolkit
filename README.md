@@ -49,7 +49,6 @@ Full SBOM provision is in progress but is [waiting on support from the C++ packa
 | [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
 | [WeChat QR/Barcode Reader Models](https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode) | Apache License 2.0 |
 
-
 ### Other Items
 
 The following are distrubuted with the source for use with examples or testing etc

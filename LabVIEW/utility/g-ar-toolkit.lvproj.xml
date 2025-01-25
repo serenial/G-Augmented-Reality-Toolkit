@@ -12,7 +12,6 @@
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="examples" Type="Folder">
-			<Item Name="AR Example.lvlib" Type="Library" URL="../examples/AR Example/AR Example.lvlib"/>
 			<Item Name="Calibrate Camera.vi" Type="VI" URL="../examples/Calibrate Camera.vi"/>
 			<Item Name="Capture Example.vi" Type="VI" URL="../examples/Capture Example.vi"/>
 			<Item Name="Detect AprilTags.vi" Type="VI" URL="../examples/Detect AprilTags.vi"/>
@@ -22,6 +21,7 @@
 			<Item Name="Image Example.vi" Type="VI" URL="../examples/Image Example.vi"/>
 			<Item Name="Load Obj File.vi" Type="VI" URL="../examples/Load Obj File.vi"/>
 			<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../examples/Mapped Pixel Pointer Example.vi"/>
+			<Item Name="Minimal AR Example.vi" Type="VI" URL="../examples/Minimal AR Example.vi"/>
 			<Item Name="Shape Example.vi" Type="VI" URL="../examples/Shape Example.vi"/>
 			<Item Name="Spot Chessboard AR.vi" Type="VI" URL="../examples/Spot Chessboard AR.vi"/>
 		</Item>
@@ -43,7 +43,6 @@
 		<Item Name="g_ar_toolkit.shape.lvlib" Type="Library" URL="../g_ar_toolkit.shape/g_ar_toolkit.shape.lvlib"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
-				<Item Name="1D String Array to Delimited String.vi" Type="VI" URL="/&lt;vilib&gt;/AdvancedString/1D String Array to Delimited String.vi"/>
 				<Item Name="Application Directory.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Application Directory.vi"/>
 				<Item Name="Bit-array To Byte-array.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pictutil.llb/Bit-array To Byte-array.vi"/>
 				<Item Name="BuildHelpPath.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/BuildHelpPath.vi"/>
@@ -114,7 +113,6 @@
 				<Item Name="Three Button Dialog.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Three Button Dialog.vi"/>
 				<Item Name="Trim Whitespace.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace.vi"/>
 				<Item Name="Unflatten Pixmap.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pixmap.llb/Unflatten Pixmap.vi"/>
-				<Item Name="usereventprio.ctl" Type="VI" URL="/&lt;vilib&gt;/event_ctls.llb/usereventprio.ctl"/>
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
 			<Item Name="g_ar_toolkit.1.32.dll" Type="Document" URL="../g_ar_toolkit.common/bin/g_ar_toolkit.1.32.dll"/>
