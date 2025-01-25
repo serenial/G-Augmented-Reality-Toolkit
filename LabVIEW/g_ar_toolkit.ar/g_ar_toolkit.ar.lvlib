@@ -32,19 +32,19 @@
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Solve PnP" Type="Folder">
-			<Item Name="SolvePnP-USAC.vi" Type="VI" URL="../SolvePnP-USAC.vi"/>
-			<Item Name="SolvePnP-IPPESquare.vi" Type="VI" URL="../SolvePnP-IPPESquare.vi"/>
-			<Item Name="SolvePnP-EPNP.vi" Type="VI" URL="../SolvePnP-EPNP.vi"/>
-			<Item Name="SolvePnP-P3P.vi" Type="VI" URL="../SolvePnP-P3P.vi"/>
-			<Item Name="SolvePnP-AP3P.vi" Type="VI" URL="../SolvePnP-AP3P.vi"/>
-			<Item Name="SolvePnP-SQPNP.vi" Type="VI" URL="../SolvePnP-SQPNP.vi"/>
-			<Item Name="SolvePnP-IPPE.vi" Type="VI" URL="../SolvePnP-IPPE.vi"/>
-			<Item Name="SolvePnP-IterativeGuess.vi" Type="VI" URL="../SolvePnP-IterativeGuess.vi"/>
-			<Item Name="SolvePnP-Iterative.vi" Type="VI" URL="../SolvePnP-Iterative.vi"/>
+			<Item Name="Solve PnP (USAC).vi" Type="VI" URL="../Solve PnP (USAC).vi"/>
+			<Item Name="Solve PnP (IPPESquare).vi" Type="VI" URL="../Solve PnP (IPPESquare).vi"/>
+			<Item Name="Solve PnP (EPNP).vi" Type="VI" URL="../Solve PnP (EPNP).vi"/>
+			<Item Name="Solve PnP (P3P).vi" Type="VI" URL="../Solve PnP (P3P).vi"/>
+			<Item Name="Solve PnP (AP3P).vi" Type="VI" URL="../Solve PnP (AP3P).vi"/>
+			<Item Name="Solve PnP (SQPNP).vi" Type="VI" URL="../Solve PnP (SQPNP).vi"/>
+			<Item Name="Solve PnP (IPPE).vi" Type="VI" URL="../Solve PnP (IPPE).vi"/>
+			<Item Name="Solve PnP (IterativeGuess).vi" Type="VI" URL="../Solve PnP (IterativeGuess).vi"/>
+			<Item Name="Solve PnP (Iterative).vi" Type="VI" URL="../Solve PnP (Iterative).vi"/>
 		</Item>
 		<Item Name="Rodrigues" Type="Folder">
-			<Item Name="RodriguesRVecToRMat.vi" Type="VI" URL="../RodriguesRVecToRMat.vi"/>
-			<Item Name="RodriguesRMatToRVec.vi" Type="VI" URL="../RodriguesRMatToRVec.vi"/>
+			<Item Name="Rodrigues (RVec To RMat).vi" Type="VI" URL="../Rodrigues (RVec To RMat).vi"/>
+			<Item Name="Rodrigues (RMat To RVec).vi" Type="VI" URL="../Rodrigues (RMat To RVec).vi"/>
 		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
@@ -62,5 +62,6 @@
 		<Item Name="Quarternion SLERP.vi" Type="VI" URL="../Quarternion SLERP.vi"/>
 		<Item Name="Quaternion to Rotation Matrix.vi" Type="VI" URL="../Quaternion to Rotation Matrix.vi"/>
 		<Item Name="Quaternion Average.vi" Type="VI" URL="../Quaternion Average.vi"/>
+		<Item Name="Draw Axes at Point.vi" Type="VI" URL="../Draw Axes at Point.vi"/>
 	</Item>
 </Library>

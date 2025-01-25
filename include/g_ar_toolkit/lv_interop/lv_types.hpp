@@ -48,7 +48,7 @@ namespace g_ar_toolkit
             {
                 return reinterpret_cast<T *>(&data[0]);
             }
-            static constexpr size_t data_memeber_offset_bytes(){
+            static size_t data_member_offset_bytes(){
                 LV_Array_t<n_dims, T> tmp;
                 return size_t(reinterpret_cast<uintptr_t>(&tmp.data[0]) - reinterpret_cast<uintptr_t>(&tmp));
             }

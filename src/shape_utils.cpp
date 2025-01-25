@@ -35,6 +35,27 @@ extern "C"
         return LV_ERR_noError;
     }
 
+    //     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_shape_approx_poly_convex_hull(
+    //     LV_ErrorClusterPtr_t error_cluster_ptr,
+    //     LV_ShapePointsArrayHandle_t points_array_handle,
+    //     uint8_t n_sides,
+    //     double epsilon_pct,
+    //     LV_BooleanPtr_t ensure_convex)
+    // {
+    //     try
+    //     {
+    //         std::vector<cv::Point2i> curve;
+    //         cv::approxPolyN(points_array_handle.to_vector<cv::Point2i>(), curve, n_sides, epsilon_pct, *ensure_convex);
+    //         // copy result back into handle
+    //         points_array_handle.copy_element_by_element_from(curve);
+    //     }
+    //     catch (...)
+    //     {
+    //         error_cluster_ptr->copy_from_exception(std::current_exception(), __func__);
+    //     }
+    //     return LV_ERR_noError;
+    // }
+
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_shape_contours_arc_length(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_ShapePointsArrayHandle_t points_array_handle,

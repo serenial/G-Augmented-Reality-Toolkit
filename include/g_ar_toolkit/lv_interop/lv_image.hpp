@@ -32,55 +32,60 @@ namespace g_ar_toolkit
         void copyTo(cv::_OutputArray) const;
         void copyTo(cv::_OutputArray, cv::_InputArray) const;
         void set_mat(cv::Mat);
-        void ensure_sized_to_match(const cv::Size&);
-        void ensure_sized_to_match(const lv_image&);
+        void ensure_sized_to_match(const cv::Size &);
+        void ensure_sized_to_match(const lv_image &);
         void upgrade_to_mapped();
         void downgrade_from_mapped();
         cv::Mat operator()(cv::Rect2i) const;
 
-        template<class T, class... Targs >
-        T& at(Targs... arguments){
-          return data->mat.at<T>(arguments...);  
+        template <class T, class... Targs>
+        T &at(Targs... arguments)
+        {
+            return data->mat.at<T>(arguments...);
         }
 
         // user-defined conversions to openCV's Input and Output Array types
         // this allows an Image instance to pretend to work like a cv::Mat
         operator cv::_InputArray();
         operator cv::_OutputArray();
-        operator cv::Mat*();
-        operator const cv::Mat&() const;
-        operator cv::Mat&();
+        operator cv::Mat *();
+        operator const cv::Mat &() const;
+        operator cv::Mat &();
 
     private:
-        enum lock_state_t
+        struct image_persistant_data_t
         {
-            NONE,
-            LABVIEW,
-            CPP,
-            CPP_MAPPED
-        };
-        struct image_persistant_data
-        {
+            enum lock_states
+            {
+                NONE,
+                LABVIEW,
+                CPP,
+                CPP_MAPPED
+            };
             cv::Mat mat;
-            lock_state_t locked;
+            lock_states locked;
             std::mutex m;
             std::condition_variable cv;
+
+            // locking and unlocking utility functions
+            static void lock(image_persistant_data_t *, lock_states);
+            static void unlock(image_persistant_data_t *, lock_states);
         };
 
         // private functions required for initialization
         LV_EDVRContext_t get_ctx();
         LV_EDVRDataPtr_t create_new_edvr_data_ptr();
         LV_EDVRDataPtr_t get_edvr_data_ptr();
-        image_persistant_data *get_metadata();
-
-        // locking and unlocking utility functions
-        static inline void lock(image_persistant_data *, lock_state_t);
-        static inline void unlock(image_persistant_data *, lock_state_t);
+        image_persistant_data_t *get_metadata();
 
         // private properties - the order here is important for the initialization step
         const LV_EDVRReferencePtr_t edvr_ref_ptr;
         const LV_EDVRContext_t ctx;
         const LV_EDVRDataPtr_t edvr_data_ptr;
-        image_persistant_data *const data;
+        image_persistant_data_t *const data;
+
+        static LV_MgErr_t on_labview_lock(LV_EDVRDataPtr_t ptr);
+        static LV_MgErr_t on_labview_unlock(LV_EDVRDataPtr_t ptr);
+        static void on_labview_delete(LV_EDVRDataPtr_t ptr);
     };
 }

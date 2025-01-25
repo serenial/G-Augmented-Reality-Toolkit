@@ -104,3 +104,6 @@ std::string Stream::auto_param_error::format_message(Stream::camera_auto_paramet
 Stream::param_info_t::param_info_t(): is_supported(false), min(0), max(0), step(0), default_value(-1){
 
 }
+
+Stream::stream_type_t::stream_type_t(uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom) : 
+                        width(width), height(height), fps_numerator(fps_num), fps_denominator(fps_denom){}

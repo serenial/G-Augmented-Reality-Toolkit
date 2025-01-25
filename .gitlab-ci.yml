@@ -1,0 +1,23 @@
+image:
+  name: node:16-alpine 
+variables:
+  ANTORA_CACHE_DIR: .cache/antora 
+  NODE_OPTIONS: --max-old-space-size=4096 
+before_script:
+- npm ci && npm --prefix docs-UI ci && docs-UI/node_modules/gulp/bin/gulp.js --gulpfile docs-UI/gulpfile.js bundle
+pages:
+  stage: deploy
+  interruptible: true
+  rules:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    when: always
+  - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+    when: manual
+  cache:
+    paths:
+    - .cache 
+  script:
+  - npx antora --fetch --redirect-facility=gitlab --to-dir=public antora-playbook.yml 
+  artifacts:
+    paths:
+    - public 

@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2a6bc1e..b550821 100644
+index 00248b8..2146cc4 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,219 +1,44 @@
+@@ -1,227 +1,44 @@
 -cmake_minimum_required(VERSION 3.16)
 -project(apriltag VERSION 3.4.2 LANGUAGES C)
 -
@@ -48,7 +48,14 @@ index 2a6bc1e..b550821 100644
 -
 -if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
 -    add_compile_options(-Wall -Wextra -Werror)
--    # add_compile_options(-Wpedantic)
+-    add_compile_options(-Wpedantic)
+-    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+-        add_compile_options(
+-            -Wno-gnu-zero-variadic-macro-arguments
+-            -Wno-strict-prototypes
+-            -Wno-static-in-inline
+-        )
+-    endif()
 -    add_compile_options(-Wno-shift-negative-value)
 -endif()
 -
@@ -109,7 +116,7 @@ index 2a6bc1e..b550821 100644
 -set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
 -set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
 -set(targets_export_name "${PROJECT_NAME}Targets")
--set(config_install_dir "share/${PROJECT_NAME}/cmake")
+-set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}/cmake")
 -
 -# Include module with fuction 'write_basic_package_version_file'
 -include(CMakePackageConfigHelpers)
@@ -256,13 +263,12 @@ index 2a6bc1e..b550821 100644
 +)
  
 -if(BUILD_TESTING)
+-    enable_testing()
 -    add_subdirectory(test)
--endif()
 +if(MSVC)
 +  # disable unknown paramgma warnings
 +  target_compile_options(apriltag PRIVATE /wd4068)
-+endif()
-\ No newline at end of file
+ endif()
 diff --git a/common/time_util.h b/common/time_util.h
 index c184049..8fc97bc 100644
 --- a/common/time_util.h

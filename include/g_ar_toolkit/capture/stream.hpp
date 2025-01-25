@@ -61,6 +61,8 @@ namespace g_ar_toolkit
             struct stream_type_t
             {
                 uint32_t width, height, fps_numerator, fps_denominator;
+                stream_type_t(uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom);
+                stream_type_t() = default;
             };
 
             Stream(std::string_view device_id, stream_type_t stream_type);
@@ -121,7 +123,8 @@ namespace g_ar_toolkit
                 WAITING_ON_STREAM_PARAM_AUTO_READ,
                 WAITING_ON_STREAM_PARAM_UPDATED,
                 WAITING_ON_STREAM_PARAM_AUTO_UPDATED,
-                WAITING_ON_DEINITIALIZED
+                WAITING_ON_DEINITIALIZED,
+                INTERNAL_THREAD_TERMINATED
             };
 
             std::mutex m_mtx;
@@ -132,12 +135,13 @@ namespace g_ar_toolkit
             param_info_t m_last_param_info;
             int32_t m_last_param_value;
             bool m_last_auto_param_is_automatic;
-            cv::Mat m_buffer_mat;
             cv::Mat *m_dest_mat_ptr;
             const std::future<void> m_ftr;
             winrt::event_token m_sample_handler_token;
             const uint32_t m_rows, m_cols;
             std::exception_ptr m_last_exception;
+
+            void throw_if_internal_thread_terminated() const;
 #endif
 
         private:

@@ -22,22 +22,26 @@ void LV_ErrorCluster_t::copy_from_exception(std::exception_ptr ex, const char * 
             std::rethrow_exception(ex);
         }
     }
-    catch (cv::Exception &e)
+    catch (cv::Exception const&e)
     {
         ss << e.what();
         m_code = e.code;
     }
-    catch (LV_MemoryManagerException &e)
+    catch (LV_MemoryManagerException const&e)
     {
         ss << e.what();
         m_code = e.err;
     }
-    catch (LV_EDVRInvalidException &e)
+    catch (LV_EDVRInvalidException const&e)
     {
         ss << e.what();
         m_code = 1556;
     }
-    catch (std::exception &e)
+    catch (std::system_error const&e){
+        ss << e.what();
+        m_code = e.code().value();
+    }
+    catch (std::exception const&e)
     {
         ss << e.what();
         m_code = LV_ERR_bogusError;

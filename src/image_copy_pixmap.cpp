@@ -28,9 +28,10 @@ namespace
     public:
         void copy_to_cv_mat_type_mask(cv::Mat &mask) const;
         void copy_from_cv_mat_type_mask(const cv::Mat &mask);
+        LV_PixmapMaskArrayHandle_t() = delete;
 
     private:
-        std::pair<int, size_t> calc_mask_buffer_bytes_and_stride(const cv::Mat &) const;
+        static std::pair<int, size_t> calc_mask_buffer_bytes_and_stride(const cv::Mat &);
     };
 
     using LV_PixmapImage_t = struct
@@ -145,7 +146,6 @@ extern "C"
                             {
                                 auto index = pixmap_image_data_mat.at<uint8_t>(row, column);
                                 working_mat_ptr->at<cv::Vec4b>(row, column) = lookup_table.at<cv::Vec4b>(index);
-                                ;
                             }
                         }
                     }
@@ -353,7 +353,7 @@ void LV_PixmapMaskArrayHandle_t::copy_to_cv_mat_type_mask(cv::Mat &mask) const
     }
 }
 
-std::pair<int, size_t> LV_PixmapMaskArrayHandle_t::calc_mask_buffer_bytes_and_stride(const cv::Mat &mask) const
+std::pair<int, size_t> LV_PixmapMaskArrayHandle_t::calc_mask_buffer_bytes_and_stride(const cv::Mat &mask)
 {
     // mask has to have an even number of bytes per row
     auto [quotient, remainder] = std::div(mask.cols, 8);

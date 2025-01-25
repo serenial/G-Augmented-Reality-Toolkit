@@ -139,19 +139,35 @@ void SourceReader::stop_streaming()
 
     std::condition_variable event_completion;
     std::mutex m;
-    std::unique_lock<std::mutex> ul(m);
+    std::unique_lock ul(m);
 
     EnterCriticalSection(&m_critsec);
     m_config_event_token_list.Append(m_config_event.add([&]()
                                                         {
             m_streaming_started = false;
-            check_hresult(m_source_reader->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, FALSE));
+            try{
+                check_hresult(m_source_reader->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, FALSE));
+            }
+            catch(...){
+                event_completion.notify_one();
+                std::rethrow_exception(std::current_exception());
+            }
             event_completion.notify_one(); }));
     LeaveCriticalSection(&m_critsec);
-    check_hresult(m_source_reader->Flush(MF_SOURCE_READER_FIRST_VIDEO_STREAM));
+
+    try{
+        check_hresult(m_source_reader->Flush(MF_SOURCE_READER_FIRST_VIDEO_STREAM));
+    }
+    catch(...){
+        // wait for the config-stop event to complete
+        event_completion.wait(ul);
+        ul.unlock();
+        std::rethrow_exception(std::current_exception());
+    }
 
     // wait for the config-stop event to complete
     event_completion.wait(ul);
+    ul.unlock();
 
     m_capture_callback_event(callback_events::END_OF_STREAM, nullptr);
 }

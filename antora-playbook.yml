@@ -1,0 +1,13 @@
+site:
+  title: G Augmented-Reality Toolkit Docs
+  start_page: g-ar-tk::index.adoc
+  url:  https://serenial.gitlab.io/g-augmented-reality-toolkit
+content:
+  sources:
+  - url: ./
+    start_path: docs
+    branches: HEAD
+ui:
+  bundle:
+    url: ./docs-UI/build/ui-bundle.zip
+    snapshot: true
