@@ -27,8 +27,8 @@
 			<Item Name="Find Circles.vi" Type="VI" URL="../examples/Find Circles.vi"/>
 			<Item Name="Example Barcode.vi" Type="VI" URL="../examples/Example Barcode.vi"/>
 			<Item Name="Example QR Code.vi" Type="VI" URL="../examples/Example QR Code.vi"/>
-			<Item Name="AR Example.lvlib" Type="Library" URL="../examples/AR Example/AR Example.lvlib"/>
 			<Item Name="Minimal AR Example.vi" Type="VI" URL="../examples/Minimal AR Example.vi"/>
+			<Item Name="AR Example.lvlib" Type="Library" URL="../examples/AR Example/AR Example.lvlib"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
@@ -154,6 +154,7 @@
 				<Item Name="Edit LVLibs.lvlib" Type="Library" URL="/&lt;vilib&gt;/Utility/EditLVLibs/Edit LVLibs.lvlib"/>
 				<Item Name="Get LV Class Default Value.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Default Value.vi"/>
 				<Item Name="LVNumericRepresentation.ctl" Type="VI" URL="/&lt;vilib&gt;/numeric/LVNumericRepresentation.ctl"/>
+				<Item Name="Trim Whitespace One-Sided.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace One-Sided.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 			<Item Name="Flip Image.vi" Type="VI" URL="../g_ar_toolkit.image/Flip Image.vi"/>
@@ -265,6 +266,50 @@
 				<Property Name="Source[9].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
 				<Property Name="SourceCount" Type="Int">14</Property>
+			</Item>
+			<Item Name="Example Application" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{91E31079-3022-4B9A-A81E-F53FD06D8C88}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{492199AE-800A-4774-8908-01D0E581A8BF}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="App_serverType" Type="Int">0</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{668B8AF3-653F-4C0E-BFFC-134E3C7989B3}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Example Application</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../build/NI_AB_PROJECTNAME/Example Application</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{45B768CF-A888-4C25-8957-1523C40713FB}</Property>
+				<Property Name="Bld_version.build" Type="Int">4</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Example Application.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../build/NI_AB_PROJECTNAME/Example Application/Example Application.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../build/NI_AB_PROJECTNAME/Example Application/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{9715432B-4D8B-49D1-BD05-68862050FC80}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/examples/Image Example.vi</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[2].itemID" Type="Ref">/My Computer/examples/Minimal AR Example.vi</Property>
+				<Property Name="Source[2].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[2].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">3</Property>
+				<Property Name="TgtF_companyName" Type="Str">serenial.io</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Example Application</Property>
+				<Property Name="TgtF_internalName" Type="Str">Example Application</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2025 serenial.io</Property>
+				<Property Name="TgtF_productName" Type="Str">Example Application</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{583C462E-70E3-4BA0-93A6-FACAED79CAC4}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">Example Application.exe</Property>
+				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
 			</Item>
 		</Item>
 	</Item>

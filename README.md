@@ -43,11 +43,12 @@ Full SBOM provision is in progress but is [waiting on support from the C++ packa
 | [Apriltag](https://github.com/AprilRobotics/apriltag) | BSD 2-Clause License |
 | [Apriltag Generation](https://github.com/AprilRobotics/apriltag-generation) (if usage includes AprilTag Generation VIs) | BSD 2-Clause Licence |
 | [whereami](https://github.com/gpakosz/whereami.git) | MIT |
+| [eigen](https://gitlab.com/libeigen/eigen) | Mozilla Public License 2.0 |
+| [Averaging Quaternions](https://github.com/tolgabirdal/averaging_quaternions) | MIT |
 | [ros_msft_camera](https://github.com/ms-iot/ros_msft_camera) (on Windows) | MIT |
 | [v4l2-list-devices](https://github.com/improvess/v4l2-list-devices) (on Linux) | Apache License 2.0 |
 | [WeChat QR/Barcode Reader Models](https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode) | Apache License 2.0 |
-| [eigen](https://gitlab.com/libeigen/eigen) | Mozilla Public License 2.0 |
-| [Averaging Quaternions](https://github.com/tolgabirdal/averaging_quaternions) | MIT |
+
 
 ### Other Items
 
@@ -55,18 +56,18 @@ The following are distrubuted with the source for use with examples or testing e
 
 *Models*
 
-| Model | Licence | Source |
-|-------|---------|--------|
-| Spot  | https://creativecommons.org/publicdomain/zero/1.0/ | https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/ |
+| Model | Licence |
+|-------|---------|
+| [Spot](https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/) | CC0 1.0 Universal |
 
 *Test Images*
 
-| Image | Licence | Source |
-|-------|---------|--------|
-| tag36h11-mosaic.png  | BSD 2-Clause Licence | https://github.com/AprilRobotics/apriltag-imgs |
-| exampled_coins.jpg | MIT | https://github.com/JamesMc86/Python-and-LabVIEW-Presentation |
-| barcode_book.jpg | Apache License 2.0 | https://docs.opencv.org/4.10.0/barcode_book.jpg |
-| Qr-code-ver-10.png|  Creative Commons CC0 1.0 Universal Public Domain Dedication | https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.png |
+| Image | Licence |
+|-------|---------|
+| [tag36h11-mosaic.png](https://github.com/AprilRobotics/apriltag-imgs) | BSD 2-Clause Licence  |
+| [exampled_coins.jpg](https://github.com/JamesMc86/Python-and-LabVIEW-Presentation) | MIT |
+| [barcode_book.jpg](https://docs.opencv.org/4.10.0/barcode_book.jpg) | Apache License 2.0 |
+| [Qr-code-ver-10.png](https://commons.wikimedia.org/wiki/File:Qr-code-ver-10.png)| CC0 1.0 Universal |
 
 ## Contributions
 Contributions to this toolkit are welcome. Please open an issue to discuss any bug/features or to share any interesting projects you have used this toolkit for.
@@ -80,8 +81,10 @@ Those interested in modifying and building the `C++` code will need to setup the
 
 Those wanting to modify and build the docs locally will need to follow the instructions here #TODO:link
 
-## Related Toolkits and Code
-[G-Image](https://github.com/dataflowg/g-image) - A cross-platform LabVIEW library for loading, saving, and processing images.
-[3DEngine](https://github.com/neilpate/3DEngine) - A LabVIEW native 3D engine
-[G<sup>2</sup>CPU](https://www.g2cpu.com/) - A high performance computing toolkit (community version is avaliable).
-[Haro3D by HaroTek](https://www.vipm.io/package/harotek_lib_haro3d/) - A toolkit with support for AR type hardware
+## Related
+If you are interested in this toolkit you might also like the following:
+* [LabVIEW Community Training](https://github.com/LabVIEWCommunityTraining) - Community created open source training resources (software and hardware) for LabVIEW
+* [G-Image](https://github.com/dataflowg/g-image) - A cross-platform LabVIEW library for loading, saving, and processing images.
+* [3DEngine](https://github.com/neilpate/3DEngine) - A LabVIEW native 3D engine
+* [G<sup>2</sup>CPU](https://www.g2cpu.com/) - A high performance computing toolkit (community version is avaliable).
+* [Haro3D by HaroTek](https://www.vipm.io/package/harotek_lib_haro3d/) - A toolkit with support for AR type hardware.
