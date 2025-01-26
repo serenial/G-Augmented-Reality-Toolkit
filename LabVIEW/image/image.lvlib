@@ -162,6 +162,7 @@
 			<Item Name="Flip (ARGB Both Axes).vi" Type="VI" URL="../Flip (ARGB Both Axes).vi"/>
 			<Item Name="Flip (ARGB X-Axis).vi" Type="VI" URL="../Flip (ARGB X-Axis).vi"/>
 			<Item Name="Flip (ARGB Y-Axis).vi" Type="VI" URL="../Flip (ARGB Y-Axis).vi"/>
+			<Item Name="Flip (Greyscale Both Axes).vi" Type="VI" URL="../Flip (Greyscale Both Axes).vi"/>
 			<Item Name="Flip (Greyscale X-Axis).vi" Type="VI" URL="../Flip (Greyscale X-Axis).vi"/>
 			<Item Name="Flip (Greyscale Y-Axis).vi" Type="VI" URL="../Flip (Greyscale Y-Axis).vi"/>
 		</Item>
