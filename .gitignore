@@ -214,3 +214,7 @@ cython_debug/
 
 # docs uses Antora and a nodejs pipeline/tooling to build the docs
 /node_modules/
+
+
+# Antidoc Output
+LabVIEW/Antidoc-Output

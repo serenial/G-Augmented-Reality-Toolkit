@@ -1,5 +1,0 @@
-* Toolkit Basics
-** xref:image-types.adoc[Image Data Representation]
-** xref:image-data-sources.adoc[Image Data Sources]
-** xref:image-data-sinks.adoc[Image Data Sinks]
-** xref:image-mapped-memory-access.adoc[Image Mapped Memory Access]
