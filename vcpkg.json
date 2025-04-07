@@ -1,41 +1,35 @@
 {
   "dependencies": [
+    "apriltag",
+    "eigen3",
     {
       "name": "opencv4",
       "default-features": false,
       "features": [
         "calib3d",
+        "contrib",
+        "dnn",
         "fs",
         "intrinsics",
+        "ipp",
         "jpeg",
         "png",
-        "quirc",
         "thread",
         "tiff",
-        "webp",
-        "contrib",
-        "dnn"
+        "webp"
       ]
     },
-    {
-      "name": "tinyobjloader"
-    },
-    {
-      "name": "eigen3"
-    }
+    "tinyobjloader",
+    "pcl"
   ],
   "overrides": [
     {
+      "name": "apriltag",
+      "version": "3.4.2"
+    },
+    {
       "name": "opencv4",
-      "version": "4.10.0#2"
-    },
-    {
-      "name": "tinyobjloader",
-      "version": "2.0.0rc13"
-    },
-    {
-      "name": "eigen3",
-      "version": "3.4.0#4"
+      "version": "4.10.0#4"
     }
   ]
 }

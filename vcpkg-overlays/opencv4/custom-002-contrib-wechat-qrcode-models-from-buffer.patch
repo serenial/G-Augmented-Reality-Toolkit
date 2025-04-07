@@ -1,0 +1,163 @@
+diff --git a/modules/wechat_qrcode/include/opencv2/wechat_qrcode.hpp b/modules/wechat_qrcode/include/opencv2/wechat_qrcode.hpp
+index 676104c..43d87ef 100644
+--- a/modules/wechat_qrcode/include/opencv2/wechat_qrcode.hpp
++++ b/modules/wechat_qrcode/include/opencv2/wechat_qrcode.hpp
+@@ -33,10 +33,10 @@ public:
+      * @param super_resolution_prototxt_path prototxt file path for the super resolution model
+      * @param super_resolution_caffe_model_path caffe file path for the super resolution model
+      */
+-    CV_WRAP WeChatQRCode(const std::string& detector_prototxt_path = "",
+-                         const std::string& detector_caffe_model_path = "",
+-                         const std::string& super_resolution_prototxt_path = "",
+-                         const std::string& super_resolution_caffe_model_path = "");
++    CV_WRAP WeChatQRCode(std::string_view detector_prototxt,
++                         std::string_view detector_caffe_model,
++                         std::string_view super_resolution_prototxt,
++                         std::string_view super_resolution_caffe_model);
+     ~WeChatQRCode(){};
+ 
+     /**
+diff --git a/modules/wechat_qrcode/src/detector/ssd_detector.cpp b/modules/wechat_qrcode/src/detector/ssd_detector.cpp
+index dca1851..58aad88 100644
+--- a/modules/wechat_qrcode/src/detector/ssd_detector.cpp
++++ b/modules/wechat_qrcode/src/detector/ssd_detector.cpp
+@@ -1,3 +1,5 @@
++#include <string_view>
++
+ // This file is part of OpenCV project.
+ // It is subject to the license terms in the LICENSE file found in the top-level directory
+ // of this distribution and at http://opencv.org/license.html.
+@@ -9,8 +11,8 @@
+ #define CLIP(x, x1, x2) max(x1, min(x, x2))
+ namespace cv {
+ namespace wechat_qrcode {
+-int SSDDetector::init(const string& proto_path, const string& model_path) {
+-    net_ = dnn::readNetFromCaffe(proto_path, model_path);
++int SSDDetector::init(std::string_view proto, std::string_view model) {
++    net_ = dnn::readNetFromCaffe(proto.data(),proto.size(), model.data(), model.size());
+     return 0;
+ }
+ 
+diff --git a/modules/wechat_qrcode/src/detector/ssd_detector.hpp b/modules/wechat_qrcode/src/detector/ssd_detector.hpp
+index e510cb3..252ba26 100644
+--- a/modules/wechat_qrcode/src/detector/ssd_detector.hpp
++++ b/modules/wechat_qrcode/src/detector/ssd_detector.hpp
+@@ -8,8 +8,9 @@
+ #ifndef __DETECTOR_SSD_DETECTOR_HPP_
+ #define __DETECTOR_SSD_DETECTOR_HPP_
+ 
+-#include <stdio.h>
++#include <string_view>
+ 
++#include <stdio.h>
+ #include "opencv2/dnn.hpp"
+ #include "opencv2/imgproc.hpp"
+ namespace cv {
+@@ -19,7 +20,7 @@ class SSDDetector {
+ public:
+     SSDDetector(){};
+     ~SSDDetector(){};
+-    int init(const std::string& proto_path, const std::string& model_path);
++    int init(std::string_view proto, std::string_view model);
+     std::vector<Mat> forward(Mat img, const int target_width, const int target_height);
+ 
+ private:
+diff --git a/modules/wechat_qrcode/src/scale/super_scale.cpp b/modules/wechat_qrcode/src/scale/super_scale.cpp
+index 8b3b113..1fe71d8 100644
+--- a/modules/wechat_qrcode/src/scale/super_scale.cpp
++++ b/modules/wechat_qrcode/src/scale/super_scale.cpp
+@@ -1,3 +1,5 @@
++#include <string_view>
++
+ // This file is part of OpenCV project.
+ // It is subject to the license terms in the LICENSE file found in the top-level directory
+ // of this distribution and at http://opencv.org/license.html.
+@@ -7,12 +9,11 @@
+ #include "../precomp.hpp"
+ #include "super_scale.hpp"
+ 
+-
+ #define CLIP(x, x1, x2) max(x1, min(x, x2))
+ namespace cv {
+ namespace wechat_qrcode {
+-int SuperScale::init(const std::string &proto_path, const std::string &model_path) {
+-    srnet_ = dnn::readNetFromCaffe(proto_path, model_path);
++int SuperScale::init(std::string_view proto, std::string_view model) {
++    srnet_ = dnn::readNetFromCaffe(proto.data(), proto.size(), model.data(), model.size());
+     net_loaded_ = true;
+     return 0;
+ }
+diff --git a/modules/wechat_qrcode/src/scale/super_scale.hpp b/modules/wechat_qrcode/src/scale/super_scale.hpp
+index 2717932..9e7a654 100644
+--- a/modules/wechat_qrcode/src/scale/super_scale.hpp
++++ b/modules/wechat_qrcode/src/scale/super_scale.hpp
+@@ -8,6 +8,8 @@
+ #ifndef __SCALE_SUPER_SCALE_HPP_
+ #define __SCALE_SUPER_SCALE_HPP_
+ 
++#include <string_view>
++
+ #include <stdio.h>
+ #include "opencv2/dnn.hpp"
+ #include "opencv2/imgproc.hpp"
+@@ -18,7 +20,7 @@ class SuperScale {
+ public:
+     SuperScale(){};
+     ~SuperScale(){};
+-    int init(const std::string &proto_path, const std::string &model_path);
++    int init(std::string_view proto, std::string_view model);
+     Mat processImageScale(const Mat &src, float scale, const bool &use_sr, int sr_max_size = 160);
+ 
+ private:
+diff --git a/modules/wechat_qrcode/src/wechat_qrcode.cpp b/modules/wechat_qrcode/src/wechat_qrcode.cpp
+index 64aad73..66cf86c 100644
+--- a/modules/wechat_qrcode/src/wechat_qrcode.cpp
++++ b/modules/wechat_qrcode/src/wechat_qrcode.cpp
+@@ -1,3 +1,5 @@
++#include <string_view>
++
+ // This file is part of OpenCV project.
+ // It is subject to the license terms in the LICENSE file found in the top-level directory
+ // of this distribution and at http://opencv.org/license.html.
+@@ -47,18 +49,16 @@ public:
+     float scaleFactor = -1.f;
+ };
+ 
+-WeChatQRCode::WeChatQRCode(const String& detector_prototxt_path,
+-                           const String& detector_caffe_model_path,
+-                           const String& super_resolution_prototxt_path,
+-                           const String& super_resolution_caffe_model_path) {
++WeChatQRCode::WeChatQRCode(std::string_view detector_prototxt,
++                           std::string_view detector_caffe_model,
++                           std::string_view super_resolution_prototxt,
++                           std::string_view super_resolution_caffe_model) {
+     p = makePtr<WeChatQRCode::Impl>();
+-    if (!detector_caffe_model_path.empty() && !detector_prototxt_path.empty()) {
++    if (!detector_caffe_model.empty() && !detector_prototxt.empty()) {
+         // initialize detector model (caffe)
+         p->use_nn_detector_ = true;
+-        CV_Assert(utils::fs::exists(detector_prototxt_path));
+-        CV_Assert(utils::fs::exists(detector_caffe_model_path));
+         p->detector_ = make_shared<SSDDetector>();
+-        auto ret = p->detector_->init(detector_prototxt_path, detector_caffe_model_path);
++        auto ret = p->detector_->init(detector_prototxt, detector_caffe_model);
+         CV_Assert(ret == 0);
+     } else {
+         p->use_nn_detector_ = false;
+@@ -68,13 +68,11 @@ WeChatQRCode::WeChatQRCode(const String& detector_prototxt_path,
+     // it could also support non model weights by cubic resizing
+     // so, we initialize it first.
+     p->super_resolution_model_ = make_shared<SuperScale>();
+-    if (!super_resolution_prototxt_path.empty() && !super_resolution_caffe_model_path.empty()) {
++    if (!super_resolution_prototxt.empty() && !super_resolution_caffe_model.empty()) {
+         p->use_nn_sr_ = true;
+         // initialize dnn model (caffe format)
+-        CV_Assert(utils::fs::exists(super_resolution_prototxt_path));
+-        CV_Assert(utils::fs::exists(super_resolution_caffe_model_path));
+-        auto ret = p->super_resolution_model_->init(super_resolution_prototxt_path,
+-                                                    super_resolution_caffe_model_path);
++        auto ret = p->super_resolution_model_->init(super_resolution_prototxt,
++                                                    super_resolution_caffe_model);
+         CV_Assert(ret == 0);
+     } else {
+         p->use_nn_sr_ = false;

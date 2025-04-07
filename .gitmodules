@@ -2,3 +2,6 @@
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg
 	shallow = true
+[submodule "vcpkg-sbom"]
+	path = vcpkg-sbom
+	url = https://github.com/moverseai/vcpkg-sbom.git

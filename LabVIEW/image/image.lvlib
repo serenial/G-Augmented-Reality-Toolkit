@@ -1,5 +1,7 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <Library LVVersion="20008000">
+	<Property Name="NI.Lib.Description" Type="Str">G Augmented Reality Toolkit Image Library contains the base image types and image transformation operations.</Property>
+	<Property Name="NI.Lib.HelpPath" Type="Str"></Property>
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*7!!!*Q(C=\&gt;5B&lt;BN2%-&lt;RLV6!K7'9:;GE&gt;(#:L_!LT!&amp;-4!0.IY#2!AJ;9KEH-#I@&amp;OQL_!36NP]X/Y[CKEJ)7V66XPIZ[_`NG`@T\HID68MH87F[K8WYN/WPWBDPA^A@H[@/JSV\XRG[6*D([\8NH7F&lt;Y^0]KG1O-I^8(`/H?@J=]_@ZP@YF?4J?[T_D,_@T4;`NN@X@\?&lt;&amp;(]%@`RW]U8A1U:-?&gt;+?&lt;RL*4EC&gt;ZEC&gt;ZEC&gt;ZE!&gt;ZE!&gt;ZE!?ZETOZETOZETOZE2OZE2OZE2NZ&lt;?1C&amp;\H))37,*QMF2:-#S=&amp;1F,QFHM34?")0(Z6Y%E`C34S*BU/5?"*0YEE]C9&gt;J3DS**`%EHM2$K:*E&lt;?2Y%A`F&amp;8A#4_!*0)'(*26Y!E#Q7&amp;!Y+!*$Q7#Q%XA#4_"B6Y%H]!3?Q".Y'&amp;&lt;A#4S"*`!%(K&lt;579H3D)U=$W8E?"S0YX%]DI@3=DS/R`%Y(M@$=H)]DM&gt;"/!M[R3()G?1=Y(RQ0)[(0X)]DM@R/"\(QV"&gt;);]T-T2D)]&gt;D?!S0Y4%]BI=3-DS'R`!9(M.$72E?QW.Y$)`B93E:(M.D?!S)M3D,SSBG4$1/-A,$Q[PO&amp;KOL&amp;#7RWK3_?&gt;5XJ@JG5^^%[JN$@&gt;(6&amp;V.^E&gt;1H8XV3V3&gt;,@2,58U[.6G05C[AHDQ.VZPV%0^)0^$V^2^`1V`16@4'G`O9$T_?T4K?4DM?D$I?$^PO^&gt;LO&gt;.JO.VOOV6KO6&amp;IP&amp;YW.AS@&lt;Y1*C@3T@MXV^`?`BUP&lt;T\_C8D]]@FX@X\Z?X)`],`ZX`AW;CX?LI'Z_A(_#V^Y1!!!!!</Property>
 	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
@@ -53,6 +55,7 @@
 		<Item Name="FixPixmap.vi" Type="VI" URL="../FixPixmap.vi"/>
 		<Item Name="Flip Mode.ctl" Type="VI" URL="../Flip Mode.ctl"/>
 		<Item Name="FlipCore.vim" Type="VI" URL="../FlipCore.vim"/>
+		<Item Name="HorizontalConcatImageDataCore.vim" Type="VI" URL="../HorizontalConcatImageDataCore.vim"/>
 		<Item Name="ImageSizeCore.vim" Type="VI" URL="../ImageSizeCore.vim"/>
 		<Item Name="InRangeImageCore.vim" Type="VI" URL="../InRangeImageCore.vim"/>
 		<Item Name="InsertIntoCore.vim" Type="VI" URL="../InsertIntoCore.vim"/>
@@ -62,7 +65,6 @@
 		<Item Name="ReadImageFileCore.vim" Type="VI" URL="../ReadImageFileCore.vim"/>
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
-		<Item Name="ShowWindowCore.vim" Type="VI" URL="../ShowWindowCore.vim"/>
 		<Item Name="ThresholdCore.vi" Type="VI" URL="../ThresholdCore.vi"/>
 		<Item Name="UndistortCore.vim" Type="VI" URL="../UndistortCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
@@ -80,10 +82,11 @@
 			<Item Name="Add Weighted Images (Greyscale).vi" Type="VI" URL="../Add Weighted Images (Greyscale).vi"/>
 		</Item>
 		<Item Name="Bitwise" Type="Folder">
+			<Property Name="NI.SortType" Type="Int">3</Property>
 			<Item Name="Bitwise AND (Greyscale with Mask).vi" Type="VI" URL="../Bitwise AND (Greyscale with Mask).vi"/>
+			<Item Name="Bitwise NOT (Greyscale).vi" Type="VI" URL="../Bitwise NOT (Greyscale).vi"/>
 			<Item Name="Bitwise AND (Greyscale).vi" Type="VI" URL="../Bitwise AND (Greyscale).vi"/>
 			<Item Name="Bitwise NOT (Greyscale with Mask).vi" Type="VI" URL="../Bitwise NOT (Greyscale with Mask).vi"/>
-			<Item Name="Bitwise NOT (Greyscale).vi" Type="VI" URL="../Bitwise NOT (Greyscale).vi"/>
 			<Item Name="Bitwise OR (Greyscale with Mask).vi" Type="VI" URL="../Bitwise OR (Greyscale with Mask).vi"/>
 			<Item Name="Bitwise OR (Greyscale).vi" Type="VI" URL="../Bitwise OR (Greyscale).vi"/>
 			<Item Name="Bitwise XOR (Greyscale with Mask).vi" Type="VI" URL="../Bitwise XOR (Greyscale with Mask).vi"/>
@@ -113,9 +116,10 @@
 			<Item Name="Copy Image to Memory Address (Greyscale).vi" Type="VI" URL="../Copy Image to Memory Address (Greyscale).vi"/>
 		</Item>
 		<Item Name="Copy Image to Pixmap" Type="Folder">
+			<Property Name="NI.SortType" Type="Int">3</Property>
 			<Item Name="Copy Image to Pixmap (ARGB with Mask).vi" Type="VI" URL="../Copy Image to Pixmap (ARGB with Mask).vi"/>
-			<Item Name="Copy Image to Pixmap (ARGB).vi" Type="VI" URL="../Copy Image to Pixmap (ARGB).vi"/>
 			<Item Name="Copy Image to Pixmap (Greyscale with Mask).vi" Type="VI" URL="../Copy Image to Pixmap (Greyscale with Mask).vi"/>
+			<Item Name="Copy Image to Pixmap (ARGB).vi" Type="VI" URL="../Copy Image to Pixmap (ARGB).vi"/>
 			<Item Name="Copy Image to Pixmap Greyscale.vi" Type="VI" URL="../Copy Image to Pixmap Greyscale.vi"/>
 		</Item>
 		<Item Name="Copy Memory Address to Image" Type="Folder">
@@ -130,13 +134,16 @@
 			<Item Name="Copy Pixmap to Image (Greyscale with Mask Output).vi" Type="VI" URL="../Copy Pixmap to Image (Greyscale with Mask Output).vi"/>
 		</Item>
 		<Item Name="Crop" Type="Folder">
-			<Item Name="Crop (ARGB).vi" Type="VI" URL="../Crop (ARGB).vi"/>
-			<Item Name="Crop (Greyscale).vi" Type="VI" URL="../Crop (Greyscale).vi"/>
+			<Item Name="Crop (Rectangle Points ARGB).vi" Type="VI" URL="../Crop (Rectangle Points ARGB).vi"/>
+			<Item Name="Crop (Rectangle Points Greyscale).vi" Type="VI" URL="../Crop (Rectangle Points Greyscale).vi"/>
+			<Item Name="Crop (Rectangle Size ARGB).vi" Type="VI" URL="../Crop (Rectangle Size ARGB).vi"/>
+			<Item Name="Crop (Rectangle Size Greyscale).vi" Type="VI" URL="../Crop (Rectangle Size Greyscale).vi"/>
 		</Item>
 		<Item Name="Draw Image to Picture" Type="Folder">
+			<Property Name="NI.SortType" Type="Int">3</Property>
 			<Item Name="Draw Image to Picture (ARGB with Mask).vi" Type="VI" URL="../Draw Image to Picture (ARGB with Mask).vi"/>
-			<Item Name="Draw Image to Picture (ARGB).vi" Type="VI" URL="../Draw Image to Picture (ARGB).vi"/>
 			<Item Name="Draw Image to Picture (Greyscale with Mask).vi" Type="VI" URL="../Draw Image to Picture (Greyscale with Mask).vi"/>
+			<Item Name="Draw Image to Picture (ARGB).vi" Type="VI" URL="../Draw Image to Picture (ARGB).vi"/>
 			<Item Name="Draw Image to Picture (Greyscale).vi" Type="VI" URL="../Draw Image to Picture (Greyscale).vi"/>
 		</Item>
 		<Item Name="Draw on Image" Type="Folder">
@@ -177,6 +184,10 @@
 			<Item Name="Get Morphology Structuring Element (Elipse).vi" Type="VI" URL="../Get Morphology Structuring Element (Elipse).vi"/>
 			<Item Name="Get Morphology Structuring Element (Rectangle).vi" Type="VI" URL="../Get Morphology Structuring Element (Rectangle).vi"/>
 		</Item>
+		<Item Name="Horizontal Concatinate Image Data" Type="Folder">
+			<Item Name="Horizontal Concat Image Data (ARGB).vi" Type="VI" URL="../Horizontal Concat Image Data (ARGB).vi"/>
+			<Item Name="Horizontal Concat Image Data (Greyscale).vi" Type="VI" URL="../Horizontal Concat Image Data (Greyscale).vi"/>
+		</Item>
 		<Item Name="In-Range Image" Type="Folder">
 			<Item Name="In-Range (ARGB).vi" Type="VI" URL="../In-Range (ARGB).vi"/>
 			<Item Name="In-Range (Greyscale).vi" Type="VI" URL="../In-Range (Greyscale).vi"/>
@@ -205,17 +216,17 @@
 		</Item>
 		<Item Name="New Image" Type="Folder">
 			<Item Name="New Image (ARGB Array).vi" Type="VI" URL="../New Image (ARGB Array).vi"/>
-			<Item Name="New Image (ARGB).vi" Type="VI" URL="../New Image (ARGB).vi"/>
+			<Item Name="New Image (ARGB Preallocated).vi" Type="VI" URL="../New Image (ARGB Preallocated).vi"/>
 			<Item Name="New Image (Greyscale Array).vi" Type="VI" URL="../New Image (Greyscale Array).vi"/>
-			<Item Name="New Image (Greyscale).vi" Type="VI" URL="../New Image (Greyscale).vi"/>
+			<Item Name="New Image (Greyscale Preallocated).vi" Type="VI" URL="../New Image (Greyscale Preallocated).vi"/>
 		</Item>
 		<Item Name="Read Image File" Type="Folder">
 			<Item Name="Read Image File (ARGB).vi" Type="VI" URL="../Read Image File (ARGB).vi"/>
 			<Item Name="Read Image File (Greyscale).vi" Type="VI" URL="../Read Image File (Greyscale).vi"/>
 		</Item>
 		<Item Name="Required Font Scale" Type="Folder">
-			<Item Name="Required Font Scale.vi" Type="VI" URL="../Required Font Scale.vi"/>
-			<Item Name="Required Font-Scale (Text Draw Settings).vi" Type="VI" URL="../Required Font-Scale (Text Draw Settings).vi"/>
+			<Item Name="Required Font-Scale (As Numeric).vi" Type="VI" URL="../Required Font-Scale (As Numeric).vi"/>
+			<Item Name="Required Font-Scale (As Text Draw Settings).vi" Type="VI" URL="../Required Font-Scale (As Text Draw Settings).vi"/>
 		</Item>
 		<Item Name="Resize" Type="Folder">
 			<Item Name="Resize (ARGB).vi" Type="VI" URL="../Resize (ARGB).vi"/>
@@ -267,77 +278,85 @@
 		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
+		<Property Name="NI.SortType" Type="Int">0</Property>
 		<Item Name="Types" Type="Folder">
-			<Item Name="Kernel Block Size.ctl" Type="VI" URL="../Kernel Block Size.ctl"/>
+			<Property Name="NI.SortType" Type="Int">0</Property>
 			<Item Name="Alpha Handling.ctl" Type="VI" URL="../Alpha Handling.ctl"/>
 			<Item Name="ARGB Colour.ctl" Type="VI" URL="../ARGB Colour.ctl"/>
+			<Item Name="ARGB Image.ctl" Type="VI" URL="../ARGB Image.ctl"/>
+			<Item Name="Border Type.ctl" Type="VI" URL="../Border Type.ctl"/>
+			<Item Name="Canny Aperture Size.ctl" Type="VI" URL="../Canny Aperture Size.ctl"/>
 			<Item Name="Destination Sizing Mode.ctl" Type="VI" URL="../Destination Sizing Mode.ctl"/>
+			<Item Name="Ellipse Angles.ctl" Type="VI" URL="../Ellipse Angles.ctl"/>
+			<Item Name="Fill-Poly Points Type.ctl" Type="VI" URL="../Fill-Poly Points Type.ctl"/>
+			<Item Name="Font Face.ctl" Type="VI" URL="../Font Face.ctl"/>
+			<Item Name="Greyscale Image.ctl" Type="VI" URL="../Greyscale Image.ctl"/>
 			<Item Name="Image Draw Offset.ctl" Type="VI" URL="../Image Draw Offset.ctl"/>
 			<Item Name="Image Read Size.ctl" Type="VI" URL="../Image Read Size.ctl"/>
 			<Item Name="In-Range Image Colour Range.ctl" Type="VI" URL="../In-Range Image Colour Range.ctl"/>
 			<Item Name="In-Range Image Grey Range.ctl" Type="VI" URL="../In-Range Image Grey Range.ctl"/>
 			<Item Name="Interpolation Mode.ctl" Type="VI" URL="../Interpolation Mode.ctl"/>
+			<Item Name="Kernel Block Size.ctl" Type="VI" URL="../Kernel Block Size.ctl"/>
 			<Item Name="Line Type.ctl" Type="VI" URL="../Line Type.ctl"/>
+			<Item Name="Poly Lines Shape Draw Mode.ctl" Type="VI" URL="../Poly Lines Shape Draw Mode.ctl"/>
 			<Item Name="Raw Memory Information Dimension.ctl" Type="VI" URL="../Raw Memory Information Dimension.ctl"/>
 			<Item Name="Raw Memory Information.ctl" Type="VI" URL="../Raw Memory Information.ctl"/>
-			<Item Name="Poly Lines Shape Draw Mode.ctl" Type="VI" URL="../Poly Lines Shape Draw Mode.ctl"/>
-			<Item Name="Fill-Poly Points Type.ctl" Type="VI" URL="../Fill-Poly Points Type.ctl"/>
-			<Item Name="Ellipse Angles.ctl" Type="VI" URL="../Ellipse Angles.ctl"/>
-			<Item Name="Font Face.ctl" Type="VI" URL="../Font Face.ctl"/>
 			<Item Name="Text Drawing Settings.ctl" Type="VI" URL="../Text Drawing Settings.ctl"/>
-			<Item Name="Border Type.ctl" Type="VI" URL="../Border Type.ctl"/>
-			<Item Name="Canny Aperture Size.ctl" Type="VI" URL="../Canny Aperture Size.ctl"/>
-			<Item Name="ARGB Image.ctl" Type="VI" URL="../ARGB Image.ctl"/>
-			<Item Name="Greyscale Image.ctl" Type="VI" URL="../Greyscale Image.ctl"/>
 		</Item>
-		<Item Name="ImageDistorter.lvclass" Type="LVClass" URL="../ImageDistorter/ImageDistorter.lvclass"/>
-		<Item Name="ImageRectifier.lvclass" Type="LVClass" URL="../ImageRectifier/ImageRectifier.lvclass"/>
-		<Item Name="Copy.vi" Type="VI" URL="../Copy.vi"/>
-		<Item Name="Copy Pixmap to Image.vi" Type="VI" URL="../Copy Pixmap to Image.vi"/>
-		<Item Name="Copy Image to Pixmap.vi" Type="VI" URL="../Copy Image to Pixmap.vi"/>
-		<Item Name="Copy Memory Address to Image.vi" Type="VI" URL="../Copy Memory Address to Image.vi"/>
-		<Item Name="Copy Image to Memory Address.vi" Type="VI" URL="../Copy Image to Memory Address.vi"/>
-		<Item Name="Copy Array to Image.vi" Type="VI" URL="../Copy Array to Image.vi"/>
-		<Item Name="New Image.vi" Type="VI" URL="../New Image.vi"/>
-		<Item Name="Read Image File.vi" Type="VI" URL="../Read Image File.vi"/>
-		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
-		<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
-		<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
-		<Item Name="Get Channel.vi" Type="VI" URL="../Get Channel.vi"/>
-		<Item Name="Set Channel.vi" Type="VI" URL="../Set Channel.vi"/>
-		<Item Name="Set Channel Value.vi" Type="VI" URL="../Set Channel Value.vi"/>
+		<Item Name="Acquire Mapped Memory Access.vi" Type="VI" URL="../Acquire Mapped Memory Access.vi"/>
 		<Item Name="Add Weighted Images.vi" Type="VI" URL="../Add Weighted Images.vi"/>
+		<Item Name="ARGB Colour to U32 Pixel Value.vi" Type="VI" URL="../ARGB Colour to U32 Pixel Value.vi"/>
+		<Item Name="ARGB Data to Pixel Values Array.vi" Type="VI" URL="../ARGB Data to Pixel Values Array.vi"/>
+		<Item Name="ARGB Image to Greyscale Image.vi" Type="VI" URL="../ARGB Image to Greyscale Image.vi"/>
 		<Item Name="Bitwise.vi" Type="VI" URL="../Bitwise.vi"/>
 		<Item Name="Blur.vi" Type="VI" URL="../Blur.vi"/>
-		<Item Name="Canny Edge.vi" Type="VI" URL="../Canny Edge.vi"/>
+		<Item Name="Canny Edge Detection.vi" Type="VI" URL="../Canny Edge Detection.vi"/>
+		<Item Name="Combine 2D Affine Transforms.vi" Type="VI" URL="../Combine 2D Affine Transforms.vi"/>
+		<Item Name="Compute 2D Rotation Affine Matrix.vi" Type="VI" URL="../Compute 2D Rotation Affine Matrix.vi"/>
+		<Item Name="Compute Colour Pair.vi" Type="VI" URL="../Compute Colour Pair.vi"/>
+		<Item Name="Copy Array to Image.vi" Type="VI" URL="../Copy Array to Image.vi"/>
+		<Item Name="Copy Image to Memory Address.vi" Type="VI" URL="../Copy Image to Memory Address.vi"/>
+		<Item Name="Copy Image to Pixmap.vi" Type="VI" URL="../Copy Image to Pixmap.vi"/>
+		<Item Name="Copy Memory Address to Image.vi" Type="VI" URL="../Copy Memory Address to Image.vi"/>
+		<Item Name="Copy Pixmap to Image.vi" Type="VI" URL="../Copy Pixmap to Image.vi"/>
+		<Item Name="Copy.vi" Type="VI" URL="../Copy.vi"/>
 		<Item Name="Crop.vi" Type="VI" URL="../Crop.vi"/>
 		<Item Name="Draw Image To Picture.vi" Type="VI" URL="../Draw Image To Picture.vi"/>
 		<Item Name="Draw on Image.vi" Type="VI" URL="../Draw on Image.vi"/>
+		<Item Name="Expand Greyscale Image Data.vi" Type="VI" URL="../Expand Greyscale Image Data.vi"/>
 		<Item Name="Find Non Zero Points.vi" Type="VI" URL="../Find Non Zero Points.vi"/>
 		<Item Name="Flip.vi" Type="VI" URL="../Flip.vi"/>
+		<Item Name="Get Channel.vi" Type="VI" URL="../Get Channel.vi"/>
+		<Item Name="Get Mapped Memory Access Information.vi" Type="VI" URL="../Get Mapped Memory Access Information.vi"/>
+		<Item Name="Get Morphology Structuring Element.vi" Type="VI" URL="../Get Morphology Structuring Element.vi"/>
+		<Item Name="Get Perspective Transform.vi" Type="VI" URL="../Get Perspective Transform.vi"/>
+		<Item Name="Get Text Size.vi" Type="VI" URL="../Get Text Size.vi"/>
+		<Item Name="Greyscale Data to ARGB Data.vi" Type="VI" URL="../Greyscale Data to ARGB Data.vi"/>
+		<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
+		<Item Name="Horizontal Concatinate Image Data.vi" Type="VI" URL="../Horizontal Concatinate Image Data.vi"/>
+		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
+		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
 		<Item Name="In-Range Image.vi" Type="VI" URL="../In-Range Image.vi"/>
 		<Item Name="Insert Image.vi" Type="VI" URL="../Insert Image.vi"/>
 		<Item Name="Invert Greyscale Image In-Place.vi" Type="VI" URL="../Invert Greyscale Image In-Place.vi"/>
 		<Item Name="Match-Value Image.vi" Type="VI" URL="../Match-Value Image.vi"/>
 		<Item Name="Morphology.vi" Type="VI" URL="../Morphology.vi"/>
+		<Item Name="New Image.vi" Type="VI" URL="../New Image.vi"/>
+		<Item Name="Pixel Values Array to ARGB Data.vi" Type="VI" URL="../Pixel Values Array to ARGB Data.vi"/>
+		<Item Name="Read Image File.vi" Type="VI" URL="../Read Image File.vi"/>
+		<Item Name="Release Mapped Memory Access.vi" Type="VI" URL="../Release Mapped Memory Access.vi"/>
+		<Item Name="Required Font-Scale.vi" Type="VI" URL="../Required Font-Scale.vi"/>
 		<Item Name="Resize.vi" Type="VI" URL="../Resize.vi"/>
 		<Item Name="Rotate.vi" Type="VI" URL="../Rotate.vi"/>
+		<Item Name="Scale Picture to Centre Image.vi" Type="VI" URL="../Scale Picture to Centre Image.vi"/>
+		<Item Name="Scaled Picture Co-ordinates to Image Co-ordinates.vi" Type="VI" URL="../Scaled Picture Co-ordinates to Image Co-ordinates.vi"/>
+		<Item Name="Set Channel Value.vi" Type="VI" URL="../Set Channel Value.vi"/>
+		<Item Name="Set Channel.vi" Type="VI" URL="../Set Channel.vi"/>
+		<Item Name="Size.vi" Type="VI" URL="../Size.vi"/>
 		<Item Name="Threshold.vi" Type="VI" URL="../Threshold.vi"/>
 		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 		<Item Name="Warp Affine.vi" Type="VI" URL="../Warp Affine.vi"/>
 		<Item Name="Warp Perspective.vi" Type="VI" URL="../Warp Perspective.vi"/>
-		<Item Name="Get Morphology Structuring Element.vi" Type="VI" URL="../Get Morphology Structuring Element.vi"/>
-		<Item Name="ARGB Colour to U32 Pixel Value.vi" Type="VI" URL="../ARGB Colour to U32 Pixel Value.vi"/>
-		<Item Name="Get Text Size.vi" Type="VI" URL="../Get Text Size.vi"/>
-		<Item Name="Combine 2D Affine Transforms.vi" Type="VI" URL="../Combine 2D Affine Transforms.vi"/>
-		<Item Name="Compute 2D Rotation Affine Matrix.vi" Type="VI" URL="../Compute 2D Rotation Affine Matrix.vi"/>
-		<Item Name="Pixel Values Array to ARGB Data.vi" Type="VI" URL="../Pixel Values Array to ARGB Data.vi"/>
-		<Item Name="ARGB Data to Pixel Values Array.vi" Type="VI" URL="../ARGB Data to Pixel Values Array.vi"/>
-		<Item Name="Size.vi" Type="VI" URL="../Size.vi"/>
-		<Item Name="Compute Colour Pair.vi" Type="VI" URL="../Compute Colour Pair.vi"/>
-		<Item Name="Font Scale from Required Height.vi" Type="VI" URL="../Font Scale from Required Height.vi"/>
-		<Item Name="Acquire Mapped Memory Access.vi" Type="VI" URL="../Acquire Mapped Memory Access.vi"/>
-		<Item Name="Release Mapped Memory Access.vi" Type="VI" URL="../Release Mapped Memory Access.vi"/>
-		<Item Name="Get Mapped Memory Access Information.vi" Type="VI" URL="../Get Mapped Memory Access Information.vi"/>
+		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
 	</Item>
 </Library>

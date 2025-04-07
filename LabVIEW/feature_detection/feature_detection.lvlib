@@ -1,5 +1,7 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <Library LVVersion="20008000">
+	<Property Name="NI.Lib.Description" Type="Str">G Augmented Reality Toolkit Feature Detection Library contains the functionality to detect shapes/barcodes/QR codes and AprilTag AR markers etc.</Property>
+	<Property Name="NI.Lib.HelpPath" Type="Str"></Property>
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*6!!!*Q(C=\&gt;7B&lt;BN"%-&lt;RLV6!K7'9:;GE&gt;(#:M:F@96\"..!]#BAJI+!FFPI%2O8$APU+@I*+V``/D;/IKB,36F760;^T`P:W^O?\]U7K^E[[UP23_X"JGV_V-&gt;Y(M4]_4ZV0'`;_-X3J-)`8;^-\U[&lt;'J`F6S6RE(K]_ZE`T^,HGT`.\`5PS&gt;,T7@U:@TO?&lt;8NNL_\`&lt;T9M`AD`_/XCD]3#C*TXI4D?.:;=E4`)E4`)E4`)A$`)A$`)A$X)H&gt;X)H&gt;X)H&gt;X)D.X)D.X)D.`,;S%5O=J&amp;$3B:0&amp;EK+*A73A[%I?5M]C3@R*"Y_+P%EHM34?")0BSDR**\%EXA3$^/5?"*0YEE]C9&gt;3*=H;S0%E(MIL]!3?Q".Y!A^,+P!%A'#RI("1");#Q7!H]!3?Q-/O!E`A#4S"*`!QL-!4?!*0Y!E]4+GT%K5:'TE?SMDR/"\(YXA=$[8F?"S0YX%]DI@FZ(A=DY.Q&amp;H3+1Z!TS4H!_?"Y(!^`Z(A=D_.R0)[(I&lt;J#8G&gt;G;-:'DM@Q'"\$9XA-$S6E?!S0Y4%]BI?S-DS'R`!9(M0$5D)]BM@Q'""D5:;85=S9;"RE");(6^UN6F=J3G+V38XTKG^+^=WGPIH5.Y@[IKMPJPICK5___K3K4Z&lt;[*+C`H"KNRKA855]?"_L-_YF_J"`I?`K/PK7P[3P[9ET^T1??TW?&gt;4C=&gt;DU=&gt;$A@N^XPN&gt;DNNNVONVWON6CMN&amp;IP(R]#3\@'"-$_8&lt;NC`P`\W]/F[?@@V3]&lt;HD]O\_`@,WZ(`B@`0`]#T57`V&gt;!X/U1_4&gt;W[R!!!!!!</Property>
 	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
@@ -35,11 +37,14 @@
 		<Item Name="TagPixelType.ctl" Type="VI" URL="../TagPixelType.ctl"/>
 		<Item Name="TagRotatePixelArray.vi" Type="VI" URL="../TagRotatePixelArray.vi"/>
 		<Item Name="TagSetPixel.vi" Type="VI" URL="../TagSetPixel.vi"/>
+		<Item Name="wechatDetectCoffeeModel.vi" Type="VI" URL="../wechatDetectCoffeeModel.vi"/>
+		<Item Name="wechatSuperResolutionCoffeeModel.vi" Type="VI" URL="../wechatSuperResolutionCoffeeModel.vi"/>
+		<Item Name="PictureToGreyscaleArrayData.vi" Type="VI" URL="../PictureToGreyscaleArrayData.vi"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
-		<Item Name="Draw Chessboard" Type="Folder">
-			<Item Name="DrawChessboard.vi" Type="VI" URL="../DrawChessboard.vi"/>
-			<Item Name="DrawChessboardRadon.vi" Type="VI" URL="../DrawChessboardRadon.vi"/>
+		<Item Name="Generate Chessboard Image Data" Type="Folder">
+			<Item Name="Generate Chessboard Image Data (Regular).vi" Type="VI" URL="../Generate Chessboard Image Data (Regular).vi"/>
+			<Item Name="Generate Chessboard Image Data (Radon).vi" Type="VI" URL="../Generate Chessboard Image Data (Radon).vi"/>
 		</Item>
 		<Item Name="Find Chessboard Corners" Type="Folder">
 			<Item Name="FindChessboardCornersARGB.vi" Type="VI" URL="../FindChessboardCornersARGB.vi"/>
@@ -47,26 +52,26 @@
 			<Item Name="FindChessboardCornersSectorBasedARGB.vi" Type="VI" URL="../FindChessboardCornersSectorBasedARGB.vi"/>
 			<Item Name="FindChessboardCornersSectorBasedGreyscale.vi" Type="VI" URL="../FindChessboardCornersSectorBasedGreyscale.vi"/>
 		</Item>
-		<Item Name="Generate AprilTag Pixel Array" Type="Folder">
+		<Item Name="Generate AprilTag Image Data" Type="Folder">
 			<Property Name="NI.LibItem.Scope" Type="Int">1</Property>
-			<Item Name="GenerateApriltag16h5.vi" Type="VI" URL="../GenerateApriltag16h5.vi"/>
-			<Item Name="GenerateApriltag25h9.vi" Type="VI" URL="../GenerateApriltag25h9.vi"/>
-			<Item Name="GenerateApriltag36h11.vi" Type="VI" URL="../GenerateApriltag36h11.vi"/>
-			<Item Name="GenerateApriltagCircle21h7.vi" Type="VI" URL="../GenerateApriltagCircle21h7.vi"/>
-			<Item Name="GenerateApriltagCircle49h12.vi" Type="VI" URL="../GenerateApriltagCircle49h12.vi"/>
-			<Item Name="GenerateApriltagStandard41h12.vi" Type="VI" URL="../GenerateApriltagStandard41h12.vi"/>
-			<Item Name="GenerateApriltagStandard52h13.vi" Type="VI" URL="../GenerateApriltagStandard52h13.vi"/>
-			<Item Name="GenerateApriltagCustom48h12.vi" Type="VI" URL="../GenerateApriltagCustom48h12.vi"/>
+			<Item Name="Generate Apriltag Image Data (Tag16h5).vi" Type="VI" URL="../Generate Apriltag Image Data (Tag16h5).vi"/>
+			<Item Name="Generate Apriltag Image Data (Tag25h9).vi" Type="VI" URL="../Generate Apriltag Image Data (Tag25h9).vi"/>
+			<Item Name="Generate Apriltag Image Data (Tag36h11).vi" Type="VI" URL="../Generate Apriltag Image Data (Tag36h11).vi"/>
+			<Item Name="Generate Apriltag Image Data (TagCircle21h7).vi" Type="VI" URL="../Generate Apriltag Image Data (TagCircle21h7).vi"/>
+			<Item Name="Generate Apriltag Image Data (TagCircle49h12).vi" Type="VI" URL="../Generate Apriltag Image Data (TagCircle49h12).vi"/>
+			<Item Name="Generate Apriltag Image Data (TagStandard41h12).vi" Type="VI" URL="../Generate Apriltag Image Data (TagStandard41h12).vi"/>
+			<Item Name="Generate Apriltag Image Data (TagStandard52h13).vi" Type="VI" URL="../Generate Apriltag Image Data (TagStandard52h13).vi"/>
+			<Item Name="Generate Apriltag Image Data (TagCustom48h12).vi" Type="VI" URL="../Generate Apriltag Image Data (TagCustom48h12).vi"/>
 		</Item>
 		<Item Name="AprilTag Tag ID List" Type="Folder">
-			<Item Name="AprilTag16h5IDList.vi" Type="VI" URL="../AprilTag16h5IDList.vi"/>
-			<Item Name="AprilTag25h9IDList.vi" Type="VI" URL="../AprilTag25h9IDList.vi"/>
-			<Item Name="AprilTag36h11IDList.vi" Type="VI" URL="../AprilTag36h11IDList.vi"/>
-			<Item Name="AprilTagCircle21h7IDList.vi" Type="VI" URL="../AprilTagCircle21h7IDList.vi"/>
-			<Item Name="AprilTagCircle49h12IDList.vi" Type="VI" URL="../AprilTagCircle49h12IDList.vi"/>
-			<Item Name="AprilTagStandard41h12IDList.vi" Type="VI" URL="../AprilTagStandard41h12IDList.vi"/>
-			<Item Name="AprilTagStandard52h13IDList.vi" Type="VI" URL="../AprilTagStandard52h13IDList.vi"/>
-			<Item Name="AprilTagCustom48h12IDList.vi" Type="VI" URL="../AprilTagCustom48h12IDList.vi"/>
+			<Item Name="AprilTag ID List (Tag16h5).vi" Type="VI" URL="../AprilTag ID List (Tag16h5).vi"/>
+			<Item Name="AprilTag ID List (Tag25h9).vi" Type="VI" URL="../AprilTag ID List (Tag25h9).vi"/>
+			<Item Name="AprilTag ID List (Tag36h11).vi" Type="VI" URL="../AprilTag ID List (Tag36h11).vi"/>
+			<Item Name="AprilTag ID List (TagCircle21h7).vi" Type="VI" URL="../AprilTag ID List (TagCircle21h7).vi"/>
+			<Item Name="AprilTag ID List (TagCircle49h12).vi" Type="VI" URL="../AprilTag ID List (TagCircle49h12).vi"/>
+			<Item Name="AprilTag ID List (TagStandard41h12).vi" Type="VI" URL="../AprilTag ID List (TagStandard41h12).vi"/>
+			<Item Name="AprilTag ID List (TagStandard52h13).vi" Type="VI" URL="../AprilTag ID List (TagStandard52h13).vi"/>
+			<Item Name="AprilTag ID List (TagCustom48h12).vi" Type="VI" URL="../AprilTag ID List (TagCustom48h12).vi"/>
 		</Item>
 	</Item>
 	<Item Name="Types" Type="Folder">
@@ -87,11 +92,14 @@
 		<Item Name="AprilTag Detector.lvclass" Type="LVClass" URL="../Apriltag Detector/AprilTag Detector.lvclass"/>
 		<Item Name="Barcode Detector.lvclass" Type="LVClass" URL="../Barcode Detector/Barcode Detector.lvclass"/>
 		<Item Name="QR Code Detector.lvclass" Type="LVClass" URL="../QR Code Detector/QR Code Detector.lvclass"/>
+		<Item Name="QR Code Encoder.lvclass" Type="LVClass" URL="../QR Code Encoder/QR Code Encoder.lvclass"/>
+		<Item Name="WeChat QR Code Detector.lvclass" Type="LVClass" URL="../WeChat QR Code Detector/WeChat QR Code Detector.lvclass"/>
+		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
 		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
-		<Item Name="AprilTag ID List.vi" Type="VI" URL="../AprilTag ID List.vi"/>
+		<Item Name="AprilTag Tag ID List.vi" Type="VI" URL="../AprilTag Tag ID List.vi"/>
+		<Item Name="Generate AprilTag Image Data.vi" Type="VI" URL="../Generate AprilTag Image Data.vi"/>
 		<Item Name="Find Contours.vi" Type="VI" URL="../Find Contours.vi"/>
 		<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
 		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
-		<Item Name="Generate AprilTag Pixel Array.vi" Type="VI" URL="../Generate AprilTag Pixel Array.vi"/>
 	</Item>
 </Library>

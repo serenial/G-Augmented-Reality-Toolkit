@@ -9,7 +9,6 @@
         {
             "name": "base",
             "hidden": true,
-            "toolchainFile": "vcpkg/scripts/buildsystems/vcpkg.cmake",
             "generator": "Ninja"
         },
         {
