@@ -1,0 +1,113 @@
+# .gitlab-ci.yml - GitLab CI/CD configuration for a C++ project with vcpkg as submodule
+
+stages:
+  - build
+
+variables:
+  # Common build settings
+  VCPKG_DEFAULT_BINARY_CACHE: "${CI_PROJECT_DIR}/vcpkg_cache"
+
+# Define cache policies
+.vcpkg_cache_linux:
+  cache:
+    key: vcpkg-cache-linux-$CI_COMMIT_REF_SLUG
+    paths:
+      - vcpkg_cache/
+      - vcpkg/installed/
+    policy: pull-push
+
+.vcpkg_cache_windows:
+  cache:
+    key: vcpkg-cache-windows-$CI_COMMIT_REF_SLUG
+    paths:
+      - vcpkg_cache/
+      - vcpkg/installed/
+    policy: pull-push
+
+# Template for C++ build jobs
+.build_template:
+  stage: build
+  artifacts:
+    paths:
+      - ${BUILD_DIR}/
+
+# Linux build job
+build:linux:
+  extends: 
+    - .build_template
+    - .vcpkg_cache_linux
+  image: gcc:latest
+  tags:
+    - linux
+  before_script:
+    - apt-get update -y
+    - apt-get install -y build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+    - gcc --version
+    - cmake --version
+    # Initialize and update submodules
+    - git submodule update --init --recursive
+    # Bootstrap vcpkg if not already bootstrapped
+    - |
+      if [ ! -f "$VCPKG_ROOT/vcpkg" ]; then
+        echo "Bootstrapping vcpkg..."
+        "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      else
+        echo "vcpkg already bootstrapped"
+      fi
+    # Create binary cache directory
+    - mkdir -p "$VCPKG_DEFAULT_BINARY_CACHE"
+  script:
+    - cmake --preset=linux-desktop-release && cmake --build --preset=linux-desktop-release-build
+  artifacts:
+    name: "linux-build-${CI_COMMIT_SHORT_SHA}"
+    expire_in: 1 week
+
+# Windows build job
+build:windows:
+  extends: 
+    - .build_template
+    - .vcpkg_cache_windows
+  tags:
+    - windows
+  before_script:
+    - 'Write-Host "Using pre-installed Visual Studio"'
+    - 'Write-Host "Checking CMake version: $(cmake --version)"'
+    
+    # Check if Ninja is installed, install if not present
+    - |
+      if (-Not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+        Write-Host "Ninja not found. Installing Ninja..."
+        $ninjaDir = "C:\ninja"
+        if (-Not (Test-Path $ninjaDir)) {
+          New-Item -ItemType Directory -Path $ninjaDir | Out-Null
+        }
+        $ninjaZip = "$ninjaDir\ninja.zip"
+        Invoke-WebRequest -Uri "https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-win.zip" -OutFile $ninjaZip
+        Expand-Archive -Path $ninjaZip -DestinationPath $ninjaDir -Force
+        $env:Path += ";$ninjaDir"
+        [Environment]::SetEnvironmentVariable("Path", $env:Path, "Machine")
+        Write-Host "Ninja installed to $ninjaDir"
+      } else {
+        Write-Host "Ninja is already installed: $(ninja --version)"
+      }
+
+    # Initialize and update submodules
+    - git submodule update --init --recursive
+    # Bootstrap vcpkg if not already bootstrapped
+    - |
+      if (-Not (Test-Path "$env:VCPKG_ROOT\vcpkg.exe")) {
+        Write-Host "Bootstrapping vcpkg..."
+        & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
+      } else {
+        Write-Host "vcpkg already bootstrapped"
+      }
+    # Create binary cache directory
+    - New-Item -ItemType Directory -Path $env:VCPKG_DEFAULT_BINARY_CACHE -Force | Out-Null
+  script:
+    - cp x64-win-build.bat-example x64-win-build.bat
+    - cp x86-win-build.bat-example x86-win-build.bat
+    - ./x64-win-build.bat
+    - ./x86-win-build.bat
+  artifacts:
+    name: "windows-build-${CI_COMMIT_SHORT_SHA}"
+    expire_in: 1 week
