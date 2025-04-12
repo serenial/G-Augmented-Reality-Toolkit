@@ -36,7 +36,7 @@ build:linux:
   extends: 
     - .build_template
     - .vcpkg_cache_linux
-  image: gcc:latest
+  image: kitware/cmake:ci-debian12-aarch64-2025-03-31
   tags:
     - saas-linux-medium-amd64
   before_script:
@@ -48,9 +48,9 @@ build:linux:
     - git submodule update --init --recursive
     # Bootstrap vcpkg if not already bootstrapped
     - |
-      if [ ! -f "vcpkg" ]; then
+      if [ ! -f "vcpkg/vcpkg" ]; then
         echo "Bootstrapping vcpkg..."
-        "bootstrap-vcpkg.sh" -disableMetrics
+        "vcpkg/bootstrap-vcpkg.sh" -disableMetrics
       else
         echo "vcpkg already bootstrapped"
       fi
@@ -95,9 +95,9 @@ build:windows:
     - git submodule update --init --recursive
     # Bootstrap vcpkg if not already bootstrapped
     - |
-      if (-Not (Test-Path "$env:VCPKG_ROOT\vcpkg.exe")) {
+      if (-Not (Test-Path "vcpkg\vcpkg.exe")) {
         Write-Host "Bootstrapping vcpkg..."
-        & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
+        & "vcpkg\bootstrap-vcpkg.bat" -disableMetrics
       } else {
         Write-Host "vcpkg already bootstrapped"
       }
