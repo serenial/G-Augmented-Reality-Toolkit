@@ -41,16 +41,16 @@ build:linux:
     - saas-linux-medium-amd64
   before_script:
     - apt-get update -y
-    - apt-get install -y build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+    - apt-get install -y build-essential g++ python3 cmake linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-distutils ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
     - gcc --version
     - cmake --version
     # Initialize and update submodules
     - git submodule update --init --recursive
     # Bootstrap vcpkg if not already bootstrapped
     - |
-      if [ ! -f "$VCPKG_ROOT/vcpkg" ]; then
+      if [ ! -f "vcpkg" ]; then
         echo "Bootstrapping vcpkg..."
-        "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+        "bootstrap-vcpkg.sh" -disableMetrics
       else
         echo "vcpkg already bootstrapped"
       fi
