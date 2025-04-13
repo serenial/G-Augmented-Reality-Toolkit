@@ -3,10 +3,7 @@
 name: CMake on multiple platforms
 
 on:
-  push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -68,7 +65,7 @@ jobs:
       run: cmake --build . --config Release
 
     - name: Store Build Output
-    - uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.arch }}-${{ matrix.build_target }}
         path: build/shared-binary
