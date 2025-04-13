@@ -1,0 +1,56 @@
+# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
+name: CMake on multiple platforms
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
+
+      # Set up a matrix to run the following 3 configurations:
+      # 1. <Windows, Release, latest MSVC compiler toolchain on the default runner image, default generator>
+      # 2. <Linux, Release, latest GCC compiler toolchain on the default runner image, default generator>
+      #
+      # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build_type: [Release]
+        arch: [x86, x64]
+        include:
+          - os: windows-latest
+            build_target: windows
+          - os: ubuntu-latest
+            build_target: linux-desktop
+        exclude:
+          - os: ubuntu-latest
+            arch: x86
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: vcpkg build
+      id: vcpkg
+      uses: johnwason/vcpkg-action@v6
+      with:
+        manifest-dir: ${{ github.workspace }} # Set to directory containing vcpkg.json
+        token: ${{ github.token }}
+        github-binarycache: true
+        
+    - name: Setup Ninja
+      uses: ashutoshvarma/setup-ninja@master
+
+      # setup msvc build type on windows targets - do nothing on linux
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: ${{ matrix.arch }}
+
+    - name: Build
+      run: cmake --preset=${{ matrix.build_target }}-release && cmake --build --preset=${{ matrix.build_target }}-release-build
