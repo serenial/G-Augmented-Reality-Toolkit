@@ -8,64 +8,40 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-
     strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
-
-      # Set up a matrix to run the following 3 configurations:
-      # 1. <Windows, Release, latest MSVC compiler toolchain on the default runner image, default generator>
-      # 2. <Linux, Release, latest GCC compiler toolchain on the default runner image, default generator>
-      #
-      # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         os: [ubuntu-latest, windows-latest]
-        build_type: [Release]
         arch: [x86, x64]
         include:
           - os: windows-latest
-            build_target: windows-static
+            build_target: windows
           - os: ubuntu-latest
-            build_target: linux
+            build_target: linux-desktop
         exclude:
           - os: ubuntu-latest
             arch: x86
-
+        
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - uses: lukka/get-cmake@latest
     - name: Install OS dependencies
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: sudo apt install -y build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
-    - name: vcpkg build
-      id: vcpkg
-      uses: johnwason/vcpkg-action@v6
+    
+    - name: Setup VCPKG
+      uses: lukka/run-vcpkg@v11
+
+    - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
+      uses: lukka/run-cmake@v10
       with:
-        manifest-dir: ${{ github.workspace }} # Set to directory containing vcpkg.json
-        triplet: ${{ matrix.arch }}-${{ matrix.build_target }}
-        token: ${{ github.token }}
-        github-binarycache: true
-        
-    - name: Setup Ninja
-      uses: ashutoshvarma/setup-ninja@master
-
-      # setup msvc build type on windows targets - do nothing on linux
-    - uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: ${{ matrix.arch }}
-
-    - name: Create build directory
-      run: mkdir -p build
-
-    - name: Configure CMake
-      working-directory: build
-      run: cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=${{ matrix.arch }}-${{ matrix.build_target }}
-
-    - name: Build
-      working-directory: build
-      run: cmake --build . --config Release
+          configurePreset: ${{ matrix.build_target }}-release
+          buildPreset: ${{ matrix.build_target }}-release-build
 
     - name: Store Build Output
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.arch }}-${{ matrix.build_target }}
-        path: build/shared-binary
+        path: build/**/shared-binary/gartookit_*
