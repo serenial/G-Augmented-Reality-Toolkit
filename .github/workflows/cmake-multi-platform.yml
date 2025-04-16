@@ -9,12 +9,12 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     env:
-      VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.build_target }}${{ matrix.arch == 'x64' && '-release' || '' }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        arch: [x86, x64]
+        triplet: [x86-windows-static, x64-windows-static-release, x64-linux-release]
         include:
           - os: windows-latest
             build_target: windows
@@ -22,7 +22,9 @@ jobs:
             build_target: linux-desktop
         exclude:
           - os: ubuntu-latest
-            arch: x86
+            triplet: [x86-windows-static, x64-windows-static-release]
+          - os: windows-latest
+            triplet: x64-linux-release
         
     steps:
     - uses: actions/checkout@v4
@@ -45,7 +47,7 @@ jobs:
     - name: Store Build Output
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.arch }}-${{ matrix.build_target }}
+        name: ${{ matrix.triplet }}
         path: |
          ${{ github.workspace }}/bin
          ${{ github.workspace }}/build/vcpkg_installed/**/share
