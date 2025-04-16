@@ -5,9 +5,10 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
+#include <stddef.h>
 #include <string>
 #include <type_traits>
-#include <stddef.h>
 
 #include "./set_packing.hpp"
 
