@@ -44,4 +44,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.arch }}-${{ matrix.build_target }}
-        path: build/**/shared-binary/gartookit_*
+        path: |
+         ${{ github.workspace }}/LabVIEW/common/bin
+         ${{ github.workspace }}/build/**/vcpkg_installed/**/share
