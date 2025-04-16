@@ -40,7 +40,7 @@ jobs:
       uses: lukka/run-cmake@v10
       with:
           configurePreset: 
-          configurePresetAdditionalArgs: "['-DVCPKG_TARGET_TRIPLET=${{ ENV.VCPKG_DEFAULT_TRIPLET }}']"
+          configurePresetAdditionalArgs: "['-DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }}']"
           buildPreset: ci-build
 
     - name: Store Build Output
