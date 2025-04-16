@@ -14,17 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        triplet: 
-          - [x86-windows-static, x64-windows-static-release]
-          - x64-linux-release
-        include:
-          - os: windows-latest
-            build_target: windows
-          - os: ubuntu-latest
-            build_target: linux-desktop
+        triplet: [x86-windows-static, x64-windows-static-release, x64-linux-release]
         exclude:
           - os: ubuntu-latest
-            triplet: [x86-windows-static, x64-windows-static-release]
+            triplet: x86-windows-static
+          - os: ubuntu-latest
+            triplet: x64-windows-static-release
           - os: windows-latest
             triplet: x64-linux-release
         
