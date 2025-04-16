@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    env:
+      VCPKG_TARGET_TRIPLET: ${{ matrix.arch }}-${{ matrix.build_target }}${{ matrix.arch == 'x64' && '-release' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -37,13 +39,13 @@ jobs:
     - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
       uses: lukka/run-cmake@v10
       with:
-          configurePreset: ${{ matrix.build_target }}-release
-          buildPreset: ${{ matrix.build_target }}-release-build
+          configurePreset: ci
+          buildPreset: ci-build
 
     - name: Store Build Output
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.arch }}-${{ matrix.build_target }}
         path: |
-         ${{ github.workspace }}/LabVIEW/common/bin
-         ${{ github.workspace }}/build/**/vcpkg_installed/**/share
+         ${{ github.workspace }}/bin
+         ${{ github.workspace }}/build/vcpkg_installed/**/share
