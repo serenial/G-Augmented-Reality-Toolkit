@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     env:
-      VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.triplet_platform}}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.triplet_platform}}${{ matrix.arch == 'x64' && '-release' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -19,7 +19,7 @@ jobs:
           - os: windows-latest
             triplet_platform: windows-static # Windows static-release triplets have incorrect Run Time Linkage so just use static
           - os: ubuntu-latest
-            triplet_platform: linux-release
+            triplet_platform: linux
         exclude:
         - os: ubuntu-latest
           arch: x86
