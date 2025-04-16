@@ -39,7 +39,8 @@ jobs:
     - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
       uses: lukka/run-cmake@v10
       with:
-          configurePreset: ci
+          configurePreset: 
+          configurePresetAdditionalArgs: "['-DVCPKG_TARGET_TRIPLET=${{ ENV.VCPKG_DEFAULT_TRIPLET }}']"
           buildPreset: ci-build
 
     - name: Store Build Output
