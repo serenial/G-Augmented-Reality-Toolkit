@@ -17,7 +17,8 @@
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}",
+                "VCPKG_TARGET_TRIPLET": "$penv{VCPKG_DEFAULT_TRIPLET}"
             }
         },
         {
