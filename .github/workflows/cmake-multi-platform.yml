@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     env:
-      VCPKG_TARGET_TRIPLET: ${{ matrix.arch }}-${{ matrix.build_target }}${{ matrix.arch == 'x64' && '-release' || '' }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.build_target }}${{ matrix.arch == 'x64' && '-release' || '' }}
     strategy:
       fail-fast: false
       matrix:

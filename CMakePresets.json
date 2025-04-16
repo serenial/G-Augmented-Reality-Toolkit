@@ -89,7 +89,7 @@
             "configurePreset": "linux-desktop-release",
             "targets": "install",
             "configuration": "Release"
-        }
+        },
         {
             "name": "ci-build",
             "configurePreset": "ci",
