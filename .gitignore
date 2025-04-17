@@ -41,11 +41,6 @@
 # CMake Build Files
 build/*
 
-# Custom Batch Files
-*.bat
-
-# Custom Script Files
-*.sh
 
 #########################
 # Python Related Ignore #
