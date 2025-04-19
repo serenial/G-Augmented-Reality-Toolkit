@@ -77,6 +77,8 @@ elseif(UNIX)
   target_compile_options(g_ar_toolkit PRIVATE
     "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
   )
+  # link libraries (libm)
+  target_link_libraries(g_ar_toolkit PRIVATE m)
 
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
