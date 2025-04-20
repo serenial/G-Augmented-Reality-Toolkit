@@ -36,6 +36,11 @@ find_package(apriltag REQUIRED)
 # Find pcl
 find_package(PCL 1.15.0 CONFIG REQUIRED COMPONENTS registration)
 
+# Find static libm on LINUX
+if(UNIX)
+  find_library(M_LIB_STATIC NAMES libm.a REQUIRED)
+endif()
+
 # specify shared-library target
 add_library(g_ar_toolkit SHARED)
 
@@ -78,7 +83,7 @@ elseif(UNIX)
     "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
   )
   # link libraries (libm)
-  target_link_libraries(g_ar_toolkit PRIVATE m)
+  target_link_libraries(g_ar_toolkit PRIVATE ${M_LIB_STATIC})
 
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
