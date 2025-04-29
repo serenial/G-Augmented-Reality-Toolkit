@@ -35,7 +35,9 @@ error_cluster_ptr.copy_from_exception(std::current_exception(),__func__);
     {
         try
         {
-            cv::Rodrigues(rmat->as_cv_mat(), rvec_ptr->to_vec3d());
+            cv::Vec3d rvec;
+            cv::Rodrigues(rmat->as_cv_mat(), rvec);
+            *rvec_ptr = rvec;
         }
         catch (...)
         {
