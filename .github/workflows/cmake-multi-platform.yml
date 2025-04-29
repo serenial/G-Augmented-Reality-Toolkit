@@ -13,15 +13,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-22.04, windows-latest]
         arch: [x86, x64]
         include:
           - os: windows-latest
             triplet_platform: windows-static # Windows static-release triplets have incorrect Run Time Linkage so just use static
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             triplet_platform: linux
         exclude:
-        - os: ubuntu-latest
+        - os: ubuntu-22.04
           arch: x86
         
     steps:
@@ -30,8 +30,8 @@ jobs:
         submodules: true
     - uses: lukka/get-cmake@latest
     - name: Install OS dependencies
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: sudo apt install -y build-essential g++ python3  linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+      if: ${{ matrix.os == 'ubuntu-22.04' }}
+      run: sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
     
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11
@@ -45,7 +45,7 @@ jobs:
     - name: Store Build Output
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ env.VCPKG_DEFAULT_TRIPLET }}
+        name: g_augmented_reality_${{ env.VCPKG_DEFAULT_TRIPLET }}
         path: |
          ${{ github.workspace }}/bin
          ${{ github.workspace }}/build/vcpkg_installed/**/share
