@@ -25,7 +25,7 @@ namespace
         uint16_t m_size_dim_1;
         int32_t m_step_dim_1;
     };
-#include "g_ar_toolkit/lv_interop/set_packing.hpp"
+#include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 
     using LV_RawMemoryPtrInfoPtr_t = LV_Ptr_t<LV_RawMemoryPtrInfo_t>;
 

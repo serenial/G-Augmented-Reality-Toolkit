@@ -21,6 +21,7 @@ target_sources(g_ar_toolkit PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/image_canny.cpp
     ${CMAKE_CURRENT_LIST_DIR}/image_copy.cpp
     ${CMAKE_CURRENT_LIST_DIR}/image_copy_raw_memory_ptr.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/image_copy_from_buffer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/image_copy_pixmap.cpp
     ${CMAKE_CURRENT_LIST_DIR}/image_copy_array.cpp
     ${CMAKE_CURRENT_LIST_DIR}/image_negate.cpp

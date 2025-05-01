@@ -40,7 +40,12 @@ extern "C"
 
             cv::Mat bgr(src.size(), CV_8UC3);
             cv::cvtColor(src, bgr, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
-            cv::imwrite(dst_path.string(), bgr);
+            
+            auto success = cv::imwrite(dst_path.string(), bgr);
+
+            if(!success){
+                throw std::invalid_argument("Unable to write file to \"" + std::string(path_string_handle) + "\".");
+            }
         }
         catch (...)
         {

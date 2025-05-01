@@ -14,4 +14,6 @@ elif [[ "$1" -eq "debug" ]];
     BUILD_TYPE="debug"
 fi
 
+bash vcpkg/bootstrap-vcpkg.sh
+
 cmake --preset=linux-desktop-$BUILD_TYPE && cmake --build --preset=linux-desktop-$BUILD_TYPE-build
