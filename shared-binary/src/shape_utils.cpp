@@ -35,7 +35,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_shape_approx_poly_convex_hull(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_shape_approx_poly_n(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_ShapePointsArrayHandle_t points_array_handle,
         uint8_t n_sides,
