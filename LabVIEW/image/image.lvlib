@@ -35,6 +35,7 @@
 		<Item Name="BitwiseNOTImageCore.vim" Type="VI" URL="../BitwiseNOTImageCore.vim"/>
 		<Item Name="BlurGaussianCore.vim" Type="VI" URL="../BlurGaussianCore.vim"/>
 		<Item Name="BlurMedianCore.vim" Type="VI" URL="../BlurMedianCore.vim"/>
+		<Item Name="CopyBufferToImageCore.vim" Type="VI" URL="../CopyBufferToImageCore.vim"/>
 		<Item Name="CopyImageToPixmapCore.vim" Type="VI" URL="../CopyImageToPixmapCore.vim"/>
 		<Item Name="CopyImageToRawMemoryCore.vim" Type="VI" URL="../CopyImageToRawMemoryCore.vim"/>
 		<Item Name="CopyPixmapToImageCore.vim" Type="VI" URL="../CopyPixmapToImageCore.vim"/>
@@ -110,6 +111,10 @@
 			<Item Name="Copy Array to Image (Greyscale).vi" Type="VI" URL="../Copy Array to Image (Greyscale).vi"/>
 			<Item Name="Copy Array to Image (ARGB).vi" Type="VI" URL="../Copy Array to Image (ARGB).vi"/>
 			<Item Name="Copy Array to Image (Pixels).vi" Type="VI" URL="../Copy Array to Image (Pixels).vi"/>
+		</Item>
+		<Item Name="Copy Buffer to Image" Type="Folder">
+			<Item Name="Copy Buffer to Image (ARGB).vi" Type="VI" URL="../Copy Buffer to Image (ARGB).vi"/>
+			<Item Name="Copy Buffer to Image (Greyscale).vi" Type="VI" URL="../Copy Buffer to Image (Greyscale).vi"/>
 		</Item>
 		<Item Name="Copy Image to Memory Address" Type="Folder">
 			<Item Name="Copy Image to Memory Address (ARGB).vi" Type="VI" URL="../Copy Image to Memory Address (ARGB).vi"/>
@@ -285,6 +290,7 @@
 			<Item Name="ARGB Colour.ctl" Type="VI" URL="../ARGB Colour.ctl"/>
 			<Item Name="ARGB Image.ctl" Type="VI" URL="../ARGB Image.ctl"/>
 			<Item Name="Border Type.ctl" Type="VI" URL="../Border Type.ctl"/>
+			<Item Name="Buffer Information.ctl" Type="VI" URL="../Buffer Information.ctl"/>
 			<Item Name="Canny Aperture Size.ctl" Type="VI" URL="../Canny Aperture Size.ctl"/>
 			<Item Name="Destination Sizing Mode.ctl" Type="VI" URL="../Destination Sizing Mode.ctl"/>
 			<Item Name="Ellipse Angles.ctl" Type="VI" URL="../Ellipse Angles.ctl"/>
@@ -315,6 +321,7 @@
 		<Item Name="Compute 2D Rotation Affine Matrix.vi" Type="VI" URL="../Compute 2D Rotation Affine Matrix.vi"/>
 		<Item Name="Compute Colour Pair.vi" Type="VI" URL="../Compute Colour Pair.vi"/>
 		<Item Name="Copy Array to Image.vi" Type="VI" URL="../Copy Array to Image.vi"/>
+		<Item Name="Copy Buffer to Image.vi" Type="VI" URL="../Copy Buffer to Image.vi"/>
 		<Item Name="Copy Image to Memory Address.vi" Type="VI" URL="../Copy Image to Memory Address.vi"/>
 		<Item Name="Copy Image to Pixmap.vi" Type="VI" URL="../Copy Image to Pixmap.vi"/>
 		<Item Name="Copy Memory Address to Image.vi" Type="VI" URL="../Copy Memory Address to Image.vi"/>
