@@ -12,13 +12,15 @@ if "%1" == "debug" (
     echo ** Building debug ***
 )
 
-cd %SCRIPT_DIR%
+cd %SCRIPT_DIR%/vcpkg
 
-call vcpkg/bootstrap-vcpkg.bat
+call bootstrap-vcpkg.sh
 
 ::REM vcpkg can create a cmd context with all the settings we need but we cannot interact with 
 ::REM it from a batch file so echo out all the variables and then set them in this cmd context
 
-FOR /F "tokens=*" %%I in ('vcpkg/vcpkg env --triplet %VCPKG_DEFAULT_TRIPLET% set') DO @SET %%I
+FOR /F "tokens=*" %%I in ('vcpkg env --triplet %VCPKG_DEFAULT_TRIPLET% set') DO @SET %%I
+
+cd ../
 
 cmake --preset=windows-%BUILD_TYPE% && cmake --build --preset=windows-%BUILD_TYPE%-build

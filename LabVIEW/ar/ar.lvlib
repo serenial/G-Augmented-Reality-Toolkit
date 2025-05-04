@@ -13,7 +13,7 @@
 	<Item Name="Private" Type="Folder">
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
 		<Item Name="Types" Type="Folder">
-			<Item Name="PlaneCoeffecients.ctl" Type="VI" URL="../PlaneCoeffecients.ctl"/>
+			<Item Name="Plane Coefficients.ctl" Type="VI" URL="../Plane Coefficients.ctl"/>
 			<Item Name="SolvePnPFlags.ctl" Type="VI" URL="../SolvePnPFlags.ctl"/>
 			<Item Name="Material Descriptor.ctl" Type="VI" URL="../Material Descriptor.ctl"/>
 			<Item Name="PointSet.ctl" Type="VI" URL="../PointSet.ctl"/>
@@ -44,7 +44,7 @@
 		<Item Name="Camera Parameters Estimate.ctl" Type="VI" URL="../Camera Parameters Estimate.ctl"/>
 		<Item Name="Correspondence Index.ctl" Type="VI" URL="../Correspondence Index.ctl"/>
 		<Item Name="Model Bounding Box.ctl" Type="VI" URL="../Model Bounding Box.ctl"/>
-		<Item Name="Plane Alignment Coeffecients.ctl" Type="VI" URL="../Plane Alignment Coeffecients.ctl"/>
+		<Item Name="Plane Alignment Coefficients.ctl" Type="VI" URL="../Plane Alignment Coefficients.ctl"/>
 		<Item Name="Point Correspondence Params.lvclass" Type="LVClass" URL="../Point Correspondence Params/Point Correspondence Params.lvclass"/>
 		<Item Name="Point Correspondence Set.ctl" Type="VI" URL="../Point Correspondence Set.ctl"/>
 		<Item Name="Point Correspondence Sets.ctl" Type="VI" URL="../Point Correspondence Sets.ctl"/>

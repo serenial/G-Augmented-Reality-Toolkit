@@ -12,6 +12,7 @@
 </Property>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Approximate Polygon" Type="Folder">
+			<Item Name="Approximate Polygon (Convex-Hull).vi" Type="VI" URL="../Approximate Polygon (Convex-Hull).vi"/>
 			<Item Name="Approximate Polygon (Douglas-Peucker).vi" Type="VI" URL="../Approximate Polygon (Douglas-Peucker).vi"/>
 		</Item>
 	</Item>

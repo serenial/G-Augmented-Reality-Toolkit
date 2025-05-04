@@ -1,7 +1,6 @@
 {
   "name": "opencv4",
-  "version": "4.10.0",
-  "port-version": 4,
+  "version": "4.11.0",
   "description": "computer vision library",
   "homepage": "https://github.com/opencv/opencv",
   "license": "Apache-2.0",
@@ -23,6 +22,10 @@
   "default-features": [
     "calib3d",
     {
+      "name": "directml",
+      "platform": "windows & !uwp & !mingw"
+    },
+    {
       "name": "dnn",
       "platform": "!android"
     },
@@ -42,6 +45,10 @@
     "highgui",
     "intrinsics",
     "jpeg",
+    {
+      "name": "msmf",
+      "platform": "windows & !uwp & !mingw"
+    },
     "png",
     "quirc",
     "thread",
@@ -59,6 +66,15 @@
         "ade"
       ]
     },
+    "aravis": {
+      "description": "aravis",
+      "dependencies": [
+        {
+          "name": "aravis",
+          "default-features": false
+        }
+      ]
+    },
     "calib3d": {
       "description": "calib3d module"
     },
@@ -68,6 +84,10 @@
     "contrib": {
       "description": "opencv_contrib module",
       "dependencies": [
+        {
+          "name": "hdf5",
+          "platform": "!uwp & !(windows & (arm | arm64)) & !ios"
+        },
         {
           "name": "opencv4",
           "default-features": false,
@@ -108,6 +128,10 @@
       "dependencies": [
         "libdc1394"
       ]
+    },
+    "directml": {
+      "description": "Build with DirectML support",
+      "supports": "windows & !uwp & !mingw"
     },
     "dnn": {
       "description": "Enable dnn module",
@@ -233,23 +257,16 @@
       "description": "Enable Intel Integrated Performance Primitives",
       "supports": "(osx & x64) | (windows & (x64 | x86)) | (linux & (x64 | x86))"
     },
-    "jasper": {
-      "description": "JPEG 2000 support for opencv (deprecated)",
-      "dependencies": [
-        "jasper"
-      ]
-    },
     "jpeg": {
       "description": "JPEG support for opencv",
       "dependencies": [
         "libjpeg-turbo"
       ]
     },
-    "lapack": {
-      "description": "LAPACK support for opencv",
+    "jpegxl": {
+      "description": "JPEGXL support for opencv",
       "dependencies": [
-        "blas",
-        "lapack"
+        "libjxl"
       ]
     },
     "msmf": {
@@ -261,6 +278,7 @@
     },
     "opencl": {
       "description": "Enable opencl support",
+      "supports": "!osx",
       "dependencies": [
         "opencl"
       ]
@@ -273,6 +291,7 @@
     },
     "opengl": {
       "description": "opengl support for opencv",
+      "supports": "!osx",
       "dependencies": [
         "opengl"
       ]
