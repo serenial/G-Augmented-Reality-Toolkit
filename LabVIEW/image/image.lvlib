@@ -113,8 +113,10 @@
 			<Item Name="Copy Array to Image (Pixels).vi" Type="VI" URL="../Copy Array to Image (Pixels).vi"/>
 		</Item>
 		<Item Name="Copy Buffer to Image" Type="Folder">
-			<Item Name="Copy Buffer to Image (ARGB).vi" Type="VI" URL="../Copy Buffer to Image (ARGB).vi"/>
-			<Item Name="Copy Buffer to Image (Greyscale).vi" Type="VI" URL="../Copy Buffer to Image (Greyscale).vi"/>
+			<Item Name="Copy Buffer to Image (Custom Stride ARGB).vi" Type="VI" URL="../Copy Buffer to Image (Custom Stride ARGB).vi"/>
+			<Item Name="Copy Buffer to Image (Custom Stride Greyscale).vi" Type="VI" URL="../Copy Buffer to Image (Custom Stride Greyscale).vi"/>
+			<Item Name="Copy Buffer to Image (Default Stride ARGB).vi" Type="VI" URL="../Copy Buffer to Image (Default Stride ARGB).vi"/>
+			<Item Name="Copy Buffer to Image (Default Stride Greyscale).vi" Type="VI" URL="../Copy Buffer to Image (Default Stride Greyscale).vi"/>
 		</Item>
 		<Item Name="Copy Image to Memory Address" Type="Folder">
 			<Item Name="Copy Image to Memory Address (ARGB).vi" Type="VI" URL="../Copy Image to Memory Address (ARGB).vi"/>
