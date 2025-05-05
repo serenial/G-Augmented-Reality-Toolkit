@@ -476,7 +476,7 @@ find_dependency(Threads)")
 if("ade" IN_LIST FEATURES)
   string(APPEND DEPS_STRING "\nfind_dependency(ade)")
 endif()
-# Skip HDF5 and Tesseract
+# Skip HDF5 and Tesseract but ensure that iconv is added
 # if("contrib" IN_LIST FEATURES AND NOT VCPKG_TARGET_IS_UWP AND NOT VCPKG_TARGET_IS_IOS AND NOT (VCPKG_TARGET_IS_WINDOWS AND VCPKG_TARGET_ARCHITECTURE MATCHES "^arm"))
 #   string(APPEND DEPS_STRING "
 # # C language is required for try_compile tests in FindHDF5
@@ -484,6 +484,9 @@ endif()
 # find_dependency(HDF5)
 # find_dependency(Tesseract)")
 # endif()
+if(VCPKG_TARGET_IS_LINUX)
+  string(APPEND DEPS_STRING "\nfind_package(Iconv)")
+endif()
 if("eigen" IN_LIST FEATURES)
   string(APPEND DEPS_STRING "\nfind_dependency(Eigen3 CONFIG)")
 endif()
