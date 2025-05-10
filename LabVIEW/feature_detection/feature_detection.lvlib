@@ -73,6 +73,9 @@
 			<Item Name="AprilTag ID List (TagStandard52h13).vi" Type="VI" URL="../AprilTag ID List (TagStandard52h13).vi"/>
 			<Item Name="AprilTag ID List (TagCustom48h12).vi" Type="VI" URL="../AprilTag ID List (TagCustom48h12).vi"/>
 		</Item>
+		<Item Name="ZXing Read Barcodes" Type="Folder">
+			<Item Name="ZXing Read Barcodes (Greyscale All).vi" Type="VI" URL="../ZXing Read Barcodes (Greyscale All).vi"/>
+		</Item>
 	</Item>
 	<Item Name="Types" Type="Folder">
 		<Item Name="Chessboard Corner Info.ctl" Type="VI" URL="../Chessboard Corner Info.ctl"/>

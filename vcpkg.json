@@ -16,10 +16,10 @@
         "png",
         "thread",
         "tiff",
-        "webp",
-        "quirc"
+        "webp"
       ]
     },
-    "tinyobjloader"
+    "tinyobjloader",
+    "nu-book-zxing-cpp"
   ]
 }

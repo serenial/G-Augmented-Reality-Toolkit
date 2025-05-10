@@ -3,6 +3,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <opencv2/core/mat.hpp>
+#include <zxing/ImageView.h>
 
 #include "./lv_types.hpp"
 
@@ -51,6 +52,7 @@ namespace g_ar_toolkit
         operator cv::Mat *();
         operator const cv::Mat &() const;
         operator cv::Mat &();
+        operator const ZXing::ImageView();
 
     private:
         struct image_persistant_data_t

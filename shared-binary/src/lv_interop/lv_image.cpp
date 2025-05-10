@@ -276,3 +276,7 @@ cv::Mat lv_image::operator()(cv::Rect2i rect) const
 {
     return data->mat(rect);
 }
+
+lv_image::operator const ZXing::ImageView(){
+    return ZXing::ImageView{mat().data, mat().cols, mat().rows, is_bgra()? ZXing::ImageFormat::BGRA : ZXing::ImageFormat::Lum};
+}

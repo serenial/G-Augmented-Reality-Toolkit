@@ -33,6 +33,9 @@ find_package(Eigen3 REQUIRED)
 # Find apriltag
 find_package(apriltag REQUIRED)
 
+# Find ZXing
+find_package(ZXing CONFIG REQUIRED)
+
 # specify shared-library target
 add_library(g_ar_toolkit SHARED)
 
@@ -51,8 +54,8 @@ target_include_directories(g_ar_toolkit
 
 # plaform specific definitions
 if(WIN32)
-  # windows.h definitions
-  target_compile_definitions(g_ar_toolkit PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068)
+  # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
+  target_compile_definitions(g_ar_toolkit PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068 _ALLOW_COROUTINE_ABI_MISMATCH)
   target_link_libraries(g_ar_toolkit PRIVATE
     mf
     mfplat
@@ -106,6 +109,8 @@ target_link_libraries(g_ar_toolkit PRIVATE
   tinyobjloader::tinyobjloader
   apriltag::apriltag
   Eigen3::Eigen
+  ZXing::Core
+  ZXing::ZXing
 )
 
 # Install Shared Library

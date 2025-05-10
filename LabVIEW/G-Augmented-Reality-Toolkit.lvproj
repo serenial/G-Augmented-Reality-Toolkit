@@ -46,6 +46,7 @@
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
 		<Item Name="COPYRIGHT" Type="Document" URL="../COPYRIGHT"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
+		<Item Name="zx.vi" Type="VI" URL="../../../../../Users/john/Desktop/zx.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
@@ -213,7 +214,6 @@
 			<Item Name="CDK_sTypeDef_ProductVersion.ctl" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_sTypeDef_ProductVersion.ctl"/>
 			<Item Name="CDK_Utility_GetSetStringVersion.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_Utility_GetSetStringVersion.vi"/>
 			<Item Name="CDK_GLOBAL_STRINGS.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_GLOBAL_STRINGS.vi"/>
-			<Item Name="Find Point Correspondences.vi" Type="VI" URL="../ar/Find Point Correspondences.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
