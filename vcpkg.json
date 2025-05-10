@@ -16,20 +16,10 @@
         "png",
         "thread",
         "tiff",
-        "webp"
+        "webp",
+        "quirc"
       ]
     },
-    "tinyobjloader",
-    "pcl"
-  ],
-  "overrides": [
-    {
-      "name": "apriltag",
-      "version": "3.4.2"
-    },
-    {
-      "name": "opencv4",
-      "version": "4.10.0#4"
-    }
+    "tinyobjloader"
   ]
 }

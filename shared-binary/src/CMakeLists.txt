@@ -47,6 +47,5 @@ target_sources(g_ar_toolkit PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/ar_solve_pnp.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ar_rodrigues.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ar_quaternion.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ar_point_correspondences.cpp
     ${CMAKE_CURRENT_LIST_DIR}/shape_utils.cpp
 )

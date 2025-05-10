@@ -33,9 +33,6 @@ find_package(Eigen3 REQUIRED)
 # Find apriltag
 find_package(apriltag REQUIRED)
 
-# Find pcl
-find_package(PCL 1.15.0 CONFIG REQUIRED COMPONENTS registration)
-
 # specify shared-library target
 add_library(g_ar_toolkit SHARED)
 
@@ -109,7 +106,6 @@ target_link_libraries(g_ar_toolkit PRIVATE
   tinyobjloader::tinyobjloader
   apriltag::apriltag
   Eigen3::Eigen
-  ${PCL_LIBRARIES}
 )
 
 # Install Shared Library

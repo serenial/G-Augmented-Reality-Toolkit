@@ -13,11 +13,6 @@ LV_ImagePointFloat_t::operator cv::Point2d() const
     return cv::Point2d{m_x, m_y};
 }
 
-LV_ImagePointFloat_t::operator pcl::PointXY() const
-{
-    return pcl::PointXY(m_x, m_y);
-}
-
 LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point2f &point)
 {
     m_x = point.x;
@@ -26,13 +21,6 @@ LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point2f &point)
 }
 
 LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point2d &point)
-{
-    m_x = point.x;
-    m_y = point.y;
-    return *this;
-}
-
-LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const pcl::PointXY &point)
 {
     m_x = point.x;
     m_y = point.y;
@@ -109,11 +97,6 @@ LV_Vec3Double_t::operator cv::Point3f() const
     return cv::Point3f{static_cast<float>(m_x), static_cast<float>(m_y), static_cast<float>(m_z)};
 }
 
-LV_Vec3Double_t::operator pcl::PointXYZ() const
-{
-    return pcl::PointXYZ{static_cast<float>(m_x), static_cast<float>(m_y), static_cast<float>(m_z)};
-}
-
 cv::Mat LV_Vec3Double_t::as_cv_mat()
 {
     return cv::Mat{1, 3, CV_64F, &m_x};
@@ -167,12 +150,5 @@ LV_Vec3Double_t &LV_Vec3Double_t::operator=(const float a[3])
     m_x = a[0];
     m_y = a[1];
     m_z = a[2];
-    return *this;
-}
-LV_Vec3Double_t &LV_Vec3Double_t::operator=(const pcl::PointXYZ &p)
-{
-    m_x = p.x;
-    m_y = p.y;
-    m_z = p.z;
     return *this;
 }

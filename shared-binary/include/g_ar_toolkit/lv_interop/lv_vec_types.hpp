@@ -2,7 +2,6 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
-#include <pcl/point_types.h>
 
 #include "./lv_types.hpp"
 #include "./lv_array_1d.hpp"
@@ -18,11 +17,8 @@ namespace g_ar_toolkit
             double m_x,m_y;
             operator cv::Point2f() const;
             operator cv::Point2d() const;
-            operator pcl::PointXY() const;
-            operator pcl::PointXYZ() const; // 2d points as 3d
             LV_ImagePointFloat_t& operator=(const cv::Point2f &);
             LV_ImagePointFloat_t& operator=(const cv::Point2d &);
-            LV_ImagePointFloat_t& operator=(const pcl::PointXY &);
             LV_ImagePointFloat_t& operator=(const double[2]);
             LV_ImagePointFloat_t& copy_from(const float*);
         };
@@ -52,7 +48,6 @@ namespace g_ar_toolkit
             operator cv::Vec3f() const;
             operator cv::Point3d() const;
             operator cv::Point3f() const;
-            operator pcl::PointXYZ() const;
             operator cv::Mat();
             cv::Mat as_cv_mat();
             cv::Vec3d to_vec3d();
@@ -62,7 +57,6 @@ namespace g_ar_toolkit
             LV_Vec3Double_t& operator=(const cv::Point3d&);
             LV_Vec3Double_t& operator=(const cv::Point3f&);
             LV_Vec3Double_t& operator=(const float[3]);
-            LV_Vec3Double_t& operator=(const pcl::PointXYZ &);
         };
 
 using LV_ImagePointFloatPtr_t = LV_Ptr_t<LV_ImagePointFloat_t>;

@@ -108,7 +108,6 @@
 		<Item Name="Estimate Affine.vi" Type="VI" URL="../Estimate Affine.vi"/>
 		<Item Name="Estimate Absolute Orientation.vi" Type="VI" URL="../Estimate Absolute Orientation.vi"/>
 		<Item Name="Find Homography.vi" Type="VI" URL="../Find Homography.vi"/>
-		<Item Name="Find Point Correspondences.vi" Type="VI" URL="../Find Point Correspondences.vi"/>
 		<Item Name="Transformation Matrix to Pose.vi" Type="VI" URL="../Transformation Matrix to Pose.vi"/>
 	</Item>
 </Library>
