@@ -92,6 +92,7 @@
 		<Item Name="Hough Circle Result.ctl" Type="VI" URL="../Hough Circle Result.ctl"/>
 	</Item>
 	<Item Name="API" Type="Folder">
+		<Item Name="ZXing Options.lvclass" Type="LVClass" URL="../ZXing Options/ZXing Options.lvclass"/>
 		<Item Name="AprilTag Detector.lvclass" Type="LVClass" URL="../Apriltag Detector/AprilTag Detector.lvclass"/>
 		<Item Name="Barcode Detector.lvclass" Type="LVClass" URL="../Barcode Detector/Barcode Detector.lvclass"/>
 		<Item Name="QR Code Detector.lvclass" Type="LVClass" URL="../QR Code Detector/QR Code Detector.lvclass"/>
@@ -105,4 +106,5 @@
 		<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
 		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 	</Item>
+	<Item Name="ZXingCore.vim" Type="VI" URL="../ZXingCore.vim"/>
 </Library>
