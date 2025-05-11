@@ -46,7 +46,6 @@
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
 		<Item Name="COPYRIGHT" Type="Document" URL="../COPYRIGHT"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
-		<Item Name="zx.vi" Type="VI" URL="../../../../../Users/john/Desktop/zx.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>

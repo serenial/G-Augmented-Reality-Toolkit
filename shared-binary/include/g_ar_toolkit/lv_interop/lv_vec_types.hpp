@@ -2,6 +2,7 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
+#include <ZXing/Point.h>
 
 #include "./lv_types.hpp"
 #include "./lv_array_1d.hpp"
@@ -21,6 +22,7 @@ namespace g_ar_toolkit
             LV_ImagePointFloat_t& operator=(const cv::Point2d &);
             LV_ImagePointFloat_t& operator=(const double[2]);
             LV_ImagePointFloat_t& copy_from(const float*);
+            LV_ImagePointFloat_t& operator=(const ZXing::PointI&);
         };
 
         struct LV_ImagePointInt_t{
@@ -28,6 +30,7 @@ namespace g_ar_toolkit
             operator cv::Point2i() const;
             LV_ImagePointInt_t& operator=(const cv::Point2i &);
             LV_ImagePointInt_t& copy_from(const int*);
+            LV_ImagePointInt_t& operator=(const ZXing::PointI&);
         };
 
 

@@ -27,6 +27,13 @@ LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point2d &point)
     return *this;
 }
 
+LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const ZXing::PointI &point)
+{
+    m_x = point.x;
+    m_y = point.y;
+    return *this;
+}
+
 LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const double array[2])
 {
     m_x = array[0];
@@ -57,6 +64,12 @@ LV_ImagePointInt_t &LV_ImagePointInt_t::copy_from(const int *element_ptr)
 {
     m_x = *element_ptr++;
     m_y = *element_ptr;
+    return *this;
+}
+
+LV_ImagePointInt_t &LV_ImagePointInt_t::operator=(const ZXing::PointI& point){
+    m_x = point.x;
+    m_y = point.y;
     return *this;
 }
 

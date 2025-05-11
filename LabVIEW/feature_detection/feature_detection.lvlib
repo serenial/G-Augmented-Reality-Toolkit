@@ -73,9 +73,6 @@
 			<Item Name="AprilTag ID List (TagStandard52h13).vi" Type="VI" URL="../AprilTag ID List (TagStandard52h13).vi"/>
 			<Item Name="AprilTag ID List (TagCustom48h12).vi" Type="VI" URL="../AprilTag ID List (TagCustom48h12).vi"/>
 		</Item>
-		<Item Name="ZXing Read Barcodes" Type="Folder">
-			<Item Name="ZXing Read Barcodes (Greyscale All).vi" Type="VI" URL="../ZXing Read Barcodes (Greyscale All).vi"/>
-		</Item>
 	</Item>
 	<Item Name="Types" Type="Folder">
 		<Item Name="Chessboard Corner Info.ctl" Type="VI" URL="../Chessboard Corner Info.ctl"/>
@@ -92,12 +89,12 @@
 		<Item Name="Hough Circle Result.ctl" Type="VI" URL="../Hough Circle Result.ctl"/>
 	</Item>
 	<Item Name="API" Type="Folder">
-		<Item Name="ZXing Options.lvclass" Type="LVClass" URL="../ZXing Options/ZXing Options.lvclass"/>
 		<Item Name="AprilTag Detector.lvclass" Type="LVClass" URL="../Apriltag Detector/AprilTag Detector.lvclass"/>
 		<Item Name="Barcode Detector.lvclass" Type="LVClass" URL="../Barcode Detector/Barcode Detector.lvclass"/>
 		<Item Name="QR Code Detector.lvclass" Type="LVClass" URL="../QR Code Detector/QR Code Detector.lvclass"/>
 		<Item Name="QR Code Encoder.lvclass" Type="LVClass" URL="../QR Code Encoder/QR Code Encoder.lvclass"/>
 		<Item Name="WeChat QR Code Detector.lvclass" Type="LVClass" URL="../WeChat QR Code Detector/WeChat QR Code Detector.lvclass"/>
+		<Item Name="ZXing.lvclass" Type="LVClass" URL="../ZXing/ZXing.lvclass"/>
 		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
 		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 		<Item Name="AprilTag Tag ID List.vi" Type="VI" URL="../AprilTag Tag ID List.vi"/>
@@ -106,5 +103,4 @@
 		<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
 		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 	</Item>
-	<Item Name="ZXingCore.vim" Type="VI" URL="../ZXingCore.vim"/>
 </Library>
