@@ -41,7 +41,6 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr)
     {
-        BAD BAD BAD
         try
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(edvr_ref_ptr, new cv::QRCodeDetector());
