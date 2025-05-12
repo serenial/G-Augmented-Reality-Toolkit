@@ -3,7 +3,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <opencv2/core/mat.hpp>
-#include <zxing/ImageView.h>
+#include <ZXing/ImageView.h>
 
 #include "./lv_types.hpp"
 

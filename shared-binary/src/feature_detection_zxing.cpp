@@ -4,7 +4,7 @@
 #include <type_traits>
 
 #include <opencv2/objdetect.hpp>
-#include <zxing/ReadBarcode.h>
+#include <ZXing/ReadBarcode.h>
 #include <ZXing/GTIN.h>
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
