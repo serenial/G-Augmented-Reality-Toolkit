@@ -13,6 +13,13 @@ LV_ImagePointFloat_t::operator cv::Point2d() const
     return cv::Point2d{m_x, m_y};
 }
 
+LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point &point)
+{
+    m_x = point.x;
+    m_y = point.y;
+    return *this;
+}
+
 LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const cv::Point2f &point)
 {
     m_x = point.x;
@@ -93,6 +100,11 @@ LV_WindowSize_t::operator cv::Size2i() const
 LV_Vec3Double_t::operator cv::Vec3d() const
 {
     return cv::Vec3d{m_x, m_y, m_z};
+}
+
+LV_Vec3Double_t::operator cv::Scalar() const
+{
+    return cv::Scalar(m_x,m_y,m_z);
 }
 
 LV_Vec3Double_t::operator cv::Vec3f() const

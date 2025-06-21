@@ -22,7 +22,7 @@
 		<Item Name="Image Points Quad (Float).ctl" Type="VI" URL="../Image Points Quad (Float).ctl"/>
 		<Item Name="Image Size (Integer).ctl" Type="VI" URL="../Image Size (Integer).ctl"/>
 		<Item Name="Object Point (Float).ctl" Type="VI" URL="../Object Point (Float).ctl"/>
-		<Item Name="Square Corners.ctl" Type="VI" URL="../Square Corners.ctl"/>
+		<Item Name="Quad Corners.ctl" Type="VI" URL="../Quad Corners.ctl"/>
 		<Item Name="Window Size (Integer).ctl" Type="VI" URL="../Window Size (Integer).ctl"/>
 		<Item Name="Termination Criteria.lvclass" Type="LVClass" URL="../Termination Criteria/Termination Criteria.lvclass"/>
 	</Item>

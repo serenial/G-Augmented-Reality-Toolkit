@@ -23,6 +23,7 @@ namespace g_ar_toolkit
         ~lv_image();
         bool is_bgra() const;
         bool is_greyscale() const;
+        bool is_empty() const;
         cv::Mat const &mat() const;
         // add some cv::Mat methods for ease of use
         size_t width() const;

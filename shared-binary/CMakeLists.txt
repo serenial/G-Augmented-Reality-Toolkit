@@ -22,7 +22,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(OpenCV_SHARED OFF)
 
 # Find OpenCV
-find_package(OpenCV 4.10.0 REQUIRED)
+find_package(OpenCV 4.11 REQUIRED)
 
 # Find tinyobjloader
 find_package(tinyobjloader REQUIRED)
@@ -106,6 +106,8 @@ target_link_libraries(g_ar_toolkit PRIVATE
   opencv_objdetect
   opencv_wechat_qrcode
   opencv_imgcodecs
+  opencv_dnn
+  opencv_text
   tinyobjloader::tinyobjloader
   apriltag::apriltag
   Eigen3::Eigen

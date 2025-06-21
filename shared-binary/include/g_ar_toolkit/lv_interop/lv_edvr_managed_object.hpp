@@ -232,6 +232,19 @@ namespace g_ar_toolkit
             {
                 return data->object;
             }
+
+            T* operator->() const
+            {
+                return data->object;
+            }
+
+            T& operator*() { 
+                return *data->object; 
+            }
+
+            T& operator*() const{ 
+                return *data->object; 
+            }
         };
     }
 }

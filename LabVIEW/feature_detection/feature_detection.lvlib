@@ -95,6 +95,9 @@
 		<Item Name="QR Code Encoder.lvclass" Type="LVClass" URL="../QR Code Encoder/QR Code Encoder.lvclass"/>
 		<Item Name="WeChat QR Code Detector.lvclass" Type="LVClass" URL="../WeChat QR Code Detector/WeChat QR Code Detector.lvclass"/>
 		<Item Name="ZXing.lvclass" Type="LVClass" URL="../ZXing/ZXing.lvclass"/>
+		<Item Name="Text Detector.lvclass" Type="LVClass" URL="../Text Detector/Text Detector.lvclass"/>
+		<Item Name="Text Recognizer.lvclass" Type="LVClass" URL="../Text Recognizer/Text Recognizer.lvclass"/>
+		<Item Name="Text Tesseract.lvclass" Type="LVClass" URL="../Text Tesseract/Text Tesseract.lvclass"/>
 		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
 		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 		<Item Name="AprilTag Tag ID List.vi" Type="VI" URL="../AprilTag Tag ID List.vi"/>

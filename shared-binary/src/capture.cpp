@@ -191,9 +191,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-
-            stream->start_stream();
+            EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->start_stream();
         }
         catch (...)
         {
@@ -210,9 +208,7 @@ extern "C"
         try
         {
 
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-
-            stream->stop_stream();
+            EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->stop_stream();
         }
         catch (...)
         {
@@ -254,11 +250,11 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
+            
 
             Stream::param_info_t info;
 
-            stream->get_camera_parameter_info(cam_param, &info);
+            EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->get_camera_parameter_info(cam_param, &info);
 
             *cam_param_info_ptr = info;
         }
@@ -283,9 +279,7 @@ extern "C"
         try
         {
 
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-
-            *value = stream->get_camera_parameter(cam_param);
+            *value = EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->get_camera_parameter(cam_param);
         }
         catch (...)
         {
@@ -333,9 +327,7 @@ extern "C"
     {
         try
         {
-
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-            *is_automatic = stream->get_camera_auto_mode(cam_auto_param);
+            *is_automatic = EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->get_camera_auto_mode(cam_auto_param);
             *is_supported = true;
         }
         catch (Stream::auto_param_error &e)
@@ -359,8 +351,7 @@ extern "C"
         try
         {
 
-            EDVRManagedObject<Stream> stream(edvr_stream_ref_ptr);
-            stream->set_camera_auto_mode(cam_auto_param, *use_automatic);
+            EDVRManagedObject<Stream>(edvr_stream_ref_ptr)->set_camera_auto_mode(cam_auto_param, *use_automatic);
         }
         catch (...)
         {

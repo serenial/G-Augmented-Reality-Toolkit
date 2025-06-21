@@ -41,7 +41,7 @@
 				<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 				<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
 				<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-				<Property Name="NI.ClassItem.State" Type="Int">42467344</Property>
+				<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
 			</Item>
 			<Item Name="Detect and Decode Multiple (Greyscale).vi" Type="VI" URL="../Detect and Decode Multiple (Greyscale).vi">
 				<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!/O!!!!&amp;A!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!Z!-0````]%2'&amp;U91!!"U!+!!&amp;Y!!&gt;!#A!"?1!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!"A!(!5%!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!9!"Q&amp;#!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!'!!="1Q!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!"A!(!51!41$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC(5FN97&gt;F)&amp;"P;7ZU=S"2&gt;7&amp;E)#B'&lt;'^B&gt;#EO9X2M!"J!5!!%!!A!#1!+!!M(1W^S&lt;G6S=Q"H!0%!!!!!!!!!!R&gt;G:7&amp;U&gt;8*F8W2F&gt;'6D&gt;'FP&lt;CZM&gt;GRJ9BB25C"$&lt;W2F)%2F&gt;'6D&gt;'^S,GRW9WRB=X-.2'6U:7.U;7^O,G.U&lt;!!A1&amp;!!!A!&amp;!!Q21G&amp;S9W^E:3"%:82F9X2J&lt;WY!'%"!!!(`````!!U+2'6U:7.U;7^O=Q!!4E"Q!"Y!!$)8:G6B&gt;(6S:6^E:82F9X2J&lt;WYO&lt;(:M;7)956)A1W^E:3"%:82F9X2P=CZM&gt;G.M98.T!!!156)A1W^E:3"%:82F9X2P=A!!)%"1!!-!!!!"!!)4:8*S&lt;X)A;7YA+'ZP)'6S=G^S+1!.1!5!"UZV&lt;76S;7-!%!"!!!,``````````Q!2!%M!]1!!!!!!!!!##WFN97&gt;F,GRW&lt;'FC%U&gt;S:8FT9W&amp;M:3"*&lt;7&amp;H:3ZD&gt;'Q!)U"Q!#!!!1!3!2*(=G6Z=W.B&lt;'5A37VB:W5A;7Y!!&amp;*!=!!?!!!S&amp;W:F982V=G6@:'6U:7.U;7^O,GRW&lt;'FC'&amp;&amp;3)%.P:'5A2'6U:7.U&lt;X)O&lt;(:D&lt;'&amp;T=Q!!&amp;#"25C"$&lt;W2F)%2F&gt;'6D&gt;'^S)'FO!!"B!0!!$!!$!!1!$A!0!!1!"!!%!!1!%!!%!"-!&amp;!-!!(A!!!U)!!!!!!!!#1!!!!U,!!!!!!!!!!!!!!!!!!!!!!!!#A!!!!!!!!!3!!!!%!!!$1!!!!Q!!!!!!!!!!!!!!1!6!!!!!!</Property>
@@ -50,7 +50,7 @@
 				<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 				<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
 				<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-				<Property Name="NI.ClassItem.State" Type="Int">42467344</Property>
+				<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
 			</Item>
 		</Item>
 		<Item Name="Detect Single" Type="Folder">
@@ -170,7 +170,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">36175888</Property>
 		</Item>
 		<Item Name="DecodeSingleCore.vim" Type="VI" URL="../DecodeSingleCore.vim">
 			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!+V!!!!&amp;1!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!Z!-0````]%37ZG&lt;Q!!%%!B#GFT)'.V=H:F:$]!!#"!5!!$!!!!!1!#%W6S=G^S)'FO)#BO&lt;S"F=H*P=CE!"U!+!!&amp;Y!!&gt;!#A!"?1!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!#!!*!5%!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!A!#1&amp;#!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!)!!E"1Q!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!#!!*!51!4Q$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC(5FN97&gt;F)&amp;"P;7ZU=S"2&gt;7&amp;E)#B'&lt;'^B&gt;#EO9X2M!"R!5!!%!!I!#Q!-!!U*2'6U:7.U;7^O!!V!"1!(4H6N:8*J9Q!1!%!!!P``````````!!]!2Q$R!!!!!!!!!!),;7VB:W5O&lt;(:M;7)42X*F?8.D97RF)%FN97&gt;F,G.U&lt;!!@1(!!)!!"!"!"$U&gt;S:8FT9W&amp;M:3"*&lt;7&amp;H:1!31%!!!@````]!$Q2E982B!!!41(!!)!!"!")""EBB&lt;G2M:1!!6!$Q!!Q!!Q!%!!1!"1!%!!1!"!!'!!=!$A!2!"-$!!"Y!!!.#!!!!!!!!!!!!!!*!!!!!!!!!!!!!!!!!!!!#A!!!!I!!!!+!!!!%A!!!")!!!!!!1!5!!!!!!</Property>
@@ -179,7 +179,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">36175888</Property>
 		</Item>
 		<Item Name="DetectMultiCore.vim" Type="VI" URL="../DetectMultiCore.vim">
 			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!+X!!!!&amp;!!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!&gt;!#A!"?!!(1!I!!8E!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!5!"A&amp;"!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!&amp;!!9"1A!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!"1!'!5-!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!5!"A&amp;%!&amp;=!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9BV*&lt;7&amp;H:3"1&lt;WFO&gt;(-A586B:#!I2GRP981J,G.U&lt;!!E1&amp;!!"!!(!!A!#1!+%5FN97&gt;F)&amp;"P;7ZU)&amp;&amp;V972T!"B!1!!"`````Q!,#E2F&gt;'6D&gt;'FP&lt;H-!!#"!5!!$!!!!!1!#%W6S=G^S)'FO)#BO&lt;S"F=H*P=CE!$5!&amp;!!&gt;/&gt;7VF=GFD!"!!1!!#``````````]!$A"(!0%!!!!!!!!!!ANJ&lt;7&amp;H:3ZM&gt;GRJ9B.(=G6Z=W.B&lt;'5A37VB:W5O9X2M!"^!=!!A!!%!$Q%02X*F?8.D97RF)%FN97&gt;F!"*!1!!"`````Q!/"'2B&gt;'%!!".!=!!A!!%!%1%'3'&amp;O:'RF!!"5!0!!$!!$!!1!"!!-!!1!"!!%!!1!$1!%!"!!%A-!!(A!!!U)!!!!!!!!!!!!!!E!!!!!!!!!!!!!!!!!!!!!!!!!#A!!!!!!!!!3!!!!%A!!!!!"!"-!!!!!</Property>
@@ -188,7 +188,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">36175888</Property>
 		</Item>
 		<Item Name="DecodeMultiCore.vim" Type="VI" URL="../DecodeMultiCore.vim">
 			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!,0!!!!&amp;A!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!Z!-0````]%37ZG&lt;Q!!%E"!!!(`````!!5%37ZG&lt;Q!!)%"1!!-!!!!"!!)4:8*S&lt;X)A;7YA+'ZP)'6S=G^S+1!(1!I!!8A!"U!+!!&amp;Z!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!)!!E"11!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!#!!*!5)!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!A!#1&amp;$!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!)!!E"2!"0!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)&gt;37VB:W5A5'^J&lt;H2T)&amp;&amp;V971A+%:M&lt;W&amp;U+3ZD&gt;'Q!(%"1!!1!#A!,!!Q!$1F%:82F9X2J&lt;WY!'%"!!!(`````!!Y+2'6U:7.U;7^O=Q!!$5!&amp;!!&gt;/&gt;7VF=GFD!"!!1!!#``````````]!%!"(!0%!!!!!!!!!!ANJ&lt;7&amp;H:3ZM&gt;GRJ9B.(=G6Z=W.B&lt;'5A37VB:W5O9X2M!"^!=!!A!!%!%1%02X*F?8.D97RF)%FN97&gt;F!"*!1!!"`````Q!1"'2B&gt;'%!!".!=!!A!!%!%Q%'3'&amp;O:'RF!!"5!0!!$!!$!!1!"!!'!!1!"!!%!!1!"Q!0!")!&amp;!-!!(A!!!U)!!!!!!!!!!!!!!E!!!!!!!!!!!!!!!!!!!!!!!!!#A!!!!I!!!!3!!!!%A!!!!!"!"5!!!!!</Property>
@@ -197,7 +197,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">36175888</Property>
 		</Item>
 		<Item Name="DetectAndDecodeMultiCore.vim" Type="VI" URL="../DetectAndDecodeMultiCore.vim">
 			<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!-M!!!!&amp;Q!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!Z!-0````]%2'&amp;U91!!"U!+!!&amp;Y!!&gt;!#A!"?1!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!"A!(!5%!01$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC&amp;UFN97&gt;F)&amp;"P;7ZU)#B'&lt;'^B&gt;#EO9X2M!""!5!!#!!9!"Q&amp;#!$U!]1!!!!!!!!!#$'.P&lt;7VP&lt;CZM&gt;GRJ9B&gt;*&lt;7&amp;H:3"1&lt;WFO&gt;#!I2GRP981J,G.U&lt;!!11&amp;!!!A!'!!="1Q!^!0%!!!!!!!!!!ARD&lt;WVN&lt;WYO&lt;(:M;7)837VB:W5A5'^J&lt;H1A+%:M&lt;W&amp;U+3ZD&gt;'Q!%%"1!!)!"A!(!51!41$R!!!!!!!!!!)-9W^N&lt;7^O,GRW&lt;'FC(5FN97&gt;F)&amp;"P;7ZU=S"2&gt;7&amp;E)#B'&lt;'^B&gt;#EO9X2M!"J!5!!%!!A!#1!+!!M(1W^S&lt;G6S=Q"H!0%!!!!!!!!!!R&gt;G:7&amp;U&gt;8*F8W2F&gt;'6D&gt;'FP&lt;CZM&gt;GRJ9BB25C"$&lt;W2F)%2F&gt;'6D&gt;'^S,GRW9WRB=X-.2'6U:7.U;7^O,G.U&lt;!!A1&amp;!!!A!&amp;!!Q21G&amp;S9W^E:3"%:82F9X2J&lt;WY!'%"!!!(`````!!U+2'6U:7.U;7^O=Q!!)%"1!!-!!!!"!!)4:8*S&lt;X)A;7YA+'ZP)'6S=G^S+1!.1!=!"UZV&lt;76S;7-!(%"!!!,``````````Q!1#G2B&gt;'%A&gt;G&amp;M&gt;75!!$A!]1!!!!!!!!!##WFN97&gt;F,GRW&lt;'FC$E&amp;32U)A37VB:W5O9X2M!"6!=!!A!!%!%1%&amp;37VB:W5!$5!&amp;!!&gt;/&gt;7VF=GFD!"*!1!!"`````Q!4"'2B&gt;'%!!".!=!!A!!%!&amp;!%'3'&amp;O:'RF!!"5!0!!$!!$!!1!"!!/!!1!"!!%!!1!$Q!%!")!&amp;1-!!(A!!!U)!!!!!!!!!!!!!!E!!!!!!!!!!!!!!!!!!!!!!!!!#A!!!!!!!!!3!!!!%A!!!!!"!"9!!!!!</Property>
@@ -206,7 +206,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">36175888</Property>
 		</Item>
 	</Item>
 	<Item Name="Typedefs" Type="Folder">

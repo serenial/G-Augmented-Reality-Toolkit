@@ -18,6 +18,7 @@ namespace g_ar_toolkit
             double m_x,m_y;
             operator cv::Point2f() const;
             operator cv::Point2d() const;
+            LV_ImagePointFloat_t& operator=(const cv::Point &);
             LV_ImagePointFloat_t& operator=(const cv::Point2f &);
             LV_ImagePointFloat_t& operator=(const cv::Point2d &);
             LV_ImagePointFloat_t& operator=(const double[2]);
@@ -51,6 +52,7 @@ namespace g_ar_toolkit
             operator cv::Vec3f() const;
             operator cv::Point3d() const;
             operator cv::Point3f() const;
+            operator cv::Scalar() const;
             operator cv::Mat();
             cv::Mat as_cv_mat();
             cv::Vec3d to_vec3d();

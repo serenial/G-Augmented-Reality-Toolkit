@@ -93,9 +93,14 @@ extern "C"
             op_header_ptr->bottom = op_header_ptr->top + src.height();
             op_header_ptr->right = op_header_ptr->left + src.width();
 
+            if(src.is_empty()){
+                return LV_ERR_noError;
+            }
+
             // get a pointer to the point in the "string" bytes where the rgb pixel data starts
             // we can then wrap this in a cv::Mat to make copying data to it easier
             auto dst_data_ptr = lv_str_handle.begin() + SIZEOF_LV_FLATTENED_PICTURE_OP_HEADER_BYTES;
+
 
             if (src.is_bgra())
             {

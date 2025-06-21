@@ -213,3 +213,7 @@ cython_debug/
 
 # Antidoc Output
 LabVIEW/Antidoc-Output
+
+# Model Files
+*.onnx
+*.pb
