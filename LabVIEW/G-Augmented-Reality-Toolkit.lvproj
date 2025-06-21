@@ -17,8 +17,19 @@
 		<Item Name="test-images" Type="Folder" URL="../test-images">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
-		<Item Name="models" Type="Folder" URL="../models">
-			<Property Name="NI.DISK" Type="Bool">true</Property>
+		<Item Name="models" Type="Folder">
+			<Item Name="DNN" Type="Folder">
+				<Item Name="Text Detection Model (DB PP-OCRv3 EN).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (DB PP-OCRv3 EN).vi"/>
+				<Item Name="Text Detection Model (EAST).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (EAST).vi"/>
+				<Item Name="Text Recognition (CRNN-CH).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Recognition (CRNN-CH).vi"/>
+			</Item>
+			<Item Name="spot" Type="Folder">
+				<Item Name="README.txt" Type="Document" URL="../models/spot/README.txt"/>
+				<Item Name="spot.mtl" Type="Document" URL="../models/spot/spot.mtl"/>
+				<Item Name="spot_texture.png" Type="Document" URL="../models/spot/spot_texture.png"/>
+				<Item Name="spot_triangulated_with_mtl.obj" Type="Document" URL="../models/spot/spot_triangulated_with_mtl.obj"/>
+			</Item>
+			<Item Name="models.txt" Type="Document" URL="../models/models.txt"/>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
@@ -211,6 +222,13 @@
 			<Item Name="CDK_sTypeDef_ProductVersion.ctl" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_sTypeDef_ProductVersion.ctl"/>
 			<Item Name="CDK_Utility_GetSetStringVersion.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_Utility_GetSetStringVersion.vi"/>
 			<Item Name="CDK_GLOBAL_STRINGS.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_GLOBAL_STRINGS.vi"/>
+			<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
+			<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
+			<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
+			<Item Name="libgartoolkit_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/libgartoolkit_32-1.dll"/>
+			<Item Name="Text Recognition (CRNN-CH).vi" Type="VI" URL="../models/DNN/Text Recognition (CRNN-CH).vi"/>
+			<Item Name="Text Detection Model (DB PP-OCRv3 EN).vi" Type="VI" URL="../models/DNN/Text Detection Model (DB PP-OCRv3 EN).vi"/>
+			<Item Name="Text Detection Model (EAST).vi" Type="VI" URL="../models/DNN/Text Detection Model (EAST).vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
@@ -266,7 +284,7 @@
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="DestinationCount" Type="Int">11</Property>
-				<Property Name="Source[0].itemID" Type="Str">{E90A6786-3353-4A61-877C-1D1DDFA9557E}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{A5413C81-4588-4F05-9AB7-CA629289C79A}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
