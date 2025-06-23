@@ -51,4 +51,5 @@ target_sources(g_ar_toolkit PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/ar_rodrigues.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ar_quaternion.cpp
     ${CMAKE_CURRENT_LIST_DIR}/shape_utils.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/video_file_io.cpp
 )

@@ -16,7 +16,8 @@
         "png",
         "thread",
         "tiff",
-        "webp"
+        "webp",
+        "ffmpeg"
       ]
     },
     "tinyobjloader",

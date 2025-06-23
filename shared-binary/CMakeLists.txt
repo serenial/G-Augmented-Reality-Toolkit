@@ -108,6 +108,7 @@ target_link_libraries(g_ar_toolkit PRIVATE
   opencv_imgcodecs
   opencv_dnn
   opencv_text
+  
   tinyobjloader::tinyobjloader
   apriltag::apriltag
   Eigen3::Eigen
