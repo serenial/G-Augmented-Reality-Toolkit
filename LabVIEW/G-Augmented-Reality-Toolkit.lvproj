@@ -35,6 +35,7 @@
 		<Item Name=".lvversion" Type="Document" URL="../.lvversion"/>
 		<Item Name="common.lvlib" Type="Library" URL="../common/common.lvlib"/>
 		<Item Name="image.lvlib" Type="Library" URL="../image/image.lvlib"/>
+		<Item Name="video_io.lvlib" Type="Library" URL="../video_io/video_io.lvlib"/>
 		<Item Name="feature_detection.lvlib" Type="Library" URL="../feature_detection/feature_detection.lvlib"/>
 		<Item Name="capture.lvlib" Type="Library" URL="../capture/capture.lvlib"/>
 		<Item Name="ar.lvlib" Type="Library" URL="../ar/ar.lvlib"/>
