@@ -9,7 +9,6 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 endif()
 
-
 # Specify Project
 project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
 
@@ -68,16 +67,19 @@ if(WIN32)
     shlwapi
   )
 elseif(UNIX)
-  # link against static system libs
-  target_link_options(g_ar_toolkit PRIVATE
-    "-static-libgcc" "-static-libstdc++"
-  )
+  # # link against static system libs
+  # target_link_options(g_ar_toolkit PRIVATE
+  #   "-static-libgcc" "-static-libstdc++"
+  # )
 
   # try and remove unused code sections
   target_compile_options(g_ar_toolkit PRIVATE
     "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
   )
 
+  # set linker flags for ffmpeg
+  target_link_options(g_ar_toolkit PRIVATE "-Wl,-Bsymbolic") 
+ 
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
 endif()
