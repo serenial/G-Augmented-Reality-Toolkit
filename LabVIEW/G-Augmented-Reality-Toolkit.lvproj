@@ -45,6 +45,7 @@
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
 		<Item Name="LICENSE" Type="Document" URL="../../LICENSE"/>
 		<Item Name="COPYING" Type="Document" URL="../COPYING"/>
+		<Item Name="video io.vi" Type="VI" URL="../../../../../Users/john/Desktop/video io.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>

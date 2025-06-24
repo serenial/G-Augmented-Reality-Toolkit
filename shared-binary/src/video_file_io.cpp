@@ -29,10 +29,10 @@ extern "C"
                 throw std::runtime_error("Unable to open video source.");
             }
 
-            if (!cap->set(cv::VideoCaptureProperties::CAP_PROP_FORMAT, CV_8UC(n_channels)))
-            {
-                throw std::invalid_argument("Unable to set the format to the number of channels specified");
-            }
+            // if (!cap->set(cv::VideoCaptureProperties::CAP_PROP_FORMAT, CV_8UC(n_channels)))
+            // {
+            //     throw std::invalid_argument("Unable to set the format to the number of channels specified");
+            // }
         }
         catch (...)
         {
@@ -69,8 +69,6 @@ extern "C"
             case 1:
                 set_ok = cap->set(cv::VideoCaptureProperties::CAP_PROP_POS_MSEC, position);
                 break;
-            default:
-                // set nothing - just get next
             }
 
             if(!set_ok){
