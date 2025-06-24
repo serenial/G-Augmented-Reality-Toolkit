@@ -17,19 +17,8 @@
 		<Item Name="test-images" Type="Folder" URL="../test-images">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
-		<Item Name="models" Type="Folder">
-			<Item Name="DNN" Type="Folder">
-				<Item Name="Text Detection Model (DB PP-OCRv3 EN).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (DB PP-OCRv3 EN).vi"/>
-				<Item Name="Text Detection Model (EAST).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (EAST).vi"/>
-				<Item Name="Text Recognition (CRNN-CH).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Recognition (CRNN-CH).vi"/>
-			</Item>
-			<Item Name="spot" Type="Folder">
-				<Item Name="README.txt" Type="Document" URL="../models/spot/README.txt"/>
-				<Item Name="spot.mtl" Type="Document" URL="../models/spot/spot.mtl"/>
-				<Item Name="spot_texture.png" Type="Document" URL="../models/spot/spot_texture.png"/>
-				<Item Name="spot_triangulated_with_mtl.obj" Type="Document" URL="../models/spot/spot_triangulated_with_mtl.obj"/>
-			</Item>
-			<Item Name="models.txt" Type="Document" URL="../models/models.txt"/>
+		<Item Name="models" Type="Folder" URL="../models">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="utility" Type="Folder" URL="../utility">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
@@ -52,8 +41,9 @@
 		<Item Name="shape.lvlib" Type="Library" URL="../shape/shape.lvlib"/>
 		<Item Name="examples.lvlib" Type="Library" URL="../examples/examples.lvlib"/>
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
-		<Item Name="COPYRIGHT" Type="Document" URL="../COPYRIGHT"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
+		<Item Name="LICENSE" Type="Document" URL="../../LICENSE"/>
+		<Item Name="COPYING" Type="Document" URL="../COPYING"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
@@ -222,13 +212,6 @@
 			<Item Name="CDK_sTypeDef_ProductVersion.ctl" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_sTypeDef_ProductVersion.ctl"/>
 			<Item Name="CDK_Utility_GetSetStringVersion.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_Utility_GetSetStringVersion.vi"/>
 			<Item Name="CDK_GLOBAL_STRINGS.vi" Type="VI" URL="/&lt;resource&gt;/Framework/Providers/Builds/Installer/CDK_GLOBAL_STRINGS.vi"/>
-			<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
-			<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
-			<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
-			<Item Name="libgartoolkit_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/libgartoolkit_32-1.dll"/>
-			<Item Name="Text Recognition (CRNN-CH).vi" Type="VI" URL="../models/DNN/Text Recognition (CRNN-CH).vi"/>
-			<Item Name="Text Detection Model (DB PP-OCRv3 EN).vi" Type="VI" URL="../models/DNN/Text Detection Model (DB PP-OCRv3 EN).vi"/>
-			<Item Name="Text Detection Model (EAST).vi" Type="VI" URL="../models/DNN/Text Detection Model (EAST).vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
@@ -280,11 +263,10 @@
 				<Property Name="Destination[7].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[8].destName" Type="Str">bin</Property>
 				<Property Name="Destination[8].path" Type="Path">../build/source-distribution/g_ar_toolkit.common/bin</Property>
-				<Property Name="Destination[8].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="DestinationCount" Type="Int">11</Property>
-				<Property Name="Source[0].itemID" Type="Str">{A5413C81-4588-4F05-9AB7-CA629289C79A}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{4BEE38EC-95C6-4B66-9223-A649217127D9}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
@@ -338,11 +320,9 @@
 				<Property Name="Source[19].itemID" Type="Ref">/My Computer/feature_detection.lvlib/Polymorphic Implementations</Property>
 				<Property Name="Source[19].type" Type="Str">Container</Property>
 				<Property Name="Source[2].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[2].Container.applyInclusion" Type="Bool">true</Property>
 				<Property Name="Source[2].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[2].itemID" Type="Ref">/My Computer/models</Property>
-				<Property Name="Source[2].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[2].type" Type="Str">Container</Property>
 				<Property Name="Source[20].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[20].Container.depDestIndex" Type="Int">0</Property>
@@ -426,21 +406,33 @@
 				<Property Name="Source[35].itemID" Type="Ref">/My Computer/VIPM</Property>
 				<Property Name="Source[35].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[35].type" Type="Str">Container</Property>
-				<Property Name="Source[36].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[36].itemID" Type="Ref">/My Computer/COPYRIGHT</Property>
+				<Property Name="Source[36].destinationIndex" Type="Int">10</Property>
+				<Property Name="Source[36].itemID" Type="Ref">/My Computer/examples.lvlib</Property>
+				<Property Name="Source[36].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[36].newName" Type="Str">g_ar_toolkit.examples.lvlib</Property>
 				<Property Name="Source[36].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[37].destinationIndex" Type="Int">10</Property>
-				<Property Name="Source[37].itemID" Type="Ref">/My Computer/examples.lvlib</Property>
-				<Property Name="Source[37].Library.allowMissingMembers" Type="Bool">true</Property>
-				<Property Name="Source[37].newName" Type="Str">g_ar_toolkit.examples.lvlib</Property>
+				<Property Name="Source[36].type" Type="Str">Library</Property>
+				<Property Name="Source[37].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[37].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[37].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[37].itemID" Type="Ref">/My Computer/models/spot</Property>
 				<Property Name="Source[37].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[37].type" Type="Str">Library</Property>
+				<Property Name="Source[37].type" Type="Str">Container</Property>
+				<Property Name="Source[38].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[38].itemID" Type="Ref">/My Computer/models/models.txt</Property>
+				<Property Name="Source[38].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[39].destinationIndex" Type="Int">9</Property>
+				<Property Name="Source[39].itemID" Type="Ref">/My Computer/LICENSE</Property>
+				<Property Name="Source[39].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[4].destinationIndex" Type="Int">3</Property>
 				<Property Name="Source[4].itemID" Type="Ref">/My Computer/image.lvlib</Property>
 				<Property Name="Source[4].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[4].newName" Type="Str">g_ar_toolkit.image.lvlib</Property>
 				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[4].type" Type="Str">Library</Property>
+				<Property Name="Source[40].destinationIndex" Type="Int">8</Property>
+				<Property Name="Source[40].itemID" Type="Ref">/My Computer/COPYING</Property>
+				<Property Name="Source[40].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -470,7 +462,7 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
-				<Property Name="SourceCount" Type="Int">38</Property>
+				<Property Name="SourceCount" Type="Int">41</Property>
 			</Item>
 		</Item>
 	</Item>
