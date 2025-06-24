@@ -7,4 +7,3 @@ set(VCPKG_BUILD_TYPE release)
 
 # set LTO for all targets
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
-set(ENABLE_LTO ON)
