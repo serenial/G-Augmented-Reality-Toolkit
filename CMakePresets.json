@@ -19,7 +19,7 @@
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}",
                 "VCPKG_TARGET_TRIPLET": "$penv{VCPKG_DEFAULT_TRIPLET}"
-                "CMAKE_INTERPROCEDURAL_OPTIMIZATION " : ON
+                "CMAKE_INTERPROCEDURAL_OPTIMIZATION " : "ON"
             }
         },
         {
