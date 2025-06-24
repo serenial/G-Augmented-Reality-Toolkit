@@ -14,6 +14,8 @@ if "%1" == "debug" (
 
 cd %SCRIPT_DIR%
 
+call .\vcpkg\bootstrap-vcpkg.bat
+
 ::REM vcpkg can create a cmd context with all the settings we need but we cannot interact with 
 ::REM it from a batch file so echo out all the variables and then set them in this cmd context
 
