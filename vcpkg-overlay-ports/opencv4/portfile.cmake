@@ -1,5 +1,4 @@
 set(USE_QT_VERSION "6")
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
 set(ENABLE_LTO ON)
 
 vcpkg_from_github(
