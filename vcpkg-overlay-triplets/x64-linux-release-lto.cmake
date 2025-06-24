@@ -5,7 +5,6 @@ set(VCPKG_LIBRARY_LINKAGE static)
 set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 set(VCPKG_BUILD_TYPE release)
 
-# set LTO for linker optimisation
-set(VCPKG_CXX_FLAGS_RELEASE -flto)
-set(VCPKG_C_FLAGS_RELEASE -flto)
-set(VCPKG_LINKER_FLAGS_RELEASE -flto)
+# set LTO for all targets
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+set(ENABLE_LTO ON)
