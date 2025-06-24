@@ -17,8 +17,7 @@ extern "C"
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t path_string_handle,
-        LV_EDVRReferencePtr_t reader_edvr_ref,
-        uint8_t n_channels)
+        LV_EDVRReferencePtr_t reader_edvr_ref)
     {
         try
         {
@@ -28,11 +27,6 @@ extern "C"
             {
                 throw std::runtime_error("Unable to open video source.");
             }
-
-            // if (!cap->set(cv::VideoCaptureProperties::CAP_PROP_FORMAT, CV_8UC(n_channels)))
-            // {
-            //     throw std::invalid_argument("Unable to set the format to the number of channels specified");
-            // }
         }
         catch (...)
         {
