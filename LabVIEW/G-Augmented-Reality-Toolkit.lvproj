@@ -44,7 +44,6 @@
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
 		<Item Name="LICENSE" Type="Document" URL="../../LICENSE"/>
-		<Item Name="COPYING" Type="Document" URL="../COPYING"/>
 		<Item Name="video io.vi" Type="VI" URL="../../../../../Users/john/Desktop/video io.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -433,7 +432,7 @@
 				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[4].type" Type="Str">Library</Property>
 				<Property Name="Source[40].destinationIndex" Type="Int">8</Property>
-				<Property Name="Source[40].itemID" Type="Ref">/My Computer/COPYING</Property>
+				<Property Name="Source[40].itemID" Type="Ref"></Property>
 				<Property Name="Source[40].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>

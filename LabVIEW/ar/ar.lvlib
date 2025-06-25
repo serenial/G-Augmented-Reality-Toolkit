@@ -37,6 +37,7 @@
 		<Item Name="SVDForPointSetCovarainces.vi" Type="VI" URL="../SVDForPointSetCovarainces.vi"/>
 		<Item Name="EstimatePlaneForPointSet.vi" Type="VI" URL="../EstimatePlaneForPointSet.vi"/>
 		<Item Name="RotationMatrixBetweenPlanes.vi" Type="VI" URL="../RotationMatrixBetweenPlanes.vi"/>
+		<Item Name="UndistortCore.vim" Type="VI" URL="../UndistortCore.vim"/>
 	</Item>
 	<Item Name="Types" Type="Folder">
 		<Property Name="NI.SortType" Type="Int">0</Property>
@@ -86,8 +87,15 @@
 			<Item Name="Estimate3DAffineFixedScale.vi" Type="VI" URL="../Estimate3DAffineFixedScale.vi"/>
 			<Item Name="Estimate3DAffineVaraibleScale.vi" Type="VI" URL="../Estimate3DAffineVaraibleScale.vi"/>
 		</Item>
+		<Item Name="Undistort" Type="Folder">
+			<Item Name="Undistort (ARGB).vi" Type="VI" URL="../Undistort (ARGB).vi"/>
+			<Item Name="Undistort (Greyscale).vi" Type="VI" URL="../Undistort (Greyscale).vi"/>
+		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
+		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
+		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
+		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
 		<Item Name="Calibrate Camera.vi" Type="VI" URL="../Calibrate Camera.vi"/>
 		<Item Name="Camera Parameter to 3D Projection Matrix.vi" Type="VI" URL="../Camera Parameter to 3D Projection Matrix.vi"/>

@@ -60,7 +60,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_dnn_text_create_db(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_text_create_db(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         const LV_Ptr_t<LV_TextDetectModel_t> model,
         uint16_t max_candidates,
@@ -92,7 +92,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_dnn_text_create_east(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_text_create_east(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         const LV_Ptr_t<LV_TextDetectModel_t> model,
         float conf_threshold,
@@ -120,7 +120,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_dnn_text_detect(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_text_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_edvr_ref_ptr,
         LV_EDVRReferencePtr_t image_edvr_ref_ptr,
@@ -159,7 +159,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_dnn_text_create_recognizer(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_text_create_recognizer(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         const LV_Ptr_t<LV_TextRecognizeModel_t> model,
         LV_EDVRReferencePtr_t edvr_ref_ptr)
@@ -194,7 +194,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_dnn_text_recognize(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_text_recognize(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t recognizer_edvr_ref_ptr,
         LV_EDVRReferencePtr_t image_edvr_ref_ptr,

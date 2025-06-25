@@ -132,7 +132,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_TESSERACT_EXPORT LV_MgErr_t g_ar_tk_fd_tesseract_text_create(
+    G_AR_TOOLKIT_TESSERACT_EXPORT LV_MgErr_t g_ar_tk_tesseract_text_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         LV_StringHandle_t data_path_handle,
@@ -158,7 +158,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_TESSERACT_EXPORT LV_MgErr_t g_ar_tk_fd_tesseract_text_detect(
+    G_AR_TOOLKIT_TESSERACT_EXPORT LV_MgErr_t g_ar_tk_tesseract_text_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,

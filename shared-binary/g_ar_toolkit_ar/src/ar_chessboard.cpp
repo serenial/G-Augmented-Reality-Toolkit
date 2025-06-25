@@ -92,7 +92,7 @@ extern "C"
         }
         return LV_ERR_noError;
     }
-    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_refine_corner_sub_pix(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_refine_corner_sub_pix(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_WindowSizePtr_t window_size_ptr,
@@ -120,7 +120,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_fd_find_chessboard_corners_sb(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_find_chessboard_corners_sb(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_ImageSizePtr_t pattern_ptr,

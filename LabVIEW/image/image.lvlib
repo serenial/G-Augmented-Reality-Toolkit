@@ -67,7 +67,6 @@
 		<Item Name="ResizeCore.vim" Type="VI" URL="../ResizeCore.vim"/>
 		<Item Name="RotateCore.vim" Type="VI" URL="../RotateCore.vim"/>
 		<Item Name="ThresholdCore.vi" Type="VI" URL="../ThresholdCore.vi"/>
-		<Item Name="UndistortCore.vim" Type="VI" URL="../UndistortCore.vim"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
 		<Item Name="WarpPerspectiveCore.vim" Type="VI" URL="../WarpPerspectiveCore.vim"/>
 		<Item Name="WriteImageFileCore.vim" Type="VI" URL="../WriteImageFileCore.vim"/>
@@ -265,10 +264,6 @@
 			<Item Name="Threshold (Binary).vi" Type="VI" URL="../Threshold (Binary).vi"/>
 			<Item Name="Threshold (Otsu).vi" Type="VI" URL="../Threshold (Otsu).vi"/>
 		</Item>
-		<Item Name="Undistort" Type="Folder">
-			<Item Name="Undistort (ARGB).vi" Type="VI" URL="../Undistort (ARGB).vi"/>
-			<Item Name="Undistort (Greyscale).vi" Type="VI" URL="../Undistort (Greyscale).vi"/>
-		</Item>
 		<Item Name="Warp Affine" Type="Folder">
 			<Item Name="Warp Affine (ARGB).vi" Type="VI" URL="../Warp Affine (ARGB).vi"/>
 			<Item Name="Warp Affine (Greyscale).vi" Type="VI" URL="../Warp Affine (Greyscale).vi"/>
@@ -343,8 +338,6 @@
 		<Item Name="Greyscale Data to ARGB Data.vi" Type="VI" URL="../Greyscale Data to ARGB Data.vi"/>
 		<Item Name="Greyscale Image to ARGB Image.vi" Type="VI" URL="../Greyscale Image to ARGB Image.vi"/>
 		<Item Name="Horizontal Concatinate Image Data.vi" Type="VI" URL="../Horizontal Concatinate Image Data.vi"/>
-		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
-		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
 		<Item Name="In-Range Image.vi" Type="VI" URL="../In-Range Image.vi"/>
 		<Item Name="Insert Image.vi" Type="VI" URL="../Insert Image.vi"/>
 		<Item Name="Invert Greyscale Image In-Place.vi" Type="VI" URL="../Invert Greyscale Image In-Place.vi"/>
@@ -363,7 +356,6 @@
 		<Item Name="Set Channel.vi" Type="VI" URL="../Set Channel.vi"/>
 		<Item Name="Size.vi" Type="VI" URL="../Size.vi"/>
 		<Item Name="Threshold.vi" Type="VI" URL="../Threshold.vi"/>
-		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 		<Item Name="Warp Affine.vi" Type="VI" URL="../Warp Affine.vi"/>
 		<Item Name="Warp Perspective.vi" Type="VI" URL="../Warp Perspective.vi"/>
 		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
