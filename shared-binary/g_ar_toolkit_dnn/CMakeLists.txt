@@ -1,11 +1,11 @@
 # include tooling to generate export header
 include(GenerateExportHeader)
 
-# specify shared-library target
-add_library(g_ar_toolkit_dnn SHARED)
-
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED objdetect wechat_qrcode dnn)
+
+# specify shared-library target
+add_library(g_ar_toolkit_dnn SHARED)
 
 generate_export_header(g_ar_toolkit_dnn)
 

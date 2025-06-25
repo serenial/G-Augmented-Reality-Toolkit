@@ -7,14 +7,14 @@
 #include "g_ar_toolkit/lv_interop/lv_edvr_managed_object.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_videoio_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_create(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t path_string_handle,
         LV_EDVRReferencePtr_t reader_edvr_ref)
@@ -36,7 +36,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_read_frame(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_read_frame(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t reader_edvr_ref,
         LV_EDVRReferencePtr_t img_edvr_ref,
@@ -123,7 +123,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_get_info(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_get_info(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t reader_edvr_ref,
         LV_ImageSizePtr_t size,
@@ -153,7 +153,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_get_set_position(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_get_set_position(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t reader_edvr_ref,
         double* position,
@@ -201,7 +201,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-        G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_create(
+        G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t path_string_handle,
         uint8_t fourcc_0,
@@ -241,7 +241,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_write_frame(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_write_frame(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t writer_edvr_ref,
         LV_EDVRReferencePtr_t img_edvr_ref
