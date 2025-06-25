@@ -9,50 +9,50 @@
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
-lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, cv::Size size, bool is_abgr) : edvr_ref_ptr(edvr_ref_ptr),
-                                                                                      ctx(0),
-                                                                                      edvr_data_ptr(create_new_edvr_data_ptr()),
-                                                                                      data(get_metadata())
+lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, cv::Size size, bool is_abgr) : m_edvr_ref_ptr(edvr_ref_ptr),
+                                                                                      m_ctx(0),
+                                                                                      m_edvr_data_ptr(create_new_edvr_data_ptr()),
+                                                                                      m_data(get_metadata())
 
 {
-    data->mat = cv::Mat(size, is_abgr ? CV_8UC4 : CV_8UC1);
-    image_persistant_data_t::lock(data, image_persistant_data_t::lock_states::CPP);
+    m_data->mat = cv::Mat(size, is_abgr ? CV_8UC4 : CV_8UC1);
+    image_persistant_data_t::lock(m_data, image_persistant_data_t::lock_states::CPP);
 }
 
-lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr) : edvr_ref_ptr(edvr_ref_ptr), ctx(get_ctx()),
-                                                         edvr_data_ptr(get_edvr_data_ptr()),
-                                                         data(get_metadata())
+lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr) : m_edvr_ref_ptr(edvr_ref_ptr), m_ctx(get_ctx()),
+                                                         m_edvr_data_ptr(get_edvr_data_ptr()),
+                                                         m_data(get_metadata())
 {
-    image_persistant_data_t::lock(data, image_persistant_data_t::lock_states::CPP);
+    image_persistant_data_t::lock(m_data, image_persistant_data_t::lock_states::CPP);
 }
 
 lv_image::~lv_image()
 {
     // ensure EDVR sub_array data is correct
     // set the n_dims
-    edvr_data_ptr->n_dims = 2;
+    m_edvr_data_ptr->n_dims = 2;
     // set the subArray data pointer to the cv::Mat's data
-    edvr_data_ptr->sub_array.data_ptr = reinterpret_cast<uintptr_t *>(data->mat.data);
+    m_edvr_data_ptr->sub_array.data_ptr = reinterpret_cast<uintptr_t *>(m_data->mat.data);
     // set subArray dimension_specifier to match cv::Mat's
     // strides/steps are in bytes, size is number of elements so we can directly use values
-    edvr_data_ptr->sub_array.dimension_specifier[0] = {static_cast<size_t>(data->mat.rows), static_cast<ptrdiff_t>(data->mat.step[0])};
-    edvr_data_ptr->sub_array.dimension_specifier[1] = {static_cast<size_t>(data->mat.cols), static_cast<ptrdiff_t>(data->mat.step[1])};
+    m_edvr_data_ptr->sub_array.dimension_specifier[0] = {static_cast<size_t>(m_data->mat.rows), static_cast<ptrdiff_t>(m_data->mat.step[0])};
+    m_edvr_data_ptr->sub_array.dimension_specifier[1] = {static_cast<size_t>(m_data->mat.cols), static_cast<ptrdiff_t>(m_data->mat.step[1])};
 
     // unlock
-    image_persistant_data_t::unlock(data, image_persistant_data_t::lock_states::CPP);
+    image_persistant_data_t::unlock(m_data, image_persistant_data_t::lock_states::CPP);
 
     // release ref if originally added
-    if (ctx)
+    if (m_ctx)
     {
-        EDVR_ReleaseRefWithContext(*edvr_ref_ptr, ctx);
+        EDVR_ReleaseRefWithContext(*m_edvr_ref_ptr, m_ctx);
     }
 }
 
-lv_image::operator cv::_InputArray() { return data->mat; }
-lv_image::operator cv::_OutputArray() { return data->mat; }
-lv_image::operator cv::Mat *() { return &(data->mat); }
-lv_image::operator const cv::Mat &() const { return data->mat; }
-lv_image::operator cv::Mat &() { return data->mat; }
+lv_image::operator cv::_InputArray() { return m_data->mat; }
+lv_image::operator cv::_OutputArray() { return m_data->mat; }
+lv_image::operator cv::Mat *() { return &(m_data->mat); }
+lv_image::operator const cv::Mat &() const { return m_data->mat; }
+lv_image::operator cv::Mat &() { return m_data->mat; }
 
 LV_EDVRContext_t lv_image::get_ctx()
 {
@@ -70,7 +70,7 @@ LV_EDVRDataPtr_t lv_image::create_new_edvr_data_ptr()
     // initialize EDVR reference and get new EDVR data_ptr
 
     LV_EDVRDataPtr_t data_ptr = nullptr;
-    auto err = EDVR_CreateReference(edvr_ref_ptr, &data_ptr);
+    auto err = EDVR_CreateReference(m_edvr_ref_ptr, &data_ptr);
     if (err)
     {
         throw std::runtime_error("Unable to create a data-reference to associate with the supplied EDVR Refnum.");
@@ -90,7 +90,7 @@ LV_EDVRDataPtr_t lv_image::create_new_edvr_data_ptr()
 LV_EDVRDataPtr_t lv_image::get_edvr_data_ptr()
 {
     LV_EDVRDataPtr_t data_ptr = nullptr;
-    auto err = EDVR_AddRefWithContext(*edvr_ref_ptr, ctx, &data_ptr);
+    auto err = EDVR_AddRefWithContext(*m_edvr_ref_ptr, m_ctx, &data_ptr);
     if (err)
     {
         throw std::runtime_error("Unable to dereference the supplied EDVR Refnum to valid data in this application-context.");
@@ -100,7 +100,7 @@ LV_EDVRDataPtr_t lv_image::get_edvr_data_ptr()
 
 lv_image::image_persistant_data_t *lv_image::get_metadata()
 {
-    return reinterpret_cast<image_persistant_data_t *>(edvr_data_ptr->metadata_ptr);
+    return reinterpret_cast<image_persistant_data_t *>(m_edvr_data_ptr->metadata_ptr);
 }
 
 void lv_image::image_persistant_data_t::lock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_to)
@@ -134,28 +134,28 @@ void lv_image::upgrade_to_mapped()
 {
     {
         // obtain the mutex
-        std::lock_guard lk(data->m);
-        if (data->locked == image_persistant_data_t::lock_states::CPP)
+        std::lock_guard lk(m_data->m);
+        if (m_data->locked == image_persistant_data_t::lock_states::CPP)
         {
-            data->locked = image_persistant_data_t::lock_states::CPP_MAPPED;
+            m_data->locked = image_persistant_data_t::lock_states::CPP_MAPPED;
         };
     }
     // scoped-unlock and notify
-    data->cv.notify_all();
+    m_data->cv.notify_all();
 }
 
 void lv_image::downgrade_from_mapped()
 {
     {
         // obtain the mutex
-        std::lock_guard lk(data->m);
-        if (data->locked == image_persistant_data_t::lock_states::CPP_MAPPED)
+        std::lock_guard lk(m_data->m);
+        if (m_data->locked == image_persistant_data_t::lock_states::CPP_MAPPED)
         {
-            data->locked = image_persistant_data_t::lock_states::CPP;
+            m_data->locked = image_persistant_data_t::lock_states::CPP;
         };
     }
     // scoped-unlock and notify
-    data->cv.notify_all();
+    m_data->cv.notify_all();
 }
 
 LV_MgErr_t lv_image::on_labview_lock(LV_EDVRDataPtr_t ptr)
@@ -204,6 +204,10 @@ void lv_image::on_labview_delete(LV_EDVRDataPtr_t ptr)
     ptr->metadata_ptr = reinterpret_cast<uintptr_t>(nullptr);
 }
 
+uchar* lv_image::data() const{
+    return mat().data;
+}
+
 bool lv_image::is_bgra() const
 {
     return mat().channels() == 4;
@@ -221,27 +225,27 @@ size_t lv_image::height() const
 
 void lv_image::set_mat(cv::Mat new_mat)
 {
-    data->mat = new_mat;
+    m_data->mat = new_mat;
 }
 
 cv::Mat lv_image::clone() const
 {
-    return data->mat.clone();
+    return m_data->mat.clone();
 }
 
 void lv_image::copyTo(cv::_OutputArray dst) const
 {
-    data->mat.copyTo(dst);
+    m_data->mat.copyTo(dst);
 }
 
 void lv_image::copyTo(cv::_OutputArray dst, cv::_InputArray mask) const
 {
-    data->mat.copyTo(dst, mask);
+    m_data->mat.copyTo(dst, mask);
 }
 
 cv::Mat const &lv_image::mat() const
 {
-    return data->mat;
+    return m_data->mat;
 }
 
 bool lv_image::is_greyscale() const
@@ -274,11 +278,11 @@ void lv_image::ensure_sized_to_match(const lv_image &other)
 
 cv::Mat lv_image::operator()(cv::Rect2i rect) const
 {
-    return data->mat(rect);
+    return m_data->mat(rect);
 }
 
 
 
 bool lv_image::is_empty() const {
-    return data->mat.empty();
+    return m_data->mat.empty();
 }

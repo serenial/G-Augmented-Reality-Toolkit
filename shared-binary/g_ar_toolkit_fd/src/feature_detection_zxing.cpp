@@ -13,7 +13,7 @@
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_fd_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -383,10 +383,14 @@ namespace
             m_symbol_identifier.copy_from(barcode.symbologyIdentifier());
             m_content_type = barcode.contentType();
             m_has_eci = barcode.hasECI();
-            m_top_left = barcode.position().topLeft();
-            m_bottom_left = barcode.position().bottomLeft();
-            m_bottom_right = barcode.position().bottomRight();
-            m_top_right = barcode.position().topRight();
+            m_top_left.m_x = barcode.position().topLeft().x;
+            m_top_left.m_y = barcode.position().topLeft().y;
+            m_bottom_left.m_x = barcode.position().bottomLeft().x;
+            m_bottom_left.m_y = barcode.position().bottomLeft().y;
+            m_bottom_right.m_x = barcode.position().bottomRight().x;
+            m_bottom_right.m_y = barcode.position().bottomRight().y;
+            m_top_right.m_x = barcode.position().topRight().x;
+            m_top_right.m_y = barcode.position().topRight().y;
             m_orientation = barcode.orientation();
             m_is_mirrored = barcode.isMirrored();
             m_is_inverted = barcode.isInverted();
@@ -419,7 +423,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_zxing_read_barcodes(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_zxing_read_barcodes(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_Ptr_t<LV_ZXingOptions_t> options_ptr,
@@ -430,7 +434,9 @@ extern "C"
         {
             lv_image image(src_edvr_ref_ptr);
 
-            auto barcodes = ZXing::ReadBarcodes(image, *options_ptr);
+            ZXing::ImageView zx_im_view(image.data(), image.width(), image.height(), image.is_bgra()? ZXing::ImageFormat::BGRA : ZXing::ImageFormat::Lum);
+
+            auto barcodes = ZXing::ReadBarcodes(zx_im_view, *options_ptr);
 
             results_handle.size_to_fit(barcodes.size());
             auto element = results_handle.begin();
@@ -446,8 +452,4 @@ extern "C"
         }
         return LV_ERR_noError;
     }
-}
-
-lv_image::operator const ZXing::ImageView(){
-    return ZXing::ImageView{mat().data, mat().cols, mat().rows, is_bgra()? ZXing::ImageFormat::BGRA : ZXing::ImageFormat::Lum};
 }

@@ -14,6 +14,8 @@ project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
 
 add_subdirectory(g_ar_toolkit)
 add_subdirectory(g_ar_toolkit_ar)
+add_subdirectory(g_ar_toolkit_dnn)
+add_subdirectory(g_ar_toolkit_fd)
 
 
 # # include tooling to generate export header
@@ -121,7 +123,7 @@ add_subdirectory(g_ar_toolkit_ar)
 # )
 
 # Install Shared Library
-INSTALL(TARGETS g_ar_toolkit g_ar_toolkit_ar
+INSTALL(TARGETS g_ar_toolkit g_ar_toolkit_ar g_ar_toolkit_dnn g_ar_toolkit_fd
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION bin
 )

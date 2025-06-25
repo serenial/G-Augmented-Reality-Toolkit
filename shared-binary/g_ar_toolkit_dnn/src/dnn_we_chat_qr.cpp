@@ -7,7 +7,7 @@
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit/lv_interop/lv_str.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_dnn_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -27,7 +27,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_we_chat_qr_create_detector(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_we_chat_qr_create_detector(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t detector_proto_handle,
         LV_StringHandle_t detector_model_handle,
@@ -46,7 +46,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_we_chat_qr_detect(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_we_chat_qr_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -80,7 +80,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_we_chat_qr_detector_scale_factor(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_we_chat_qr_detector_scale_factor(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         float *scale_factor,

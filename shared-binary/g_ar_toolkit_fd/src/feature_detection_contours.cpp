@@ -9,7 +9,7 @@
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_fd_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -85,7 +85,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_find_contours(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_find_contours(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EnumContourRetrievalMode_t retrieval_mode,

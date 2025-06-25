@@ -8,7 +8,7 @@
 #include "g_ar_toolkit/lv_interop/lv_edvr_managed_object.hpp"
 #include "g_ar_toolkit/lv_interop/lv_array_2d.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_fd_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -64,7 +64,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_create(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         uint8_t n_qrcodes,
@@ -89,7 +89,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_generate(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_generate(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         LV_StringHandle_t info,
@@ -111,7 +111,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_generate_structured_append(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_encoder_generate_structured_append(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         LV_StringHandle_t info,

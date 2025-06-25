@@ -6,7 +6,7 @@
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_dnn_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -26,7 +26,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_create_detector(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_create_detector(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t sr_proto_handle,
         LV_StringHandle_t sr_model_handle,
@@ -43,7 +43,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detect(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -79,7 +79,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_gradient_threshold(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_gradient_threshold(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         double *threshold,
@@ -103,7 +103,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_downsampling_threshold(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_downsampling_threshold(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         double *threshold,
@@ -127,7 +127,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_scales(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_scales(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_1DArrayHandle_t<float> scales_handle,

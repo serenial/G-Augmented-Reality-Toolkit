@@ -8,7 +8,7 @@
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_fd_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -37,7 +37,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_create(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr)
     {
@@ -52,7 +52,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_single(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_single(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -84,7 +84,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_multiple(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_multiple(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -119,7 +119,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_decode_single(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_decode_single(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -141,7 +141,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_decode_multiple(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_decode_multiple(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -176,7 +176,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_decode_multiple(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_detect_decode_multiple(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -209,7 +209,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_set_epsilon(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_qr_detector_set_epsilon(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         double eps,

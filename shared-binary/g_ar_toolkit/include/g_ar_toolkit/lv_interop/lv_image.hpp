@@ -25,6 +25,7 @@ namespace g_ar_toolkit
         bool is_empty() const;
         cv::Mat const &mat() const;
         // add some cv::Mat methods for ease of use
+        uchar* data() const;
         size_t width() const;
         size_t height() const;
         cv::Size size() const;
@@ -42,7 +43,7 @@ namespace g_ar_toolkit
         template <class T, class... Targs>
         T &at(Targs... arguments)
         {
-            return data->mat.at<T>(arguments...);
+            return m_data->mat.at<T>(arguments...);
         }
 
         // user-defined conversions to openCV's Input and Output Array types
@@ -80,10 +81,10 @@ namespace g_ar_toolkit
         image_persistant_data_t *get_metadata();
 
         // private properties - the order here is important for the initialization step
-        const LV_EDVRReferencePtr_t edvr_ref_ptr;
-        const LV_EDVRContext_t ctx;
-        const LV_EDVRDataPtr_t edvr_data_ptr;
-        image_persistant_data_t *const data;
+        const LV_EDVRReferencePtr_t m_edvr_ref_ptr;
+        const LV_EDVRContext_t m_ctx;
+        const LV_EDVRDataPtr_t m_edvr_data_ptr;
+        image_persistant_data_t *const m_data;
 
         static LV_MgErr_t on_labview_lock(LV_EDVRDataPtr_t ptr);
         static LV_MgErr_t on_labview_unlock(LV_EDVRDataPtr_t ptr);

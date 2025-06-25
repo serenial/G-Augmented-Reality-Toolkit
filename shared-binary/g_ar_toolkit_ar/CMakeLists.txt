@@ -1,14 +1,14 @@
 # include tooling to generate export header
 include(GenerateExportHeader)
 
-# specify shared-library target
-add_library(g_ar_toolkit_ar SHARED)
-
 # Find tinyobjloader
 find_package(tinyobjloader REQUIRED)
 
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED calib3d)
+
+# specify shared-library target
+add_library(g_ar_toolkit_ar SHARED)
 
 generate_export_header(g_ar_toolkit_ar)
 
