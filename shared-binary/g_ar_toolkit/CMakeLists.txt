@@ -4,7 +4,7 @@ set(OpenCV_SHARED OFF)
 include(GenerateExportHeader)
 
 # Find OpenCV
-find_package(OpenCV 4.11 REQUIRED)
+find_package(OpenCV 4.11 REQUIRED core imgproc imgcodecs)
 
 # Find eigen3
 find_package(Eigen3 CONFIG REQUIRED)

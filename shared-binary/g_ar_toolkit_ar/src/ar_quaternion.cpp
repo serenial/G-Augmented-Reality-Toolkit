@@ -10,7 +10,7 @@
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit/lv_interop/lv_mat.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -42,7 +42,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_rotation_matrix_to_quaternion(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_rotation_matrix_to_quaternion(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_3x3MatrixPtr_t rotation_mat_ptr,
         LV_QuaternionPtr_t quaternion_ptr)
@@ -58,7 +58,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_to_rotation_matrix(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_to_rotation_matrix(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_QuaternionPtr_t quaternion_ptr,
         LV_3x3MatrixPtr_t rotation_mat_ptr)
@@ -74,7 +74,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_slerp(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_slerp(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_QuaternionPtr_t from_ptr,
         LV_QuaternionPtr_t to_ptr,
@@ -92,7 +92,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_average(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_average(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_1DArrayHandle_t<LV_Quaternion_t> input_handle,
         LV_1DArrayHandle_t<double> weights_handle,

@@ -8,7 +8,7 @@
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 #include "g_ar_toolkit/lv_interop/lv_mat.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -42,7 +42,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_solve_pnp(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_solve_pnp(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_PointCorrespondencePtr_t point_correspondence_ptr,
         LV_CameraMatrixPtr_t camera_matrix_ptr,
@@ -85,7 +85,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_solve_pnp_usac(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_solve_pnp_usac(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_PointCorrespondencePtr_t point_correspondence_ptr,
         LV_CameraMatrixPtr_t camera_matrix_ptr,
@@ -126,7 +126,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_find_homography_usac(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_find_homography_usac(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_1DArrayHandle_t<LV_ImagePointFloat_t> source_handle,
         LV_1DArrayHandle_t<LV_ImagePointFloat_t> destination_handle,

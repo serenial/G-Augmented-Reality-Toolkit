@@ -6,14 +6,14 @@
 #include "g_ar_toolkit/lv_interop/lv_image.hpp"
 #include "g_ar_toolkit/lv_interop/lv_camera_parameters.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_undistort(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_image_undistort(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_CameraMatrixPtr_t camera_matrix_ptr,
         LV_CameraDistortionPtr_t camera_distortion_ptr,

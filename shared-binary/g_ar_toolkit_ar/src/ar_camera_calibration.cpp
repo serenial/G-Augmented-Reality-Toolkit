@@ -12,7 +12,7 @@
 #include "g_ar_toolkit/lv_interop/lv_camera_parameters.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -71,7 +71,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_camera_calibration(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_camera_calibration(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_PointCorrespondencesArrayHandle_t point_correspondence_handle,
         LV_ImageSizePtr_t size_ptr,

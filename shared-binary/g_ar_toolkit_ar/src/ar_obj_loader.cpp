@@ -10,7 +10,7 @@
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc
 #define TINYOBJLOADER_USE_MAPBOX_EARCUT
@@ -657,7 +657,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_ar_load_obj(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_load_obj(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t obj_path_handle,
         LV_StringHandle_t material_path_handle,

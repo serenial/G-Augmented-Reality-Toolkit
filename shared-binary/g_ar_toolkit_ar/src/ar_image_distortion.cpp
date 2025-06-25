@@ -13,7 +13,7 @@
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 #include "g_ar_toolkit/lv_interop/lv_u32_colour.hpp"
 
-#include "g_ar_toolkit_export.h"
+#include "g_ar_toolkit_ar_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -37,7 +37,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_distortion_map_create(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_image_distortion_map_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_ImageSizePtr_t size_ptr,
         LV_CameraMatrixPtr_t camera_matrix_ptr,
@@ -55,7 +55,7 @@ error_cluster_ptr.copy_from_exception(std::current_exception(),__func__);
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_distortion_map_distort_image(
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_image_distortion_map_distort_image(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t rectifier_edvr_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,

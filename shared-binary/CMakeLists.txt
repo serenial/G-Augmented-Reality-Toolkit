@@ -121,7 +121,7 @@ add_subdirectory(g_ar_toolkit_ar)
 # )
 
 # Install Shared Library
-INSTALL(TARGETS g_ar_toolkit
+INSTALL(TARGETS g_ar_toolkit g_ar_toolkit_ar
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION bin
 )
