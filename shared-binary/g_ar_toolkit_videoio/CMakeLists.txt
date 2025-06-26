@@ -15,7 +15,7 @@ if(UNIX)
   set_target_properties(g_ar_toolkit_videoio PROPERTIES PREFIX "")
 
   # set linker flags for ffmpeg
-  target_link_options(g_ar_toolkit PRIVATE "-Wl,-Bsymbolic")
+  target_link_options(g_ar_toolkit_videoio PRIVATE "-Wl,-Bsymbolic")
 endif()
 
 target_include_directories(g_ar_toolkit_videoio
