@@ -18,13 +18,14 @@
 		<Item Name="test-images" Type="Folder" URL="../test-images">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
-		<Item Name="COPYRIGHT" Type="Document" URL="../COPYRIGHT"/>
+		<Item Name="COPYING" Type="Document" URL="../g_ar_toolkit.common/BIN/COPYRIGHT"/>
 		<Item Name="g_ar_toolkit.ar.lvlib" Type="Library" URL="../g_ar_toolkit.ar/g_ar_toolkit.ar.lvlib"/>
 		<Item Name="g_ar_toolkit.capture.lvlib" Type="Library" URL="../g_ar_toolkit.capture/g_ar_toolkit.capture.lvlib"/>
 		<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
 		<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
 		<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
 		<Item Name="g_ar_toolkit.shape.lvlib" Type="Library" URL="../g_ar_toolkit.shape/g_ar_toolkit.shape.lvlib"/>
+		<Item Name="g_ar_toolkit.video_io.lvlib" Type="Library" URL="../g_ar_toolkit.video_io/g_ar_toolkit.video_io.lvlib"/>
 		<Item Name="g_ar_toolkit.examples.lvlib" Type="Library" URL="../g_ar_toolkit.examples/g_ar_toolkit.examples.lvlib"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">

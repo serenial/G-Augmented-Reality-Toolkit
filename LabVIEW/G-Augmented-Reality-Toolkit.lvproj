@@ -44,7 +44,7 @@
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
 		<Item Name="LICENSE" Type="Document" URL="../../LICENSE"/>
-		<Item Name="video io.vi" Type="VI" URL="../../../../../Users/john/Desktop/video io.vi"/>
+		<Item Name="COPYING" Type="Document" URL="../../shared-binary/COPYING"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
@@ -236,7 +236,7 @@
 				<Property Name="Bld_preActionVIID" Type="Ref">/My Computer/build-tools/Pre-Build Action.vi</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{335EEF3B-14B7-4A77-85E2-594933016307}</Property>
 				<Property Name="Bld_removeVIObj" Type="Int">1</Property>
-				<Property Name="Bld_version.minor" Type="Int">14</Property>
+				<Property Name="Bld_version.minor" Type="Int">15</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
@@ -244,6 +244,9 @@
 				<Property Name="Destination[1].path" Type="Path">../build/source-distribution/data</Property>
 				<Property Name="Destination[10].destName" Type="Str">examples</Property>
 				<Property Name="Destination[10].path" Type="Path">../build/source-distribution/g_ar_toolkit.examples</Property>
+				<Property Name="Destination[11].destName" Type="Str">video_io</Property>
+				<Property Name="Destination[11].path" Type="Path">../build/source-distribution/g_ar_toolkit.video_io</Property>
+				<Property Name="Destination[11].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[2].destName" Type="Str">common</Property>
 				<Property Name="Destination[2].path" Type="Path">../build/source-distribution/g_ar_toolkit.common</Property>
 				<Property Name="Destination[2].preserveHierarchy" Type="Bool">true</Property>
@@ -266,8 +269,8 @@
 				<Property Name="Destination[8].path" Type="Path">../build/source-distribution/g_ar_toolkit.common/bin</Property>
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
-				<Property Name="DestinationCount" Type="Int">11</Property>
-				<Property Name="Source[0].itemID" Type="Str">{4BEE38EC-95C6-4B66-9223-A649217127D9}</Property>
+				<Property Name="DestinationCount" Type="Int">12</Property>
+				<Property Name="Source[0].itemID" Type="Str">{8A5549D2-12F1-437F-968F-83ADB8D2FF58}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
@@ -432,8 +435,22 @@
 				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[4].type" Type="Str">Library</Property>
 				<Property Name="Source[40].destinationIndex" Type="Int">8</Property>
-				<Property Name="Source[40].itemID" Type="Ref"></Property>
+				<Property Name="Source[40].itemID" Type="Ref">/My Computer/COPYING</Property>
 				<Property Name="Source[40].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[41].destinationIndex" Type="Int">11</Property>
+				<Property Name="Source[41].itemID" Type="Ref">/My Computer/video_io.lvlib</Property>
+				<Property Name="Source[41].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[41].newName" Type="Str">g_ar_toolkit.video_io.lvlib</Property>
+				<Property Name="Source[41].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[41].type" Type="Str">Library</Property>
+				<Property Name="Source[42].destinationIndex" Type="Int">11</Property>
+				<Property Name="Source[42].itemID" Type="Ref">/My Computer/video_io.lvlib/API/Reader.lvclass</Property>
+				<Property Name="Source[42].type" Type="Str">Library</Property>
+				<Property Name="Source[43].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[43].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[43].destinationIndex" Type="Int">11</Property>
+				<Property Name="Source[43].itemID" Type="Ref">/My Computer/video_io.lvlib/API</Property>
+				<Property Name="Source[43].type" Type="Str">Container</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -463,7 +480,7 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
-				<Property Name="SourceCount" Type="Int">41</Property>
+				<Property Name="SourceCount" Type="Int">44</Property>
 			</Item>
 		</Item>
 	</Item>
