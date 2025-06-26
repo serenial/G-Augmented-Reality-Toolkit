@@ -31,6 +31,11 @@ elseif(UNIX)
   target_link_options(g_ar_toolkit_core PUBLIC
     "-static-libgcc" "-static-libstdc++"
   )
+
+  # try and remove unused code sections
+  target_compile_options(g_ar_toolkit PUBLIC
+    "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
+  )
 endif()
 
 # specify target properties
