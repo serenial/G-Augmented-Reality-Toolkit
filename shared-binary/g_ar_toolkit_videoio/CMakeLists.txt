@@ -24,17 +24,6 @@ target_include_directories(g_ar_toolkit_videoio
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
-# specify target properties
-# winrt only supports C++17 std
-set_property(TARGET g_ar_toolkit_videoio PROPERTY CXX_STANDARD 17)
-set_target_properties(g_ar_toolkit_videoio PROPERTIES
-  POSITION_INDEPENDENT_CODE ON
-  C_VISIBILITY_PRESET hidden
-  CXX_VISIBILITY_PRESET hidden
-  VISIBILITY_INLINES_HIDDEN ON
-  WINDOWS_EXPORT_ALL_SYMBOLS OFF
-)
-
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_videoio PROPERTIES OUTPUT_NAME gartoolkit_videoio_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})

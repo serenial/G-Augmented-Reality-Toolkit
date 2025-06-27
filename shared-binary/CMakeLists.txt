@@ -9,6 +9,8 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+
 # Specify Project
 project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
 

@@ -26,25 +26,10 @@ target_include_directories(g_ar_toolkit_core
 if(WIN32)
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
   target_compile_definitions(g_ar_toolkit_core PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068 _ALLOW_COROUTINE_ABI_MISMATCH)
-elseif(UNIX)
-
 endif()
-
-# specify target properties
-# winrt only supports C++17 std
-set_property(TARGET g_ar_toolkit_core PROPERTY CXX_STANDARD 17)
-set_target_properties(g_ar_toolkit_core PROPERTIES
-  POSITION_INDEPENDENT_CODE ON
-  C_VISIBILITY_PRESET default
-  CXX_VISIBILITY_PRESET default
-  VISIBILITY_INLINES_HIDDEN OFF
-  WINDOWS_EXPORT_ALL_SYMBOLS ON
-)
 
 target_link_libraries(g_ar_toolkit_core PUBLIC
   opencv_core
-  opencv_imgproc
-  opencv_imgcodecs
   Eigen3::Eigen
 )
 
@@ -143,6 +128,9 @@ math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit PROPERTIES OUTPUT_NAME gartoolkit_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit PUBLIC
   g_ar_toolkit_core
+)
+target_link_libraries(g_ar_toolkit PRIVATE
+  opencv_imgcodecs
 )
 
 include(${CMAKE_CURRENT_LIST_DIR}/src/capture/CMakeLists.txt)
