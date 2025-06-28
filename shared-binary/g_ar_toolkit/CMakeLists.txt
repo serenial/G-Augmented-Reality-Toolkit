@@ -15,6 +15,14 @@ add_library(g_ar_toolkit_core OBJECT)
 # add compile definitions
 target_compile_definitions(g_ar_toolkit_core PUBLIC G_AR_TOOLKIT_BYTE_PACKING_${CMAKE_SIZEOF_VOID_P})
 
+set_target_properties(g_ar_toolkit_core PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+  C_VISIBILITY_PRESET hidden
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+)
+
 target_include_directories(g_ar_toolkit_core
   PUBLIC
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/g_ar_toolkit>"
@@ -112,13 +120,6 @@ endif()
 # specify target properties
 # winrt only supports C++17 std
 set_property(TARGET g_ar_toolkit PROPERTY CXX_STANDARD 17)
-set_target_properties(g_ar_toolkit PROPERTIES
-  POSITION_INDEPENDENT_CODE ON
-  C_VISIBILITY_PRESET default
-  CXX_VISIBILITY_PRESET default
-  VISIBILITY_INLINES_HIDDEN OFF
-  WINDOWS_EXPORT_ALL_SYMBOLS ON
-)
 
 # generate export header
 generate_export_header(g_ar_toolkit)
