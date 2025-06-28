@@ -21,11 +21,19 @@ target_include_directories(g_ar_toolkit_tesseract
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
+set_target_properties(g_ar_toolkit_tesseract PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+  C_VISIBILITY_PRESET hidden
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+)
+
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_tesseract PROPERTIES OUTPUT_NAME gartoolkit_tesseract_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_tesseract PRIVATE
-  g_ar_toolkit
+  g_ar_toolkit_core
   opencv_text
 )
 

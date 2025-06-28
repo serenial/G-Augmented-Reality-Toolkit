@@ -17,10 +17,10 @@ target_compile_definitions(g_ar_toolkit_core PUBLIC G_AR_TOOLKIT_BYTE_PACKING_${
 
 set_target_properties(g_ar_toolkit_core PROPERTIES
   POSITION_INDEPENDENT_CODE ON
-  C_VISIBILITY_PRESET hidden
-  CXX_VISIBILITY_PRESET hidden
-  VISIBILITY_INLINES_HIDDEN ON
-  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+  C_VISIBILITY_PRESET default
+  CXX_VISIBILITY_PRESET default
+  VISIBILITY_INLINES_HIDDEN OFF
+  WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 
 target_include_directories(g_ar_toolkit_core
@@ -93,6 +93,14 @@ target_include_directories(g_ar_toolkit
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
+set_target_properties(g_ar_toolkit PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+  C_VISIBILITY_PRESET hidden
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+)
+
 # plaform specific definitions
 if(WIN32)
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
@@ -127,10 +135,8 @@ generate_export_header(g_ar_toolkit)
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit PROPERTIES OUTPUT_NAME gartoolkit_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
-target_link_libraries(g_ar_toolkit PUBLIC
-  g_ar_toolkit_core
-)
 target_link_libraries(g_ar_toolkit PRIVATE
+  g_ar_toolkit_core
   opencv_imgcodecs
 )
 

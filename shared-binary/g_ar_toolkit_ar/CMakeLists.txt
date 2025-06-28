@@ -5,7 +5,7 @@ include(GenerateExportHeader)
 find_package(tinyobjloader REQUIRED)
 
 # Find OpenCV
-find_package(OpenCV 4.11 REQUIRED core calib3d)
+find_package(OpenCV 4.11 REQUIRED calib3d)
 
 # specify shared-library target
 add_library(g_ar_toolkit_ar SHARED)
@@ -24,12 +24,19 @@ target_include_directories(g_ar_toolkit_ar
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
+set_target_properties(g_ar_toolkit_ar PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+  C_VISIBILITY_PRESET hidden
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+)
 
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_ar PROPERTIES OUTPUT_NAME gartoolkit_ar_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_ar PRIVATE
-  g_ar_toolkit
+  g_ar_toolkit_core
   tinyobjloader::tinyobjloader
   opencv_calib3d
 )

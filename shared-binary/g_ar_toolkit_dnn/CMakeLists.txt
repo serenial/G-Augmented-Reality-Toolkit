@@ -21,11 +21,19 @@ target_include_directories(g_ar_toolkit_dnn
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
+set_target_properties(g_ar_toolkit_dnn PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+  C_VISIBILITY_PRESET hidden
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+  WINDOWS_EXPORT_ALL_SYMBOLS OFF
+)
+
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_dnn PROPERTIES OUTPUT_NAME gartoolkit_dnn_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_dnn PRIVATE
-  g_ar_toolkit
+  g_ar_toolkit_core
   opencv_objdetect
   opencv_wechat_qrcode
   opencv_dnn
