@@ -60,6 +60,7 @@
 		<Item Name="ImageSizeCore.vim" Type="VI" URL="../ImageSizeCore.vim"/>
 		<Item Name="InRangeImageCore.vim" Type="VI" URL="../InRangeImageCore.vim"/>
 		<Item Name="InsertIntoCore.vim" Type="VI" URL="../InsertIntoCore.vim"/>
+		<Item Name="InvertImageInPlaceCore.vim" Type="VI" URL="../InvertImageInPlaceCore.vim"/>
 		<Item Name="MatrixToFixedSize.vim" Type="VI" URL="../MatrixToFixedSize.vim"/>
 		<Item Name="MorphologyCore.vi" Type="VI" URL="../MorphologyCore.vi"/>
 		<Item Name="MorphStructuringElementCore.vi" Type="VI" URL="../MorphStructuringElementCore.vi"/>
@@ -205,6 +206,12 @@
 			<Item Name="Insert Image (Greyscale with Mask).vi" Type="VI" URL="../Insert Image (Greyscale with Mask).vi"/>
 			<Item Name="Insert Image (Greyscale).vi" Type="VI" URL="../Insert Image (Greyscale).vi"/>
 		</Item>
+		<Item Name="Invert In-Place" Type="Folder">
+			<Item Name="Invert In-Place (ARGB Bitwise).vi" Type="VI" URL="../Invert In-Place (ARGB Bitwise).vi"/>
+			<Item Name="Invert In-Place (ARGB Negate).vi" Type="VI" URL="../Invert In-Place (ARGB Negate).vi"/>
+			<Item Name="Invert In-Place (Greyscale Bitwise).vi" Type="VI" URL="../Invert In-Place (Greyscale Bitwise).vi"/>
+			<Item Name="Invert In-Place (Greyscale Negate).vi" Type="VI" URL="../Invert In-Place (Greyscale Negate).vi"/>
+		</Item>
 		<Item Name="Match-Value Image" Type="Folder">
 			<Item Name="Match-Value Image (ARGB).vi" Type="VI" URL="../Match-Value Image (ARGB).vi"/>
 			<Item Name="Match-Value Image (Colour).vi" Type="VI" URL="../Match-Value Image (Colour).vi"/>
@@ -280,7 +287,7 @@
 		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
-		<Property Name="NI.SortType" Type="Int">0</Property>
+		<Property Name="NI.SortType" Type="Int">3</Property>
 		<Item Name="Types" Type="Folder">
 			<Property Name="NI.SortType" Type="Int">0</Property>
 			<Item Name="Alpha Handling.ctl" Type="VI" URL="../Alpha Handling.ctl"/>
@@ -340,7 +347,7 @@
 		<Item Name="Horizontal Concatinate Image Data.vi" Type="VI" URL="../Horizontal Concatinate Image Data.vi"/>
 		<Item Name="In-Range Image.vi" Type="VI" URL="../In-Range Image.vi"/>
 		<Item Name="Insert Image.vi" Type="VI" URL="../Insert Image.vi"/>
-		<Item Name="Invert Greyscale Image In-Place.vi" Type="VI" URL="../Invert Greyscale Image In-Place.vi"/>
+		<Item Name="Invert In-Place.vi" Type="VI" URL="../Invert In-Place.vi"/>
 		<Item Name="Match-Value Image.vi" Type="VI" URL="../Match-Value Image.vi"/>
 		<Item Name="Morphology.vi" Type="VI" URL="../Morphology.vi"/>
 		<Item Name="New Image.vi" Type="VI" URL="../New Image.vi"/>

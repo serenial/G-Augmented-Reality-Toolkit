@@ -38,7 +38,7 @@ set_target_properties(g_ar_toolkit_fd PROPERTIES
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_fd PROPERTIES OUTPUT_NAME gartoolkit_fd_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_fd PRIVATE
-  g_ar_toolkit_core
+  g_ar_toolkit
   apriltag::apriltag
   ZXing::Core
   ZXing::ZXing

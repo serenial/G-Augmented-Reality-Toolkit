@@ -80,7 +80,8 @@ extern "C"
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t mask_edvr_ref_ptr,
-        LV_BooleanPtr_t has_mask_ptr)
+        LV_BooleanPtr_t has_mask_ptr
+    )
     {
         try
         {

@@ -11,6 +11,7 @@ jobs:
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.triplet_platform}}-ci
       VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}/vcpkg_cache,readwrite
+      CACHE_KEY_HASH: ${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json', 'CMakePresets.json', 'shared-binary/**/CMakeLists.txt', 'vcpkg-overlay-ports', 'vcpkg-overlay-triplets') }}
     strategy:
       fail-fast: false
       matrix:
@@ -30,7 +31,7 @@ jobs:
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}/vcpkg_cache
-        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ hashFiles('vcpkg.json') }}
+        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ env.CACHE_KEY_HASH }}
         restore-keys: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-
 
     - uses: actions/checkout@v4
@@ -64,4 +65,4 @@ jobs:
       uses: actions/cache/save@v4
       with:
         path: ${{ github.workspace }}/vcpkg_cache
-        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ hashFiles('vcpkg.json') }}
+        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ env.CACHE_KEY_HASH }}

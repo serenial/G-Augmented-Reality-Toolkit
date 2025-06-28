@@ -5,7 +5,7 @@ include(GenerateExportHeader)
 find_package(tinyobjloader REQUIRED)
 
 # Find OpenCV
-find_package(OpenCV 4.11 REQUIRED calib3d)
+find_package(OpenCV 4.11 REQUIRED imgproc calib3d)
 
 # specify shared-library target
 add_library(g_ar_toolkit_ar SHARED)
@@ -36,7 +36,8 @@ set_target_properties(g_ar_toolkit_ar PROPERTIES
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_ar PROPERTIES OUTPUT_NAME gartoolkit_ar_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_ar PRIVATE
-  g_ar_toolkit_core
+  g_ar_toolkit
+  opencv_imgproc
   tinyobjloader::tinyobjloader
   opencv_calib3d
 )

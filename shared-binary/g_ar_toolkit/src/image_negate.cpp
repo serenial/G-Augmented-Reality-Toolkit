@@ -11,31 +11,29 @@ extern "C"
 {
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_negate_in_place(
         LV_ErrorClusterPtr_t error_cluster_ptr,
-        LV_EDVRReferencePtr_t img_edvr_ref_ptr)
+        LV_EDVRReferencePtr_t img_edvr_ref_ptr,
+        LV_BooleanPtr_t use_bitwise_not)
     {
         try
         {
+
             // operate in place
             lv_image img(img_edvr_ref_ptr);
 
-            if (img.is_greyscale())
+            if (use_bitwise_not)
             {
-                for (int row = 0; row < img.height(); row++)
-                {
-                    for (int col = 0; col < img.width(); col++)
-                    {
-                        img.at<uint8_t>(row, col) = uint8_t(255) - img.at<uchar>(row, col);
-                    }
-                }
+                cv::bitwise_not(img, img);
             }
             else
             {
-                for (int row = 0; row < img.height(); row++)
+
+                if (img.is_greyscale())
                 {
-                    for (int col = 0; col < img.width(); col++)
-                    {
-                        img.at<cv::Vec4b>(row, col) = cv::Vec4b(255, 255, 255, 255) - img.at<cv::Vec4b>(row, col);
-                    }
+                    *img = 255 - img.mat();
+                }
+                else
+                {
+                    *img = cv::Vec4b(255, 255, 255, 255) - img.mat();
                 }
             }
         }

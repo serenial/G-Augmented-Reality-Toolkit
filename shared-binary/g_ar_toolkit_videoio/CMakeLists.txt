@@ -36,7 +36,7 @@ set_target_properties(g_ar_toolkit_videoio PROPERTIES
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit_videoio PROPERTIES OUTPUT_NAME gartoolkit_videoio_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_videoio PRIVATE
-  g_ar_toolkit_core
+  g_ar_toolkit
   opencv_videoio
 )
 
