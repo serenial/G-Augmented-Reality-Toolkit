@@ -41,6 +41,8 @@
 # CMake Build Files
 build/*
 
+# Zip Files
+*.zip
 
 #########################
 # Python Related Ignore #

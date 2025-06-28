@@ -19,6 +19,9 @@
 			<Item Name="PointSet.ctl" Type="VI" URL="../PointSet.ctl"/>
 			<Item Name="Transform.ctl" Type="VI" URL="../Transform.ctl"/>
 			<Item Name="Vertex Descriptor.ctl" Type="VI" URL="../Vertex Descriptor.ctl"/>
+			<Item Name="Chessboard Semi Circle Square Type.ctl" Type="VI" URL="../Chessboard Semi Circle Square Type.ctl"/>
+			<Item Name="Chessboard Teardrop Corner Type.ctl" Type="VI" URL="../Chessboard Teardrop Corner Type.ctl"/>
+			<Item Name="ChessboardSquareLocation.ctl" Type="VI" URL="../ChessboardSquareLocation.ctl"/>
 		</Item>
 		<Item Name="Dimensions.vi" Type="VI" URL="../Dimensions.vi"/>
 		<Item Name="EstimateTransformParametersBetweenPointSets.vi" Type="VI" URL="../EstimateTransformParametersBetweenPointSets.vi"/>
@@ -38,12 +41,22 @@
 		<Item Name="EstimatePlaneForPointSet.vi" Type="VI" URL="../EstimatePlaneForPointSet.vi"/>
 		<Item Name="RotationMatrixBetweenPlanes.vi" Type="VI" URL="../RotationMatrixBetweenPlanes.vi"/>
 		<Item Name="UndistortCore.vim" Type="VI" URL="../UndistortCore.vim"/>
+		<Item Name="DrawChessboardSemiCircleSquare.vi" Type="VI" URL="../DrawChessboardSemiCircleSquare.vi"/>
+		<Item Name="DrawChessboardSpotOnSquare.vi" Type="VI" URL="../DrawChessboardSpotOnSquare.vi"/>
+		<Item Name="DrawChessboardTearDropSquare.vi" Type="VI" URL="../DrawChessboardTearDropSquare.vi"/>
+		<Item Name="FindChessboardCorners.vim" Type="VI" URL="../FindChessboardCorners.vim"/>
+		<Item Name="FindChessboardCornersSectorBased.vim" Type="VI" URL="../FindChessboardCornersSectorBased.vim"/>
 	</Item>
 	<Item Name="Types" Type="Folder">
 		<Property Name="NI.SortType" Type="Int">0</Property>
 		<Item Name="Camera Calibration Flags.ctl" Type="VI" URL="../Camera Calibration Flags.ctl"/>
 		<Item Name="Camera Parameters Estimate.ctl" Type="VI" URL="../Camera Parameters Estimate.ctl"/>
+		<Item Name="Chessboard Corner Info.ctl" Type="VI" URL="../Chessboard Corner Info.ctl"/>
+		<Item Name="Chessboard Square Marker.ctl" Type="VI" URL="../Chessboard Square Marker.ctl"/>
 		<Item Name="Correspondence Index.ctl" Type="VI" URL="../Correspondence Index.ctl"/>
+		<Item Name="Find Chessboard Corners Flags.ctl" Type="VI" URL="../Find Chessboard Corners Flags.ctl"/>
+		<Item Name="Find Chessboard Corners Sector Based Flags.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Flags.ctl"/>
+		<Item Name="Find Chessboard Corners Sector Based Meta.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Meta.ctl"/>
 		<Item Name="Model Bounding Box.ctl" Type="VI" URL="../Model Bounding Box.ctl"/>
 		<Item Name="Plane Alignment Coefficients.ctl" Type="VI" URL="../Plane Alignment Coefficients.ctl"/>
 		<Item Name="Point Correspondence Params.lvclass" Type="LVClass" URL="../Point Correspondence Params/Point Correspondence Params.lvclass"/>
@@ -91,10 +104,21 @@
 			<Item Name="Undistort (ARGB).vi" Type="VI" URL="../Undistort (ARGB).vi"/>
 			<Item Name="Undistort (Greyscale).vi" Type="VI" URL="../Undistort (Greyscale).vi"/>
 		</Item>
+		<Item Name="Generate Chessboard Image Data" Type="Folder">
+			<Item Name="Generate Chessboard Image Data (Regular).vi" Type="VI" URL="../Generate Chessboard Image Data (Regular).vi"/>
+			<Item Name="Generate Chessboard Image Data (Radon).vi" Type="VI" URL="../Generate Chessboard Image Data (Radon).vi"/>
+		</Item>
+		<Item Name="Find Chessboard Corners" Type="Folder">
+			<Item Name="Find Chessboard Corners (ARGB).vi" Type="VI" URL="../Find Chessboard Corners (ARGB).vi"/>
+			<Item Name="Find Chessboard Corners (Greyscale).vi" Type="VI" URL="../Find Chessboard Corners (Greyscale).vi"/>
+			<Item Name="Find Chessboard Corners (ARGB Sector Based).vi" Type="VI" URL="../Find Chessboard Corners (ARGB Sector Based).vi"/>
+			<Item Name="Find Chessboard Corners (Greyscale Sector Based).vi" Type="VI" URL="../Find Chessboard Corners (Greyscale Sector Based).vi"/>
+		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
 		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
 		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
+		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
 		<Item Name="Calibrate Camera.vi" Type="VI" URL="../Calibrate Camera.vi"/>
@@ -117,5 +141,7 @@
 		<Item Name="Estimate Absolute Orientation.vi" Type="VI" URL="../Estimate Absolute Orientation.vi"/>
 		<Item Name="Find Homography.vi" Type="VI" URL="../Find Homography.vi"/>
 		<Item Name="Transformation Matrix to Pose.vi" Type="VI" URL="../Transformation Matrix to Pose.vi"/>
+		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
+		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 	</Item>
 </Library>

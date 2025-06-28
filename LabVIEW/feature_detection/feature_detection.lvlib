@@ -21,14 +21,6 @@
 		<Item Name="AprilTagCustom48h12Codes.vi" Type="VI" URL="../AprilTagCustom48h12Codes.vi"/>
 		<Item Name="AprilTagStandard41h12Codes.vi" Type="VI" URL="../AprilTagStandard41h12Codes.vi"/>
 		<Item Name="AprilTagStandard52h13Codes.vi" Type="VI" URL="../AprilTagStandard52h13Codes.vi"/>
-		<Item Name="Chessboard Semi Circle Square Type.ctl" Type="VI" URL="../Chessboard Semi Circle Square Type.ctl"/>
-		<Item Name="Chessboard Teardrop Corner Type.ctl" Type="VI" URL="../Chessboard Teardrop Corner Type.ctl"/>
-		<Item Name="ChessboardSquareLocation.ctl" Type="VI" URL="../ChessboardSquareLocation.ctl"/>
-		<Item Name="DrawChessboardSemiCircleSquare.vi" Type="VI" URL="../DrawChessboardSemiCircleSquare.vi"/>
-		<Item Name="DrawChessboardSpotOnSquare.vi" Type="VI" URL="../DrawChessboardSpotOnSquare.vi"/>
-		<Item Name="DrawChessboardTearDropSquare.vi" Type="VI" URL="../DrawChessboardTearDropSquare.vi"/>
-		<Item Name="FindChessboardCorners.vim" Type="VI" URL="../FindChessboardCorners.vim"/>
-		<Item Name="FindChessboardCornersSectorBased.vim" Type="VI" URL="../FindChessboardCornersSectorBased.vim"/>
 		<Item Name="Hough Modes.ctl" Type="VI" URL="../Hough Modes.ctl"/>
 		<Item Name="TagCreatePixelArray.vi" Type="VI" URL="../TagCreatePixelArray.vi"/>
 		<Item Name="TagCreatePixelArrayV1Tags.vi" Type="VI" URL="../TagCreatePixelArrayV1Tags.vi"/>
@@ -39,19 +31,8 @@
 		<Item Name="TagSetPixel.vi" Type="VI" URL="../TagSetPixel.vi"/>
 		<Item Name="wechatDetectCoffeeModel.vi" Type="VI" URL="../wechatDetectCoffeeModel.vi"/>
 		<Item Name="wechatSuperResolutionCoffeeModel.vi" Type="VI" URL="../wechatSuperResolutionCoffeeModel.vi"/>
-		<Item Name="PictureToGreyscaleArrayData.vi" Type="VI" URL="../PictureToGreyscaleArrayData.vi"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
-		<Item Name="Generate Chessboard Image Data" Type="Folder">
-			<Item Name="Generate Chessboard Image Data (Regular).vi" Type="VI" URL="../Generate Chessboard Image Data (Regular).vi"/>
-			<Item Name="Generate Chessboard Image Data (Radon).vi" Type="VI" URL="../Generate Chessboard Image Data (Radon).vi"/>
-		</Item>
-		<Item Name="Find Chessboard Corners" Type="Folder">
-			<Item Name="FindChessboardCornersARGB.vi" Type="VI" URL="../FindChessboardCornersARGB.vi"/>
-			<Item Name="FindChessboardCornersGreyscale.vi" Type="VI" URL="../FindChessboardCornersGreyscale.vi"/>
-			<Item Name="FindChessboardCornersSectorBasedARGB.vi" Type="VI" URL="../FindChessboardCornersSectorBasedARGB.vi"/>
-			<Item Name="FindChessboardCornersSectorBasedGreyscale.vi" Type="VI" URL="../FindChessboardCornersSectorBasedGreyscale.vi"/>
-		</Item>
 		<Item Name="Generate AprilTag Image Data" Type="Folder">
 			<Property Name="NI.LibItem.Scope" Type="Int">1</Property>
 			<Item Name="Generate Apriltag Image Data (Tag16h5).vi" Type="VI" URL="../Generate Apriltag Image Data (Tag16h5).vi"/>
@@ -75,14 +56,9 @@
 		</Item>
 	</Item>
 	<Item Name="Types" Type="Folder">
-		<Item Name="Chessboard Corner Info.ctl" Type="VI" URL="../Chessboard Corner Info.ctl"/>
-		<Item Name="Chessboard Square Marker.ctl" Type="VI" URL="../Chessboard Square Marker.ctl"/>
 		<Item Name="Contour Approximation Mode.ctl" Type="VI" URL="../Contour Approximation Mode.ctl"/>
 		<Item Name="Contour Hierarchy.ctl" Type="VI" URL="../Contour Hierarchy.ctl"/>
 		<Item Name="Contour Retrieval Modes.ctl" Type="VI" URL="../Contour Retrieval Modes.ctl"/>
-		<Item Name="Find Chessboard Corners Flags.ctl" Type="VI" URL="../Find Chessboard Corners Flags.ctl"/>
-		<Item Name="Find Chessboard Corners Sector Based Flags.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Flags.ctl"/>
-		<Item Name="Find Chessboard Corners Sector Based Meta.ctl" Type="VI" URL="../Find Chessboard Corners Sector Based Meta.ctl"/>
 		<Item Name="Found Contour.ctl" Type="VI" URL="../Found Contour.ctl"/>
 		<Item Name="Hough Circle Modes.ctl" Type="VI" URL="../Hough Circle Modes.ctl"/>
 		<Item Name="Hough Circle Parameters.ctl" Type="VI" URL="../Hough Circle Parameters.ctl"/>
@@ -98,12 +74,9 @@
 		<Item Name="Text Detector.lvclass" Type="LVClass" URL="../Text Detector/Text Detector.lvclass"/>
 		<Item Name="Text Recognizer.lvclass" Type="LVClass" URL="../Text Recognizer/Text Recognizer.lvclass"/>
 		<Item Name="Text Tesseract.lvclass" Type="LVClass" URL="../Text Tesseract/Text Tesseract.lvclass"/>
-		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
-		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
 		<Item Name="AprilTag Tag ID List.vi" Type="VI" URL="../AprilTag Tag ID List.vi"/>
 		<Item Name="Generate AprilTag Image Data.vi" Type="VI" URL="../Generate AprilTag Image Data.vi"/>
 		<Item Name="Find Contours.vi" Type="VI" URL="../Find Contours.vi"/>
 		<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
-		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 	</Item>
 </Library>
