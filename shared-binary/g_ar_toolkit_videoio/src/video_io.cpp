@@ -21,7 +21,9 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::VideoCapture> cap(reader_edvr_ref, new cv::VideoCapture(path_string_handle, cv::CAP_FFMPEG));
+            EDVRManagedObject<cv::VideoCapture> cap(reader_edvr_ref, new cv::VideoCapture());
+
+            cap->open(path_string_handle, cv::CAP_FFMPEG);
 
             if (!cap->isOpened())
             {
@@ -212,7 +214,8 @@ extern "C"
         LV_ImageSizePtr_t size,
         double fps,
         LV_BooleanPtr_t is_colour,
-        int8_t quality
+        int8_t quality,
+        LV_BooleanPtr_t use_hw_acceleration
     )
     {
         try
@@ -223,10 +226,17 @@ extern "C"
 
             args[0] = cv::VideoWriterProperties::VIDEOWRITER_PROP_IS_COLOR;
             args[1] = *is_colour;
-            args[2] = cv::VideoWriterProperties::VIDEOWRITER_PROP_QUALITY;
-            args[3] = quality;
+            args[2] = cv::VideoWriterProperties::VIDEOWRITER_PROP_HW_ACCELERATION;
+            args[3] = *use_hw_acceleration? cv::VIDEO_ACCELERATION_ANY : cv::VIDEO_ACCELERATION_NONE;
 
-            EDVRManagedObject<cv::VideoWriter> writer(writer_edvr_ref, new cv::VideoWriter(path_string_handle, cv::CAP_FFMPEG, fourcc, fps, *size, args));
+            if(quality>=0){
+                args.push_back(cv::VideoWriterProperties::VIDEOWRITER_PROP_QUALITY);
+                args.push_back(quality);
+            }
+
+            EDVRManagedObject<cv::VideoWriter> writer(writer_edvr_ref, new cv::VideoWriter());
+
+            writer->open(path_string_handle, cv::CAP_FFMPEG, fourcc, fps, *size, args);
 
             if (!writer->isOpened())
             {

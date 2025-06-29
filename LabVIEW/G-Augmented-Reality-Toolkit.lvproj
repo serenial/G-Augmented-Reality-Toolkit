@@ -163,8 +163,6 @@
 				<Item Name="Remove Duplicates From 1D Array.vim" Type="VI" URL="/&lt;vilib&gt;/Array/Remove Duplicates From 1D Array.vim"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="Generate Chessboard Image Data (Radon).vi" Type="VI" URL="../feature_detection/Generate Chessboard Image Data (Radon).vi"/>
-			<Item Name="Generate Chessboard Image Data (Regular).vi" Type="VI" URL="../feature_detection/Generate Chessboard Image Data (Regular).vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">

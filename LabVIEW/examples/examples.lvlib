@@ -24,5 +24,6 @@
 	<Item Name="OCR Example DNN.vi" Type="VI" URL="../OCR Example DNN.vi"/>
 	<Item Name="OCR Example Tesseract.vi" Type="VI" URL="../OCR Example Tesseract.vi"/>
 	<Item Name="Video Playback.vi" Type="VI" URL="../Video Playback.vi"/>
+	<Item Name="Video Write.vi" Type="VI" URL="../Video Write.vi"/>
 	<Item Name="Webcam Capture.vi" Type="VI" URL="../Webcam Capture.vi"/>
 </Library>
