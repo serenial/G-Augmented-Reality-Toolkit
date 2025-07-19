@@ -161,8 +161,44 @@
 				<Item Name="Get System Directory.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/sysdir.llb/Get System Directory.vi"/>
 				<Item Name="sizeaction.ctl" Type="VI" URL="/&lt;vilib&gt;/event_ctls.llb/sizeaction.ctl"/>
 				<Item Name="Remove Duplicates From 1D Array.vim" Type="VI" URL="/&lt;vilib&gt;/Array/Remove Duplicates From 1D Array.vim"/>
+				<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
+				<Item Name="NI-Linux-RT Shared Library Path.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/NI-Linux-RT Shared Library Path.vi"/>
+				<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
+				<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
+				<Item Name="ARGB Image.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/ARGB Image.ctl"/>
+				<Item Name="Greyscale Image.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Greyscale Image.ctl"/>
+				<Item Name="Raw Memory Information Dimension.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Raw Memory Information Dimension.ctl"/>
+				<Item Name="Image Size (Integer).ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/Image Size (Integer).ctl"/>
+				<Item Name="Raw Memory Information.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Raw Memory Information.ctl"/>
+				<Item Name="Image Draw Offset.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Image Draw Offset.ctl"/>
+				<Item Name="Image Point (Integer).ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/Image Point (Integer).ctl"/>
+				<Item Name="Image Point (Float).ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/Image Point (Float).ctl"/>
+				<Item Name="ARGBExtractChannel.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/ARGBExtractChannel.vi"/>
+				<Item Name="ExtractOptions.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/ExtractOptions.ctl"/>
+				<Item Name="Font Face.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Font Face.ctl"/>
+				<Item Name="Text Drawing Settings.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Text Drawing Settings.ctl"/>
+				<Item Name="Interpolation Mode.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Interpolation Mode.ctl"/>
+				<Item Name="Border Type.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Border Type.ctl"/>
+				<Item Name="ARGB Colour.ctl" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/ARGB Colour.ctl"/>
+				<Item Name="ARGB Colour to U32 Pixel Value.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/ARGB Colour to U32 Pixel Value.vi"/>
+				<Item Name="Acquire.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image ARGB/Acquire.vi"/>
+				<Item Name="Acquire.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image Greyscale/Acquire.vi"/>
+				<Item Name="Get Mapped Memory Infomation.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image ARGB/Get Mapped Memory Infomation.vi"/>
+				<Item Name="Get Mapped Memory Information.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image Greyscale/Get Mapped Memory Information.vi"/>
+				<Item Name="Release.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image Greyscale/Release.vi"/>
+				<Item Name="Release.vi" Type="VI" URL="/&lt;vilib&gt;/serenial/G Augmented-Reality Toolkit/g_ar_toolkit.image/Mapped Memory Access Image ARGB/Release.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
+			<Item Name="Text Recognition (CRNN-CH).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Recognition (CRNN-CH).vi"/>
+			<Item Name="g_ar_toolkit.feature_detection.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.feature_detection/g_ar_toolkit.feature_detection.lvlib"/>
+			<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
+			<Item Name="gartoolkit_fd_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/gartoolkit_fd_32-1.dll"/>
+			<Item Name="g_ar_toolkit.image.lvlib" Type="Library" URL="../../build/source-distribution/g_ar_toolkit.image/g_ar_toolkit.image.lvlib"/>
+			<Item Name="gartoolkit_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/gartoolkit_32-1.dll"/>
+			<Item Name="gartoolkit_dnn_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/gartoolkit_dnn_32-1.dll"/>
+			<Item Name="gartoolkit_tesseract_32-1.dll" Type="Document" URL="../../build/source-distribution/g_ar_toolkit.common/bin/gartoolkit_tesseract_32-1.dll"/>
+			<Item Name="Text Detection Model (EAST).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (EAST).vi"/>
+			<Item Name="Text Detection Model (DB PP-OCRv3 EN).vi" Type="VI" URL="../../build/source-distribution/models/DNN/Text Detection Model (DB PP-OCRv3 EN).vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
