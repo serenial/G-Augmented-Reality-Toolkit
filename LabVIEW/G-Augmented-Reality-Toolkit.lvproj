@@ -220,7 +220,7 @@
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="DestinationCount" Type="Int">12</Property>
-				<Property Name="Source[0].itemID" Type="Str">{7DFC0EBB-FD8E-469F-A782-2BDBC91D502C}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{3FC13400-DB3C-47A6-B410-094982DB1E74}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
@@ -397,6 +397,21 @@
 				<Property Name="Source[42].destinationIndex" Type="Int">11</Property>
 				<Property Name="Source[42].itemID" Type="Ref">/My Computer/video_io.lvlib/API</Property>
 				<Property Name="Source[42].type" Type="Str">Container</Property>
+				<Property Name="Source[43].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[43].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[43].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[43].itemID" Type="Ref">/My Computer/common.lvlib/Private</Property>
+				<Property Name="Source[43].type" Type="Str">Container</Property>
+				<Property Name="Source[44].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[44].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[44].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[44].itemID" Type="Ref">/My Computer/common.lvlib/Utility</Property>
+				<Property Name="Source[44].type" Type="Str">Container</Property>
+				<Property Name="Source[45].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[45].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[45].destinationIndex" Type="Int">11</Property>
+				<Property Name="Source[45].itemID" Type="Ref">/My Computer/video_io.lvlib/Private</Property>
+				<Property Name="Source[45].type" Type="Str">Container</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -426,7 +441,7 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
-				<Property Name="SourceCount" Type="Int">43</Property>
+				<Property Name="SourceCount" Type="Int">46</Property>
 			</Item>
 		</Item>
 	</Item>
