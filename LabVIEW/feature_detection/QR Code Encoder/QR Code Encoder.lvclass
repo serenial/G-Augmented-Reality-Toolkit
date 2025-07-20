@@ -60,7 +60,7 @@
 				<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 				<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
 				<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-				<Property Name="NI.ClassItem.State" Type="Int">1117782032</Property>
+				<Property Name="NI.ClassItem.State" Type="Int">8397328</Property>
 			</Item>
 			<Item Name="Encode (Structured Append).vi" Type="VI" URL="../Encode (Structured Append).vi">
 				<Property Name="NI.ClassItem.ConnectorPane" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!'`!!!!$A!-1#%'=X2B&gt;(6T!!!,1!-!"'.P:'5!!""!-0````]'=W^V=G.F!!!71&amp;!!!Q!!!!%!!AFF=H*P=C"P&gt;81!"!!!!!V!"1!(4H6N:8*J9Q!=1%!!!P``````````!!5+37VB:W5A2'&amp;U91!!%%"1!!%!"A&gt;25C"$&lt;W2F!":!1!!"`````Q!(#&amp;&amp;3)%.P:'6T!!"+1(!!(A!!-2&gt;G:7&amp;U&gt;8*F8W2F&gt;'6D&gt;'FP&lt;CZM&gt;GRJ9B&gt;25C"$&lt;W2F)%6O9W^E:8)O&lt;(:D&lt;'&amp;T=Q!056)A1W^E:3"&amp;&lt;G.P:'6S!#"!5!!$!!!!!1!#%W6S=G^S)'FO)#BO&lt;S"F=H*P=CE!$E!Q`````Q2%982B!!"/1(!!(A!!-2&gt;G:7&amp;U&gt;8*F8W2F&gt;'6D&gt;'FP&lt;CZM&gt;GRJ9B&gt;25C"$&lt;W2F)%6O9W^E:8)O&lt;(:D&lt;'&amp;T=Q!356)A1W^E:3"&amp;&lt;G.P:'6S)'FO!!"B!0!!$!!$!!1!#!!*!!1!"!!%!!1!#A!%!!M!$!-!!(A!!!U)!!!!!!!!#1!!!!U,!!!!!!!!!!!!!!!!!!!!!!!!#A!!!!!!!!%3!!!!%!!!$1!!!!Q!!!!!!!!!!!!!!1!.!!!!!!</Property>
@@ -69,7 +69,7 @@
 				<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 				<Property Name="NI.ClassItem.MethodScope" Type="UInt">1</Property>
 				<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-				<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+				<Property Name="NI.ClassItem.State" Type="Int">8397328</Property>
 			</Item>
 		</Item>
 	</Item>
@@ -91,7 +91,7 @@
 			<Property Name="NI.ClassItem.IsStaticMethod" Type="Bool">true</Property>
 			<Property Name="NI.ClassItem.MethodScope" Type="UInt">2</Property>
 			<Property Name="NI.ClassItem.Priority" Type="Int">1</Property>
-			<Property Name="NI.ClassItem.State" Type="Int">41943056</Property>
+			<Property Name="NI.ClassItem.State" Type="Int">8397328</Property>
 		</Item>
 	</Item>
 	<Item Name="Correction Levels.ctl" Type="VI" URL="../Correction Levels.ctl">
