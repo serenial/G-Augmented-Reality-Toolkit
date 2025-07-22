@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-07-21 22:27:08" Creator="john" Comments="" ID="c8b11095ff3b07ce0732abc57d4a18ac">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-07-22 20:29:31" Creator="john" Comments="" ID="2284a751286df6367396a3132d030b1c">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit</Package_File_Name>
-    <Library_Version>1.0.0.2</Library_Version>
+    <Library_Version>1.0.0.4</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>build\source-distribution</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
@@ -41,9 +41,7 @@
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit/</URL>
       <Release_Notes>First Public Release - Enjoy!
 
-Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
-
-</Release_Notes>
+Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -344,7 +342,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.capture</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>BEBCF17EAEBABCDD812C638F34B585CD</GUID>
+      <GUID>295F75E6DD25986CB40026A2A58B94A5</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -617,7 +615,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.image\Copy Buffer to Image.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>30CE11C8C4A87E962AEE3B3DEB0EA96F</GUID>
+      <GUID>0B7ED85C43F23EEC2EB929BA69E46E98</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>1</Parent_Palette_Index>
@@ -694,7 +692,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.image\Get Mapped Memory Access Information.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>CC897F49D4924C563885D25D5299EAE4</GUID>
+      <GUID>46D75ECA4F4D03D96F41658392488878</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1191,7 +1189,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.image\Invert In-Place.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>CC785643690F5E0D0A43DDCF872FAD45</GUID>
+      <GUID>4D644FCECB6210D31A69543BD25414C3</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1436,7 +1434,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.capture\Stream\Read Stream Specification.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>0C218287CB572A2D8B86D3941F208C92</GUID>
+      <GUID>4B21F72B4FBFE84E87D3B1CFF7D82203</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1569,7 +1567,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\Text and OCR</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>CAA9152D652132EFBDE9A69BCEAE1663</GUID>
+      <GUID>A7D132B1F268E0E0A1AF341EF64780BA</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -1660,7 +1658,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Apriltag Detector\Create.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>B6C395FEF603D57AF4047FAE3A70F1AD</GUID>
+      <GUID>9B1B83A31D9B46464F795D2204BCE029</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -1807,7 +1805,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Barcode Detector\Detect Barcodes.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>1D31221F0DEC4CC274F34DC226957246</GUID>
+      <GUID>3D00B136B3F7310BBCBD41F7C6114624</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1884,7 +1882,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.shape\Contour Convex Hull.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>73397C941BDE92C9184C3E78B0CDEC10</GUID>
+      <GUID>2970D9117FE591E70B41E40316D49749</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2227,7 +2225,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar\Undistort.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>B97FBBA6D91EADD0637DCA213AEBAC5F</GUID>
+      <GUID>953634D8FC8225EB4A15D46B7BD993BC</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2304,7 +2302,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar\Estimate Affine.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>0C8B2BF29C151A3E1D4A453BFADFB2C1</GUID>
+      <GUID>00570B7CA4B088B5EA3D9E80B32BCCA9</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2577,7 +2575,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.examples\Set Camera Settings.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9EDDF21BC97D44385832444F5D63570C</GUID>
+      <GUID>FD1B2571150912D959577A8696722308</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -2640,7 +2638,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Encoder</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>57AE7E6E3EC5B59EF8D0E2297F7CCB88</GUID>
+      <GUID>8F9D4D8830FCFCFEF29EF36D384763FF</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -2787,7 +2785,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Detector\Detect and Decode Multiple.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>FAA564EE054417AD63B1004DBF671F79</GUID>
+      <GUID>2A370D8A49621060D1DF2730074FF6CD</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -2878,7 +2876,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\WeChat QR Code Detector\Set Scaling Factor.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>EA23C34BB29E84C744C361B7E4CF2A32</GUID>
+      <GUID>8F81A5FCB5E644B23712E876E4043034</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -2941,7 +2939,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Encoder\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>D014531066E69EC42B914B7A7443A3E6</GUID>
+      <GUID>DCE7B599A944D5DBF9585F1FFC8B33B1</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -3004,7 +3002,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path/>
         <VI_Title/>
       </Items_Data>
-      <GUID>CD83F88ED3167AD5E98E381EB370B62B</GUID>
+      <GUID>F33E6AF34E0C151F95FA50C3954DABC3</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -3067,7 +3065,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Recognizer</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>F418D9E105C11A503391750A2E850A39</GUID>
+      <GUID>0659362FBD8D9873E4CF52818E371967</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3130,7 +3128,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Detector\Detect Text.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>62238E2ADCC7B412445F2E0A9A394B9E</GUID>
+      <GUID>8983705E47A7B905959ECF53EAA83124</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3193,7 +3191,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Recognizer\Recognize Text.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>BE402CD2A8F6739157450E8D68B1EB0F</GUID>
+      <GUID>4AB04CD4BB0AFDEDF12903C31F55F118</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3256,7 +3254,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Tesseract\Run.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>A72B997B27B2451038E2800619D29BC7</GUID>
+      <GUID>BBB2EAFCA1EF63503C548C6409C382CE</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>9</Parent_Palette_Index>
@@ -3333,7 +3331,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar\Image Distorter\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>449F83D8D84760795CAE00937EC55606</GUID>
+      <GUID>6FD09EFC1AB71666782027B11D2806C7</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>9</Parent_Palette_Index>
@@ -3438,7 +3436,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar\Image Undistorter\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>6E88FCAB0648C9F05FA958425452DDB1</GUID>
+      <GUID>5667D3660D7035D378E69E1978791709</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -3501,7 +3499,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (ARGB)</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>F612F7777D444B626598CFF45033B42B</GUID>
+      <GUID>066184E816FB30B317990C296A8D007F</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3606,7 +3604,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.video_io\Reader\Read Frame.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>D691AB1668970E84C8611BB6563A5825</GUID>
+      <GUID>33C9776C6465DF6A3E82F96D9ECB6BDA</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3669,7 +3667,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (ARGB)\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>8D92A2EEB59FBA236E6129752F9EE962</GUID>
+      <GUID>EDA4A44B28704A724B24422F4F7983F4</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3732,7 +3730,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (Greyscale)\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>193F595B9096569627A21565607625CD</GUID>
+      <GUID>64FF064F2B2994CE1B98181033DA1521</GUID>
     </Functions_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>-1</Parent_Palette_Index>
@@ -3795,7 +3793,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>5F39028271BF60F0BAAAA619432060A3</GUID>
+      <GUID>DDA645531D0190EAEE35C6B68A49707E</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -3942,7 +3940,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.common\Window Size (Integer).ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>6E18137FDE5ED4DDA36A9B24E60D7A03</GUID>
+      <GUID>81C39294CE60988300B2BB22F347C72B</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -4257,7 +4255,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.image\Poly Lines Shape Draw Mode.ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>F30DCA0577F5F3311FA1810BA560C1D0</GUID>
+      <GUID>B01AD346DA49913C0D11029F35D9B7C6</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -4418,7 +4416,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit
         <Path>build\source-distribution\g_ar_toolkit.ar\tvec.ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>168BE626CC406934AEB3C2498E0C8FBF</GUID>
+      <GUID>3354C8213882EB4DDB1ABAB43AC94701</GUID>
     </Controls_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>
