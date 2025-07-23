@@ -1,0 +1,65 @@
+#pragma once
+
+#include <opencv2/core/base.hpp>
+#include <opencv2/imgproc.hpp>
+
+#include "./lv_array_1d.hpp"
+
+namespace g_ar_toolkit
+{
+    namespace lv_interop
+    {
+
+#include "./set_packing.hpp"
+
+        class LV_EnumCVBoarderType_t
+        {
+        public:
+            operator cv::BorderTypes() const;
+
+        private:
+            uint8_t m_value;
+        };
+
+        class LV_EnumCVInterpolationFlag_t
+        {
+        public:
+            operator cv::InterpolationFlags() const;
+
+        private:
+            uint8_t m_value;
+        };
+
+        class LV_EnumCVInt_t
+        {
+        public:
+            template <typename T>
+            static int combine(LV_1DArrayHandle_t<T> handle)
+            {
+                static_assert(std::is_base_of<LV_EnumCVInt_t, T>::value, "Type is not derived from LV_EnumCVInt_t");
+
+                // convert and accumulate flags
+                return std::accumulate(handle.begin(), handle.end(), int(0), std::bit_or<int>());
+            }
+
+        protected:
+            uint8_t m_value;
+        };
+
+        class LV_EnumBlockSize_t{
+            public:
+            operator int() const{
+                // 0 -> 3
+                // 1 -> 5
+                // 2 -> 7
+                // ...
+                return (m_value *2) + 3;
+            }
+            private:
+            uint8_t m_value;
+        };
+
+
+#include "./reset_packing.hpp"
+    }
+}
