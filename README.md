@@ -27,4 +27,4 @@ A Getting Started Tutorial is provided alongside the [full documentation for the
 Contributions to this toolkit are welcome. Please open an issue to discuss any bug/features or to share any interesting projects you have used this toolkit for.
 
 ## Working with the Source Code (LabVIEW and C++)
-If you are interested in working with either the LabVIEW or C++ source code then please follow the guidance in the documentation at #TODO:link
+If you are interested in working with either the LabVIEW or C++ source code then please follow the guidance in the documentation at [here](https://serenial.gitlab.io/g-augmented-reality-toolkit-docs/v1/toolkit/development.html).
