@@ -1,0 +1,9 @@
+# This mlt file has been added to allow for spot to be loaded with its texture map
+# This file is licenced like the original spot model by Keenan Crane under CC0 1.0 Universal
+
+newmtl SpotMaterial
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000  
+d 1.0                       
+map_Kd spot_texture.png

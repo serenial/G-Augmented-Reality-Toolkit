@@ -1,0 +1,12 @@
+diff --git a/common/time_util.h b/common/time_util.h
+index c184049..8fc97bc 100644
+--- a/common/time_util.h
++++ b/common/time_util.h
+@@ -33,6 +33,7 @@ either expressed or implied, of the Regents of The University of Michigan.
+ 
+ #ifdef _WIN32
+ #include <windows.h>
++#include <winsock.h>
+ typedef long long suseconds_t;
+ #endif
+ 

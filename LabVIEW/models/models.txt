@@ -1,0 +1,3 @@
+https://www.cs.cmu.edu/~kmcrane/Projects/ModelRepository/
+
+spot - provided under https://creativecommons.org/publicdomain/zero/1.0/

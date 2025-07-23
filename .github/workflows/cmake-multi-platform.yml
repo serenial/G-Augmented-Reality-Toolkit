@@ -1,0 +1,67 @@
+# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
+name: CMake on multiple platforms
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    env:
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.arch }}-${{ matrix.triplet_platform}}-ci
+      VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}/vcpkg_cache,readwrite
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest]
+        arch: [x86, x64]
+        include:
+          - os: windows-latest
+            triplet_platform: windows-static # Windows static-release triplets have incorrect Run Time Linkage so just use static
+          - os: ubuntu-22.04
+            triplet_platform: linux
+        exclude:
+        - os: ubuntu-22.04
+          arch: x86
+        
+    steps:
+    - name: Restore vcpkg cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json', 'CMakePresets.json', 'shared-binary/**/CMakeLists.txt', 'vcpkg-overlay-ports/**/*.cmake', 'vcpkg-overlay-triplets/**/*.cmake') }}
+        restore-keys: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - uses: lukka/get-cmake@latest
+    - name: Install OS dependencies
+      if: ${{ matrix.os == 'ubuntu-22.04' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+    
+    - name: Setup VCPKG
+      uses: lukka/run-vcpkg@v11
+
+    - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
+      uses: lukka/run-cmake@v10
+      with:
+          configurePreset: ci
+          buildPreset: ci-build
+
+    - name: Store Build Output
+      uses: actions/upload-artifact@v4
+      with:
+        name: g_augmented_reality_${{ env.VCPKG_DEFAULT_TRIPLET }}
+        path: |
+         ${{ github.workspace }}/bin
+         ${{ github.workspace }}/build/vcpkg_installed/**/share
+
+    - name: Save vcpkg cache
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: vcpkg-${{ matrix.arch }}-${{ matrix.triplet_platform}}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json', 'CMakePresets.json', 'shared-binary/**/CMakeLists.txt', 'vcpkg-overlay-ports/**/*.cmake', 'vcpkg-overlay-triplets/**/*.cmake') }}

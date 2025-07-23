@@ -1,7 +1,0 @@
-{
-    "cmake.configureOnOpen": true,
-    "cmake.configureOnEdit": false,
-    "cmake.configureSettings": {
-        "CMAKE_TOOLCHAIN_FILE": "C:/src/vcpkg/scripts/buildsystems/vcpkg.cmake"
-    },
-}

@@ -1,0 +1,100 @@
+diff --git a/modules/objdetect/include/opencv2/objdetect/barcode.hpp b/modules/objdetect/include/opencv2/objdetect/barcode.hpp
+index c20b67c0b2..a1978293cb 100644
+--- a/modules/objdetect/include/opencv2/objdetect/barcode.hpp
++++ b/modules/objdetect/include/opencv2/objdetect/barcode.hpp
+@@ -6,6 +6,8 @@
+ #ifndef OPENCV_OBJDETECT_BARCODE_HPP
+ #define OPENCV_OBJDETECT_BARCODE_HPP
+ 
++#include <string_view>
++
+ #include <opencv2/core.hpp>
+ #include <opencv2/objdetect/graphical_code_detector.hpp>
+ 
+@@ -24,10 +26,10 @@ public:
+     /** @brief Initialize the BarcodeDetector.
+      *
+      * Parameters allow to load _optional_ Super Resolution DNN model for better quality.
+-     * @param prototxt_path prototxt file path for the super resolution model
+-     * @param model_path model file path for the super resolution model
++     * @param prototxt prototxt file path for the super resolution model
++     * @param model model file path for the super resolution model
+      */
+-    CV_WRAP BarcodeDetector(CV_WRAP_FILE_PATH const std::string &prototxt_path, CV_WRAP_FILE_PATH const std::string &model_path);
++    CV_WRAP BarcodeDetector(std::string_view prototxt_path, std::string_view model_path);
+     ~BarcodeDetector();
+ 
+     /** @brief Decodes barcode in image once it's found by the detect() method.
+diff --git a/modules/objdetect/src/barcode.cpp b/modules/objdetect/src/barcode.cpp
+index 1b963e4242..04f87ec073 100644
+--- a/modules/objdetect/src/barcode.cpp
++++ b/modules/objdetect/src/barcode.cpp
+@@ -343,16 +343,14 @@ BarcodeDetector::BarcodeDetector()
+ {
+ }
+ 
+-BarcodeDetector::BarcodeDetector(const string &prototxt_path, const string &model_path)
++BarcodeDetector::BarcodeDetector(std::string_view prototxt, std::string_view model)
+ {
+     Ptr<BarcodeImpl> p_ = new BarcodeImpl();
+     p = p_;
+     p_->sr = make_shared<SuperScale>();
+-    if (!prototxt_path.empty() && !model_path.empty())
++    if (!prototxt.empty() && !model.empty())
+     {
+-        CV_Assert(utils::fs::exists(prototxt_path));
+-        CV_Assert(utils::fs::exists(model_path));
+-        int res = p_->sr->init(prototxt_path, model_path);
++        int res = p_->sr->init(prototxt, model);
+         CV_Assert(res == 0);
+         p_->use_nn_sr = true;
+     }
+diff --git a/modules/objdetect/src/barcode_decoder/common/super_scale.cpp b/modules/objdetect/src/barcode_decoder/common/super_scale.cpp
+index 4b7099a27d..940c4f235b 100644
+--- a/modules/objdetect/src/barcode_decoder/common/super_scale.cpp
++++ b/modules/objdetect/src/barcode_decoder/common/super_scale.cpp
+@@ -1,3 +1,5 @@
++#include <string_view>
++
+ // This file is part of OpenCV project.
+ // It is subject to the license terms in the LICENSE file found in the top-level directory
+ // of this distribution and at http://opencv.org/license.html.
+@@ -18,9 +20,9 @@ namespace barcode {
+ 
+ constexpr static float MAX_SCALE = 4.0f;
+ 
+-int SuperScale::init(const std::string &proto_path, const std::string &model_path)
++int SuperScale::init(std::string_view proto, std::string_view model)
+ {
+-    srnet_ = dnn::readNetFromCaffe(proto_path, model_path);
++    srnet_ = dnn::readNetFromCaffe(proto.data(), proto.size(), model.data(), model.size());
+     net_loaded_ = true;
+     return 0;
+ }
+@@ -77,10 +79,10 @@ int SuperScale::superResolutionScale(const Mat &src, Mat &dst)
+ 
+ #else // HAVE_OPENCV_DNN
+ 
+-int SuperScale::init(const std::string &proto_path, const std::string &model_path)
++int SuperScale::init(std::string_view proto, std::string_view model)
+ {
+-    CV_UNUSED(proto_path);
+-    CV_UNUSED(model_path);
++    CV_UNUSED(proto);
++    CV_UNUSED(model);
+     return 0;
+ }
+ 
+diff --git a/modules/objdetect/src/barcode_decoder/common/super_scale.hpp b/modules/objdetect/src/barcode_decoder/common/super_scale.hpp
+index 024ea86e54..45340c87fa 100644
+--- a/modules/objdetect/src/barcode_decoder/common/super_scale.hpp
++++ b/modules/objdetect/src/barcode_decoder/common/super_scale.hpp
+@@ -22,7 +22,7 @@ public:
+ 
+     ~SuperScale() = default;
+ 
+-    int init(const std::string &proto_path, const std::string &model_path);
++    int init(std::string_view proto, std::string_view model);
+ 
+     void processImageScale(const Mat &src, Mat &dst, float scale, const bool &use_sr, int sr_max_size = 160);
+ 
