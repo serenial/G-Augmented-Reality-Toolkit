@@ -366,5 +366,6 @@
 		<Item Name="Warp Affine.vi" Type="VI" URL="../Warp Affine.vi"/>
 		<Item Name="Warp Perspective.vi" Type="VI" URL="../Warp Perspective.vi"/>
 		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
+		<Item Name="CLAHE.lvclass" Type="LVClass" URL="../CLAHE/CLAHE.lvclass"/>
 	</Item>
 </Library>

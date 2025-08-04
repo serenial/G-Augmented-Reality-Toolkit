@@ -21,10 +21,8 @@ namespace
 
     public:
         LV_CLAHE_t(double clip_limit, cv::Size grid_size) : clahe(cv::createCLAHE(clip_limit, grid_size)) {}
-        void apply_conversion(cv::Mat &src, LV_EDVRReferencePtr_t dst_edvr_ref_ptr)
+        void apply_conversion(cv::Mat &src, lv_image dst, double scaling_factor)
         {
-
-            lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(src.size());
 
@@ -32,8 +30,9 @@ namespace
 
             // apply transform
             clahe->apply(src, intermediate);
+            
             // convert to U8
-            intermediate.convertTo(dst, CV_8UC1, 1.0 / 256.0);
+            intermediate.convertTo(dst, CV_8UC1, scaling_factor);
         }
         void apply_conversion(cv::Mat &src, lv_image dst)
         {
@@ -49,12 +48,11 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_clahe_create(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_clahe_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr,
         double clip_limit,
-        LV_ImageSizePtr_t title_grid_size
-    )
+        LV_ImageSizePtr_t title_grid_size)
     {
         try
         {
@@ -67,18 +65,19 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_clahe_apply_to_u16_array(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_clahe_apply_to_mono_16_array(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t clahe_ref_ptr,
+        LV_2DArrayHandle_t<uint16_t> data_handle,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        LV_2DArrayHandle_t<uint16_t> data_handle
+        double scaling_factor
     )
     {
         try
         {
             cv::Mat src = data_handle.as_cv_mat(CV_16UC1);
 
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst_edvr_ref_ptr);
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, lv_image(dst_edvr_ref_ptr), scaling_factor);
         }
         catch (...)
         {
@@ -87,30 +86,13 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_clahe_apply_to_image(
-        LV_ErrorClusterPtr_t error_cluster_ptr,
-        LV_EDVRReferencePtr_t clahe_ref_ptr,
-        LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        LV_EDVRReferencePtr_t src_edvr_ref_ptr
-    )
-    {
-        try
-        {
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(lv_image(src_edvr_ref_ptr), lv_image(dst_edvr_ref_ptr));
-        }
-        catch (...)
-        {
-            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
-        }
-        return LV_ERR_noError;
-    }
-
-    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_clahe_apply_to_edvr_buffer_mono_16(
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_clahe_apply_to_edvr_buffer_mono_16(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t clahe_ref_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t data_ref_ptr,
-        LV_ImageSizePtr_t size_ptr
+        LV_ImageSizePtr_t size_ptr,
+        double scaling_factor
     )
     {
 
@@ -134,7 +116,7 @@ extern "C"
 
             cv::Mat src(*size_ptr, CV_16UC1, data_ptr->sub_array.data_ptr);
 
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst_edvr_ref_ptr);
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, lv_image(dst_edvr_ref_ptr), scaling_factor);
         }
         catch (...)
         {
@@ -143,6 +125,23 @@ extern "C"
         if (ctx)
         {
             EDVR_ReleaseRefWithContext(*data_ref_ptr, ctx);
+        }
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_clahe_apply_to_image(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_EDVRReferencePtr_t clahe_ref_ptr,
+        LV_EDVRReferencePtr_t src_edvr_ref_ptr,
+        LV_EDVRReferencePtr_t dst_edvr_ref_ptr)
+    {
+        try
+        {
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(lv_image(src_edvr_ref_ptr), lv_image(dst_edvr_ref_ptr));
+        }
+        catch (...)
+        {
+            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
         }
         return LV_ERR_noError;
     }

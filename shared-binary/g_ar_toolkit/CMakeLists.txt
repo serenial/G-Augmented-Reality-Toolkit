@@ -175,5 +175,6 @@ target_sources(g_ar_toolkit PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/image_morphology.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/image_find_nonzero.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/image_colour.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/image_clahe.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/shape_utils.cpp
 )
