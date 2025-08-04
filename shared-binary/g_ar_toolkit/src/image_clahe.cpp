@@ -21,10 +21,8 @@ namespace
 
     public:
         LV_CLAHE_t(double clip_limit, cv::Size grid_size) : clahe(cv::createCLAHE(clip_limit, grid_size)) {}
-        void apply_conversion(cv::Mat &src, lv_image dst, double scaling_factor)
+        void apply_conversion(cv::Mat &src, cv::Mat &dst, double scaling_factor)
         {
-
-            dst.ensure_sized_to_match(src.size());
 
             cv::Mat intermediate(src.size(), CV_16UC1);
 
@@ -34,10 +32,8 @@ namespace
             // convert to U8
             intermediate.convertTo(dst, CV_8UC1, scaling_factor);
         }
-        void apply_conversion(cv::Mat &src, lv_image dst)
+        void apply_conversion(cv::Mat &src, cv::Mat  &dst)
         {
-            dst.ensure_sized_to_match(src.size());
-
             // apply transform
             clahe->apply(src, dst);
         }
@@ -77,7 +73,10 @@ extern "C"
         {
             cv::Mat src = data_handle.as_cv_mat(CV_16UC1);
 
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, lv_image(dst_edvr_ref_ptr), scaling_factor);
+            lv_image dst(dst_edvr_ref_ptr);
+            dst.ensure_sized_to_match(src.size());
+
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst, scaling_factor);
         }
         catch (...)
         {
@@ -89,9 +88,9 @@ extern "C"
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_clahe_apply_to_edvr_buffer_mono_16(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t clahe_ref_ptr,
-        LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         LV_EDVRReferencePtr_t data_ref_ptr,
         LV_ImageSizePtr_t size_ptr,
+        LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
         double scaling_factor
     )
     {
@@ -116,7 +115,10 @@ extern "C"
 
             cv::Mat src(*size_ptr, CV_16UC1, data_ptr->sub_array.data_ptr);
 
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, lv_image(dst_edvr_ref_ptr), scaling_factor);
+            lv_image dst(dst_edvr_ref_ptr);
+            dst.ensure_sized_to_match(src.size());
+
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst, scaling_factor);
         }
         catch (...)
         {
@@ -137,7 +139,10 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(lv_image(src_edvr_ref_ptr), lv_image(dst_edvr_ref_ptr));
+            lv_image src(src_edvr_ref_ptr);
+            lv_image dst(dst_edvr_ref_ptr);
+
+            EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst);
         }
         catch (...)
         {
