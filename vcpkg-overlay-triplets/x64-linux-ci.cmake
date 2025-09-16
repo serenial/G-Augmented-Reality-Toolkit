@@ -6,4 +6,7 @@ set(VCPKG_LIBRARY_LINKAGE static)
 set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 set(VCPKG_BUILD_TYPE release)
 
+set(VCPKG_LINKER_FLAGS "${VCPKG_LINKER_FLAGS} -static-libgcc -static-libstdc++")
+set(VCPKG_BUILD_TYPE release)
+
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
