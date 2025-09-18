@@ -4,8 +4,8 @@ set(VCPKG_LIBRARY_LINKAGE static)
 
 set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 
-set(VCPKG_CXX_FLAGS_RELEASE "${VCPKG_CXX_FLAGS_RELEASE} -static-libgcc -flto")
-set(VCPKG_C_FLAGS_RELEASE "${VCPKG_C_FLAGS_RELEASE} -static-libgcc -static-libstdc++ -flto")
+set(VCPKG_C_FLAGS_RELEASE "${VCPKG_CXX_FLAGS_RELEASE} -static-libgcc -flto")
+set(VCPKG_CXX_FLAGS_RELEASE "${VCPKG_C_FLAGS_RELEASE} -static-libgcc -static-libstdc++ -flto")
 
 set(VCPKG_LINKER_FLAGS )
 
