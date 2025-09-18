@@ -17,7 +17,8 @@
         "thread",
         "tiff",
         "webp",
-        "ffmpeg"
+        "ffmpeg",
+        "cuda"
       ]
     },
     "tinyobjloader",
