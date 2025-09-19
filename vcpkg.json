@@ -18,7 +18,10 @@
         "tiff",
         "webp",
         "ffmpeg",
-        "cuda"
+        {
+          "name": "cuda",
+          "platform": "!x86"
+        }
       ]
     },
     "tinyobjloader",
