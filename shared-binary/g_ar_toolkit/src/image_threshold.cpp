@@ -14,7 +14,7 @@ namespace
     class LV_AdaptiveThresholdMethods_t : public LV_EnumCVInt_t
     {
     public:
-        // confusingly this enum is called AdaptiveThresholdTypes even through it is methods
+        // confusingly this enum is called AdaptiveThresholdTypes even though it is methods
         operator cv::AdaptiveThresholdTypes() const
         {
             const cv::AdaptiveThresholdTypes threshold_types[] =

@@ -78,5 +78,6 @@
 		<Item Name="Generate AprilTag Image Data.vi" Type="VI" URL="../Generate AprilTag Image Data.vi"/>
 		<Item Name="Find Contours.vi" Type="VI" URL="../Find Contours.vi"/>
 		<Item Name="Hough Circles.vi" Type="VI" URL="../Hough Circles.vi"/>
+		<Item Name="DNN Detection Model.lvclass" Type="LVClass" URL="../DNN Detection Model/DNN Detection Model.lvclass"/>
 	</Item>
 </Library>
