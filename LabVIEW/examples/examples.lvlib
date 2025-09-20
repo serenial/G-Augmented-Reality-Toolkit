@@ -17,6 +17,7 @@
 	<Item Name="Detect Circles.vi" Type="VI" URL="../Detect Circles.vi"/>
 	<Item Name="Detect QR Code.vi" Type="VI" URL="../Detect QR Code.vi"/>
 	<Item Name="Detect Shapes.vi" Type="VI" URL="../Detect Shapes.vi"/>
+	<Item Name="DNN Detection Model.vi" Type="VI" URL="../DNN Detection Model.vi"/>
 	<Item Name="Load Obj File.vi" Type="VI" URL="../Load Obj File.vi"/>
 	<Item Name="LV Paint.vi" Type="VI" URL="../LV Paint.vi"/>
 	<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../Mapped Pixel Pointer Example.vi"/>

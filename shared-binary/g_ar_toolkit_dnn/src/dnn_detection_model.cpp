@@ -24,11 +24,11 @@ namespace
 
     struct LV_DetectionCorners_t
     {
-        LV_ImagePointFloat_t top_left, bottom_right;
+        LV_ImagePointInt_t m_top_left,  m_bottom_right;
         LV_DetectionCorners_t& operator=(cv::Rect r){
-            top_left = r.tl();
-            bottom_right = r.br();
-
+            
+            m_top_left = r.tl();
+            m_bottom_right = r.br();
             return *this;
         }
     };
@@ -86,7 +86,6 @@ namespace
         {
             const cv::dnn::Backend backend_types[] =
                 {
-
                     cv::dnn::Backend::DNN_BACKEND_DEFAULT,
                     cv::dnn::Backend::DNN_BACKEND_HALIDE,
                     cv::dnn::Backend::DNN_BACKEND_INFERENCE_ENGINE,
@@ -111,7 +110,7 @@ namespace
 
 extern "C"
 {
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_create_model(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_detection_model_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         const LV_Ptr_t<LV_Model_t> model_parameters,
         LV_DnnTarget_t target,
@@ -141,13 +140,13 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_model_detect(
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_detection_model_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_edvr_ref_ptr,
         LV_EDVRReferencePtr_t image_edvr_ref_ptr,
-        LV_1DArrayHandle_t<LV_Detection_t> detections_handle,
         float confidence_threshold,
-        float nms_threshold
+        float nms_threshold,
+        LV_1DArrayHandle_t<LV_Detection_t> detections_handle
     )
     {
         try
@@ -167,7 +166,7 @@ extern "C"
 
             detections_handle.size_to_fit(class_ids.size());
 
-            for(int i=0; i> class_ids.size(); i++){
+            for(int i=0; i< class_ids.size(); i++){
                 detections_handle[i].class_id = class_ids[i];
                 detections_handle[i].confidence = confidences[i];
                 detections_handle[i].corners = boxes[i];
