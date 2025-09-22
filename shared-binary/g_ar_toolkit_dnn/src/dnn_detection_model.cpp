@@ -24,9 +24,10 @@ namespace
 
     struct LV_DetectionCorners_t
     {
-        LV_ImagePointInt_t m_top_left,  m_bottom_right;
-        LV_DetectionCorners_t& operator=(cv::Rect r){
-            
+        LV_ImagePointInt_t m_top_left, m_bottom_right;
+        LV_DetectionCorners_t &operator=(cv::Rect r)
+        {
+
             m_top_left = r.tl();
             m_bottom_right = r.br();
             return *this;
@@ -106,6 +107,25 @@ namespace
     };
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+
+    // create a class to store the cv::dnn::DetectionModel as it's lifetime mechanics seems a bit weird otherwise
+    struct dnn_model_t
+    {
+        cv::dnn::DetectionModel m_model;
+        dnn_model_t(const LV_Model_t &model_parameters, const LV_DnnTarget_t target, const LV_DnnBackend_t backend) : m_model(model_parameters.model_path_handle, model_parameters.config_path_handle)
+        {
+            m_model.setInputParams(
+                model_parameters.scale,
+                model_parameters.image_size,
+                model_parameters.mean,
+                model_parameters.use_RGB,
+                model_parameters.crop);
+
+            m_model.setPreferableTarget(target);
+            m_model.setPreferableBackend(backend);
+        }
+    };
+
 }
 
 extern "C"
@@ -119,19 +139,7 @@ extern "C"
     {
         try
         {
-            auto model = new cv::dnn::DetectionModel(model_parameters->model_path_handle, model_parameters->config_path_handle);
-
-            model->setInputParams(
-                model_parameters->scale,
-                model_parameters->image_size,
-                model_parameters->mean,
-                model_parameters->use_RGB,
-                model_parameters->crop);
-
-            model->setPreferableTarget(target);
-            model->setPreferableBackend(backend);
-
-            EDVRManagedObject<cv::dnn::DetectionModel>(edvr_ref_ptr, model);
+            EDVRManagedObject<dnn_model_t>(edvr_ref_ptr, new dnn_model_t(*model_parameters, target, backend));
         }
         catch (...)
         {
@@ -146,12 +154,11 @@ extern "C"
         LV_EDVRReferencePtr_t image_edvr_ref_ptr,
         float confidence_threshold,
         float nms_threshold,
-        LV_1DArrayHandle_t<LV_Detection_t> detections_handle
-    )
+        LV_1DArrayHandle_t<LV_Detection_t> detections_handle)
     {
         try
         {
-            EDVRManagedObject<cv::dnn::DetectionModel> model(detector_edvr_ref_ptr);
+            EDVRManagedObject<dnn_model_t> model(detector_edvr_ref_ptr);
             lv_image src(image_edvr_ref_ptr);
 
             cv::Mat frame;
@@ -162,11 +169,12 @@ extern "C"
             std::vector<float> confidences;
             std::vector<cv::Rect> boxes;
 
-            model->detect(frame, class_ids, confidences, boxes, confidence_threshold, nms_threshold);
+            model->m_model.detect(frame, class_ids, confidences, boxes, confidence_threshold, nms_threshold);
 
             detections_handle.size_to_fit(class_ids.size());
 
-            for(int i=0; i< class_ids.size(); i++){
+            for (int i = 0; i < class_ids.size(); i++)
+            {
                 detections_handle[i].class_id = class_ids[i];
                 detections_handle[i].confidence = confidences[i];
                 detections_handle[i].corners = boxes[i];

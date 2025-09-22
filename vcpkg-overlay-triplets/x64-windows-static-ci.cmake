@@ -4,5 +4,6 @@ set(VCPKG_CRT_LINKAGE static)
 set(VCPKG_LIBRARY_LINKAGE static)
 
 set(VCPKG_BUILD_TYPE release)
-
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+
+set(MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")

@@ -15,9 +15,9 @@
 	<Item Name="Detect AprilTags.vi" Type="VI" URL="../Detect AprilTags.vi"/>
 	<Item Name="Detect Barcode.vi" Type="VI" URL="../Detect Barcode.vi"/>
 	<Item Name="Detect Circles.vi" Type="VI" URL="../Detect Circles.vi"/>
+	<Item Name="Detect Objects with YOLOV3-tiny.vi" Type="VI" URL="../Detect Objects with YOLOV3-tiny.vi"/>
 	<Item Name="Detect QR Code.vi" Type="VI" URL="../Detect QR Code.vi"/>
 	<Item Name="Detect Shapes.vi" Type="VI" URL="../Detect Shapes.vi"/>
-	<Item Name="DNN Detection Model.vi" Type="VI" URL="../DNN Detection Model.vi"/>
 	<Item Name="Load Obj File.vi" Type="VI" URL="../Load Obj File.vi"/>
 	<Item Name="LV Paint.vi" Type="VI" URL="../LV Paint.vi"/>
 	<Item Name="Mapped Pixel Pointer Example.vi" Type="VI" URL="../Mapped Pixel Pointer Example.vi"/>
