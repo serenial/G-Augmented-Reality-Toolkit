@@ -1,18 +1,9 @@
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  # set to use Multithreaded Static Runtime
-  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
-  # vcpkg has some issues with not loading the static libs
-  # so manually fix the MSVC runtime components used
-  string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-  string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 
 # Specify Project
 project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(g_ar_toolkit)
 add_subdirectory(g_ar_toolkit_ar)

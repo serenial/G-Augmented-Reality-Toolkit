@@ -56,6 +56,18 @@ namespace
     };
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+
+// create objecta to hold the detectors/classifiers to work with openCV's lifetime and ownership semantics
+struct text_detector_t{
+    cv::dnn::TextDetectionModel m_text_detector;
+    text_detector_t(cv::dnn::TextDetectionModel m) : m_text_detector(m) {};
+};
+
+struct text_recognizer_t{
+    cv::dnn::TextRecognitionModel m_text_recognizer;
+    text_recognizer_t(cv::dnn::TextRecognitionModel m) : m_text_recognizer(m) {};
+};
+
 }
 
 extern "C"
@@ -72,9 +84,9 @@ extern "C"
         try
         {
 
-            auto text_detector = new cv::dnn::TextDetectionModel_DB(model->model_data, model->model_config);
+            cv::dnn::TextDetectionModel_DB td{model->model_data, model->model_config};
 
-            text_detector->setMaxCandidates(max_candidates)
+            td.setMaxCandidates(max_candidates)
                 .setBinaryThreshold(binary_threshold)
                 .setPolygonThreshold(poly_threshold)
                 .setUnclipRatio(unclip_ratio)
@@ -83,7 +95,7 @@ extern "C"
                 .setInputScale(model->scale)
                 .setInputSwapRB(model->use_RGB);
 
-            EDVRManagedObject<cv::dnn::TextDetectionModel>(edvr_ref_ptr, text_detector);
+            EDVRManagedObject<text_detector_t>(edvr_ref_ptr, new text_detector_t(std::move(td)));
         }
         catch (...)
         {
@@ -102,16 +114,16 @@ extern "C"
         try
         {
 
-            auto text_detector = new cv::dnn::TextDetectionModel_EAST(model->model_data, model->model_config);
+            cv::dnn::TextDetectionModel_EAST td{model->model_data, model->model_config};
 
-            text_detector->setConfidenceThreshold(conf_threshold)
+            td.setConfidenceThreshold(conf_threshold)
                 .setNMSThreshold(nms_threshold)
                 .setInputSize(model->image_size)
                 .setInputMean(model->mean)
                 .setInputScale(model->scale)
                 .setInputSwapRB(model->use_RGB);
 
-            EDVRManagedObject<cv::dnn::TextDetectionModel>(edvr_ref_ptr, text_detector);
+            EDVRManagedObject<text_detector_t>(edvr_ref_ptr, new text_detector_t(std::move(td)));
         }
         catch (...)
         {
@@ -128,7 +140,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::dnn::TextDetectionModel> text_detector(detector_edvr_ref_ptr);
+            EDVRManagedObject<text_detector_t> td(detector_edvr_ref_ptr);
             lv_image src(image_edvr_ref_ptr);
 
             cv::Mat frame;
@@ -138,7 +150,7 @@ extern "C"
             std::vector<std::vector<cv::Point>> quads;
             std::vector<float> confidences;
 
-            text_detector->detect(frame, quads, confidences);
+            td->m_text_detector.detect(frame, quads, confidences);
 
             detections_handle.size_to_fit(quads.size());
 
@@ -166,7 +178,7 @@ extern "C"
     {
         try
         {
-            auto recognizer = new cv::dnn::TextRecognitionModel(model->model_data, model->model_config);
+            cv::dnn::TextRecognitionModel r{model->model_data, model->model_config};
 
             std::vector<std::string> tokens;
             std::istringstream iss(model->vocab);
@@ -177,15 +189,15 @@ extern "C"
                 tokens.push_back(token);
             }
 
-            recognizer->setVocabulary(tokens)
+            r.setVocabulary(tokens)
                 .setInputMean(model->mean)
                 .setInputScale(model->scale)
                 .setInputSize(model->image_size)
                 .setInputSwapRB(model->use_RGB);
 
-            recognizer->setDecodeType(model->mode ? "CTC-prefix-beam-search" : "CTC-greedy");
+            r.setDecodeType(model->mode ? "CTC-prefix-beam-search" : "CTC-greedy");
 
-            EDVRManagedObject<cv::dnn::TextRecognitionModel>(edvr_ref_ptr, recognizer);
+            EDVRManagedObject<text_recognizer_t>(edvr_ref_ptr, new text_recognizer_t(std::move(r)));
         }
         catch (...)
         {
@@ -202,7 +214,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::dnn::TextRecognitionModel> recognizer(recognizer_edvr_ref_ptr);
+            EDVRManagedObject<text_recognizer_t> r(recognizer_edvr_ref_ptr);
 
             lv_image src(image_edvr_ref_ptr);
 
@@ -210,7 +222,7 @@ extern "C"
 
             cv::cvtColor(src, frame, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
 
-            result.copy_from(recognizer->recognize(frame));
+            result.copy_from(r->m_text_recognizer.recognize(frame));
         }
         catch (...)
         {

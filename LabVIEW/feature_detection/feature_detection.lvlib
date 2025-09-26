@@ -74,6 +74,7 @@
 		<Item Name="Text Detector.lvclass" Type="LVClass" URL="../Text Detector/Text Detector.lvclass"/>
 		<Item Name="Text Recognizer.lvclass" Type="LVClass" URL="../Text Recognizer/Text Recognizer.lvclass"/>
 		<Item Name="Text Tesseract.lvclass" Type="LVClass" URL="../Text Tesseract/Text Tesseract.lvclass"/>
+		<Item Name="DNN Detection Model.lvclass" Type="LVClass" URL="../DNN Detection Model/DNN Detection Model.lvclass"/>
 		<Item Name="AprilTag Tag ID List.vi" Type="VI" URL="../AprilTag Tag ID List.vi"/>
 		<Item Name="Generate AprilTag Image Data.vi" Type="VI" URL="../Generate AprilTag Image Data.vi"/>
 		<Item Name="Find Contours.vi" Type="VI" URL="../Find Contours.vi"/>

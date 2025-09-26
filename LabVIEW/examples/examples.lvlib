@@ -15,6 +15,7 @@
 	<Item Name="Detect AprilTags.vi" Type="VI" URL="../Detect AprilTags.vi"/>
 	<Item Name="Detect Barcode.vi" Type="VI" URL="../Detect Barcode.vi"/>
 	<Item Name="Detect Circles.vi" Type="VI" URL="../Detect Circles.vi"/>
+	<Item Name="Detect Objects with YOLOV3-tiny.vi" Type="VI" URL="../Detect Objects with YOLOV3-tiny.vi"/>
 	<Item Name="Detect QR Code.vi" Type="VI" URL="../Detect QR Code.vi"/>
 	<Item Name="Detect Shapes.vi" Type="VI" URL="../Detect Shapes.vi"/>
 	<Item Name="Load Obj File.vi" Type="VI" URL="../Load Obj File.vi"/>
@@ -24,6 +25,7 @@
 	<Item Name="OCR Example DNN.vi" Type="VI" URL="../OCR Example DNN.vi"/>
 	<Item Name="OCR Example Tesseract.vi" Type="VI" URL="../OCR Example Tesseract.vi"/>
 	<Item Name="Set Camera Settings.vi" Type="VI" URL="../Set Camera Settings.vi"/>
+	<Item Name="U16 Image Data Processing.vi" Type="VI" URL="../U16 Image Data Processing.vi"/>
 	<Item Name="Video Playback.vi" Type="VI" URL="../Video Playback.vi"/>
 	<Item Name="Video Write.vi" Type="VI" URL="../Video Write.vi"/>
 	<Item Name="Webcam Capture.vi" Type="VI" URL="../Webcam Capture.vi"/>

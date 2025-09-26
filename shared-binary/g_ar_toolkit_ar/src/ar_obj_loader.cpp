@@ -284,7 +284,7 @@ namespace
         }
     }
 
-    void computeSmoothingShape(const tinyobj::attrib_t &inattrib, const tinyobj::shape_t &inshape,
+    void compute_smoothing_shape(const tinyobj::attrib_t &inattrib, const tinyobj::shape_t &inshape,
                                std::vector<std::pair<unsigned int, unsigned int>> &sortedids,
                                unsigned int idbegin, unsigned int idend,
                                std::vector<tinyobj::shape_t> &outshapes,
@@ -368,7 +368,7 @@ namespace
             {
                 while (activeid == id && ++idend < numfaces)
                     id = sortedids[idend].first;
-                computeSmoothingShape(inattrib, inshape, sortedids, idbegin, idend,
+                compute_smoothing_shape(inattrib, inshape, sortedids, idbegin, idend,
                                       outshapes, outattrib);
                 activeid = id;
                 idbegin = idend;
@@ -376,11 +376,11 @@ namespace
         }
     }
 
-    bool loadObjAndConvert(float bmin[3], float bmax[3],
+    bool load_obj_and_convert(float bmin[3], float bmax[3],
                            std::vector<objObject> &drawObjects,
                            std::vector<tinyobj::material_t> &materials,
-                           const std::string inputFilePath,
-                           const std::string searchPath,
+                           const std::string &inputFilePath,
+                           const std::string &searchPath,
                            const bool forceRegenNormals,
                            std::vector<std::vector<tinyobj::real_t>> &shapeVerticies)
     {
@@ -675,7 +675,7 @@ extern "C"
             std::vector<tinyobj::material_t> materials;
             std::vector<std::vector<tinyobj::real_t>> shape_verticies;
 
-            bool success = loadObjAndConvert(bmin, bmax, objects, materials,
+            bool success = load_obj_and_convert(bmin, bmax, objects, materials,
                                              obj_path_handle,
                                              material_path_handle,
                                              *regen_normals_ptr,
