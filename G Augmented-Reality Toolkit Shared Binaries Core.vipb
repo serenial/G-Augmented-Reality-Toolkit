@@ -1,9 +1,9 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-07-23 10:49:44" Creator="john" Comments="" ID="0470b6b71d40ae1850c6fc4422a8aa8c">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-09-25 22:53:22" Creator="john" Comments="" ID="17c80d3d294279882aa464b846088b6b">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit_shared_binaries_core</Package_File_Name>
-    <Library_Version>1.0.0.4</Library_Version>
+    <Library_Version>1.1.0.7</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
-    <Library_Source_Folder>build\source-distribution-shared-binaries</Library_Source_Folder>
+    <Library_Source_Folder>build\source-distribution\g_ar_toolkit.common\bin</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
     <Company_Name>Serenial</Company_Name>
     <Library_Summary/>
@@ -32,15 +32,14 @@
       <Copyright>Copyright (c) 2025, Serenial and contributors</Copyright>
       <Packager>Serenial</Packager>
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit</URL>
-      <Release_Notes>First Public Release - Enjoy!
-
-Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit</Release_Notes>
+      <Release_Notes>Added CLAHE (Contrast Limited Adaptive Histogram Equalization) exported functions.
+Modified linkage to Windows Runtime</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
         <LLB>false</LLB>
         <Preserve_Hierarchy>true</Preserve_Hierarchy>
-        <Path>&lt;vi.lib&gt;\serenial\G Augmented-Reality Toolkit</Path>
+        <Path>&lt;vi.lib&gt;\serenial\G Augmented-Reality Toolkit\g_ar_toolkit.common\bin</Path>
       </Toolkit_VIs>
       <Examples>
         <LLB>false</LLB>
@@ -114,49 +113,49 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit</Re
         <Namespace/>
       </Namespace_Overrides>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_ar_32-1.dll</Path>
+        <Path>gartoolkit_ar_32-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_ar_64-1.dll</Path>
+        <Path>gartoolkit_ar_64-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_ar_64-1.so</Path>
+        <Path>gartoolkit_ar_64-1.so</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_dnn_32-1.dll</Path>
+        <Path>gartoolkit_dnn_32-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_dnn_64-1.dll</Path>
+        <Path>gartoolkit_dnn_64-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_dnn_64-1.so</Path>
+        <Path>gartoolkit_dnn_64-1.so</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_fd_32-1.dll</Path>
+        <Path>gartoolkit_fd_32-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_fd_64-1.dll</Path>
+        <Path>gartoolkit_fd_64-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_fd_64-1.so</Path>
+        <Path>gartoolkit_fd_64-1.so</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_tesseract_32-1.dll</Path>
+        <Path>gartoolkit_tesseract_32-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_tesseract_64-1.dll</Path>
+        <Path>gartoolkit_tesseract_64-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_tesseract_64-1.so</Path>
+        <Path>gartoolkit_tesseract_64-1.so</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_videoio_32-1.dll</Path>
+        <Path>gartoolkit_videoio_32-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_videoio_64-1.dll</Path>
+        <Path>gartoolkit_videoio_64-1.dll</Path>
       </Exclusions>
       <Exclusions>
-        <Path>g_ar_toolkit.common/bin/gartoolkit_videoio_64-1.so</Path>
+        <Path>gartoolkit_videoio_64-1.so</Path>
       </Exclusions>
       <Place_Folder_Contents>
         <Path/>
@@ -165,7 +164,7 @@ Report any issues to https://gitlab.com/serenial/g-augmented-reality-toolkit</Re
         <Path>g_ar_toolkit.common</Path>
       </Place_Folder_Contents>
     </Source_Files>
-    <License_Agreement_Filepath>build\source-distribution-shared-binaries\g_ar_toolkit.common\bin\COPYING</License_Agreement_Filepath>
+    <License_Agreement_Filepath>build\source-distribution\g_ar_toolkit.common\bin\COPYING</License_Agreement_Filepath>
     <Licensing_and_Activation>
       <License_LF_file_path/>
       <Licensed_library_file_path/>

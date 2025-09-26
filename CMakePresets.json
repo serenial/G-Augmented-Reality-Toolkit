@@ -42,7 +42,7 @@
             "inherits": "base",
             "binaryDir": "${sourceDir}/build/linux-desktop",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-linux",
+                "VCPKG_TARGET_TRIPLET": "x64-linux-ci",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common"
             },

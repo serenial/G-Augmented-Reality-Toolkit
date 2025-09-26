@@ -23,6 +23,13 @@ namespace
     };
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+
+// create an object to hold the qr detector to work with openCV's lifetime and ownership semantics
+struct wechat_qr_t{
+    cv::wechat_qrcode::WeChatQRCode m_qr_detector;
+    wechat_qr_t (LV_StringHandle_t detector_proto_handle, LV_StringHandle_t detector_model_handle, LV_StringHandle_t sr_proto_handle, LV_StringHandle_t sr_mode_handle) : m_qr_detector(detector_proto_handle, detector_model_handle, sr_proto_handle, sr_mode_handle) {}
+};
+
 }
 
 extern "C"
@@ -37,7 +44,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::wechat_qrcode::WeChatQRCode> qr_detector(edvr_ref_ptr, new cv::wechat_qrcode::WeChatQRCode(detector_proto_handle, detector_model_handle, sr_proto_handle, sr_mode_handle));
+            EDVRManagedObject<wechat_qr_t> qr_detector(edvr_ref_ptr, new wechat_qr_t(detector_proto_handle, detector_model_handle, sr_proto_handle, sr_mode_handle));
         }
         catch (...)
         {
@@ -54,13 +61,13 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::wechat_qrcode::WeChatQRCode> qr_detector(detector_ref_ptr);
+            EDVRManagedObject<wechat_qr_t> qr(detector_ref_ptr);
 
             lv_image image(src_edvr_ref_ptr);
 
             std::vector<cv::Mat> points;
 
-            auto info = qr_detector->detectAndDecode(image, points);
+            auto info = qr->m_qr_detector.detectAndDecode(image, points);
 
             auto next_point = points.begin();
 
@@ -88,15 +95,15 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::wechat_qrcode::WeChatQRCode> qr_detector(detector_ref_ptr);
+            EDVRManagedObject<wechat_qr_t> qr(detector_ref_ptr);
 
             if (*write)
             {
-                qr_detector->setScaleFactor(*scale_factor);
+                qr->m_qr_detector.setScaleFactor(*scale_factor);
             }
             else
             {
-                *scale_factor = qr_detector->getScaleFactor();
+                *scale_factor = qr->m_qr_detector.getScaleFactor();
             }
         }
         catch (...)

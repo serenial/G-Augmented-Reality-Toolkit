@@ -22,6 +22,13 @@ namespace
     };
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
+
+// create an object to hold the bardcode detector to work with openCV's lifetime and ownership semantics
+struct barcode_detector_t{
+    cv::barcode::BarcodeDetector m_barcode_detector;
+    barcode_detector_t(LV_StringHandle_t sr_proto_handle, LV_StringHandle_t sr_model_handle): m_barcode_detector(sr_proto_handle, sr_model_handle) {}
+};
+
 }
 
 extern "C"
@@ -34,7 +41,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::barcode::BarcodeDetector> barcode_detector(edvr_ref_ptr, new cv::barcode::BarcodeDetector(sr_proto_handle, sr_model_handle));
+            EDVRManagedObject<barcode_detector_t> barcode_detector(edvr_ref_ptr, new barcode_detector_t(sr_proto_handle, sr_model_handle));
         }
         catch (...)
         {
@@ -51,14 +58,14 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::barcode::BarcodeDetector> barcode_detector(detector_ref_ptr);
+            EDVRManagedObject<barcode_detector_t> bd(detector_ref_ptr);
 
             lv_image image(src_edvr_ref_ptr);
 
             std::vector<std::string> info, types;
             std::vector<cv::Point2i> points;
 
-            barcode_detector->detectAndDecodeWithType(image, info, types, points);
+            bd->m_barcode_detector.detectAndDecodeWithType(image, info, types, points);
 
             auto next_point = points.begin();
             auto next_type = types.begin();
@@ -87,14 +94,14 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::barcode::BarcodeDetector> barcode_detector(detector_ref_ptr);
+            EDVRManagedObject<barcode_detector_t> bd(detector_ref_ptr);
 
             if (*write)
             {
-                barcode_detector->setGradientThreshold(*threshold);
+                bd->m_barcode_detector.setGradientThreshold(*threshold);
             }
 
-            *threshold = barcode_detector->getGradientThreshold();
+            *threshold = bd->m_barcode_detector.getGradientThreshold();
         }
         catch (...)
         {
@@ -111,14 +118,14 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::barcode::BarcodeDetector> barcode_detector(detector_ref_ptr);
+            EDVRManagedObject<barcode_detector_t> bd(detector_ref_ptr);
 
             if (*write)
             {
-                barcode_detector->setDownsamplingThreshold(*threshold);
+                bd->m_barcode_detector.setDownsamplingThreshold(*threshold);
             }
 
-            *threshold = barcode_detector->getDownsamplingThreshold();
+            *threshold = bd->m_barcode_detector.getDownsamplingThreshold();
         }
         catch (...)
         {
@@ -135,16 +142,16 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<cv::barcode::BarcodeDetector> barcode_detector(detector_ref_ptr);
+            EDVRManagedObject<barcode_detector_t> bd(detector_ref_ptr);
 
             if (*write)
             {
-                barcode_detector->setDetectorScales(scales_handle.as_vector<float>());
+                bd->m_barcode_detector.setDetectorScales(scales_handle.as_vector<float>());
             }
             else
             {
                 std::vector<float> scales;
-                barcode_detector->getDetectorScales(scales);
+                bd->m_barcode_detector.getDetectorScales(scales);
                 scales_handle.copy_memory_from(scales);
             }
         }
