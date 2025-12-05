@@ -11,13 +11,13 @@
         "dnn",
         "fs",
         "intrinsics",
-        "ipp",
         "jpeg",
         "png",
         "thread",
         "tiff",
         "webp",
-        "ffmpeg"
+        "ffmpeg",
+        {"platform":"!arm", "name":"ipp"}
       ]
     },
     "tinyobjloader",

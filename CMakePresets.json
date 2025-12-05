@@ -18,8 +18,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}",
-                "VCPKG_TARGET_TRIPLET": "$penv{VCPKG_DEFAULT_TRIPLET}",
-                "CMAKE_INTERPROCEDURAL_OPTIMIZATION " : "ON"
+                "VCPKG_TARGET_TRIPLET": "$penv{VCPKG_DEFAULT_TRIPLET}"
             }
         },
         {
@@ -65,6 +64,15 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
+        },
+        {
+            "name": "linux-arm32v7-cross",
+            "inherits": "linux-desktop-release",
+            "binaryDir": "${sourceDir}/build/linux-arm32v7",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "arm32v7-linux-ci",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common/arm32v7"
+            }
         }
     ],
     "buildPresets": [
@@ -89,6 +97,12 @@
         {
             "name": "linux-desktop-release-build",
             "configurePreset": "linux-desktop-release",
+            "targets": "install",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-arm32v7-cross-release-build",
+            "configurePreset": "linux-arm32v7-cross",
             "targets": "install",
             "configuration": "Release"
         },
