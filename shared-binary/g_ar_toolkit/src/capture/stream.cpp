@@ -6,7 +6,7 @@
 
 namespace
 {
-    static void replace_token_in_string(std::string &str, std::string_view token, std::string_view to_insert)
+    static void replace_token_in_string(std::string &str, const std::string& token, const std::string& to_insert)
     {
         std::size_t pos = str.find(token);
         while (pos != std::string::npos)
@@ -20,9 +20,9 @@ namespace
 using namespace g_ar_toolkit;
 using namespace capture;
 
-Stream::param_error::param_error(camera_parameters param, std::string_view formatting_string) : std::runtime_error(Stream::param_error::format_message(param, formatting_string)) {}
+Stream::param_error::param_error(camera_parameters param, const std::string& formatting_string) : std::runtime_error(Stream::param_error::format_message(param, formatting_string)) {}
 
-std::string Stream::param_error::format_message(Stream::camera_parameters param, std::string_view formatting_string)
+std::string Stream::param_error::format_message(Stream::camera_parameters param, const std::string& formatting_string)
 {
     std::string parameter_name;
     switch (param)
@@ -74,9 +74,9 @@ std::string Stream::param_error::format_message(Stream::camera_parameters param,
 }
 
 
-Stream::auto_param_error::auto_param_error(camera_auto_parameters param, std::string_view formatting_string) : std::runtime_error(Stream::auto_param_error::format_message(param, formatting_string)) {}
+Stream::auto_param_error::auto_param_error(camera_auto_parameters param, const std::string& formatting_string) : std::runtime_error(Stream::auto_param_error::format_message(param, formatting_string)) {}
 
-std::string Stream::auto_param_error::format_message(Stream::camera_auto_parameters param, std::string_view formatting_string)
+std::string Stream::auto_param_error::format_message(Stream::camera_auto_parameters param, const std::string& formatting_string)
 {
     std::string parameter_name;
     switch (param)

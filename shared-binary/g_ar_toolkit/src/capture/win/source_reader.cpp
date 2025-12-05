@@ -33,7 +33,7 @@ using namespace winrt::Windows::System::Threading;
 using namespace g_ar_toolkit;
 using namespace capture;
 
-SourceReader::SourceReader(std::string_view device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, SourceReader::sample_handler_t on_sample)
+SourceReader::SourceReader(const std::string& device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, SourceReader::sample_handler_t on_sample)
     : m_ref_count(1),
       m_source_reader_flags(0),
       m_streaming_started(false)
@@ -284,7 +284,7 @@ bool SourceReader::find_matching_media_type(IMFMediaType **matching_media_type, 
     return match;
 }
 
-SourceReader *SourceReader::create(std::string_view device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t sample_handler)
+SourceReader *SourceReader::create(const std::string& device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t sample_handler)
 {
     return new SourceReader(device_id, width, height, fps_num, fps_denom, sample_handler);
 }

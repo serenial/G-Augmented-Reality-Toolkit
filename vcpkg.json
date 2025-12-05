@@ -17,10 +17,16 @@
         "tiff",
         "webp",
         "ffmpeg",
-        {"platform":"!arm", "name":"ipp"}
+        {
+          "platform": "!arm",
+          "name": "ipp"
+        }
       ]
     },
     "tinyobjloader",
-    "nu-book-zxing-cpp"
+    {
+      "platform": "!arm32",
+      "name": "nu-book-zxing-cpp"
+    }
   ]
 }

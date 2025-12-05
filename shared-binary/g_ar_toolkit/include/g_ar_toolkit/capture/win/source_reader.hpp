@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include <string_view>
-
 #include <mfapi.h>
 #include <mfidl.h>
 #include <mfreadwrite.h>
@@ -54,7 +52,7 @@ namespace g_ar_toolkit
 
             // force calling create
             using sample_handler_t = winrt::delegate<callback_events, IMFSample *>;
-            static SourceReader *create(std::string_view device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t sample_handler);
+            static SourceReader *create(const std::string& device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t sample_handler);
 
             // IUnknown methods
             STDMETHODIMP QueryInterface(REFIID iid, void **ppv);
@@ -169,7 +167,7 @@ namespace g_ar_toolkit
         private:
             // make constructor/destructor private to force usage through create and Release
             ~SourceReader();
-            SourceReader(std::string_view device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t on_sample);
+            SourceReader(const std::string& device_id, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, sample_handler_t on_sample);
             bool find_matching_media_type(IMFMediaType **matching_media_type, uint32_t width, uint32_t height, uint32_t fps_num, uint32_t fps_denom, GUID preferred_video_sub_type);
 
             winrt::com_ptr<IMFMediaSource> m_media_source;

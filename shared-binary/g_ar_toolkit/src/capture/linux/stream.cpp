@@ -16,7 +16,7 @@ using namespace std::chrono_literals;
 
 namespace
 {
-    std::pair<scoped_file_descriptor, __u32> open_and_configure_device_file_descriptor(std::string_view device_id, Stream::stream_type_t stream_type)
+    std::pair<scoped_file_descriptor, __u32> open_and_configure_device_file_descriptor(const std::string& device_id, Stream::stream_type_t stream_type)
     {
         // lookup the device path
 
@@ -71,7 +71,7 @@ namespace
         throw std::runtime_error("Unable to configure the stream for device with device-id:\"" + std::string(device_id) + "\" with the dimensions and FPS requested.");
     }
 
-    std::vector<scoped_mmap_buffer> create_buffer_list(int fd, std::string_view device_id)
+    std::vector<scoped_mmap_buffer> create_buffer_list(int fd, const std::string& device_id)
     {
 
         std::vector<scoped_mmap_buffer> buffer_list;
@@ -128,12 +128,12 @@ Stream::~Stream()
 }
 
 // call delegated constructor
-Stream::Stream(std::string_view device_id, stream_type_t stream_type) : Stream(device_id, stream_type, open_and_configure_device_file_descriptor(device_id, stream_type))
+Stream::Stream(const std::string& device_id, stream_type_t stream_type) : Stream(device_id, stream_type, open_and_configure_device_file_descriptor(device_id, stream_type))
 {
 }
 
 // private constructor that actually does the constructing
-Stream::Stream(std::string_view device_id, stream_type_t stream_type, std::pair<scoped_file_descriptor, __u32> fd)
+Stream::Stream(const std::string& device_id, stream_type_t stream_type, std::pair<scoped_file_descriptor, __u32> fd)
     : m_stream_type(stream_type), m_device_id(device_id), m_scoped_fd(std::move(fd.first)),
       m_pixel_format(fd.second), m_decoder(decoder::create(fd.second, stream_type.width, stream_type.height)),
       m_buffer_list(create_buffer_list(m_scoped_fd, device_id)), m_is_streaming(false)

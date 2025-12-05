@@ -4,9 +4,6 @@ include(GenerateExportHeader)
 # Find apriltag
 find_package(apriltag REQUIRED)
 
-# Find ZXing
-find_package(ZXing CONFIG REQUIRED)
-
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED objdetect)
 
@@ -23,7 +20,8 @@ endif()
 
 target_include_directories(g_ar_toolkit_fd
   PUBLIC
-    # add binary directory so auto-generated g_ar_toolkit_fd_export.h is found
+
+  # add binary directory so auto-generated g_ar_toolkit_fd_export.h is found
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 set_target_properties(g_ar_toolkit_fd PROPERTIES
@@ -46,10 +44,24 @@ target_link_libraries(g_ar_toolkit_fd PRIVATE
 )
 
 target_sources(g_ar_toolkit_fd PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_apriltag.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_contours.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_hough.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_encoder.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_apriltag.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_contours.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_hough.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_encoder.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
 )
+
+if(NOT DEFINED NO_ZXING)
+  # Find ZXing
+  find_package(ZXing CONFIG REQUIRED)
+
+  target_link_libraries(g_ar_toolkit_fd PRIVATE
+    ZXing::Core
+    ZXing::ZXing
+  )
+
+  target_sources(g_ar_toolkit_fd PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
+  )
+endif()

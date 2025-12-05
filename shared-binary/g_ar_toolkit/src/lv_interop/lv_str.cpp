@@ -9,9 +9,9 @@
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
-LV_StringHandle_t::operator std::string_view() const
+LV_StringHandle_t::operator const std::string&() const
 {
-    return std::string_view{begin(), size()};
+    return const std::string&{begin(), size()};
 }
 
 LV_StringHandle_t::operator const std::string() const

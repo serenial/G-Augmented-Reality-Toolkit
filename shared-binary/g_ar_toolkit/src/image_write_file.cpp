@@ -24,7 +24,7 @@ extern "C"
         {
             lv_image src(src_edvr_ref_ptr);
 
-            std::filesystem::path dst_path = static_cast<std::string_view>(path_string_handle);
+            std::filesystem::path dst_path = static_cast<const std::string&>(path_string_handle);
 
             // if save_alpha then check filetype
             // avoid to lower case with std::set search

@@ -173,7 +173,7 @@ extern "C"
         try
         {
             // convert input to c++ types
-            std::string_view device_id = device_id_str_handle;
+            const std::string& device_id = device_id_str_handle;
 
             EDVRManagedObject<Stream> stream(edvr_strm_ref_ptr, new Stream(device_id, *stream_spec_ptr));
         }

@@ -16,7 +16,7 @@ namespace g_ar_toolkit
             scoped_file_descriptor() = delete;
             scoped_file_descriptor(const scoped_file_descriptor &) = delete;
             scoped_file_descriptor(scoped_file_descriptor &&);
-            scoped_file_descriptor(std::string_view, int flags);
+            scoped_file_descriptor(const std::string&, int flags);
             ~scoped_file_descriptor();
             operator int() const;
 

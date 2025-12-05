@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <string_view>
 #include <chrono>
 #include <exception>
 #include <array>
@@ -66,7 +65,7 @@ namespace g_ar_toolkit
                 stream_type_t() = default;
             };
 
-            Stream(std::string_view device_id, stream_type_t stream_type);
+            Stream(const std::string& device_id, stream_type_t stream_type);
             ~Stream();
             void start_stream();
             void stop_stream();
@@ -80,30 +79,30 @@ namespace g_ar_toolkit
             class param_error : public std::runtime_error
             {
             private:
-                static std::string format_message(camera_parameters, std::string_view);
+                static std::string format_message(camera_parameters, const std::string&);
 
             public:
                 param_error() = delete;
-                param_error(camera_parameters, std::string_view message);
+                param_error(camera_parameters, const std::string& message);
             };
 
             class auto_param_error : public std::runtime_error
             {
             private:
-                static std::string format_message(camera_auto_parameters, std::string_view);
+                static std::string format_message(camera_auto_parameters, const std::string&);
 
             public:
                 auto_param_error() = delete;
-                auto_param_error(camera_auto_parameters, std::string_view message);
+                auto_param_error(camera_auto_parameters, const std::string& message);
             };
 
 #ifdef __linux__
         private:
-            Stream(std::string_view, stream_type_t, std::pair<scoped_file_descriptor, __u32>);
+            Stream(const std::string&, stream_type_t, std::pair<scoped_file_descriptor, __u32>);
             void enqueue_buffer(int);
             int dequeue_buffer(size_t *n_bytes);
             const stream_type_t m_stream_type;
-            const std::string_view m_device_id;
+            const const std::string& m_device_id;
             scoped_file_descriptor m_scoped_fd; // device handle
             const __u32 m_pixel_format;
             const std::unique_ptr<decoder> m_decoder;

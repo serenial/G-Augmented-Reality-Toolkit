@@ -42,7 +42,7 @@ int capture::xioctl(int fh, int request, void *arg)
     return r;
 }
 
-scoped_file_descriptor::scoped_file_descriptor(std::string_view path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
+scoped_file_descriptor::scoped_file_descriptor(const std::string& path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
 
 scoped_file_descriptor::~scoped_file_descriptor()
 {
