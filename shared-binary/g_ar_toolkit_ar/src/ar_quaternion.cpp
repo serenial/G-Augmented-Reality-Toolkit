@@ -3,8 +3,8 @@
 #include <opencv2/core.hpp>
 #include <opencv2/calib3d.hpp>
 
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/Geometry>
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"

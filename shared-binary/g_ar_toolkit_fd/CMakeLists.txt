@@ -2,7 +2,7 @@
 include(GenerateExportHeader)
 
 # Find apriltag
-find_package(apriltag REQUIRED)
+find_package(apriltag 3.4.5 REQUIRED)
 
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED objdetect)
@@ -38,8 +38,6 @@ set_target_properties(g_ar_toolkit_fd PROPERTIES OUTPUT_NAME gartoolkit_fd_${BIT
 target_link_libraries(g_ar_toolkit_fd PRIVATE
   g_ar_toolkit
   apriltag::apriltag
-  ZXing::Core
-  ZXing::ZXing
   opencv_objdetect
 )
 
@@ -49,7 +47,6 @@ target_sources(g_ar_toolkit_fd PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_hough.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_encoder.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
 )
 
 if(NOT DEFINED NO_ZXING)

@@ -4,6 +4,9 @@ include(GenerateExportHeader)
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED imgproc calib3d)
 
+# Find Eigen
+find_package(Eigen3 REQUIRED NO_MODULE)
+
 # specify shared-library target
 add_library(g_ar_toolkit_ar SHARED)
 
@@ -36,6 +39,7 @@ target_link_libraries(g_ar_toolkit_ar PRIVATE
   g_ar_toolkit
   opencv_imgproc
   opencv_calib3d
+  Eigen3::Eigen
 )
 
 target_sources(g_ar_toolkit_ar PRIVATE

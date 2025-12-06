@@ -102,7 +102,7 @@ namespace g_ar_toolkit
             void enqueue_buffer(int);
             int dequeue_buffer(size_t *n_bytes);
             const stream_type_t m_stream_type;
-            const const std::string& m_device_id;
+            const std::string& m_device_id;
             scoped_file_descriptor m_scoped_fd; // device handle
             const __u32 m_pixel_format;
             const std::unique_ptr<decoder> m_decoder;

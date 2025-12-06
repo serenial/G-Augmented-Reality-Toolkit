@@ -12,7 +12,6 @@ namespace g_ar_toolkit
         class LV_StringHandle_t : public LV_1DArrayHandle_t<char>{
             public:
             LV_StringHandle_t() = delete;
-            operator const std::string&()  const;
             operator const std::string()  const;
             void copy_from(const std::string&);
             void copy_from_utf8(const std::string &);

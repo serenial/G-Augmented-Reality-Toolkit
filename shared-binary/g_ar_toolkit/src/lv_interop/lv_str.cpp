@@ -9,10 +9,6 @@
 using namespace g_ar_toolkit;
 using namespace lv_interop;
 
-LV_StringHandle_t::operator const std::string&() const
-{
-    return const std::string&{begin(), size()};
-}
 
 LV_StringHandle_t::operator const std::string() const
 {
