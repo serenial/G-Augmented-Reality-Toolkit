@@ -12,8 +12,6 @@ find_package(Eigen3 CONFIG REQUIRED)
 # specify an object library to provide exported core functionality
 add_library(g_ar_toolkit_core OBJECT)
 
-# add compile definitions
-target_compile_definitions(g_ar_toolkit_core PUBLIC G_AR_TOOLKIT_BYTE_PACKING_${CMAKE_SIZEOF_VOID_P})
 
 set_target_properties(g_ar_toolkit_core PROPERTIES
   POSITION_INDEPENDENT_CODE ON

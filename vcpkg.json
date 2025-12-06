@@ -24,15 +24,15 @@
         "ffmpeg",
         "dnn"
       ],
-      "platform": "!arm"
+      "platform": "x86|x64"
     },
     {
       "name": "nu-book-zxing-cpp",
-      "platform": "!arm"
+      "platform": "x86|x64"
     },
     {
       "name": "tinyobjloader",
-      "platform": "!arm"
+      "platform": "x86|x64"
     }
   ]
 }

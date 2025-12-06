@@ -6,13 +6,13 @@ project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(g_ar_toolkit)
-add_subdirectory(g_ar_toolkit_ar)
-add_subdirectory(g_ar_toolkit_fd)
+# add_subdirectory(g_ar_toolkit_ar)
+# add_subdirectory(g_ar_toolkit_fd)
 
 set(BUILD_TARGETS
   g_ar_toolkit
-  g_ar_toolkit_ar
-  g_ar_toolkit_fd
+  # g_ar_toolkit_ar
+  # g_ar_toolkit_fd
 )
 
 if(NOT DEFINED NO_DNN)

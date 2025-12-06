@@ -62,16 +62,22 @@
             "name": "linux-desktop-release",
             "inherits": "linux-desktop-debug",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Release",
+                "NO_ZXING":"",
+                "NO_DNN":"",
+                "NO_VIDEOIO":"",
+                "NO_TESSERACT":"",
+                "NO_OBJLOADER":""
             }
         },
         {
-            "name": "linux-arm32v7-cross",
+            "name": "linux-armv7a-cross",
             "inherits": "linux-desktop-release",
-            "binaryDir": "${sourceDir}/build/linux-arm32v7",
+            "binaryDir": "${sourceDir}/build/linux-armv7a",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "arm32v7-linux-ci",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common/arm32v7",
+                "VCPKG_TARGET_TRIPLET": "armv7a-linux-ci",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common/armv7a",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE" : "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
                 "NO_ZXING":"",
                 "NO_DNN":"",
                 "NO_VIDEOIO":"",
@@ -106,8 +112,8 @@
             "configuration": "Release"
         },
         {
-            "name": "linux-arm32v7-cross-release-build",
-            "configurePreset": "linux-arm32v7-cross",
+            "name": "linux-armv7a-cross-release-build",
+            "configurePreset": "linux-armv7a-cross",
             "targets": "install",
             "configuration": "Release"
         },
