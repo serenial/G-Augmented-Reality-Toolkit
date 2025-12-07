@@ -41,7 +41,7 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-22.04' }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl
+        sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl autoconf-archive
     
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11
