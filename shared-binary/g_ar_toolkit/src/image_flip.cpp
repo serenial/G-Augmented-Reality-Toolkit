@@ -21,7 +21,7 @@ namespace
                     -1 // flip x and y
                 };
 
-            if (m_value < std::size(flip_codes))
+            if (m_value < lv_interop::size(flip_codes))
             {
                 return flip_codes[m_value];
             }

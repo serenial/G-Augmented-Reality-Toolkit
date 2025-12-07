@@ -54,8 +54,12 @@ LV_U32RGBColour_t &LV_U32RGBColour_t::operator++()
 LV_U32RGBColour_t &LV_U32RGBColour_t::adjust(float fractional_change)
 {
     auto hsv = get_hsv();
-    for(int c = 0; c<3; c++){
-        hsv[c] = std::round(std::clamp((1 + fractional_change) * float(hsv[c]), 0.0f, 255.0f));
+    for (int c = 0; c < 3; c++)
+    {
+        float val = (1 + fractional_change) * float(hsv[c]);
+        val = val < 0.0 ? 0.0 : val;
+        val = val > 255.0 ? 255.0 : val;
+        hsv[c] = std::round(val);
     }
 
     cv::Mat bgr;

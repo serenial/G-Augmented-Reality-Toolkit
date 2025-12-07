@@ -28,7 +28,7 @@ namespace
                 cv::ContourApproximationModes::CHAIN_APPROX_TC89_L1,
                 cv::ContourApproximationModes::CHAIN_APPROX_TC89_KCOS};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -49,7 +49,7 @@ namespace
                 cv::RetrievalModes::RETR_TREE,
                 cv::RetrievalModes::RETR_FLOODFILL};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }

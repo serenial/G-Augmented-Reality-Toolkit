@@ -54,7 +54,7 @@ target_sources(g_ar_toolkit_ar PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_undistortion.cpp
 )
 
-if(NOT DEFINED NO_OBJLOADER)
+if(NOT OMIT_OBJLOADER)
 # Find tinyobjloader
 find_package(tinyobjloader REQUIRED)
 

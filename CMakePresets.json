@@ -62,12 +62,7 @@
             "name": "linux-desktop-release",
             "inherits": "linux-desktop-debug",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "NO_ZXING":"",
-                "NO_DNN":"",
-                "NO_VIDEOIO":"",
-                "NO_TESSERACT":"",
-                "NO_OBJLOADER":""
+                "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
@@ -76,13 +71,14 @@
             "binaryDir": "${sourceDir}/build/linux-armv7a",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "armv7a-linux-ci",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common/armv7a",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE" : "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
-                "NO_ZXING":"",
-                "NO_DNN":"",
-                "NO_VIDEOIO":"",
-                "NO_TESSERACT":"",
-                "NO_OBJLOADER":""
+                "CMAKE_CXX_STANDARD": "14",
+                "CMAKE_C_STANDARD":"11",
+                "OMIT_ZXING":"ON",
+                "OMIT_DNN":"ON",
+                "OMIT_VIDEOIO":"ON",
+                "OMIT_TESSERACT":"ON",
+                "OMIT_OBJLOADER":"ON"
             }
         }
     ],

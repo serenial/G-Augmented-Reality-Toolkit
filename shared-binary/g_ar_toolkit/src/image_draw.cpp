@@ -32,7 +32,7 @@ namespace
                     cv::LINE_8,
                     cv::LINE_AA};
 
-            if (m_value < std::size(line_types))
+            if (m_value < lv_interop::size(line_types))
             {
                 return line_types[m_value];
             }
@@ -61,7 +61,7 @@ namespace
                     cv::FONT_HERSHEY_SCRIPT_COMPLEX,
                     cv::FONT_ITALIC};
 
-            if (m_value < std::size(fonts))
+            if (m_value < lv_interop::size(fonts))
             {
                 return fonts[m_value];
             }

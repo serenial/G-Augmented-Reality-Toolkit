@@ -107,7 +107,9 @@ ImageDistorter::ImageDistorter(const cv::Mat &camera_mat, const cv::Mat &distort
     for (int i = 0; i < points_undistorted.size(); i++)
     {
         const auto point = points_undistorted[i];
-        auto [row, col] = std::div(i, m_input_size.width);
+        auto q_and_r = std::div(i, m_input_size.width);
+        auto row = q_and_r.quot;
+        auto col = q_and_r.rem;
         m_map_x_float.at<float>(row, col) = point.x;
         m_map_y_float.at<float>(row, col) = point.y;
     }

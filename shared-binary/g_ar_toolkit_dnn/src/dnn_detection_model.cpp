@@ -71,7 +71,7 @@ namespace
                     cv::dnn::Target::DNN_TARGET_NPU,
                     cv::dnn::Target::DNN_TARGET_CPU_FP16};
 
-            if (m_value < std::size(target_types))
+            if (m_value < lv_interop::size(target_types))
             {
                 return target_types[m_value];
             }
@@ -97,7 +97,7 @@ namespace
                     cv::dnn::Backend::DNN_BACKEND_TIMVX,
                     cv::dnn::Backend::DNN_BACKEND_CANN};
 
-            if (m_value < std::size(backend_types))
+            if (m_value < lv_interop::size(backend_types))
             {
                 return backend_types[m_value];
             }

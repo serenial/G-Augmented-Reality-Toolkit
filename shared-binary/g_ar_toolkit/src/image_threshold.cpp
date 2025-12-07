@@ -22,7 +22,7 @@ namespace
                     cv::AdaptiveThresholdTypes::ADAPTIVE_THRESH_MEAN_C,
                     cv::AdaptiveThresholdTypes::ADAPTIVE_THRESH_GAUSSIAN_C};
 
-            if (m_value < std::size(threshold_types))
+            if (m_value < lv_interop::size(threshold_types))
             {
                 return threshold_types[m_value];
             }
@@ -48,7 +48,7 @@ namespace
                     cv::ThresholdTypes::THRESH_OTSU,
                     cv::ThresholdTypes::THRESH_TRIANGLE};
 
-            if (m_value < std::size(threshold_types))
+            if (m_value < lv_interop::size(threshold_types))
             {
                 return threshold_types[m_value];
             }

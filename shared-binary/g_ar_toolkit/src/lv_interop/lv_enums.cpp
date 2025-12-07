@@ -16,7 +16,7 @@ LV_EnumCVBoarderType_t::operator cv::BorderTypes() const
         cv::BorderTypes::BORDER_DEFAULT,
         cv::BorderTypes::BORDER_ISOLATED};
 
-    if (m_value < std::size(types))
+    if (m_value < lv_interop::size(types))
     {
         return types[m_value];
     }
@@ -36,7 +36,7 @@ LV_EnumCVInterpolationFlag_t::operator cv::InterpolationFlags() const
         cv::InterpolationFlags::INTER_NEAREST_EXACT,
         cv::InterpolationFlags::INTER_MAX};
 
-    if (m_value < std::size(flags))
+    if (m_value < lv_interop::size(flags))
     {
         return flags[m_value];
     }

@@ -24,7 +24,7 @@ namespace
                     cv::MorphShapes::MORPH_CROSS,
                     cv::MorphShapes::MORPH_ELLIPSE};
 
-            if (m_value < std::size(morph_shapes))
+            if (m_value < lv_interop::size(morph_shapes))
             {
                 return morph_shapes[m_value];
             }
@@ -49,7 +49,7 @@ namespace
                     cv::MorphTypes::MORPH_BLACKHAT,
                     cv::MorphTypes::MORPH_HITMISS};
 
-            if (m_value < std::size(morph_types))
+            if (m_value < lv_interop::size(morph_types))
             {
                 return morph_types[m_value];
             }

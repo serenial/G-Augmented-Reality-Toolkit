@@ -59,7 +59,7 @@ namespace
                     cv::text::ocr_engine_mode::OEM_TESSERACT_CUBE_COMBINED,
                     cv::text::ocr_engine_mode::OEM_DEFAULT};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -87,7 +87,7 @@ namespace
                     cv::text::page_seg_mode::PSM_CIRCLE_WORD,
                     cv::text::page_seg_mode::PSM_SINGLE_CHAR};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }

@@ -73,7 +73,7 @@ namespace
                                    {
                                       
 
-                                       if (v.m_value < std::size(barcode_formats))
+                                       if (v.m_value < lv_interop::size(barcode_formats))
                                        {
                                            auto result = static_cast<std::underlying_type_t<ZXing::BarcodeFormat>>(f) | static_cast<std::underlying_type_t<ZXing::BarcodeFormat>>(barcode_formats[v.m_value]);
                                            return static_cast<ZXing::BarcodeFormat>(result);
@@ -97,7 +97,7 @@ namespace
                 ZXing::Binarizer::FixedThreshold,
                 ZXing::Binarizer::BoolCast};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -120,7 +120,7 @@ namespace
                     ZXing::EanAddOnSymbol::Read,
                     ZXing::EanAddOnSymbol::Require};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -145,7 +145,7 @@ namespace
                     ZXing::TextMode::Hex,
                     ZXing::TextMode::Escaped};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -196,7 +196,7 @@ namespace
                 ZXing::CharacterSet::UTF32BE,
                 ZXing::CharacterSet::UTF32LE,
                 ZXing::CharacterSet::BINARY};
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }

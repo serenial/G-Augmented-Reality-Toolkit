@@ -96,7 +96,7 @@ namespace
                     Stream::camera_parameters::BACKLIGHT_COMPENSATION,
                     Stream::camera_parameters::POWER_LINE_FREQUENCY};
 
-            if (m_value < std::size(parameters))
+            if (m_value < lv_interop::size(parameters))
             {
                 return parameters[m_value];
             }
@@ -120,7 +120,7 @@ namespace
                     Stream::camera_auto_parameters::AUTO_WHITE_BALANCE,
                     Stream::camera_auto_parameters::AUTO_GAIN};
 
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }
@@ -304,9 +304,9 @@ extern "C"
             stream->get_camera_parameter_info(cam_param, &info);
 
             int32_t quantized = std::round((*value - info.min) / info.step) * info.step + info.min;
-            int32_t clamped = std::clamp(quantized, info.min, info.max);
+            int32_t clamped = quantized < info.min ? info.min : quantized;
 
-            *value = clamped;
+            *value = clamped > info.max ? info.max : clamped;
 
             stream->set_camera_parameter(cam_param, clamped);
         }

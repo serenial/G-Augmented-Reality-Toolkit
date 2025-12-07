@@ -7,7 +7,7 @@ include(GenerateExportHeader)
 find_package(OpenCV 4.11 REQUIRED core imgproc imgcodecs)
 
 # Find eigen3
-find_package(Eigen3 CONFIG REQUIRED)
+find_package(Eigen3 REQUIRED NO_MODULE)
 
 # specify an object library to provide exported core functionality
 add_library(g_ar_toolkit_core OBJECT)
@@ -123,10 +123,6 @@ elseif(UNIX)
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
 endif()
-
-# specify target properties
-# winrt only supports C++17 std
-set_property(TARGET g_ar_toolkit PROPERTY CXX_STANDARD 17)
 
 # generate export header
 generate_export_header(g_ar_toolkit)

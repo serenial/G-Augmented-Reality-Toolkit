@@ -61,6 +61,13 @@ namespace g_ar_toolkit
             }
         };
 
+        // a C++14 patch for std::size    
+        template <class T, std::size_t N>
+        constexpr std::size_t size(const T (&array)[N]) noexcept
+        {
+            return N;
+        }
+
         // LabVIEW EDVR structure types
 
         // a dimension specifier used to specify the size of this dimension

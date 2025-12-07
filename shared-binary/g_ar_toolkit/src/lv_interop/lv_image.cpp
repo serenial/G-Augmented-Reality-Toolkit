@@ -106,7 +106,7 @@ lv_image::image_persistant_data_t *lv_image::get_metadata()
 void lv_image::image_persistant_data_t::lock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_to)
 {
     // obtain the mutex
-    std::unique_lock lk(d->m);
+    std::unique_lock<std::mutex> lk(d->m);
     // wait for the locked flag to be NONE
     // this will lead to deadlocks if CPP or CPP_MAPPED but that is probably desired behaviour
     d->cv.wait(lk, [&]
@@ -120,7 +120,7 @@ void lv_image::image_persistant_data_t::unlock(lv_image::image_persistant_data_t
 {
     {
         // obtain the mutex
-        std::lock_guard lk(d->m);
+        std::lock_guard<std::mutex> lk(d->m);
         if (d->locked == transition_from)
         {
             d->locked = NONE;
@@ -134,7 +134,7 @@ void lv_image::upgrade_to_mapped()
 {
     {
         // obtain the mutex
-        std::lock_guard lk(m_data->m);
+        std::lock_guard<std::mutex> lk (m_data->m);
         if (m_data->locked == image_persistant_data_t::lock_states::CPP)
         {
             m_data->locked = image_persistant_data_t::lock_states::CPP_MAPPED;
@@ -148,7 +148,7 @@ void lv_image::downgrade_from_mapped()
 {
     {
         // obtain the mutex
-        std::lock_guard lk(m_data->m);
+        std::lock_guard<std::mutex> lk(m_data->m);
         if (m_data->locked == image_persistant_data_t::lock_states::CPP_MAPPED)
         {
             m_data->locked = image_persistant_data_t::lock_states::CPP;
@@ -192,7 +192,7 @@ void lv_image::on_labview_delete(LV_EDVRDataPtr_t ptr)
 {
     auto data = reinterpret_cast<image_persistant_data_t *>(ptr->metadata_ptr);
     // obtain the mutex
-    std::unique_lock lk(data->m);
+    std::unique_lock<std::mutex> lk(data->m);
     // wait for the locked flag to be cleared
     // note - DVR Delete calls lock_callback_fn first so only check we aren't locked from CPP side
     data->cv.wait(lk, [&]

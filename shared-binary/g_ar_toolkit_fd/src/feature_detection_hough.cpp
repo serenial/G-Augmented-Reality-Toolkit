@@ -30,7 +30,7 @@ namespace
                 cv::HoughModes::HOUGH_GRADIENT,
                 cv::HoughModes::HOUGH_GRADIENT_ALT,
             };
-            if (m_value < std::size(modes))
+            if (m_value < lv_interop::size(modes))
             {
                 return modes[m_value];
             }

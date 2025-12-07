@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-#include <filesystem>
+#include <opencv2/core/utility.hpp>
 #include <algorithm>
 
 #include "g_ar_toolkit/capture/linux/utils.hpp"
@@ -42,7 +42,7 @@ int capture::xioctl(int fh, int request, void *arg)
     return r;
 }
 
-scoped_file_descriptor::scoped_file_descriptor(const std::string& path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
+scoped_file_descriptor::scoped_file_descriptor(const std::string &path, int flags) : m_fd(open(std::string(path).c_str(), flags)) {};
 
 scoped_file_descriptor::~scoped_file_descriptor()
 {
@@ -139,45 +139,45 @@ v4l2_device_t::v4l2_device_t(const std::string &path, const std::string &device_
 void capture::list_v4l2_devices(std::vector<v4l2_device_t> &device_list)
 {
     // list /dev/ directory
-    for (const auto &entry : std::filesystem::directory_iterator{"/dev"})
+    std::vector<std::string> video_device_paths;
+    cv::glob("/dev/video*", video_device_paths);
+
+    for (const auto &video_device_path : video_device_paths)
     {
 
-        if (entry.path().filename().string().find("video") == 0)
+        // filename begins with "video" so assume it is a video device
+
+        scoped_file_descriptor s_fd{video_device_path, O_RDONLY};
+
+        if (s_fd != -1)
         {
-            // filename begins with "video" so assume it is a video device
+            // is a valid file
 
-            scoped_file_descriptor s_fd{entry.path().string(), O_RDONLY};
+            v4l2_capability dev_capability;
 
-            if (s_fd != -1)
+            if (xioctl(s_fd, VIDIOC_QUERYCAP, &dev_capability) == -1 &&
+                (dev_capability.device_caps & V4L2_CAP_VIDEO_CAPTURE != 0) && // can capture
+                (dev_capability.device_caps & V4L2_CAP_READWRITE != 0) &&     // can read/write
+                (dev_capability.device_caps & V4L2_CAP_STREAMING != 0)        // can stream
+            )
             {
-                // is a valid file
-
-                v4l2_capability dev_capability;
-
-                if (xioctl(s_fd, VIDIOC_QUERYCAP, &dev_capability) == -1 &&
-                    (dev_capability.device_caps & V4L2_CAP_VIDEO_CAPTURE != 0) && // can capture
-                    (dev_capability.device_caps & V4L2_CAP_READWRITE != 0) &&     // can read/write
-                    (dev_capability.device_caps & V4L2_CAP_STREAMING != 0)        // can stream
-                )
-                {
-                    // not able to query capabilites or not supported
-                    continue;
-                }
-
-                v4l2_device_t dev{
-                    entry.path().string(),
-                    reinterpret_cast<const char *>(dev_capability.bus_info),
-                    reinterpret_cast<const char *>(dev_capability.card),
-                    s_fd
-                };
-
-                if(dev.format_info.empty()){
-                    // no supported fomats
-                    continue;
-                }
-
-                device_list.push_back(dev);
+                // not able to query capabilites or not supported
+                continue;
             }
+
+            v4l2_device_t dev{
+                video_device_path,
+                reinterpret_cast<const char *>(dev_capability.bus_info),
+                reinterpret_cast<const char *>(dev_capability.card),
+                s_fd};
+
+            if (dev.format_info.empty())
+            {
+                // no supported fomats
+                continue;
+            }
+
+            device_list.push_back(dev);
         }
     }
 }

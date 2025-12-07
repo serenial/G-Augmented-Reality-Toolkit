@@ -1,7 +1,6 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <exception>
-#include <filesystem>
 #include <set>
 
 #include "g_ar_toolkit/lv_interop/lv_error.hpp"
@@ -24,24 +23,15 @@ extern "C"
         {
             lv_image src(src_edvr_ref_ptr);
 
-            std::filesystem::path dst_path = static_cast<const std::string&>(path_string_handle);
-
-            // if save_alpha then check filetype
-            // avoid to lower case with std::set search
-            if (*save_alpha_ptr && (std::set<std::filesystem::path>{".png", ".pnG", ".pNg", ".pNG", ".Png", ".PnG", ".PNg", ".PNG"}).count(dst_path.extension()) == 0)
-            {
-                throw std::invalid_argument("The output filetype must be .png to write the alpha channel data to file.");
-            }
-
             if (*save_alpha_ptr && src.is_bgra())
             {
-                cv::imwrite(dst_path.string(), src);
+                cv::imwrite(path_string_handle, src);
             }
 
             cv::Mat bgr(src.size(), CV_8UC3);
             cv::cvtColor(src, bgr, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
             
-            auto success = cv::imwrite(dst_path.string(), bgr);
+            auto success = cv::imwrite(path_string_handle, bgr);
 
             if(!success){
                 throw std::invalid_argument("Unable to write file to \"" + std::string(path_string_handle) + "\".");

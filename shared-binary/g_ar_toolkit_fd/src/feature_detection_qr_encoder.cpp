@@ -29,7 +29,7 @@ namespace
                     cv::QRCodeEncoder::CORRECT_LEVEL_Q,
                     cv::QRCodeEncoder::CORRECT_LEVEL_H};
 
-            if (m_value < std::size(levels))
+            if (m_value < lv_interop::size(levels))
             {
                 return levels[m_value];
             }

@@ -79,7 +79,7 @@ namespace
                 std::make_pair(tagStandard52h13_create, tagStandard52h13_destroy),
             };
 
-            if (family >= std::size(families))
+            if (family >= lv_interop::size(families))
             {
                 throw std::out_of_range("The supplied value for the tag family does not match an Apriltag tag-family.");
             }
@@ -116,7 +116,7 @@ namespace
     public:
         TagDetector(TagDetector const &) = delete;
         void operator=(TagDetector const &x) = delete;
-        TagDetector(LV_AprilTagFamily_t family, int bits, float decimate, float blur, int32_t threads, bool refine_edges) : m_tag_family(Tag(family)),
+        TagDetector(LV_AprilTagFamily_t family, int bits, float decimate, float blur, int32_t threads, bool refine_edges) : m_tag_family(family),
                                                                                                                             m_detector(apriltag_detector_create()),
                                                                                                                             m_detections(nullptr)
         {

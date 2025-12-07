@@ -33,7 +33,7 @@ namespace
                 cv::CALIB_CB_FILTER_QUADS,
                 cv::CALIB_CB_FAST_CHECK};
 
-            if (m_value < std::size(flags))
+            if (m_value < lv_interop::size(flags))
             {
                 return flags[m_value];
             }
@@ -53,7 +53,7 @@ namespace
                 cv::CALIB_CB_LARGER,
                 cv::CALIB_CB_MARKER};
 
-            if (m_value < std::size(flags))
+            if (m_value < lv_interop::size(flags))
             {
                 return flags[m_value];
             }

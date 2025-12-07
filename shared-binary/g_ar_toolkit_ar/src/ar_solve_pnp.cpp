@@ -181,7 +181,7 @@ LV_EnumCVSolvePnPFlags_t::operator int() const
         cv::SOLVEPNP_IPPE_SQUARE,
         cv::SOLVEPNP_SQPNP};
 
-    if (m_value < std::size(flags))
+    if (m_value < lv_interop::size(flags))
     {
         return flags[m_value];
     }
@@ -197,7 +197,7 @@ LV_UsacParams_t::operator cv::UsacParams() const
         cv::PolishingMethod::MAGSAC,
         cv::PolishingMethod::COV_POLISHER};
 
-    if (m_polish_mode >= std::size(polishing_modes))
+    if (m_polish_mode >= lv_interop::size(polishing_modes))
     {
         throw std::out_of_range("The supplied value for the polishing mode does not map to a valid OpenCV value.");
     }
@@ -209,7 +209,7 @@ LV_UsacParams_t::operator cv::UsacParams() const
         cv::LocalOptimMethod::LOCAL_OPTIM_GC,
         cv::LocalOptimMethod::LOCAL_OPTIM_SIGMA};
 
-    if (m_lo_method >= std::size(lo_methods))
+    if (m_lo_method >= lv_interop::size(lo_methods))
     {
         throw std::out_of_range("The supplied value for the local optimization method does not map to a valid OpenCV value.");
     }
@@ -219,7 +219,7 @@ LV_UsacParams_t::operator cv::UsacParams() const
         cv::NeighborSearchMethod::NEIGH_GRID,
         cv::NeighborSearchMethod::NEIGH_FLANN_RADIUS};
 
-    if (m_neighbor_search_method >= std::size(neighbor_search_methods))
+    if (m_neighbor_search_method >= lv_interop::size(neighbor_search_methods))
     {
         throw std::out_of_range("The supplied value for the neighbor search method does not map to a valid OpenCV value.");
     }
@@ -230,7 +230,7 @@ LV_UsacParams_t::operator cv::UsacParams() const
         cv::SamplingMethod::SAMPLING_NAPSAC,
         cv::SamplingMethod::SAMPLING_PROSAC};
 
-    if (m_sampler >= std::size(sampling_methods))
+    if (m_sampler >= lv_interop::size(sampling_methods))
     {
         throw std::out_of_range("The supplied value for the sampling method does not map to a valid OpenCV value.");
     }
@@ -241,7 +241,7 @@ LV_UsacParams_t::operator cv::UsacParams() const
         cv::ScoreMethod::SCORE_METHOD_MAGSAC,
         cv::ScoreMethod::SCORE_METHOD_LMEDS};
 
-    if (m_score >= std::size(score_methods))
+    if (m_score >= lv_interop::size(score_methods))
     {
         throw std::out_of_range("The supplied value for the score method does not map to a valid OpenCV value.");
     }

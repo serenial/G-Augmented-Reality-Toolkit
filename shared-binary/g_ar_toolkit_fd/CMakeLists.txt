@@ -49,7 +49,7 @@ target_sources(g_ar_toolkit_fd PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
 )
 
-if(NOT DEFINED NO_ZXING)
+if(NOT OMIT_ZXING)
   # Find ZXing
   find_package(ZXing CONFIG REQUIRED)
 

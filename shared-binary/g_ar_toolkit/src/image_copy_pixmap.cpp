@@ -323,10 +323,10 @@ void LV_PixmapMaskArrayHandle_t::copy_from_cv_mat_type_mask(const cv::Mat &mask)
             if (mask.at<uint8_t>(row, col) == 0)
             {
                 // set the bit in the mask for this pixel to off (i.e masked)
-                auto [mask_buffer_col, shift_by] = std::div(col, 8);
-                auto bitmask = uint8_t(0b1000'0000) >> shift_by;
+                auto q_and_r = std::div(col,8);
+                auto bitmask = uint8_t(0b1000'0000) >> q_and_r.rem;
                 // bitwise and with the bitwise negation of the bitmask
-                mask_buffer.at<uint8_t>(row, mask_buffer_col) = mask_buffer.at<uint8_t>(row, mask_buffer_col) & (~bitmask);
+                mask_buffer.at<uint8_t>(row, q_and_r.quot) = mask_buffer.at<uint8_t>(row, q_and_r.quot) & (~bitmask);
             }
         }
     }
@@ -345,10 +345,10 @@ void LV_PixmapMaskArrayHandle_t::copy_to_cv_mat_type_mask(cv::Mat &mask) const
     {
         for (int col = 0; col < mask.cols; col++)
         {
-            auto [mask_buffer_col, shift_by] = std::div(col, 8);
-            auto bitmask = uint8_t(0b1000'0000) >> shift_by;
+            auto q_and_r = std::div(col,8);
+            auto bitmask = uint8_t(0b1000'0000) >> q_and_r.rem;
             // check if the bit of mask_buffer is 0 or not
-            mask.at<uint8_t>(row, col) = ((mask_buffer.at<uint8_t>(row, mask_buffer_col)) & bitmask) == 0 ? 0 : 255;
+            mask.at<uint8_t>(row, col) = ((mask_buffer.at<uint8_t>(row, q_and_r.quot)) & bitmask) == 0 ? 0 : 255;
         }
     }
 }
@@ -356,8 +356,8 @@ void LV_PixmapMaskArrayHandle_t::copy_to_cv_mat_type_mask(cv::Mat &mask) const
 std::pair<int, size_t> LV_PixmapMaskArrayHandle_t::calc_mask_buffer_bytes_and_stride(const cv::Mat &mask)
 {
     // mask has to have an even number of bytes per row
-    auto [quotient, remainder] = std::div(mask.cols, 8);
-    auto number_of_mask_bytes_per_row = quotient;
+    auto q_and_r= std::div(mask.cols, 8);
+    auto number_of_mask_bytes_per_row = q_and_r.quot;
 
     if (remainder != 0)
     {

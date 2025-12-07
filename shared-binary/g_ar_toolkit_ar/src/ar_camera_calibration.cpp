@@ -38,7 +38,7 @@ namespace
                 cv::CALIB_TILTED_MODEL,
                 cv::CALIB_FIX_TAUX_TAUY};
 
-            if (m_value < std::size(flags))
+            if (m_value < lv_interop::size(flags))
             {
                 return flags[m_value];
             }
