@@ -13,26 +13,31 @@
         "jpeg",
         "png",
         "tiff",
-        "webp"
+        "webp",
+        {
+          "name": "ipp",
+          "platform": "x86|x64"
+        }
       ]
     },
     {
       "name": "opencv4",
+      "default-features": false,
+      "platform": "!arm",
       "features": [
-        "ipp",
         "contrib",
         "ffmpeg",
-        "dnn"
-      ],
-      "platform": "x86|x64"
+        "dnn",
+        "text"
+      ]
     },
     {
       "name": "nu-book-zxing-cpp",
-      "platform": "x86|x64"
+      "platform": "!arm"
     },
     {
       "name": "tinyobjloader",
-      "platform": "x86|x64"
+      "platform": "!arm"
     }
   ]
 }

@@ -33,7 +33,7 @@ if(WIN32)
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
   target_compile_definitions(g_ar_toolkit_core PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068 _ALLOW_COROUTINE_ABI_MISMATCH)
   if(${CMAKE_SIZEOF_VOID_P} EQUAL 4)
-    target_compile_definitions(g_ar_toolkit PUBLIC G_AR_TOOLKIT_BYTE_PACKING_WIN_x86})
+    target_compile_definitions(g_ar_toolkit_core PUBLIC G_AR_TOOLKIT_BYTE_PACKING_WIN_x86)
   endif()
 endif()
 
