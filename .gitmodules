@@ -2,6 +2,9 @@
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg
 	shallow = true
+
 [submodule "LabVIEW/test/FeatureDetection/wechat_models"]
 	path = LabVIEW/test/FeatureDetection/wechat_models
 	url = https://github.com/WeChatCV/opencv_3rdparty.git
+	shallow = true
+	branch = wechat_qrcode
