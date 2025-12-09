@@ -166,18 +166,10 @@
 				<Item Name="Read Delimited Spreadsheet (I64).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet (I64).vi"/>
 				<Item Name="Read Delimited Spreadsheet (DBL).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet (DBL).vi"/>
 				<Item Name="Read Delimited Spreadsheet.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet.vi"/>
-				<Item Name="Less Functor.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Comparison/Less/Less Functor/Less Functor.lvclass"/>
-				<Item Name="Less Comparable.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Comparison/Less/Less Comparable/Less Comparable.lvclass"/>
 				<Item Name="Version Info Cluster_vipm_api.ctl" Type="VI" URL="/&lt;vilib&gt;/JKI/VIPM API/command-line/support/Version Info Cluster_vipm_api.ctl"/>
 				<Item Name="Read VI Package Build Spec_vipm_api.vi" Type="VI" URL="/&lt;vilib&gt;/JKI/VIPM API/Read VI Package Build Spec_vipm_api.vi"/>
 				<Item Name="Write VI Package Build Spec_vipm_api.vi" Type="VI" URL="/&lt;vilib&gt;/JKI/VIPM API/Write VI Package Build Spec_vipm_api.vi"/>
 				<Item Name="Build VI Package_vipm_api.vi" Type="VI" URL="/&lt;vilib&gt;/JKI/VIPM API/Build VI Package_vipm_api.vi"/>
-				<Item Name="Append Pass Result.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Append Pass Result.vi"/>
-				<Item Name="Append Fail Result.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Append Fail Result.vi"/>
-				<Item Name="Describe Comparison.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Describe Comparison.vi"/>
-				<Item Name="Compare Variants.vim" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Compare Variants.vim"/>
-				<Item Name="Run In UI.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Run In UI.vi"/>
-				<Item Name="Describe Variant.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Describe Variant.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 		</Item>
