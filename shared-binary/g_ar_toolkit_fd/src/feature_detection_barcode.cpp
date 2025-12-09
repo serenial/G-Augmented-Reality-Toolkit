@@ -6,7 +6,7 @@
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
 
-#include "g_ar_toolkit_dnn_export.h"
+#include "g_ar_toolkit_fd_export.h"
 
 using namespace g_ar_toolkit;
 using namespace lv_interop;
@@ -23,25 +23,24 @@ namespace
 
 #include "g_ar_toolkit/lv_interop/reset_packing.hpp"
 
-// create an object to hold the bardcode detector to work with openCV's lifetime and ownership semantics
-struct barcode_detector_t{
-    cv::barcode::BarcodeDetector m_barcode_detector;
-    barcode_detector_t(LV_StringHandle_t sr_proto_handle, LV_StringHandle_t sr_model_handle): m_barcode_detector(sr_proto_handle, sr_model_handle) {}
-};
+    // create an object to hold the bardcode detector to work with openCV's lifetime and ownership semantics
+    struct barcode_detector_t
+    {
+        cv::barcode::BarcodeDetector m_barcode_detector;
+        barcode_detector_t() : m_barcode_detector() {}
+    };
 
 }
 
 extern "C"
 {
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_create_detector(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_create_detector(
         LV_ErrorClusterPtr_t error_cluster_ptr,
-        LV_StringHandle_t sr_proto_handle,
-        LV_StringHandle_t sr_model_handle,
         LV_EDVRReferencePtr_t edvr_ref_ptr)
     {
         try
         {
-            EDVRManagedObject<barcode_detector_t> barcode_detector(edvr_ref_ptr, new barcode_detector_t(sr_proto_handle, sr_model_handle));
+            EDVRManagedObject<barcode_detector_t> barcode_detector(edvr_ref_ptr, new barcode_detector_t());
         }
         catch (...)
         {
@@ -50,7 +49,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detect(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detect(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
@@ -86,7 +85,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_gradient_threshold(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_gradient_threshold(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         double *threshold,
@@ -110,7 +109,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_downsampling_threshold(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_downsampling_threshold(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         double *threshold,
@@ -134,7 +133,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_barcode_detector_scales(
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_barcode_detector_scales(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_1DArrayHandle_t<float> scales_handle,

@@ -29,8 +29,6 @@
 		<Item Name="TagPixelType.ctl" Type="VI" URL="../TagPixelType.ctl"/>
 		<Item Name="TagRotatePixelArray.vi" Type="VI" URL="../TagRotatePixelArray.vi"/>
 		<Item Name="TagSetPixel.vi" Type="VI" URL="../TagSetPixel.vi"/>
-		<Item Name="wechatDetectCoffeeModel.vi" Type="VI" URL="../wechatDetectCoffeeModel.vi"/>
-		<Item Name="wechatSuperResolutionCoffeeModel.vi" Type="VI" URL="../wechatSuperResolutionCoffeeModel.vi"/>
 	</Item>
 	<Item Name="Polymorphic Implementations" Type="Folder">
 		<Item Name="Generate AprilTag Image Data" Type="Folder">

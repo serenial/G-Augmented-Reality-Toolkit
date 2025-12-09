@@ -359,7 +359,7 @@ std::pair<int, size_t> LV_PixmapMaskArrayHandle_t::calc_mask_buffer_bytes_and_st
     auto q_and_r= std::div(mask.cols, 8);
     auto number_of_mask_bytes_per_row = q_and_r.quot;
 
-    if (remainder != 0)
+    if (q_and_r.rem != 0)
     {
         ++number_of_mask_bytes_per_row;
     }

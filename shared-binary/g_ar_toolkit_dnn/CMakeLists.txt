@@ -40,7 +40,6 @@ target_link_libraries(g_ar_toolkit_dnn PRIVATE
 )
 
 target_sources(g_ar_toolkit_dnn PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/src/dnn_barcode.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/dnn_we_chat_qr.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/dnn_text.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/dnn_detection_model.cpp

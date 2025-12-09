@@ -47,6 +47,7 @@ target_sources(g_ar_toolkit_fd PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_hough.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_encoder.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_barcode.cpp
 )
 
 if(NOT OMIT_ZXING)

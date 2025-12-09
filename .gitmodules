@@ -5,3 +5,6 @@
 [submodule "vcpkg-sbom"]
 	path = vcpkg-sbom
 	url = https://github.com/moverseai/vcpkg-sbom.git
+[submodule "LabVIEW/test/FeatureDetection/wechat_models"]
+	path = LabVIEW/test/FeatureDetection/wechat_models
+	url = https://github.com/WeChatCV/opencv_3rdparty.git
