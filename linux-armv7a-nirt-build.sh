@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 cd "$(dirname "$0")"
 
-bash vcpkg/bootstrap-vcpkg.sh
 
-cmake --preset=linux-armv7-a-cross && cmake --build --preset=linux-armv7-a-cross-release-build
+cmake --preset=linux-armv7a-cross --trace && cmake --build --preset=linux-armv7a-cross-release-build --trace

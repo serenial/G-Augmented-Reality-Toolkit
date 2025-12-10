@@ -1,41 +1,19 @@
 # based on vcpkg/scripts/toolchains/linux.cmake
 # values from /usr/local/oecore-x86_64/environment-setup-cortexa9-vfpv3-nilrt-linux-gnueabi
-
-set(OE_INSTALL_SCRIPT oecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh)
-set(OE_INSTALL_SCRIPT_HASH SHA256=c6e7c560a662b31f45b4c323af9b81ab4bf301f1ccd02066dbe1550e940fcbaa)
-
 if(NOT _NILRT_ARM3V7_A_TOOLCHAIN)
-    set(_NILRT_ARMV7_A_TOOLCHAIN 1)
+    set(_NILRT_ARM3V7_A_TOOLCHAIN TRUE)
 
     set(CMAKE_SYSTEM_NAME Linux CACHE STRING "")
     set(CMAKE_SYSTEM_PROCESSOR armv7a)
 
     set(CMAKE_CROSSCOMPILING ON)
 
-    include(FetchContent)
-
-    FetchContent_GetProperties(oe_armv7a_compile_tools)
-
-    if(NOT oe_armv7a_compile_tools_POPULATED)
-        message(NOTICE "-->> Downloading and installing cross compile tools for armv7 targets from NI.com...")
-
-        set(OE_COMPILE_TOOLS_DIR "${CMAKE_BINARY_DIR}/oe_armv7a_compile_tools")
-
-        FetchContent_Populate(
-            oe_armv7a_compile_tools
-            URL "https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/${OE_INSTALL_SCRIPT}"
-            URL_HASH "${OE_INSTALL_SCRIPT_HASH}"
-            DOWNLOAD_DIR "${OE_COMPILE_TOOLS_DIR}"
-            DOWNLOAD_NO_EXTRACT TRUE
-            UPDATE_COMMAND chmod +x "${OE_COMPILE_TOOLS_DIR}/${OE_INSTALL_SCRIPT}" && "${OE_COMPILE_TOOLS_DIR}/${OE_INSTALL_SCRIPT}" -y -d "${OE_COMPILE_TOOLS_DIR}"
-            PATCH_COMMAND echo "-->> Cross compile tools for armv7 targets installed!"
-        )
-    endif()
+    # Compile tools location
+    set(OE_COMPILE_TOOLS_DIR "/usr/local/oecore-x86_64/")
 
     # Sysroot configuration
     set(SDKTARGETSYSROOT "${OE_COMPILE_TOOLS_DIR}/sysroots/cortexa9-vfpv3-nilrt-linux-gnueabi")
     set(OECORE_NATIVE_SYSROOT "${OE_COMPILE_TOOLS_DIR}/sysroots/x86_64-nilrtsdk-linux")
-
     set(CMAKE_SYSROOT ${SDKTARGETSYSROOT})
     set(CMAKE_FIND_ROOT_PATH ${SDKTARGETSYSROOT})
 
