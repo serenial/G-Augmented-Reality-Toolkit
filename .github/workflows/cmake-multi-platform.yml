@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-latest]
-        arch: [x86, x64]
+        arch: [x86, x64, armv7a]
         include:
           - os: windows-latest
             triplet_platform: windows-static # Windows static-release triplets have incorrect Run Time Linkage so just use static
@@ -24,6 +24,8 @@ jobs:
         exclude:
         - os: ubuntu-22.04
           arch: x86
+        - os: windows-latest
+          arch: armv7a
         
     steps:
     - name: Restore vcpkg cache
