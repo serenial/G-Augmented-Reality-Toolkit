@@ -23,7 +23,7 @@
     {
       "name": "opencv4",
       "default-features": false,
-      "platform": "!arm",
+      "platform": "!arm32",
       "features": [
         "contrib",
         "ffmpeg",
@@ -33,11 +33,11 @@
     },
     {
       "name": "nu-book-zxing-cpp",
-      "platform": "!arm"
+      "platform": "!arm32"
     },
     {
       "name": "tinyobjloader",
-      "platform": "!arm"
+      "platform": "!arm32"
     }
   ]
 }

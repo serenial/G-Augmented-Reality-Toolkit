@@ -8,6 +8,27 @@ https://downloads.raspberrypi.com/raspios_oldstable_lite_arm64/images/raspios_ol
 
 https://devblogs.microsoft.com/cppblog/vcpkg-artifacts/
 
+================================================================
+unxz --keep 2025-11-24-raspios-bookworm-arm64-lite.img.xz
+
+fdisk -l 2025-11-24-raspios-bookworm-arm64-lite.img
+Disk 2025-11-24-raspios-bookworm-arm64-lite.img: 2.56 GiB, 2751463424 bytes, 5373952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x9e020a5c
+
+Device                                      Boot   Start     End Sectors  Size Id Type
+2025-11-24-raspios-bookworm-arm64-lite.img1        16384 1064959 1048576  512M  c W95 FAT32 (LBA)
+2025-11-24-raspios-bookworm-arm64-lite.img2      1064960 5373951 4308992  2.1G 83 Linux
+
+mkdir hiya
+sudo mount -o loop,offset=$((1064960 * 512)) 2025-11-24-raspios-bookworm-arm64-lite.img hiya
+
+sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+
 =========================== Parked ==============================
 
 if(VCPKG_CROSSCOMPILING)
@@ -16,7 +37,7 @@ if(VCPKG_CROSSCOMPILING)
     vcpkg_download_distfile(
         OE_CROSS_COMPILER_INSTALL_SCRIPT
         URLS "https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh"
-        FILENAME "ecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh"
+        FILENAME5` "ecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh"
         SHA512 31833d2ddc49b18d740332d9c2e8680ab3834b0f0a8e5555511323d6d6a819f01cd43725ad6c79c1571e47a0b23fa8209c367d40bb90b755fc896d51cf41cd7d
     )
 
