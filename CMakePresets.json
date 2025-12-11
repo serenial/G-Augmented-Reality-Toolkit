@@ -112,10 +112,10 @@
         },
         {
             "name": "ci-linux-armv7a",
-            "inherits": "ci",
+            "inherits": "nilrt-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "nilrt-armv7a-cross"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
             }
         }
     ],
