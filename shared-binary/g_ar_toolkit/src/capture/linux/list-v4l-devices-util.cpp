@@ -25,10 +25,8 @@ int main(int argc, char const *argv[]){
         std::cout << "- " << dev.path << std::endl << std::endl;
 
         for(const auto &format: dev.format_info){
-            std::cout << format.first.width << " x " << format.first.height << std::endl;
-            std::cout << format.second.description << std::endl << std::endl;
+            std::cout << format.first.width << " x " << format.first.height << " " << format.second.description << std::endl << std::endl;
         }
-
 
         std::cout << "===================================" << std::endl;
 
