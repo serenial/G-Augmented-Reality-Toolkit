@@ -85,8 +85,8 @@
             },
             "condition": {
                 "type": "equals",
-                "lhs": "$penv{RUNNING_IN_CI}",
-                "rhs": "TRUE"
+                "lhs": "$penv{GITHUB_ACTIONS}",
+                "rhs": "true"
             }
         },
         {
