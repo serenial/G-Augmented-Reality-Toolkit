@@ -44,8 +44,8 @@ jobs:
     - name: Install OS dependencies
       if: ${{ matrix.os == 'ubuntu-22.04' }}
       run: |
-        apt-get update
-        apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl autoconf-archive
+        sudo apt-get update
+        sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl autoconf-archive
     
     - name: Install Armv7a Cross Compilation Tools
       if: ${{ matrix.arch == 'armv7a' }}
@@ -53,14 +53,14 @@ jobs:
         wget https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh -Lo install-tc.sh \
         echo "${TOOLCHAIN_SCRIPT_SHA512} install-tc.sh" | sha512sum --check --status
         chmod +x ./install-tc.sh
-        ./install-tc.sh -y
+        sudo ./install-tc.sh -y
         curl https://git.yoctoproject.org/opkg-utils/snapshot/opkg-utils-0.7.0.tar.gz -Lo opkg-utils.tar.gz
         echo "${OPKG_UTILS_TAR_SHA256} opkg-utils.tar.gz" | sha256sum --check --status
         mkdir /opkg-utils
         tar -zxf opkg-utils.tar.gz -C /opkg-utils --strip-components=1
         cd /opkg-utils
         make
-        make install
+        sudo make install
 
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11
