@@ -33,6 +33,7 @@
 		<Item Name="Library Name.ctl" Type="VI" URL="../Library Name.ctl"/>
 	</Item>
 	<Item Name="Utility" Type="Folder">
+		<Item Name="Not Supported on 32-Bit Systems.vi" Type="VI" URL="../Not Supported on 32-Bit Systems.vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (Augmented Reality).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (Augmented Reality).vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (Core).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (Core).vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (DNN).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (DNN).vi"/>
