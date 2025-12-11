@@ -30,6 +30,10 @@ if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
         ${CMAKE_CURRENT_SOURCE_DIR}/include/g_ar_toolkit/capture/linux/decoders.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/g_ar_toolkit/capture/linux/utils.hpp
     )
+
+    add_executable(list-v4l-devices-util ${CMAKE_CURRENT_LIST_DIR}/linux/list-v4l-devices-util.cpp)
+    target_link_libraries(list-v4l-devices-util PRIVATE g_ar_toolkit)
+
 endif()
 
 target_sources(g_ar_toolkit PRIVATE

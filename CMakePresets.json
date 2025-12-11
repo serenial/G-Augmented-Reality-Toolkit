@@ -74,6 +74,7 @@
             "inherits": "linux-desktop-release",
             "binaryDir": "${sourceDir}/build/nilrt-armv7a",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
                 "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE" : "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
                 "CMAKE_CXX_STANDARD": "14",
@@ -83,15 +84,6 @@
                 "OMIT_VIDEOIO":"ON",
                 "OMIT_TESSERACT":"ON",
                 "OMIT_OBJLOADER":"ON"
-            }
-        },
-        {
-            "name": "rpi5bookworm-aarch64-cross",
-            "inherits": "linux-desktop-release",
-            "binaryDir": "${sourceDir}/build/rpi5bookworm-aarch64",
-            "cacheVariables":{
-                "VCPKG_TARGET_TRIPLET": "aarch64-rpi5bookworm-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE" : "${sourceDir}/scripts/toolchains/rpi5-bookworm-aarch64.cmake"
             }
         }
     ],
@@ -124,13 +116,7 @@
             "name": "nilrt-armv7a-cross-build",
             "configurePreset": "nilrt-armv7a-cross",
             "targets": "install",
-            "configuration": "Release"
-        },
-        {
-            "name": "rpi5bookworm-aarch64-cross-build",
-            "configurePreset": "rpi5bookworm-aarch64-cross",
-            "targets": "install",
-            "configuration": "Release"
+            "configuration": "Debug"
         },
         {
             "name": "ci-build",
