@@ -85,7 +85,7 @@
             },
             "condition": {
                 "type": "equals",
-                "lhs": "$penv{GITHUB_ACTIONS}",
+                "lhs": "$penv{CI}",
                 "rhs": "true"
             }
         },

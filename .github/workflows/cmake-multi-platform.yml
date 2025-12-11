@@ -55,7 +55,7 @@ jobs:
         chmod +x ./install-tc.sh
         sudo ./install-tc.sh -y
         curl https://git.yoctoproject.org/opkg-utils/snapshot/opkg-utils-0.7.0.tar.gz -Lo opkg-utils.tar.gz
-        echo "${OPKG_UTILS_TAR_SHA256} opkg-utils.tar.gz" | sha256sum --check --status
+        echo "${OPKG_UTILS_TAR_SHA512} opkg-utils.tar.gz" | sha256sum --check --status
         mkdir /opkg-utils
         tar -zxf opkg-utils.tar.gz -C /opkg-utils --strip-components=1
         cd /opkg-utils
@@ -68,13 +68,13 @@ jobs:
     - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
       uses: lukka/run-cmake@v10
       with:
-          configurePreset: ci-{{ matrix.triplet_platform }}-{{ matrix.arch }}
-          buildPreset: ci-{{ matrix.triplet_platform }}-{{ matrix.arch }}
+          configurePreset: ci-${{ matrix.triplet_platform }}-${{ matrix.arch }}
+          buildPreset: ci-${{ matrix.triplet_platform }}-${{ matrix.arch }}
 
     - name: Store Build Output
       uses: actions/upload-artifact@v4
       with:
-        name: g_augmented_reality_{{ matrix.triplet_platform }}-{{ matrix.arch }}
+        name: g_augmented_reality_${{ matrix.triplet_platform }}-${{ matrix.arch }}
         path: |
          ${{ github.workspace }}/bin
          ${{ github.workspace }}/build/vcpkg_installed/**/share
