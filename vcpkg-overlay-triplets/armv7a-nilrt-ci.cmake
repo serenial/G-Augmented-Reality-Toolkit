@@ -8,3 +8,5 @@ set(VCPKG_BUILD_TYPE release)
 set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/../scripts/toolchains/nilrt-armv7a.cmake")
 
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+# for opencv
+set(ENABLE_LTO ON)
