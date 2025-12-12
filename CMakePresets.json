@@ -12,7 +12,10 @@
             "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_CXX_STANDARD": "17",
-                "CMAKE_C_STANDARD": "17"
+                "CMAKE_C_STANDARD": "17",
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common"
             }
         },
         {
@@ -20,9 +23,7 @@
             "inherits": "base",
             "binaryDir": "${sourceDir}/build/windows-$penv{Platform}",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "$penv{Platform}-windows-static",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common"
+                "VCPKG_TARGET_TRIPLET": "$penv{Platform}-windows-static"
             },
             "condition": {
                 "type": "equals",
@@ -31,13 +32,11 @@
             }
         },
         {
-            "name": "linux-desktop-debug",
+            "name": "linux-debug",
             "inherits": "base",
-            "binaryDir": "${sourceDir}/build/linux-desktop",
+            "binaryDir": "${sourceDir}/build/linux-x64",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-linux-ci",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/LabVIEW/common"
+                "VCPKG_TARGET_TRIPLET": "x64-linux-ci"
             },
             "condition": {
                 "type": "equals",
@@ -53,18 +52,18 @@
             }
         },
         {
-            "name": "linux-desktop-release",
-            "inherits": "linux-desktop-debug",
+            "name": "linux-release",
+            "inherits": "linux-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
             "name": "nilrt-armv7a-cross",
-            "inherits": "linux-desktop-release",
+            "inherits": "linux-release",
             "binaryDir": "${sourceDir}/build/nilrt-armv7a",
             "cacheVariables": {
-                "BUILD_OPKG":"ON",
+                "BUILD_OPKG": "ON",
                 "CMAKE_BUILD_TYPE": "Release",
                 "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
@@ -134,14 +133,14 @@
             "configuration": "Release"
         },
         {
-            "name": "linux-desktop-debug",
-            "configurePreset": "linux-desktop-debug",
+            "name": "linux-debug",
+            "configurePreset": "linux-debug",
             "targets": "install",
             "configuration": "Debug"
         },
         {
-            "name": "linux-desktop-release",
-            "configurePreset": "linux-desktop-release",
+            "name": "linux-release",
+            "configurePreset": "linux-release",
             "targets": "install",
             "configuration": "Release"
         },
@@ -154,21 +153,25 @@
         {
             "name": "ci-windows-x86",
             "configuration": "Release",
+            "targets": "install",
             "configurePreset": "ci-windows-x86"
         },
         {
             "name": "ci-windows-x64",
             "configuration": "Release",
+            "targets": "install",
             "configurePreset": "ci-windows-x64"
         },
         {
             "name": "ci-linux-x64",
             "configuration": "Release",
+            "targets": "install",
             "configurePreset": "ci-linux-x64"
         },
         {
             "name": "ci-linux-armv7a",
             "configuration": "Release",
+            "targets": "install",
             "configurePreset": "ci-linux-armv7a"
         }
     ]
