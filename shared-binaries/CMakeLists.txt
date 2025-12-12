@@ -29,7 +29,7 @@ if(NOT OMIT_VIDEOIO)
   list(APPEND BUILD_TARGETS g_ar_toolkit_videoio)
 endif()
 
-add_subdirectory(opkg)
+add_subdirectory(opkg_pkg_build)
 
 # Install Shared Library
 INSTALL(TARGETS ${BUILD_TARGETS}
