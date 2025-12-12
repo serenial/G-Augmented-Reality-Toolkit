@@ -1,0 +1,7 @@
+Package: @PROJECT_NAME@
+Version: @PROJECT_VERSION@
+Description: Shared Binaries used by the G Augmented-Reality Toolkit
+Maintainer: "John Medland" <john@serenial.io>
+License: LGPLv2
+Architecture: armv7a-vfp
+Homepage: https://gitlab.com/serenial/g-augmented-reality-toolkit

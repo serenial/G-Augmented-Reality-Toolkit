@@ -1,5 +1,5 @@
 # Specify Project
-project(g_ar_toolkit_shared_binary VERSION 1.0.0 LANGUAGES C CXX)
+project(gartoolkit-shared-binaries VERSION 1.2 LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -28,6 +28,8 @@ if(NOT OMIT_VIDEOIO)
   add_subdirectory(g_ar_toolkit_videoio)
   list(APPEND BUILD_TARGETS g_ar_toolkit_videoio)
 endif()
+
+add_subdirectory(opkg)
 
 # Install Shared Library
 INSTALL(TARGETS ${BUILD_TARGETS}

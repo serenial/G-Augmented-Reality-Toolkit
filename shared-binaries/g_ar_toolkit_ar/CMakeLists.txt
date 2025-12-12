@@ -34,7 +34,7 @@ set_target_properties(g_ar_toolkit_ar PROPERTIES
 
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
-set_target_properties(g_ar_toolkit_ar PROPERTIES OUTPUT_NAME gartoolkit_ar_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
+set_target_properties(g_ar_toolkit_ar PROPERTIES OUTPUT_NAME gartoolkit_ar_${BITNESS}-${gartoolkit-shared-binaries_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_ar PRIVATE
   g_ar_toolkit
   opencv_imgproc

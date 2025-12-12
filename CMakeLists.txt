@@ -6,4 +6,4 @@ SET(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems
 project(g_ar_toolkit)
 
 # add source
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/shared-binary)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/shared-binaries)

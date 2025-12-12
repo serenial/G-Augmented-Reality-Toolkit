@@ -31,7 +31,7 @@ set_target_properties(g_ar_toolkit_tesseract PROPERTIES
 
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
-set_target_properties(g_ar_toolkit_tesseract PROPERTIES OUTPUT_NAME gartoolkit_tesseract_${BITNESS}-${g_ar_toolkit_shared_binary_VERSION_MAJOR})
+set_target_properties(g_ar_toolkit_tesseract PROPERTIES OUTPUT_NAME gartoolkit_tesseract_${BITNESS}-${gartoolkit-shared-binaries_VERSION_MAJOR})
 target_link_libraries(g_ar_toolkit_tesseract PRIVATE
   g_ar_toolkit
   opencv_text
