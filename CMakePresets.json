@@ -65,7 +65,7 @@
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-ci",
+                "VCPKG_TARGET_TRIPLET": "armv7a-linux-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
                 "CMAKE_CXX_STANDARD": "14",
                 "CMAKE_C_STANDARD": "11",
