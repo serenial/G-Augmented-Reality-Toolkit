@@ -7,20 +7,37 @@
       "default-features": false,
       "features": [
         "calib3d",
-        "contrib",
-        "dnn",
         "fs",
         "intrinsics",
-        "ipp",
+        "thread",
         "jpeg",
         "png",
-        "thread",
         "tiff",
         "webp",
-        "ffmpeg"
+        {
+          "name": "ipp",
+          "platform": "x86|x64"
+        }
       ]
     },
-    "tinyobjloader",
-    "nu-book-zxing-cpp"
+    {
+      "name": "opencv4",
+      "default-features": false,
+      "platform": "!arm32",
+      "features": [
+        "contrib",
+        "ffmpeg",
+        "dnn",
+        "text"
+      ]
+    },
+    {
+      "name": "nu-book-zxing-cpp",
+      "platform": "!arm32"
+    },
+    {
+      "name": "tinyobjloader",
+      "platform": "!arm32"
+    }
   ]
 }
