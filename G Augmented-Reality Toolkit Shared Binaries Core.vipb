@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-09-25 22:53:22" Creator="john" Comments="" ID="17c80d3d294279882aa464b846088b6b">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2025-12-13 18:34:25" Creator="john" Comments="" ID="b331ffc9cd08ec2fdb7c2dbf92ba1fb4">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit_shared_binaries_core</Package_File_Name>
-    <Library_Version>1.1.0.7</Library_Version>
+    <Library_Version>1.2.0.8</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>build\source-distribution\g_ar_toolkit.common\bin</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
@@ -32,8 +32,7 @@
       <Copyright>Copyright (c) 2025, Serenial and contributors</Copyright>
       <Packager>Serenial</Packager>
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit</URL>
-      <Release_Notes>Added CLAHE (Contrast Limited Adaptive Histogram Equalization) exported functions.
-Modified linkage to Windows Runtime</Release_Notes>
+      <Release_Notes>Bumped version to match binary package release.</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -112,51 +111,6 @@ Modified linkage to Windows Runtime</Release_Notes>
         <Namespace_Type>Prefix</Namespace_Type>
         <Namespace/>
       </Namespace_Overrides>
-      <Exclusions>
-        <Path>gartoolkit_ar_32-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_ar_64-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_ar_64-1.so</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_dnn_32-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_dnn_64-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_dnn_64-1.so</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_fd_32-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_fd_64-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_fd_64-1.so</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_tesseract_32-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_tesseract_64-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_tesseract_64-1.so</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_videoio_32-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_videoio_64-1.dll</Path>
-      </Exclusions>
-      <Exclusions>
-        <Path>gartoolkit_videoio_64-1.so</Path>
-      </Exclusions>
       <Place_Folder_Contents>
         <Path/>
       </Place_Folder_Contents>
