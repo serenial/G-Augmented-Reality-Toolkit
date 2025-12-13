@@ -81,7 +81,8 @@
             "inherits": "base",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}",
+                "CMAKE_BUILD_TYPE": "Release"
             },
             "condition": {
                 "type": "equals",
