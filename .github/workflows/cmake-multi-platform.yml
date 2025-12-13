@@ -18,7 +18,7 @@ jobs:
         arch: [x86, x64, armv7a]
         include:
           - os: windows-latest
-            triplet_platform: windows
+            triplet_platform: windows-static
           - os: ubuntu-22.04
             triplet_platform: linux
         exclude:

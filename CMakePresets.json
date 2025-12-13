@@ -91,14 +91,14 @@
             }
         },
         {
-            "name": "ci-windows-x86",
+            "name": "ci-windows-static-x86",
             "inherits": "ci",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x86-windows-static-ci"
             }
         },
         {
-            "name": "ci-windows-x64",
+            "name": "ci-windows-static-x64",
             "inherits": "ci",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x64-windows-static-ci"
@@ -152,16 +152,16 @@
             "configuration": "Release"
         },
         {
-            "name": "ci-windows-x86",
+            "name": "ci-windows-static-x86",
             "configuration": "Release",
             "targets": "install",
-            "configurePreset": "ci-windows-x86"
+            "configurePreset": "ci-windows-static-x86"
         },
         {
-            "name": "ci-windows-x64",
+            "name": "ci-windows-static-x64",
             "configuration": "Release",
             "targets": "install",
-            "configurePreset": "ci-windows-x64"
+            "configurePreset": "ci-windows-static-x64"
         },
         {
             "name": "ci-linux-x64",
