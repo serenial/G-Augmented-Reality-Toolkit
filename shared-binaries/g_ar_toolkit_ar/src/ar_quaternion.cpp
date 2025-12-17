@@ -134,6 +134,40 @@ extern "C"
         return LV_ERR_noError;
     }
 
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_rpy_to_quaternion(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_Ptr_t<LV_Vec3Double_t> rpy_vec_ptr,
+        LV_QuaternionPtr_t quaternion_ptr)
+    {
+        try
+        {
+
+            // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Euler_angles_to_quaternion_conversion
+            double roll = rpy_vec_ptr->m_x;
+            double pitch = rpy_vec_ptr->m_y;
+            double yaw = rpy_vec_ptr->m_z;
+
+            double cr = std::cos(roll * 0.5);
+            double sr = std::sin(roll * 0.5);
+
+            double cp = std::cos(pitch * 0.5);
+            double sp = std::sin(pitch * 0.5);
+
+            double cy = std::cos(yaw * 0.5);
+            double sy = std::sin(yaw * 0.5);
+
+            quaternion_ptr->m_w = cr * cp * cy + sr * sp * sy;
+            quaternion_ptr->m_x = sr * cp * cy - cr * sp * sy;
+            quaternion_ptr->m_y = cr * sp * cy + sr * cp * sy;
+            quaternion_ptr->m_z = cr * cp * sy - sr * sp * cy;
+        }
+        catch (...)
+        {
+            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
+        }
+        return LV_ERR_noError;
+    }
+
     G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_slerp(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_QuaternionPtr_t from_ptr,
