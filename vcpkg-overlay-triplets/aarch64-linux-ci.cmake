@@ -5,7 +5,7 @@ set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 set(VCPKG_BUILD_TYPE release)
 
 # Reference the main toolchain file
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/../scripts/toolchains/nilrt-armv7a.cmake")
+set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/../scripts/toolchains/rpi5-aarch64.cmake")
 
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 # for opencv
