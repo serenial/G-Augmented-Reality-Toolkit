@@ -1,4 +1,5 @@
 #include <limits>
+#include <cmath>
 
 #include <opencv2/core.hpp>
 #include <opencv2/calib3d.hpp>
@@ -29,8 +30,6 @@ namespace
         Eigen::Quaterniond to_eigen_quaterniond() const;
         LV_Quaternion_t &operator=(Eigen::Quaterniond);
         LV_Quaternion_t &operator=(Eigen::Vector4d);
-
-    private:
         double m_w, m_x, m_y, m_z;
     };
 
@@ -66,6 +65,67 @@ extern "C"
         try
         {
             *rotation_mat_ptr = quaternion_ptr->to_eigen_quaterniond().toRotationMatrix();
+        }
+        catch (...)
+        {
+            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
+        }
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_AR_EXPORT LV_MgErr_t g_ar_tk_ar_quaternion_to_rpy(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_QuaternionPtr_t quaternion_ptr,
+        LV_Ptr_t<LV_Vec3Double_t> rpy_vec_ptr)
+    {
+        try
+        {
+            // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Quaternion_to_Euler_angles_(in_3-2-1_sequence)_conversion
+
+            double w = quaternion_ptr->m_w;
+            double x = quaternion_ptr->m_x;
+            double y = quaternion_ptr->m_y;
+            double z = quaternion_ptr->m_z;
+
+            // roll about x-axis
+
+            double cxcy = 1.0 - 2.0 * (x * x + y * y);
+            double sxcy = 2.0 * (w * x + y * z);
+            double cy_sq_cxsx = cxcy * cxcy + sxcy * sxcy;
+            if (cy_sq_cxsx > 1e-20)
+            {
+                rpy_vec_ptr->m_x = std::atan2(sxcy, cxcy);
+            }
+            else
+            {
+                rpy_vec_ptr->m_x = 0;
+            }
+
+            // pitch about y-axis
+
+            double ratio = 2.0 * (w * y - z * x);
+            if (std::abs(ratio) >= 1.0)
+            {
+                rpy_vec_ptr->m_y = std::copysign(PI_by_2, ratio);
+            }
+            else
+            {
+                rpy_vec_ptr->m_y = std::asin(ratio);
+            }
+
+            // yaw about the z axis
+
+            double cycz = 1.0 - 2.0 * (y * y + z * z);
+            double cysz = 2.0 * (w * z + x * y);
+            double cy_sq_czsz = cycz * cycz + cysz * cysz;
+            if (cy_sq_czsz > 1e-20)
+            {
+                rpy_vec_ptr->m_z = std::atan2(cysz, cycz);
+            }
+            else
+            {
+                rpy_vec_ptr->m_z = std::atan2(2.0 * w * z, w * w - z * z);
+            }
         }
         catch (...)
         {
