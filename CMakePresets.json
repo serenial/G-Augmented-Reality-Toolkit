@@ -187,6 +187,13 @@
             "configuration": "Release",
             "targets": "install",
             "configurePreset": "ci-linux-armv7a"
+        },
+        {
+            "name": "ci-linux-aarch64",
+            "configuration": "Release",
+            "targets": "install",
+            "configurePreset": "ci-linux-aarch64"
         }
+        
     ]
 }
