@@ -52,10 +52,10 @@ jobs:
       run: |
         sudo scripts/install-nilrt-armv7a-tools.sh
 
-    - name: Install aarch64 Cross Compilation Tools
+    - name: Install rpi-aarch64 Cross Compilation Tools
       if: ${{ matrix.arch == 'aarch64' }}
       run: |
-        sudo scripts/install-rpi5-aarch64-tools.sh
+        sudo scripts/install-rpi-aarch64-tools.sh
 
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11
