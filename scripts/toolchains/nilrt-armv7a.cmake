@@ -6,6 +6,8 @@ if(NOT _NILRT_ARM3V7_A_TOOLCHAIN)
     set(CMAKE_SYSTEM_NAME Linux CACHE STRING "")
     set(CMAKE_SYSTEM_PROCESSOR armv7a)
 
+    set(OPKG_ARCH armv7a-vfp)
+
     set(CMAKE_CROSSCOMPILING ON)
 
     # Compile tools location

@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-latest]
-        arch: [x86, x64, armv7a]
+        arch: [x86, x64, armv7a, aarch64]
         include:
           - os: windows-latest
             triplet_platform: windows-static
@@ -26,6 +26,8 @@ jobs:
           arch: x86
         - os: windows-latest
           arch: armv7a
+        - os: windows-latest
+          arch: aarch64
         
     steps:
     - name: Restore vcpkg cache
@@ -49,6 +51,11 @@ jobs:
       if: ${{ matrix.arch == 'armv7a' }}
       run: |
         sudo scripts/install-nilrt-armv7a-tools.sh
+
+    - name: Install aarch64 Cross Compilation Tools
+      if: ${{ matrix.arch == 'aarch64' }}
+      run: |
+        sudo scripts/install-nilrt-aarch64-tools.sh
 
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11

@@ -220,3 +220,7 @@ LabVIEW/Antidoc-Output
 # Model Files
 *.onnx
 *.pb
+
+# rpi tools
+trixie**
+mountpi**

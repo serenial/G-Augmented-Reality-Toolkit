@@ -77,6 +77,17 @@
             }
         },
         {
+            "name": "nilrt-aarch64-cross",
+            "inherits": "linux-release",
+            "binaryDir": "${sourceDir}/build/nilrt-aarch64",
+            "cacheVariables": {
+                "BUILD_OPKG": "ON",
+                "CMAKE_BUILD_TYPE": "Release",
+                "VCPKG_TARGET_TRIPLET": "aarch64-linux-ci",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/rpi5-aarch64.cmake"
+            }
+        },
+        {
             "name": "ci",
             "inherits": "base",
             "binaryDir": "${sourceDir}/build",
@@ -118,6 +129,14 @@
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}"
             }
+        },
+        {
+            "name": "ci-linux-aarch64",
+            "inherits": "nilrt-aarch64-cross",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
+            }
         }
     ],
     "buildPresets": [
@@ -142,12 +161,6 @@
         {
             "name": "linux-release",
             "configurePreset": "linux-release",
-            "targets": "install",
-            "configuration": "Release"
-        },
-        {
-            "name": "nilrt-armv7a-cross",
-            "configurePreset": "nilrt-armv7a-cross",
             "targets": "install",
             "configuration": "Release"
         },
