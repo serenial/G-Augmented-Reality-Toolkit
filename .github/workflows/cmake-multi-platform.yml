@@ -55,7 +55,7 @@ jobs:
     - name: Install aarch64 Cross Compilation Tools
       if: ${{ matrix.arch == 'aarch64' }}
       run: |
-        sudo scripts/install-nilrt-aarch64-tools.sh
+        sudo scripts/install-rpi5-aarch64-tools.sh
 
     - name: Setup VCPKG
       uses: lukka/run-vcpkg@v11
