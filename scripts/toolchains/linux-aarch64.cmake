@@ -1,11 +1,9 @@
-if(NOT _RPI_BOOKWORM_AARCH64)
-    set(_RPI_BOOKWORM_AARCH64 TRUE)
+if(NOT _LINUX_AARCH64)
+    set(_LINUX_AARCH64 TRUE)
 
     set(CMAKE_SYSTEM_NAME Linux)
     set(CMAKE_SYSTEM_PROCESSOR aarch64)
     set(CMAKE_CROSSCOMPILING ON)
-
-    set(OPKG_ARCH aarch64)
 
     set(TOOLCHAIN_NAME aarch64-linux-gnu)
     set(TOOL_BASE_PATH "/usr/bin/${TOOLCHAIN_NAME}-")
@@ -22,12 +20,8 @@ if(NOT _RPI_BOOKWORM_AARCH64)
     set(CMAKE_OBJCOPY "${TOOL_BASE_PATH}objcopy")
     set(CMAKE_OBJDUMP "${TOOL_BASE_PATH}objdump")
 
-    # Specify the sysroot (optional, adjust path as needed)
+    # Specify the sysroot (use rpi trixie)
     set(CMAKE_SYSROOT ~/trixie-mnt/partition_1)
-
-    # Additional compiler flags optimized for Raspberry Pi 5 (Cortex-A76)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcpu=cortex-a76 -mtune=cortex-a76 -fPIC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mcpu=cortex-a76 -mtune=cortex-a76 -fPIC")
 
     set(CMAKE_MODULE_LINKER_FLAGS_INIT "-Wl,-O1")
     set(CMAKE_SHARED_LINKER_FLAGS_INIT "-Wl,-O1")

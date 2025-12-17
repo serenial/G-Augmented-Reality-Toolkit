@@ -77,14 +77,14 @@
             }
         },
         {
-            "name": "nilrt-aarch64-cross",
+            "name": "rpi5-aarch64-cross",
             "inherits": "linux-release",
             "binaryDir": "${sourceDir}/build/nilrt-aarch64",
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
                 "CMAKE_BUILD_TYPE": "Release",
                 "VCPKG_TARGET_TRIPLET": "aarch64-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/rpi5-aarch64.cmake"
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake"
             }
         },
         {
@@ -132,7 +132,7 @@
         },
         {
             "name": "ci-linux-aarch64",
-            "inherits": "nilrt-aarch64-cross",
+            "inherits": "rpi5-aarch64-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}"
