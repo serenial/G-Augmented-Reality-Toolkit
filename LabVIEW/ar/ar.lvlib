@@ -3,6 +3,7 @@
 	<Property Name="NI.Lib.Description" Type="Str">G Augmented Reality Toolkit AR Library contains the functionality used in augmented reality applications such as Pose Estimation, .Obj file loading and Point Set handling functionality.</Property>
 	<Property Name="NI.Lib.HelpPath" Type="Str"></Property>
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*6!!!*Q(C=\&gt;7B&lt;BN"%-&lt;RLV6!K7'9:;GE&gt;(#:M:F@96\"..!]#BAJI+!FFPI%2O8$APU+@I*+V``/D;/IKB,36F760;^T`P:W^O?\]U7K^E[[UP23_X"JGV_V-&gt;Y(M4]_4ZV0'`;_-X3J-)`8;^-\U[&lt;'J`F6S6RE(K]_ZE`T^,HGT`.\`5PS&gt;,T7@U:@TO?&lt;8NNL_\`&lt;T9M`AD`_/XCD]3#C*TXI4D?.:;=E4`)E4`)E4`)A$`)A$`)A$X)H&gt;X)H&gt;X)H&gt;X)D.X)D.X)D.`,;S%5O=J&amp;$3B:0&amp;EK+*A73A[%I?5M]C3@R*"Y_+P%EHM34?")0BSDR**\%EXA3$^/5?"*0YEE]C9&gt;3*=H;S0%E(MIL]!3?Q".Y!A^,+P!%A'#RI("1");#Q7!H]!3?Q-/O!E`A#4S"*`!QL-!4?!*0Y!E]4+GT%K5:'TE?SMDR/"\(YXA=$[8F?"S0YX%]DI@FZ(A=DY.Q&amp;H3+1Z!TS4H!_?"Y(!^`Z(A=D_.R0)[(I&lt;J#8G&gt;G;-:'DM@Q'"\$9XA-$S6E?!S0Y4%]BI?S-DS'R`!9(M0$5D)]BM@Q'""D5:;85=S9;"RE");(6^UN6F=J3G+V38XTKG^+^=WGPIH5.Y@[IKMPJPICK5___K3K4Z&lt;[*+C`H"KNRKA855]?"_L-_YF_J"`I?`K/PK7P[3P[9ET^T1??TW?&gt;4C=&gt;DU=&gt;$A@N^XPN&gt;DNNNVONVWON6CMN&amp;IP(R]#3\@'"-$_8&lt;NC`P`\W]/F[?@@V3]&lt;HD]O\_`@,WZ(`B@`0`]#T57`V&gt;!X/U1_4&gt;W[R!!!!!!</Property>
+	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SaveVersion" Type="Str">20.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
@@ -64,6 +65,7 @@
 		<Item Name="Point Correspondence Sets.ctl" Type="VI" URL="../Point Correspondence Sets.ctl"/>
 		<Item Name="Pose.ctl" Type="VI" URL="../Pose.ctl"/>
 		<Item Name="Quaternion.ctl" Type="VI" URL="../Quaternion.ctl"/>
+		<Item Name="Roll-Pitch-Yaw.ctl" Type="VI" URL="../Roll-Pitch-Yaw.ctl"/>
 		<Item Name="rvec.ctl" Type="VI" URL="../rvec.ctl"/>
 		<Item Name="tvec.ctl" Type="VI" URL="../tvec.ctl"/>
 		<Item Name="USAC Params.lvclass" Type="LVClass" URL="../USAC Params/USAC Params.lvclass"/>
@@ -116,32 +118,36 @@
 		</Item>
 	</Item>
 	<Item Name="API" Type="Folder">
-		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
-		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
-		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
-		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
-		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
+		<Property Name="NI.SortType" Type="Int">0</Property>
+		<Item Name="Align 3D Point Set to Plane.vi" Type="VI" URL="../Align 3D Point Set to Plane.vi"/>
 		<Item Name="Calibrate Camera.vi" Type="VI" URL="../Calibrate Camera.vi"/>
 		<Item Name="Camera Parameter to 3D Projection Matrix.vi" Type="VI" URL="../Camera Parameter to 3D Projection Matrix.vi"/>
-		<Item Name="Flip Transform-Matrix Handedness.vi" Type="VI" URL="../Flip Transform-Matrix Handedness.vi"/>
-		<Item Name="Transformation Matrix to 3D Model View Matrix.vi" Type="VI" URL="../Transformation Matrix to 3D Model View Matrix.vi"/>
-		<Item Name="Pose to Transformation Matrix.vi" Type="VI" URL="../Pose to Transformation Matrix.vi"/>
-		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
-		<Item Name="Project Points.vi" Type="VI" URL="../Project Points.vi"/>
-		<Item Name="Load .Obj File.vi" Type="VI" URL="../Load .Obj File.vi"/>
-		<Item Name="Solve PnP.vi" Type="VI" URL="../Solve PnP.vi"/>
-		<Item Name="Rotation Matrix to Quaternion.vi" Type="VI" URL="../Rotation Matrix to Quaternion.vi"/>
-		<Item Name="Quarternion SLERP.vi" Type="VI" URL="../Quarternion SLERP.vi"/>
-		<Item Name="Quaternion to Rotation Matrix.vi" Type="VI" URL="../Quaternion to Rotation Matrix.vi"/>
-		<Item Name="Quaternion Average.vi" Type="VI" URL="../Quaternion Average.vi"/>
-		<Item Name="Draw Axes at Point.vi" Type="VI" URL="../Draw Axes at Point.vi"/>
 		<Item Name="Combine 3D Point Sets.vi" Type="VI" URL="../Combine 3D Point Sets.vi"/>
-		<Item Name="Align 3D Point Set to Plane.vi" Type="VI" URL="../Align 3D Point Set to Plane.vi"/>
-		<Item Name="Estimate Affine.vi" Type="VI" URL="../Estimate Affine.vi"/>
+		<Item Name="Draw Axes at Point.vi" Type="VI" URL="../Draw Axes at Point.vi"/>
 		<Item Name="Estimate Absolute Orientation.vi" Type="VI" URL="../Estimate Absolute Orientation.vi"/>
-		<Item Name="Find Homography.vi" Type="VI" URL="../Find Homography.vi"/>
-		<Item Name="Transformation Matrix to Pose.vi" Type="VI" URL="../Transformation Matrix to Pose.vi"/>
-		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
+		<Item Name="Estimate Affine.vi" Type="VI" URL="../Estimate Affine.vi"/>
 		<Item Name="Find Chessboard Corners.vi" Type="VI" URL="../Find Chessboard Corners.vi"/>
+		<Item Name="Find Homography.vi" Type="VI" URL="../Find Homography.vi"/>
+		<Item Name="Flip Transform-Matrix Handedness.vi" Type="VI" URL="../Flip Transform-Matrix Handedness.vi"/>
+		<Item Name="Generate Chessboard Image Data.vi" Type="VI" URL="../Generate Chessboard Image Data.vi"/>
+		<Item Name="Image Distorter.lvclass" Type="LVClass" URL="../Image Distorter/Image Distorter.lvclass"/>
+		<Item Name="Image Undistorter.lvclass" Type="LVClass" URL="../Image Undistorter/Image Undistorter.lvclass"/>
+		<Item Name="Invert Transformation Matrix.vi" Type="VI" URL="../Invert Transformation Matrix.vi"/>
+		<Item Name="Load .Obj File.vi" Type="VI" URL="../Load .Obj File.vi"/>
+		<Item Name="Pose to Transformation Matrix.vi" Type="VI" URL="../Pose to Transformation Matrix.vi"/>
+		<Item Name="Project Points.vi" Type="VI" URL="../Project Points.vi"/>
+		<Item Name="Quarternion SLERP.vi" Type="VI" URL="../Quarternion SLERP.vi"/>
+		<Item Name="Quaternion Average.vi" Type="VI" URL="../Quaternion Average.vi"/>
+		<Item Name="Quaternion to Roll-Pitch-Yaw.vi" Type="VI" URL="../Quaternion to Roll-Pitch-Yaw.vi"/>
+		<Item Name="Quaternion to Rotation Matrix.vi" Type="VI" URL="../Quaternion to Rotation Matrix.vi"/>
+		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
+		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
+		<Item Name="Roll-Pitch-Yaw Matrix to Quaternion.vi" Type="VI" URL="../Roll-Pitch-Yaw Matrix to Quaternion.vi"/>
+		<Item Name="Rotation Matrix to Quaternion.vi" Type="VI" URL="../Rotation Matrix to Quaternion.vi"/>
+		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
+		<Item Name="Solve PnP.vi" Type="VI" URL="../Solve PnP.vi"/>
+		<Item Name="Transformation Matrix to 3D Model View Matrix.vi" Type="VI" URL="../Transformation Matrix to 3D Model View Matrix.vi"/>
+		<Item Name="Transformation Matrix to Pose.vi" Type="VI" URL="../Transformation Matrix to Pose.vi"/>
+		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 	</Item>
 </Library>

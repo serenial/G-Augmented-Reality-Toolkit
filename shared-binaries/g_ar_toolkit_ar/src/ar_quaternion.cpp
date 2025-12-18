@@ -30,6 +30,9 @@ namespace
         Eigen::Quaterniond to_eigen_quaterniond() const;
         LV_Quaternion_t &operator=(Eigen::Quaterniond);
         LV_Quaternion_t &operator=(Eigen::Vector4d);
+        normalize(){
+            *this = this->to_eigen_quaterniond();
+        }
         double m_w, m_x, m_y, m_z;
     };
 
@@ -81,6 +84,8 @@ extern "C"
         try
         {
             // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Quaternion_to_Euler_angles_(in_3-2-1_sequence)_conversion
+
+            quaternion_ptr->normalize();
 
             double w = quaternion_ptr->m_w;
             double x = quaternion_ptr->m_x;
