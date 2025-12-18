@@ -30,8 +30,9 @@ namespace
         Eigen::Quaterniond to_eigen_quaterniond() const;
         LV_Quaternion_t &operator=(Eigen::Quaterniond);
         LV_Quaternion_t &operator=(Eigen::Vector4d);
-        normalize(){
+        LV_Quaternion_t &normalize(){
             *this = this->to_eigen_quaterniond();
+            return *this;
         }
         double m_w, m_x, m_y, m_z;
     };
