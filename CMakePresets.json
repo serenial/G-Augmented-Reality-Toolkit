@@ -84,7 +84,9 @@
                 "BUILD_OPKG": "ON",
                 "CMAKE_BUILD_TYPE": "Release",
                 "VCPKG_TARGET_TRIPLET": "aarch64-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake"
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake",
+                "OMIT_VIDEOIO": "ON",
+                "OMIT_OBJLOADER": "ON"
             }
         },
         {

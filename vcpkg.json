@@ -17,6 +17,10 @@
         {
           "name": "ipp",
           "platform": "x86|x64"
+        },
+        {
+          "name": "ffmpeg",
+          "platform": "x86|x64"
         }
       ]
     },
@@ -26,7 +30,6 @@
       "platform": "!arm32",
       "features": [
         "contrib",
-        "ffmpeg",
         "dnn",
         "text"
       ]
@@ -37,7 +40,7 @@
     },
     {
       "name": "tinyobjloader",
-      "platform": "!arm32"
+      "platform": "x86|x64"
     }
   ]
 }

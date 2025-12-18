@@ -223,6 +223,7 @@
 			<Item Name="System" Type="VI" URL="System">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
 			</Item>
+			<Item Name="Break on Unsupported Target.vi" Type="VI" URL="../common/Break on Unsupported Target.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
