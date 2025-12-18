@@ -125,18 +125,12 @@
         {
             "name": "ci-linux-armv7a",
             "inherits": "nilrt-armv7a-cross",
-            "binaryDir": "${sourceDir}/build",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
-            }
+            "binaryDir": "${sourceDir}/build"
         },
         {
             "name": "ci-linux-aarch64",
             "inherits": "rpi5-aarch64-cross",
-            "binaryDir": "${sourceDir}/build",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
-            }
+            "binaryDir": "${sourceDir}/build"
         }
     ],
     "buildPresets": [
@@ -185,13 +179,13 @@
         {
             "name": "ci-linux-armv7a",
             "configuration": "Release",
-            "targets": "install",
+            "targets": "all",
             "configurePreset": "ci-linux-armv7a"
         },
         {
             "name": "ci-linux-aarch64",
             "configuration": "Release",
-            "targets": "install",
+            "targets": "all",
             "configurePreset": "ci-linux-aarch64"
         }
         
