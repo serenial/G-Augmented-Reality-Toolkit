@@ -4,6 +4,7 @@ sudo apt install -y xz-utils gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
 IMG_SHA512="89f9a96531533de65626686cfb0ff579f6fc823db35b80f198297fa8bfe2daa432564755b605dc32f04c2639406be0e08c770cfa934872ae76360389cc7b1f3d"
 MOUNTPI_SHA512="b7a8186e1dffe55639c4b941ef4c8abce87c522d824bc59d09b621718eec12ed66941ba7292fc79810e07954c2983e258879db7e1b5f14290e305d6bb48ebbf2"
+OPKG_UTILS_TAR_SHA512="441ee5ed416c3565617ae5fc413846ebc53e33876f9cce5e721afef2b8d9cd68723231ea12c8a2effaba2ccb33a36dc6e180994a57e6871f34d671c03ab36b7b"
 
 curl https://downloads.raspberrypi.com/raspios_lite_arm64/images/raspios_lite_arm64-2025-12-04/2025-12-04-raspios-trixie-arm64-lite.img.xz -Lo trixie.img.xz
 echo "${IMG_SHA512} trixie.img.xz" | sha512sum --check --status
@@ -15,4 +16,12 @@ unzip -j mountpi.zip -d mountpi
 chmod +x mountpi/mountpi.sh
 mkdir ~/trixie-mnt
 sudo mountpi/mountpi.sh -i trixie.img -m ~/trixie-mnt -p 1
+
+curl https://git.yoctoproject.org/opkg-utils/snapshot/opkg-utils-0.7.0.tar.gz -Lo opkg-utils.tar.gz
+echo "${OPKG_UTILS_TAR_SHA512} opkg-utils.tar.gz" | sha512sum --check --status
+mkdir opkg-utils
+tar -zxf opkg-utils.tar.gz -C opkg-utils --strip-components=1
+cd opkg-utils
+make
+sudo make install
 
