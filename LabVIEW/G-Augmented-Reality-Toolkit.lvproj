@@ -35,6 +35,9 @@
 		<Item Name="opkg" Type="Folder" URL="../opkg">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
+		<Item Name="wechat_models" Type="Folder" URL="../test/FeatureDetection/wechat_models">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
+		</Item>
 		<Item Name=".lvversion" Type="Document" URL="../.lvversion"/>
 		<Item Name="common.lvlib" Type="Library" URL="../common/common.lvlib"/>
 		<Item Name="image.lvlib" Type="Library" URL="../image/image.lvlib"/>
@@ -223,7 +226,6 @@
 			<Item Name="System" Type="VI" URL="System">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
 			</Item>
-			<Item Name="Break on Unsupported Target.vi" Type="VI" URL="../common/Break on Unsupported Target.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">
