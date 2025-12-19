@@ -146,8 +146,10 @@
 		<Item Name="Rotation Matrix to Quaternion.vi" Type="VI" URL="../Rotation Matrix to Quaternion.vi"/>
 		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
 		<Item Name="Solve PnP.vi" Type="VI" URL="../Solve PnP.vi"/>
+		<Item Name="Transform Components to Transformation Matrix.vi" Type="VI" URL="../Transform Components to Transformation Matrix.vi"/>
 		<Item Name="Transformation Matrix to 3D Model View Matrix.vi" Type="VI" URL="../Transformation Matrix to 3D Model View Matrix.vi"/>
 		<Item Name="Transformation Matrix to Pose.vi" Type="VI" URL="../Transformation Matrix to Pose.vi"/>
+		<Item Name="Transformation Matrix to Transform Components.vi" Type="VI" URL="../Transformation Matrix to Transform Components.vi"/>
 		<Item Name="Undistort.vi" Type="VI" URL="../Undistort.vi"/>
 	</Item>
 </Library>
