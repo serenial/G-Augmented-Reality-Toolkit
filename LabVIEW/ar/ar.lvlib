@@ -142,7 +142,7 @@
 		<Item Name="Quaternion to Rotation Matrix.vi" Type="VI" URL="../Quaternion to Rotation Matrix.vi"/>
 		<Item Name="Refine Corner Locations.vi" Type="VI" URL="../Refine Corner Locations.vi"/>
 		<Item Name="Rodrigues.vi" Type="VI" URL="../Rodrigues.vi"/>
-		<Item Name="Roll-Pitch-Yaw Matrix to Quaternion.vi" Type="VI" URL="../Roll-Pitch-Yaw Matrix to Quaternion.vi"/>
+		<Item Name="Roll-Pitch-Yaw to Quaternion.vi" Type="VI" URL="../Roll-Pitch-Yaw to Quaternion.vi"/>
 		<Item Name="Rotation Matrix to Quaternion.vi" Type="VI" URL="../Rotation Matrix to Quaternion.vi"/>
 		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
 		<Item Name="Solve PnP.vi" Type="VI" URL="../Solve PnP.vi"/>
