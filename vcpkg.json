@@ -20,7 +20,7 @@
         },
         {
           "name": "ffmpeg",
-          "platform": "x86|x64"
+          "platform": "!arm32"
         }
       ]
     },
@@ -40,7 +40,7 @@
     },
     {
       "name": "tinyobjloader",
-      "platform": "x86|x64"
+      "platform": "!arm32"
     }
   ]
 }
