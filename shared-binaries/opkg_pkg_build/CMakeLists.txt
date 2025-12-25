@@ -1,5 +1,5 @@
 
-if(${BUILD_OPKG} AND LINUX)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND BUILD_OPKG)
 
     include(ExternalProject)
 
