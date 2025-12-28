@@ -139,7 +139,8 @@
             "inherits": "rpi5-aarch64-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "ARCHIVE_PLATFORM_NAME":"aarch64"
+                "ARCHIVE_PLATFORM_NAME":"aarch64",
+                "GENERATE_ARCHIVE": "ON"
             }
         }
     ],

@@ -78,7 +78,7 @@ jobs:
       with:
         name: g_augmented_reality_${{ matrix.triplet_platform }}-${{ matrix.arch }}
         path: |
-         ${{ github.workspace }}/build/**/*.tar.gz
+         ${{ github.workspace }}/build/**/gartoolkit-shared-binaries_*.tar.gz
 
     - name: Store OPKG Builds
       uses: actions/upload-artifact@v4
