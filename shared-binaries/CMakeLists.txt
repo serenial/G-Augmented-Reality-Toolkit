@@ -36,3 +36,29 @@ INSTALL(TARGETS ${BUILD_TARGETS}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION bin
 )
+
+if(GENERATE_ARCHIVE)
+
+SET(ARCHIVE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+
+add_custom_target(archived_binaries_prepare ALL)
+
+# For each library target
+foreach(lib_target ${BUILD_TARGETS})
+    add_custom_command(TARGET archived_binaries_prepare POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${lib_target}> ${ARCHIVE_DIRECTORY}/$<TARGET_FILE_NAME:${lib_target}>
+    )
+    add_dependencies(archived_binaries_prepare ${lib_target})
+endforeach()
+
+# Bundle up dependencies
+add_custom_target(archived_binaries_tar ALL)
+add_dependencies(archived_binaries_tar archived_binaries_prepare)
+
+add_custom_command(TARGET archived_binaries_tar POST_BUILD
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
+    COMMENT "Building tar package..."
+)
+
+endif()

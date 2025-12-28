@@ -34,23 +34,23 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND BUILD_OPKG)
         NEWLINE_STYLE UNIX
     )
 
-    add_custom_target(opkg-prepare ALL)
-    add_dependencies(opkg-prepare opkg_utils)
+    add_custom_target(opkg_prepare ALL)
+    add_dependencies(opkg_prepare opkg_utils)
 
     # For each library target
     foreach(lib_target ${BUILD_TARGETS})
-        add_custom_command(TARGET opkg-prepare POST_BUILD
+        add_custom_command(TARGET opkg_prepare POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${lib_target}> ${OPKG_PACKAGE_INPUTS_DIR}/usr/lib/$<TARGET_FILE_NAME:${lib_target}>
         )
-        add_dependencies(opkg-prepare ${lib_target})
+        add_dependencies(opkg_prepare ${lib_target})
     endforeach()
 
-    add_custom_target(opkg-build ALL)
-    add_dependencies(opkg-build opkg-prepare)
+    add_custom_target(opkg_build ALL)
+    add_dependencies(opkg_build opkg_prepare)
 
-    add_custom_command(TARGET opkg-build POST_BUILD
+    add_custom_command(TARGET opkg_build POST_BUILD
         WORKING_DIRECTORY "${OPKG_BINARY_DIR}"
-        COMMAND fakeroot "${OPKG_UTILS_PATH}/opkg-build" "${PROJECT_NAME}"
+        COMMAND fakeroot "${OPKG_UTILS_PATH}/opkg_build" "${PROJECT_NAME}"
         COMMENT "Building opkg package..."
     )
 endif()

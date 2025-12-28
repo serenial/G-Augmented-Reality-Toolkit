@@ -91,7 +91,8 @@
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}",
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Release",
+                "GENERATE_ARCHIVE": "ON"
             },
             "condition": {
                 "type": "equals",
@@ -103,14 +104,16 @@
             "name": "ci-windows-static-x86",
             "inherits": "ci",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x86-windows-static-ci"
+                "VCPKG_TARGET_TRIPLET": "x86-windows-static-ci",
+                "ARCHIVE_PLATFORM_NAME":"x86"
             }
         },
         {
             "name": "ci-windows-static-x64",
             "inherits": "ci",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-windows-static-ci"
+                "VCPKG_TARGET_TRIPLET": "x64-windows-static-ci",
+                "ARCHIVE_PLATFORM_NAME":"x64"
             }
         },
         {
@@ -118,7 +121,8 @@
             "inherits": "ci",
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
-                "VCPKG_TARGET_TRIPLET": "x64-linux-ci"
+                "VCPKG_TARGET_TRIPLET": "x64-linux-ci",
+                "ARCHIVE_PLATFORM_NAME":"x64"
             }
         },
         {
@@ -126,7 +130,8 @@
             "inherits": "nilrt-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "BUILD_OPKG": "ON"
+                "BUILD_OPKG": "ON",
+                "GENERATE_ARCHIVE": "OFF"
             }
         },
         {
@@ -134,7 +139,7 @@
             "inherits": "rpi5-aarch64-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "BUILD_OPKG": "ON"
+                "ARCHIVE_PLATFORM_NAME":"aarch64"
             }
         }
     ],
