@@ -3,5 +3,5 @@ Version: @PROJECT_VERSION@
 Description: Shared Binaries used by the G Augmented-Reality Toolkit
 Maintainer: "John Medland" <john@serenial.io>
 License: LGPLv2
-Architecture: @CMAKE_SYSTEM_PROCESSOR@
+Architecture: @ARCHIVE_PLATFORM_NAME@
 Homepage: https://gitlab.com/serenial/g-augmented-reality-toolkit
