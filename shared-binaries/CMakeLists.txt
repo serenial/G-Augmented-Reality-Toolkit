@@ -57,7 +57,7 @@ add_dependencies(archived_binaries_tar archived_binaries_prepare)
 
 add_custom_command(TARGET archived_binaries_tar POST_BUILD
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
+    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${CMAKE_SYSTEM_NAME}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
     COMMENT "Building tar package..."
 )
 
