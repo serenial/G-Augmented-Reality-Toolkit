@@ -55,9 +55,11 @@ endforeach()
 add_custom_target(archived_binaries_tar ALL)
 add_dependencies(archived_binaries_tar archived_binaries_prepare)
 
+string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME_LOWERCASE)
+
 add_custom_command(TARGET archived_binaries_tar POST_BUILD
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${CMAKE_SYSTEM_NAME}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
+    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${SYSTEM_NAME_LOWERCASE}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
     COMMENT "Building tar package..."
 )
 
