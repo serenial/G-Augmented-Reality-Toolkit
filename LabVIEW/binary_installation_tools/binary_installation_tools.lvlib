@@ -12,6 +12,8 @@
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>
 		<Item Name="Get Headers.vi" Type="VI" URL="../Get Headers.vi"/>
 		<Item Name="Parse Headers.vi" Type="VI" URL="../Parse Headers.vi"/>
+		<Item Name="Get Processor Architecture.vi" Type="VI" URL="../Get Processor Architecture.vi"/>
+		<Item Name="Processor Architecture.ctl" Type="VI" URL="../Processor Architecture.ctl"/>
 	</Item>
 	<Item Name="API" Type="Folder">
 		<Item Name="Binary Dependency Platform.ctl" Type="VI" URL="../Binary Dependency Platform.ctl"/>
