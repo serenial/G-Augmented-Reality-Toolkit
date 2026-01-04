@@ -300,7 +300,7 @@
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="DestinationCount" Type="Int">13</Property>
-				<Property Name="Source[0].itemID" Type="Str">{F78A0A33-8B6D-4AF9-95FA-B0AABB301CA4}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{007B3BA8-D7C3-4179-933C-CEAA2643CCBF}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
@@ -502,6 +502,16 @@
 				<Property Name="Source[47].newName" Type="Str">g_ar_toolkit.binary_installation_tools.lvlib</Property>
 				<Property Name="Source[47].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[47].type" Type="Str">Library</Property>
+				<Property Name="Source[48].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[48].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[48].destinationIndex" Type="Int">12</Property>
+				<Property Name="Source[48].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib/Private</Property>
+				<Property Name="Source[48].type" Type="Str">Container</Property>
+				<Property Name="Source[49].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[49].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[49].destinationIndex" Type="Int">12</Property>
+				<Property Name="Source[49].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib/API</Property>
+				<Property Name="Source[49].type" Type="Str">Container</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -531,7 +541,7 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
-				<Property Name="SourceCount" Type="Int">48</Property>
+				<Property Name="SourceCount" Type="Int">50</Property>
 			</Item>
 		</Item>
 	</Item>
