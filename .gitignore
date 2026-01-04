@@ -44,6 +44,8 @@ build/*
 
 # Zip Files
 *.zip
+*.ipk
+*.tar.gz
 
 #########################
 # Python Related Ignore #
