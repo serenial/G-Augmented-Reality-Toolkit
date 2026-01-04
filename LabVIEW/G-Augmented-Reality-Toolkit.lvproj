@@ -14,6 +14,10 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
+		<Item Name="VIPM" Type="Folder">
+			<Item Name="Toolkit Binaries Post-Install Custom Action.vi" Type="VI" URL="../VIPM/Toolkit Binaries Post-Install Custom Action.vi"/>
+			<Item Name="Toolkit Post-Install Custom Action.vi" Type="VI" URL="../VIPM/Toolkit Post-Install Custom Action.vi"/>
+		</Item>
 		<Item Name="test-images" Type="Folder" URL="../test-images">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
@@ -26,13 +30,7 @@
 		<Item Name="build-tools" Type="Folder" URL="../build-tools">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
-		<Item Name="VIPM" Type="Folder" URL="../VIPM">
-			<Property Name="NI.DISK" Type="Bool">true</Property>
-		</Item>
 		<Item Name="bin" Type="Folder" URL="../common/bin">
-			<Property Name="NI.DISK" Type="Bool">true</Property>
-		</Item>
-		<Item Name="opkg" Type="Folder" URL="../opkg">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="wechat_models" Type="Folder" URL="../test/FeatureDetection/wechat_models">
@@ -47,9 +45,11 @@
 		<Item Name="ar.lvlib" Type="Library" URL="../ar/ar.lvlib"/>
 		<Item Name="shape.lvlib" Type="Library" URL="../shape/shape.lvlib"/>
 		<Item Name="examples.lvlib" Type="Library" URL="../examples/examples.lvlib"/>
+		<Item Name="binary_installation_tools.lvlib" Type="Library" URL="../binary_installation_tools/binary_installation_tools.lvlib"/>
 		<Item Name="test.lvlib" Type="Library" URL="../test/test.lvlib"/>
 		<Item Name="antidoc.config" Type="Document" URL="../antidoc.config"/>
 		<Item Name="LICENSE" Type="Document" URL="../../LICENSE"/>
+		<Item Name="Download and Install Shared Binaries.vi" Type="VI" URL="../Download and Install Shared Binaries.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
@@ -221,6 +221,20 @@
 				<Item Name="Set Cursor (Icon Pict).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/cursorutil.llb/Set Cursor (Icon Pict).vi"/>
 				<Item Name="Set Busy.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/cursorutil.llb/Set Busy.vi"/>
 				<Item Name="String to 1D Array__ogtkDDA31ED5A732916949AA00FDC27B02BA.vi" Type="VI" URL="/&lt;vilib&gt;/JKI/_VIPM API_internal_deps/String to 1D Array__ogtkDDA31ED5A732916949AA00FDC27B02BA.vi"/>
+				<Item Name="LabVIEWHTTPClient.lvlib" Type="Library" URL="/&lt;vilib&gt;/httpClient/LabVIEWHTTPClient.lvlib"/>
+				<Item Name="NI_Message Digest API.lvlib" Type="Library" URL="/&lt;vilib&gt;/security/Message Digest/API/NI_Message Digest API.lvlib"/>
+				<Item Name="NI_SHA-256.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/security/Message Digest/SHA-2/SHA-256/NI_SHA-256.lvclass"/>
+				<Item Name="NI_Bit Manipulation.lvlib" Type="Library" URL="/&lt;vilib&gt;/Bit Manipulation/NI_Bit Manipulation.lvlib"/>
+				<Item Name="NI_SHA-512.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/security/Message Digest/SHA-2/SHA-512/NI_SHA-512.lvclass"/>
+				<Item Name="NI_SHA-3.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/security/Message Digest/SHA-3/NI_SHA-3.lvclass"/>
+				<Item Name="NI_Keccak.lvlib" Type="Library" URL="/&lt;vilib&gt;/security/Message Digest/Keccak/NI_Keccak.lvlib"/>
+				<Item Name="Open URL in Default Browser core.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/browser.llb/Open URL in Default Browser core.vi"/>
+				<Item Name="Escape Characters for HTTP.vi" Type="VI" URL="/&lt;vilib&gt;/printing/PathToURL.llb/Escape Characters for HTTP.vi"/>
+				<Item Name="Path to URL inner.vi" Type="VI" URL="/&lt;vilib&gt;/printing/PathToURL.llb/Path to URL inner.vi"/>
+				<Item Name="Path to URL.vi" Type="VI" URL="/&lt;vilib&gt;/printing/PathToURL.llb/Path to URL.vi"/>
+				<Item Name="Open URL in Default Browser (path).vi" Type="VI" URL="/&lt;vilib&gt;/Platform/browser.llb/Open URL in Default Browser (path).vi"/>
+				<Item Name="Open URL in Default Browser (string).vi" Type="VI" URL="/&lt;vilib&gt;/Platform/browser.llb/Open URL in Default Browser (string).vi"/>
+				<Item Name="Open URL in Default Browser.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/browser.llb/Open URL in Default Browser.vi"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 			<Item Name="System" Type="VI" URL="System">
@@ -260,8 +274,9 @@
 				<Property Name="Destination[11].destName" Type="Str">video_io</Property>
 				<Property Name="Destination[11].path" Type="Path">../build/source-distribution/g_ar_toolkit.video_io</Property>
 				<Property Name="Destination[11].preserveHierarchy" Type="Bool">true</Property>
-				<Property Name="Destination[12].destName" Type="Str">opkg</Property>
-				<Property Name="Destination[12].path" Type="Path">../build/source-distribution/opkg</Property>
+				<Property Name="Destination[12].destName" Type="Str">binary-installation-tools</Property>
+				<Property Name="Destination[12].path" Type="Path">../build/source-distribution/g_ar_toolkit.binary-installation-tools</Property>
+				<Property Name="Destination[12].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[2].destName" Type="Str">common</Property>
 				<Property Name="Destination[2].path" Type="Path">../build/source-distribution/g_ar_toolkit.common</Property>
 				<Property Name="Destination[2].preserveHierarchy" Type="Bool">true</Property>
@@ -285,7 +300,7 @@
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="DestinationCount" Type="Int">13</Property>
-				<Property Name="Source[0].itemID" Type="Str">{0F34E155-CEE4-4192-882A-9ADDE48830AA}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{F78A0A33-8B6D-4AF9-95FA-B0AABB301CA4}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
@@ -477,13 +492,16 @@
 				<Property Name="Source[45].destinationIndex" Type="Int">11</Property>
 				<Property Name="Source[45].itemID" Type="Ref">/My Computer/video_io.lvlib/Private</Property>
 				<Property Name="Source[45].type" Type="Str">Container</Property>
-				<Property Name="Source[46].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[46].Container.applyInclusion" Type="Bool">true</Property>
-				<Property Name="Source[46].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[46].destinationIndex" Type="Int">12</Property>
-				<Property Name="Source[46].itemID" Type="Ref">/My Computer/opkg</Property>
+				<Property Name="Source[46].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[46].itemID" Type="Ref">/My Computer/Download and Install Shared Binaries.vi</Property>
 				<Property Name="Source[46].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[46].type" Type="Str">Container</Property>
+				<Property Name="Source[46].type" Type="Str">VI</Property>
+				<Property Name="Source[47].destinationIndex" Type="Int">12</Property>
+				<Property Name="Source[47].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib</Property>
+				<Property Name="Source[47].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[47].newName" Type="Str">g_ar_toolkit.binary_installation_tools.lvlib</Property>
+				<Property Name="Source[47].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[47].type" Type="Str">Library</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -513,7 +531,7 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
-				<Property Name="SourceCount" Type="Int">47</Property>
+				<Property Name="SourceCount" Type="Int">48</Property>
 			</Item>
 		</Item>
 	</Item>

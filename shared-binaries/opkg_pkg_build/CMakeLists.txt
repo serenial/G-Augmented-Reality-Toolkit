@@ -51,7 +51,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND BUILD_OPKG)
     add_custom_command(TARGET opkg_build POST_BUILD
         WORKING_DIRECTORY "${OPKG_BINARY_DIR}"
         # call opkg-build on build outputs
-        COMMAND ${CMAKE_COMMAND} -E fakeroot "${OPKG_UTILS_PATH}/opkg-build" "${PROJECT_NAME}"
+        COMMAND fakeroot "${OPKG_UTILS_PATH}/opkg-build" "${PROJECT_NAME}"
         COMMENT "Building opkg package..."
     )
 endif()

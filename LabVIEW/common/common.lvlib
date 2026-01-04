@@ -32,6 +32,7 @@
 		<Item Name="Window Size (Integer).ctl" Type="VI" URL="../Window Size (Integer).ctl"/>
 		<Item Name="Termination Criteria.lvclass" Type="LVClass" URL="../Termination Criteria/Termination Criteria.lvclass"/>
 		<Item Name="Library Name.ctl" Type="VI" URL="../Library Name.ctl"/>
+		<Item Name="Expected Binary Version.vi" Type="VI" URL="../Expected Binary Version.vi"/>
 	</Item>
 	<Item Name="Utility" Type="Folder">
 		<Item Name="Break on NILRT-ARM32.vi" Type="VI" URL="../Break on NILRT-ARM32.vi"/>
