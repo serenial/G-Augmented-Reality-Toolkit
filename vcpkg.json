@@ -17,10 +17,6 @@
         {
           "name": "ipp",
           "platform": "x86|x64"
-        },
-        {
-          "name": "ffmpeg",
-          "platform": "!arm32"
         }
       ]
     },
@@ -31,7 +27,8 @@
       "features": [
         "contrib",
         "dnn",
-        "text"
+        "text",
+        "ffmpeg"
       ]
     },
     {
