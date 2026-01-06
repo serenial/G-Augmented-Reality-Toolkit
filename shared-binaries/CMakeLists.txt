@@ -62,15 +62,14 @@ foreach(lib_target ${BUILD_TARGETS})
 endforeach()
 
 # Bundle up dependencies
-add_custom_target(archived_binaries_tar ALL)
-add_dependencies(archived_binaries_tar archived_binaries_prepare)
+add_custom_target(archived_binaries_zip ALL)
+add_dependencies(archived_binaries_zip archived_binaries_prepare)
 
 string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME_LOWERCASE)
 
-add_custom_command(TARGET archived_binaries_tar POST_BUILD
+add_custom_command(TARGET archived_binaries_zip POST_BUILD
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E tar "cfvz" "${PROJECT_NAME}_${PROJECT_VERSION}_${SYSTEM_NAME_LOWERCASE}_${ARCHIVE_PLATFORM_NAME}.tar.gz" "${ARCHIVE_DIRECTORY}"
-    COMMENT "Building tar package..."
+    COMMAND ${CMAKE_COMMAND} -E tar "c" "${PROJECT_NAME}_${PROJECT_VERSION}_${SYSTEM_NAME_LOWERCASE}_${ARCHIVE_PLATFORM_NAME}.zip" --format=zip "${ARCHIVE_DIRECTORY}"
 )
 
 endif()
