@@ -26,9 +26,9 @@
       "platform": "!arm32",
       "features": [
         "contrib",
-        "ffmpeg",
         "dnn",
-        "text"
+        "text",
+        "ffmpeg"
       ]
     },
     {

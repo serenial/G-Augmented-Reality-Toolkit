@@ -44,6 +44,8 @@ build/*
 
 # Zip Files
 *.zip
+*.ipk
+*.tar.gz
 
 #########################
 # Python Related Ignore #
@@ -220,3 +222,7 @@ LabVIEW/Antidoc-Output
 # Model Files
 *.onnx
 *.pb
+
+# rpi tools
+trixie**
+mountpi**

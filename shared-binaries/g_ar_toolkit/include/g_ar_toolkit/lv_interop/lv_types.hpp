@@ -231,6 +231,10 @@ namespace g_ar_toolkit
         const LV_MgErr_t LV_ERR_ncBtSetModeErr = 120;
         const LV_MgErr_t LV_ERR_mgBtInvalidGUIDStrErr = 121;
         const LV_MgErr_t LV_ERR_rVersInFuture = 122;
+
+        // mathematical constants
+        const double PI = 3.1415926535897932385;
+        const double PI_by_2 = 1.5707963267948966192;
     }
 }
 
