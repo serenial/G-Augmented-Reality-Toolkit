@@ -29,7 +29,7 @@ target_include_directories(g_ar_toolkit_core
 )
 
 # plaform specific definitions
-if(WIN32)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
   target_compile_definitions(g_ar_toolkit_core PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068 _ALLOW_COROUTINE_ABI_MISMATCH)
   if(${CMAKE_SIZEOF_VOID_P} EQUAL 4)
@@ -101,7 +101,7 @@ set_target_properties(g_ar_toolkit PROPERTIES
 )
 
 # plaform specific definitions
-if(WIN32)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
   target_link_libraries(g_ar_toolkit PRIVATE
     mf
@@ -114,7 +114,7 @@ if(WIN32)
     Mfsensorgroup
     shlwapi
   )
-elseif(UNIX)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   # try and remove unused code sections
   target_compile_options(g_ar_toolkit PUBLIC
     "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
@@ -122,6 +122,10 @@ elseif(UNIX)
  
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
+  else()
+
+  message(FATAL_ERROR "Unsupported platform type - only Windows and Linux are supported!")
+
 endif()
 
 # generate export header
