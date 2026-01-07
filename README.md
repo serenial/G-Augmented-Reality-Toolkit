@@ -29,11 +29,11 @@ Windows (x86 and x64), Linux Desktop (x64) and NI Linux RT (x64 and armv7a*)
 \* the armv7a binaries only support a subset of the full features but include the camera driver, openCV calibration and pose estimation and AprilTag detection
 
 ## Getting the Toolkit
-The toolkit can be downloaded as a VIPM package or as a zipped release for usage directly from the releases tab.
+The toolkit can be [installed as a VIPM package](https://www.vipm.io/package/serenial_io_g_augmented_reality_toolkit/) or as a zipped release for usage directly from the releases tab.
 
 Installation via VIPM will download and install the relevant dependency for your platform.
 
-`.zip` users can run `Download and Install Shared Binaries.vi` which will install the relevant binaries from https://serenial.gitlab.io/g-augmented-reality-toolkit-binary-distribution/
+`.zip` users can run `Download and Install Shared Binaries.vi` which will install the relevant binaries from https://serenial.gitlab.io/g-augmented-reality-toolkit-binary-distribution/ or they can build them from source.
 
 ## Installing Binaries on NI-Linux-RT Targets
  [`.ipk` files can be downloaded from here](https://serenial.gitlab.io/g-augmented-reality-toolkit-binary-distribution/?filter=.ipk) or you can add `https://serenial.gitlab.io/g-augmented-reality-toolkit-binary-distribution/downloads/` as an `opkg` feed.
