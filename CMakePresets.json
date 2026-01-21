@@ -36,7 +36,7 @@
             "inherits": "base",
             "binaryDir": "${sourceDir}/build/linux-x64",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-linux-ci"
+                "VCPKG_TARGET_TRIPLET": "x64-linux-desktop"
             },
             "condition": {
                 "type": "equals",
