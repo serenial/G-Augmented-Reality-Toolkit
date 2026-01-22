@@ -5,6 +5,7 @@
 
 #include <linux/videodev2.h>
 #include "g_ar_toolkit/capture/linux/decoders.hpp"
+#include "g_ar_toolkit/capture/linux/decoder-mjpeg.hpp"
 
 using namespace g_ar_toolkit;
 using namespace capture;
@@ -32,25 +33,6 @@ namespace
              const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
              cv::mixChannels(&in, 1, &out, 1, std::begin({1, 0, 2, 1, 3, 2}), 3);
          }},
-        // {V4L2_PIX_FMT_BGRA32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-        //  {
-        //      const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-        //      in.copyTo(out);
-        //  }},
-        // {V4L2_PIX_FMT_BGRX32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-        //  { 
-        //     const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t*>(data)};
-        //     cv::mixChannels(&in, 1, &out, 1, std::begin({0, 0, 1, 1, 2, 2}), 3); }},
-        // {V4L2_PIX_FMT_RGBA32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-        //  {
-        //      const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-        //      cv::mixChannels(&in, 1, &out, 1, std::begin({0, 2, 1, 1, 2, 0, 3, 3}), 4);
-        //  }},
-        // {V4L2_PIX_FMT_RGBX32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-        //  {
-        //      const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-        //      cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 2, 2, 1}), 3);
-        //  }},
         {V4L2_PIX_FMT_ARGB32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
@@ -80,13 +62,20 @@ namespace
 
 bool decoder::decoder_available(__u32 pixel_format)
 {
-    // we only have one place to look
-    return supported_simple_formats.find(pixel_format) != supported_simple_formats.end();
+    // check if it is mjpeg or a simple format
+    return decoder_mjpeg::v4l_format() == pixel_format ||
+           supported_simple_formats.find(pixel_format) != supported_simple_formats.end();
 }
 
 std::unique_ptr<decoder> decoder::create(__u32 pixel_format, size_t width, size_t height)
 {
-    // check for a simple decoder first
+
+    // check for specialized decoders
+    if(pixel_format == decoder_mjpeg::v4l_format()){
+        return std::make_unique<decoder_mjpeg>(width, height);
+    }
+
+    // check for a simple decoder
     auto d = supported_simple_formats.find(pixel_format);
     if (d != supported_simple_formats.end())
     {
