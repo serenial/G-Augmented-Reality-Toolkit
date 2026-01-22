@@ -14,6 +14,8 @@ set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 set(CMAKE_SKIP_BUILD_RPATH FALSE)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 
+add_compile_definitions(G_AR_TOOLKIT_VERSION="${PROJECT_VERSION}")
+
 add_subdirectory(g_ar_toolkit)
 add_subdirectory(g_ar_toolkit_ar)
 add_subdirectory(g_ar_toolkit_fd)

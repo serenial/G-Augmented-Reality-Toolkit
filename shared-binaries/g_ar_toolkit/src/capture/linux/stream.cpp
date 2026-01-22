@@ -35,8 +35,11 @@ namespace
         // try and find the specified stream type
 
         auto format_match = find_if(device_match->format_info.begin(), device_match->format_info.end(), [&](const auto &f)
-                                    { return stream_type.height == f.first.height && stream_type.width == f.first.width && stream_type.fps_numerator == f.first.discrete.denominator // frame interval so denominator => numerator
-                                             && f.first.discrete.numerator == 1; });
+                                    { return stream_type.height == f.first.height &&
+                                             stream_type.width == f.first.width &&
+                                             // linux uses frame interval so 1/fps
+                                             stream_type.fps_numerator == f.first.discrete.denominator &&
+                                             stream_type.fps_denominator == f.first.discrete.numerator; });
 
         if (format_match == device_match->format_info.end())
         {
@@ -58,7 +61,8 @@ namespace
 
         param.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-        param.parm.capture.timeperframe.numerator = 1;
+        // reminder - linux uses time interval so 1/FPS
+        param.parm.capture.timeperframe.numerator = stream_type.fps_denominator;
         param.parm.capture.timeperframe.denominator = stream_type.fps_numerator;
 
         scoped_file_descriptor s_fd{device_match->path, O_RDWR};
@@ -83,7 +87,7 @@ namespace
         req.memory = V4L2_MEMORY_MMAP;
         int count = 1;
 
-        // try to find minimum number of buffers required starting with 2;
+        // try to find minimum number of buffers required starting with 1;
         do
         {
             req.count = ++count;
@@ -170,14 +174,17 @@ void Stream::stop_stream()
         return;
     }
 
-    // Start the stream
+    // Stop the stream
     enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (xioctl(m_scoped_fd, VIDIOC_STREAMOFF, &type) == -1)
     {
-        throw std::runtime_error("Unable to stop stream.");
+        if (errno != ENODEV)
+        {
+            throw std::runtime_error("Unable to stop stream.");
+        }
     }
 
-    m_is_streaming = false;
+    m_is_streaming = false; // even if this errors we don't want to throw when nothing will catch
 }
 
 bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
@@ -242,7 +249,6 @@ int Stream::dequeue_buffer(size_t *n_bytes)
 
     bufd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     bufd.memory = V4L2_MEMORY_MMAP;
-    bufd.index = 0;
 
     if (xioctl(m_scoped_fd, VIDIOC_DQBUF, &bufd) == -1)
     {

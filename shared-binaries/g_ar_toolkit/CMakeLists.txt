@@ -12,7 +12,6 @@ find_package(Eigen3 REQUIRED NO_MODULE)
 # specify an object library to provide exported core functionality
 add_library(g_ar_toolkit_core OBJECT)
 
-
 set_target_properties(g_ar_toolkit_core PROPERTIES
   POSITION_INDEPENDENT_CODE ON
   C_VISIBILITY_PRESET default
@@ -24,7 +23,8 @@ set_target_properties(g_ar_toolkit_core PROPERTIES
 target_include_directories(g_ar_toolkit_core
   PUBLIC
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/g_ar_toolkit>"
-    # add binary directory so auto-generated g_ar_toolkit_export.h is found
+
+  # add binary directory so auto-generated g_ar_toolkit_export.h is found
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
@@ -32,6 +32,7 @@ target_include_directories(g_ar_toolkit_core
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   # windows.h definitions and allow mismatch co-routine due to zxing (https://devblogs.microsoft.com/oldnewthing/20230111-00/?p=107694)
   target_compile_definitions(g_ar_toolkit_core PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX /wd4068 _ALLOW_COROUTINE_ABI_MISMATCH)
+
   if(${CMAKE_SIZEOF_VOID_P} EQUAL 4)
     target_compile_definitions(g_ar_toolkit_core PUBLIC G_AR_TOOLKIT_BYTE_PACKING_WIN_x86)
   endif()
@@ -88,6 +89,7 @@ add_library(g_ar_toolkit SHARED)
 target_include_directories(g_ar_toolkit
   PUBLIC
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/g_ar_toolkit>"
+
   # add binary directory so auto-generated g_ar_toolkit_export.h is found
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
@@ -115,17 +117,17 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     shlwapi
   )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  # try and remove unused code sections
-  target_compile_options(g_ar_toolkit PUBLIC
-    "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
-  )
- 
+  if(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
+    # try and remove unused code sections
+    target_compile_options(g_ar_toolkit PUBLIC
+      "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
+    )
+  endif()
+
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")
-  else()
-
+else()
   message(FATAL_ERROR "Unsupported platform type - only Windows and Linux are supported!")
-
 endif()
 
 # generate export header
@@ -134,7 +136,7 @@ generate_export_header(g_ar_toolkit)
 # Set the Library Filename to include the bitness
 math(EXPR BITNESS "8*${CMAKE_SIZEOF_VOID_P}")
 set_target_properties(g_ar_toolkit PROPERTIES OUTPUT_NAME gartoolkit_${BITNESS}-${gartoolkit-shared-binaries_VERSION_MAJOR})
-target_link_libraries(g_ar_toolkit 
+target_link_libraries(g_ar_toolkit
   PUBLIC
   g_ar_toolkit_core
   PRIVATE
@@ -144,35 +146,36 @@ target_link_libraries(g_ar_toolkit
 include(${CMAKE_CURRENT_LIST_DIR}/src/capture/CMakeLists.txt)
 
 target_sources(g_ar_toolkit PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/src/capture.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_new.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_blur.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_resize.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_draw_picture.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_draw.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_in_range.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_bitwise.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_read_file.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_write_file.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_add_weighted.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_flip.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_crop.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_greyscale_to_argb.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_insert.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_argb_channel_operations.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_canny.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_copy.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_raw_memory_ptr.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_from_buffer.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_pixmap.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_array.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_negate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_transform.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_rotate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_threshold.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_morphology.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_find_nonzero.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_colour.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/image_clahe.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/shape_utils.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/version.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/capture.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_new.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_blur.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_resize.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_draw_picture.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_draw.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_in_range.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_bitwise.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_read_file.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_write_file.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_add_weighted.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_flip.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_crop.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_greyscale_to_argb.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_insert.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_argb_channel_operations.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_canny.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_copy.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_raw_memory_ptr.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_from_buffer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_pixmap.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_copy_array.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_negate.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_transform.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_rotate.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_threshold.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_morphology.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_find_nonzero.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_colour.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_clahe.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/shape_utils.cpp
 )
