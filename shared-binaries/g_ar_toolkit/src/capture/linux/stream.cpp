@@ -87,7 +87,7 @@ namespace
         req.memory = V4L2_MEMORY_MMAP;
         int count = 1;
 
-        // try to find minimum number of buffers required starting with 1;
+        // try to find minimum number of buffers required starting with 2;
         do
         {
             req.count = ++count;

@@ -117,17 +117,17 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     shlwapi
   )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  find_package(PkgConfig REQUIRED)
 
-  # find decoder components from FFMPEG
-  find_package(FFMPEG REQUIRED
-      COMPONENTS
-      avcodec
-      avutil
-      swscale
+  # Find FFmpeg libraries
+  pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
+    libavcodec
+    libavutil
+    libswscale
   )
 
-  target_link_libraries(g_ar_toolkit PRIVATE ${FFMPEG_LIBRARIES})
-  target_include_directories(g_ar_toolkit PRIVATE ${FFMPEG_INCLUDE_DIRS})
+  target_link_libraries(g_ar_toolkit PRIVATE PkgConfig::LIBAV)
+  target_link_options(g_ar_toolkit PUBLIC "-Wl,-Bsymbolic")
 
   if(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
     # try and remove unused code sections
