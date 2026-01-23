@@ -1,3 +1,34 @@
+// A good portion of this code is based on the work or Evan Flynn
+// https://github.com/ros-drivers/usb_cam/blob/main/include/usb_cam/formats/mjpeg.hpp
+
+// Copyright 2023 Evan Flynn
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+//    * Redistributions of source code must retain the above copyright
+//      notice, this list of conditions and the following disclaimer.
+//
+//    * Redistributions in binary form must reproduce the above copyright
+//      notice, this list of conditions and the following disclaimer in the
+//      documentation and/or other materials provided with the distribution.
+//
+//    * Neither the name of the Evan Flynn nor the names of its
+//      contributors may be used to endorse or promote products derived from
+//      this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
 #include <stdexcept>
 
 #include <linux/videodev2.h>
@@ -7,115 +38,158 @@
 using namespace g_ar_toolkit;
 using namespace capture;
 
-__u32 decoder_mjpeg::v4l_format(){
+__u32 decoder_mjpeg::v4l_format()
+{
     return V4L2_PIX_FMT_MJPEG;
 }
-decoder_mjpeg::decoder_mjpeg(int width, int height) 
-    : m_codec(avcodec_find_decoder(AV_CODEC_ID_MJPEG)), m_codec_ctx(nullptr), m_frame(nullptr), 
-      m_packet(nullptr), m_sws_ctx(nullptr), m_width(width), m_height(height) {
-    
-    // Check codec was found OK
-    if (!m_codec) {
-        throw std::runtime_error("MJPEG codec not found");
+decoder_mjpeg::decoder_mjpeg(int width, int height)
+    : m_avcodec(avcodec_find_decoder(AVCodecID::AV_CODEC_ID_MJPEG)),
+      m_avparser(av_parser_init(AVCodecID::AV_CODEC_ID_MJPEG)),
+      m_avframe_device(av_frame_alloc()),
+      m_avoptions(nullptr),
+      m_averror_str(reinterpret_cast<char *>(malloc(AV_ERROR_MAX_STRING_SIZE))),
+      m_width(width), m_height(height)
+{
+    if (!m_avcodec)
+    {
+        throw std::runtime_error("Could not find MJPEG decoder.");
     }
-    
+
+    if (!m_avparser)
+    {
+        throw std::runtime_error("Could not find MJPEG parser.");
+    }
+
     // Allocate codec context
-    m_codec_ctx = avcodec_alloc_context3(m_codec);
-    if (!m_codec_ctx) {
-        throw std::runtime_error("Could not allocate codec context");
+    m_avcodec_context = avcodec_alloc_context3(m_avcodec);
+    if (!m_avcodec_context)
+    {
+        throw std::runtime_error("Could not allocate MJPEG codec context.");
     }
-    
-    // Set known dimensions
-    m_codec_ctx->width = m_width;
-    m_codec_ctx->height = m_height;
-    
-    // Open codec
-    if (avcodec_open2(m_codec_ctx, m_codec, nullptr) < 0) {
-        avcodec_free_context(&m_codec_ctx);
-        throw std::runtime_error("Could not open codec");
+
+    // configure device-frame
+    m_avframe_device->width = m_width;
+    m_avframe_device->height = m_height;
+    m_avframe_device->format = AVPixelFormat::AV_PIX_FMT_YUV422P; // (probably)
+
+    m_sws_context = sws_getContext(
+        m_width, m_height, (AVPixelFormat)m_avframe_device->format,
+        m_width, m_height, cv_mat_type_as_avpixelformat, SWS_FAST_BILINEAR,
+        NULL, NULL, NULL);
+
+    // Suppress warnings from ffmpeg libraries to avoid spamming the console
+    av_log_set_level(AV_LOG_PANIC);
+    av_log_set_flags(AV_LOG_SKIP_REPEATED);
+
+    m_avcodec_context->width = m_width;
+    m_avcodec_context->height = m_height;
+    m_avcodec_context->pix_fmt = (AVPixelFormat)m_avframe_device->format;
+    m_avcodec_context->codec_type = AVMEDIA_TYPE_VIDEO;
+
+    m_avframe_device_size = static_cast<size_t>(
+        av_image_get_buffer_size(
+            (AVPixelFormat)m_avframe_device->format,
+            m_avframe_device->width,
+            m_avframe_device->height,
+            m_align));
+
+    // initialize AVCodecContext
+    if (avcodec_open2(m_avcodec_context, m_avcodec, &m_avoptions) < 0)
+    {
+        throw std::runtime_error("Could not open MJPEG decoder.");
     }
-    
-    // Allocate frame
-    m_frame = av_frame_alloc();
-    if (!m_frame) {
-        avcodec_free_context(&m_codec_ctx);
-        throw std::runtime_error("Could not allocate frame");
+
+    m_result = av_frame_get_buffer(m_avframe_device, m_align);
+    if (m_result != 0)
+    {
+        av_make_error_string(m_averror_str, AV_ERROR_MAX_STRING_SIZE, m_result);
+        throw std::runtime_error("Unable to allocate MJPEG frame buffer: " + std::string(m_averror_str));
     }
-    
-    // Allocate packet
+
+    // allocate packet
     m_packet = av_packet_alloc();
-    if (!m_packet) {
-        av_frame_free(&m_frame);
-        avcodec_free_context(&m_codec_ctx);
-        throw std::runtime_error("Could not allocate packet");
-    }
-    
-    // Pre-allocate scaler context with known dimensions
-    m_sws_ctx = sws_getContext(
-        m_width, m_height, AV_PIX_FMT_YUVJ422P,  // MJPEG typically uses YUVJ422P
-        m_width, m_height, AV_PIX_FMT_BGRA,
-        SWS_BILINEAR, nullptr, nullptr, nullptr
-    );
-    
-    if (!m_sws_ctx) {
-        av_packet_free(&m_packet);
-        av_frame_free(&m_frame);
-        avcodec_free_context(&m_codec_ctx);
-        throw std::runtime_error("Could not create scaler context");
+    if (!m_packet)
+    {
+        throw std::runtime_error("Could not allocate MJPEG packet.");
     }
 }
 
-decoder_mjpeg::~decoder_mjpeg() {
-    if (m_sws_ctx) {
-        sws_freeContext(m_sws_ctx);
+decoder_mjpeg::~decoder_mjpeg()
+{
+    if (m_averror_str)
+    {
+        free(m_averror_str);
     }
-    if (m_packet) {
-        av_packet_free(&m_packet);
+    if (m_avoptions)
+    {
+        free(m_avoptions);
     }
-    if (m_frame) {
-        av_frame_free(&m_frame);
+    if (m_avcodec_context)
+    {
+        avcodec_free_context(&m_avcodec_context);
     }
-    if (m_codec_ctx) {
-        avcodec_free_context(&m_codec_ctx);
+    if (m_avframe_device)
+    {
+        av_frame_free(&m_avframe_device);
+    }
+    if (m_avparser)
+    {
+        av_parser_close(m_avparser);
+    }
+    if (m_sws_context)
+    {
+        sws_freeContext(m_sws_context);
     }
 }
 
-void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size) {
-    if (!data || size == 0) {
+void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size)
+{
+    if (!data || size == 0)
+    {
         throw std::invalid_argument("Decoding failed. Data pointer is invalid or zero size.");
     }
-    
+
+    m_result = 0;
+
     // Set packet data
-    m_packet->data = const_cast<uint8_t*>(data);
+    std::memset(m_packet, 0, sizeof(AVPacket));
+    m_packet->data = const_cast<uint8_t *>(data);
     m_packet->size = size;
-    
+
     // Send packet to decoder
-    int ret = avcodec_send_packet(m_codec_ctx, m_packet);
-    if (ret < 0) {
+    m_result = avcodec_send_packet(m_avcodec_context, m_packet);
+    if (m_result < 0)
+    {
         throw std::runtime_error("Sending a packet into the codec during decoding failed.");
     }
-    
+
     // Receive decoded frame
-    ret = avcodec_receive_frame(m_codec_ctx, m_frame);
-    if (ret < 0) {
+    m_result = avcodec_receive_frame(m_avcodec_context, m_avframe_device);
+    if (m_result == AVERROR(EAGAIN) || m_result == AVERROR_EOF)
+    {
+        return;
+    }
+    else if (m_result < 0)
+    {
         throw std::runtime_error("Recieving a frame from the codec during decoding failed.");
     }
-    
+
     // Allocate cv::Mat if needed
-    if (dst.empty() || dst.cols != m_width || 
-        dst.rows != m_height || dst.type() != CV_8UC4) {
+    if (dst.empty() || dst.cols != m_width ||
+        dst.rows != m_height || dst.type() != CV_8UC4)
+    {
         dst = cv::Mat(m_height, m_width, CV_8UC4);
     }
-    
+
     // Setup destination pointers for sws_scale
-    uint8_t *dst_data[1] = { dst.data };
-    int dst_linesize[1] = { static_cast<int>(dst.step[0]) };
-    
+    uint8_t *dst_data[1] = {dst.data};
+    int dst_linesize[1] = {static_cast<int>(dst.step[0])};
+
     // Convert from decoded format to BGRA (OpenCV format with alpha)
     sws_scale(
-        m_sws_ctx,
-        m_frame->data, m_frame->linesize,
-        0, m_frame->height,
+        m_sws_context,
+        m_avframe_device->data, m_avframe_device->linesize,
+        0, m_avframe_device->height,
         dst_data, dst_linesize
     );
 }
