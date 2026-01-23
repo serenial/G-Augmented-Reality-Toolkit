@@ -42,11 +42,13 @@ __u32 decoder_mjpeg::v4l_format()
 {
     return V4L2_PIX_FMT_MJPEG;
 }
+
 decoder_mjpeg::decoder_mjpeg(int width, int height)
     : m_avcodec(avcodec_find_decoder(AVCodecID::AV_CODEC_ID_MJPEG)),
       m_avparser(av_parser_init(AVCodecID::AV_CODEC_ID_MJPEG)),
       m_avframe_device(av_frame_alloc()),
       m_avoptions(nullptr),
+      m_sws_context(nullptr),
       m_averror_str(reinterpret_cast<char *>(malloc(AV_ERROR_MAX_STRING_SIZE))),
       m_width(width), m_height(height)
 {
@@ -60,50 +62,26 @@ decoder_mjpeg::decoder_mjpeg(int width, int height)
         throw std::runtime_error("Could not find MJPEG parser.");
     }
 
-    // Allocate codec context
+    // allocate codec context
     m_avcodec_context = avcodec_alloc_context3(m_avcodec);
     if (!m_avcodec_context)
     {
         throw std::runtime_error("Could not allocate MJPEG codec context.");
     }
 
-    // configure device-frame
-    m_avframe_device->width = m_width;
-    m_avframe_device->height = m_height;
-    m_avframe_device->format = AVPixelFormat::AV_PIX_FMT_YUV422P; // (probably)
-
-    m_sws_context = sws_getContext(
-        m_width, m_height, (AVPixelFormat)m_avframe_device->format,
-        m_width, m_height, cv_mat_type_as_avpixelformat, SWS_FAST_BILINEAR,
-        NULL, NULL, NULL);
-
-    // Suppress warnings from ffmpeg libraries to avoid spamming the console
+    // suppress warnings from ffmpeg libraries to avoid spamming the console
     av_log_set_level(AV_LOG_PANIC);
     av_log_set_flags(AV_LOG_SKIP_REPEATED);
 
+    // set basic codec parameters - let the decoder determine the pixel format
     m_avcodec_context->width = m_width;
     m_avcodec_context->height = m_height;
-    m_avcodec_context->pix_fmt = (AVPixelFormat)m_avframe_device->format;
     m_avcodec_context->codec_type = AVMEDIA_TYPE_VIDEO;
 
-    m_avframe_device_size = static_cast<size_t>(
-        av_image_get_buffer_size(
-            (AVPixelFormat)m_avframe_device->format,
-            m_avframe_device->width,
-            m_avframe_device->height,
-            m_align));
-
-    // initialize AVCodecContext
+    // initailize AVCodecContext
     if (avcodec_open2(m_avcodec_context, m_avcodec, &m_avoptions) < 0)
     {
         throw std::runtime_error("Could not open MJPEG decoder.");
-    }
-
-    m_result = av_frame_get_buffer(m_avframe_device, m_align);
-    if (m_result != 0)
-    {
-        av_make_error_string(m_averror_str, AV_ERROR_MAX_STRING_SIZE, m_result);
-        throw std::runtime_error("Unable to allocate MJPEG frame buffer: " + std::string(m_averror_str));
     }
 
     // allocate packet
@@ -112,6 +90,8 @@ decoder_mjpeg::decoder_mjpeg(int width, int height)
     {
         throw std::runtime_error("Could not allocate MJPEG packet.");
     }
+
+    // sws_context and frame buffer will be created on first decode when we know the actual pixel format
 }
 
 decoder_mjpeg::~decoder_mjpeg()
@@ -139,6 +119,10 @@ decoder_mjpeg::~decoder_mjpeg()
     if (m_sws_context)
     {
         sws_freeContext(m_sws_context);
+    }
+    if (m_packet)
+    {
+        av_packet_free(&m_packet);
     }
 }
 
@@ -171,7 +155,30 @@ void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size)
     }
     else if (m_result < 0)
     {
-        throw std::runtime_error("Recieving a frame from the codec during decoding failed.");
+        throw std::runtime_error("Receiving a frame from the codec during decoding failed.");
+    }
+
+    // Create or recreate sws_context if needed (format changed or first time)
+    if (!m_sws_context || 
+        m_avframe_device->width != m_width ||
+        m_avframe_device->height != m_height)
+    {
+        if (m_sws_context)
+        {
+            sws_freeContext(m_sws_context);
+        }
+
+        // Use the ACTUAL pixel format from the decoded frame
+        m_sws_context = sws_getContext(
+            m_avframe_device->width, m_avframe_device->height, 
+            (AVPixelFormat)m_avframe_device->format,  // Actual decoded format
+            m_width, m_height, cv_mat_type_as_avpixelformat, 
+            SWS_FAST_BILINEAR, NULL, NULL, NULL);
+
+        if (!m_sws_context)
+        {
+            throw std::runtime_error("Could not create SwsContext for pixel format conversion.");
+        }
     }
 
     // Allocate cv::Mat if needed
