@@ -14,7 +14,6 @@
         "png",
         "tiff",
         "webp",
-        "ffmpeg",
         {
           "name": "ipp",
           "platform": "x86|x64"
@@ -28,7 +27,8 @@
       "features": [
         "contrib",
         "dnn",
-        "text"
+        "text",
+        "ffmpeg"
       ]
     },
     {

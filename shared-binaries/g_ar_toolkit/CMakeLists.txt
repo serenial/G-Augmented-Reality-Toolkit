@@ -117,17 +117,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     shlwapi
   )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  find_package(PkgConfig REQUIRED)
-
-  # Find FFmpeg libraries
-  pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
-    libavcodec
-    libavutil
-    libswscale
-  )
-
-  target_link_libraries(g_ar_toolkit PRIVATE PkgConfig::LIBAV)
-  target_link_options(g_ar_toolkit PUBLIC "-Wl,-Bsymbolic")
 
   if(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
     # try and remove unused code sections
