@@ -117,13 +117,15 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     shlwapi
   )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-
   if(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
     # try and remove unused code sections
     target_compile_options(g_ar_toolkit PUBLIC
       "-fdata-sections" "-ffunction-sections" "-Wl,--gc-sections"
     )
   endif()
+
+  find_package(libjpeg-turbo CONFIG REQUIRED)
+  target_link_libraries(g_ar_toolkit PRIVATE $<IF:$<TARGET_EXISTS:libjpeg-turbo::turbojpeg>,libjpeg-turbo::turbojpeg,libjpeg-turbo::turbojpeg-static>)
 
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit PROPERTIES PREFIX "")

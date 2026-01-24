@@ -2,6 +2,7 @@
   "dependencies": [
     "apriltag",
     "eigen3",
+    "libjpeg-turbo",
     {
       "name": "opencv4",
       "default-features": false,

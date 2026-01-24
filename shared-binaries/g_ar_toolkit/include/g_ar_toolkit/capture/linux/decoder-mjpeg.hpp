@@ -1,7 +1,9 @@
 #pragma once
 
-#include <jpeglib.h>
+#include <turbojpeg.h>
 #include <linux/videodev2.h>
+#include <opencv2/opencv.hpp>
+
 #include "./decoders.hpp"
 
 namespace g_ar_toolkit
@@ -18,14 +20,8 @@ namespace g_ar_toolkit
             ~decoder_mjpeg();
 
         private:
-            struct jpeg_decompress_struct m_cinfo;
-            struct jpeg_error_mgr m_jerr;
-            
+            tjhandle m_decompressor;
             const int m_width, m_height;
-            
-            // Temporary buffer for row-by-row decoding
-            JSAMPARRAY m_buffer;
-            int m_row_stride;
         };
     }
 }
