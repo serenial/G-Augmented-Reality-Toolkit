@@ -64,17 +64,17 @@ void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size)
         dst = cv::Mat(height, width, CV_8UC4);
     }
 
-    // Decompress directly to BGRA format
-    if (tjDecompress2(m_decompressor,
-                      const_cast<unsigned char*>(data),
-                      size,
-                      dst.data,
-                      width,
-                      0,  // pitch (0 = use default)
-                      height,
-                      TJPF_BGRA,  // TurboJPEG pixel format (BGRA)
-                      TJFLAG_FASTDCT) != 0)  // Use fast DCT for speed
-    {
-        throw std::runtime_error("Failed to decompress JPEG header: " + std::string(tjGetErrorStr2(m_decompressor)) + ".");
-    }
+    // // Decompress directly to BGRA format
+    // if (tjDecompress2(m_decompressor,
+    //                   const_cast<unsigned char*>(data),
+    //                   size,
+    //                   dst.data,
+    //                   width,
+    //                   0,  // pitch (0 = use default)
+    //                   height,
+    //                   TJPF_BGRA,  // TurboJPEG pixel format (BGRA)
+    //                   TJFLAG_FASTDCT) != 0)  // Use fast DCT for speed
+    // {
+    //     throw std::runtime_error("Failed to decompress JPEG header: " + std::string(tjGetErrorStr2(m_decompressor)) + ".");
+    // }
 }
