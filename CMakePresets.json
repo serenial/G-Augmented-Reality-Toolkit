@@ -97,7 +97,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "VCPKG_TARGET_TRIPLET": "armv8a-rpi5-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake"
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/rpi5-armv8a.cmake"
             }
         },
         {
