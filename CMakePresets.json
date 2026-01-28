@@ -141,7 +141,7 @@
             }
         },
         {
-            "name": "ci-linux-nilrt-armv7a",
+            "name": "ci-linux-armv7a-nilrt",
             "inherits": "nilrt-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
@@ -151,7 +151,7 @@
             }
         },
         {
-            "name": "ci-linux-rpi5-armv8a",
+            "name": "ci-linux-armv8a-rpi5",
             "inherits": "rpi5-armv8a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
@@ -216,16 +216,16 @@
             "configurePreset": "ci-linux-x64"
         },
         {
-            "name": "ci-linux-nilrt-armv7a",
+            "name": "ci-linux-armv7a-nilrt",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-nilrt-armv7a"
+            "configurePreset": "ci-linux-armv7a-nilrt"
         },
         {
-            "name": "ci-linux-rpi5-armv8a",
+            "name": "ci-linux-armv8a-rpi5",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-rpi5-armv8a"
+            "configurePreset": "ci-linux-armv8a-rpi5"
         }
         
     ]

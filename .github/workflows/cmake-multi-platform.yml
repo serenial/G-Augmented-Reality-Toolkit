@@ -47,12 +47,12 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential g++ python3 linux-libc-dev bison autoconf automake libtool pkg-config python3-jinja2 nasm libx11-dev libxft-dev libxext-dev libxi-dev  libxtst-dev python3-setuptools ninja-build gperf libdbus-1-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libudev-dev libx11-xcb-dev  libxcursor-dev  libxdamage-dev libxinerama-dev libxrandr-dev zip unzip tar curl autoconf-archive fakeroot
     
-    - name: Install Armv7a Cross Compilation Tools
+    - name: Install NILRT armv7a Cross Compilation Tools
       if: ${{ matrix.arch == 'armv7a-nilrt' }}
       run: |
         sudo scripts/install-nilrt-armv7a-tools.sh
 
-    - name: Install rpi5-aarch Cross Compilation Tools
+    - name: Install rpi5 armv8a Cross Compilation Tools
       if: ${{ matrix.arch == 'armv8a-rpi5'}}
       run: |
         sudo scripts/install-rpi5-armv8a-tools.sh
