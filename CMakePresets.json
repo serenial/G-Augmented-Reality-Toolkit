@@ -79,7 +79,7 @@
             "binaryDir": "${sourceDir}/build/nilrt-armv7a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-linux-ci",
+                "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-linux-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
                 "CMAKE_CXX_STANDARD": "14",
                 "CMAKE_C_STANDARD": "11",
@@ -91,12 +91,12 @@
             }
         },
         {
-            "name": "rpi5-aarch64-cross",
+            "name": "rpi5-armv8a-cross",
             "inherits": "linux-x64-release",
-            "binaryDir": "${sourceDir}/build/nilrt-aarch64",
+            "binaryDir": "${sourceDir}/build/rpi5-armv8a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "aarch64-linux-ci",
+                "VCPKG_TARGET_TRIPLET": "armv8a-rpi5-linux-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake"
             }
         },
@@ -141,7 +141,7 @@
             }
         },
         {
-            "name": "ci-linux-armv7a",
+            "name": "ci-linux-nilrt-armv7a",
             "inherits": "nilrt-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
@@ -151,11 +151,11 @@
             }
         },
         {
-            "name": "ci-linux-aarch64",
-            "inherits": "rpi5-aarch64-cross",
+            "name": "ci-linux-rpi5-armv8a",
+            "inherits": "rpi5-armv8a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "ARCHIVE_PLATFORM_NAME":"aarch64",
+                "ARCHIVE_PLATFORM_NAME":"armv8a-rpi5",
                 "GENERATE_ARCHIVE": "ON"
             }
         }
@@ -216,16 +216,16 @@
             "configurePreset": "ci-linux-x64"
         },
         {
-            "name": "ci-linux-armv7a",
+            "name": "ci-linux-nilrt-armv7a",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-armv7a"
+            "configurePreset": "ci-linux-nilrt-armv7a"
         },
         {
-            "name": "ci-linux-aarch64",
+            "name": "ci-linux-rpi5-armv8a",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-aarch64"
+            "configurePreset": "ci-linux-rpi5-armv8a"
         }
         
     ]
