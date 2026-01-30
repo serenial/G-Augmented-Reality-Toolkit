@@ -16,47 +16,65 @@ namespace
         {V4L2_PIX_FMT_BGR24, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC3, const_cast<uint8_t *>(data)};
-             cv::cvtColor(in, out, cv::COLOR_BGR2BGRA);
+             if (out.channels() == 1)
+             {
+                 cv::cvtColor(in, out, cv::COLOR_BGR2GRAY);
+             }
+             else
+             {
+                 cv::cvtColor(in, out, cv::COLOR_BGR2BGRA);
+             }
          }},
         {V4L2_PIX_FMT_RGB24, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC3, const_cast<uint8_t *>(data)};
-             cv::cvtColor(in, out, cv::COLOR_RGB2BGRA);
-         }},
-        {V4L2_PIX_FMT_ABGR32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-         {
-             const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-             cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 0, 2, 1, 3, 2}), 4);
-         }},
-        {V4L2_PIX_FMT_XBGR32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-         {
-             const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-             cv::mixChannels(&in, 1, &out, 1, std::begin({1, 0, 2, 1, 3, 2}), 3);
-         }},
-        {V4L2_PIX_FMT_ARGB32, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-         {
-             const cv::Mat in{dims, CV_8UC4, const_cast<uint8_t *>(data)};
-             cv::mixChannels(&in, 1, &out, 1, std::begin({0, 3, 1, 2, 2, 1, 3, 0}), 4);
+             if (out.channels() == 1)
+             {
+                 cv::cvtColor(in, out, cv::COLOR_RGB2GRAY);
+             }
+             else
+             {
+                 cv::cvtColor(in, out, cv::COLOR_RGB2BGRA);
+             }
          }},
         {V4L2_PIX_FMT_YUYV, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC2, const_cast<uint8_t *>(data)};
-             cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YUYV);
+
+             if (out.channels() == 1)
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2GRAY_YUYV);
+             }
+             else
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YUYV);
+             }
          }},
         {V4L2_PIX_FMT_YVYU, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC2, const_cast<uint8_t *>(data)};
-             cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YVYU);
+
+             if (out.channels() == 1)
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2GRAY_YVYU);
+             }
+             else
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_YVYU);
+             }
          }},
         {V4L2_PIX_FMT_UYVY, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
          {
              const cv::Mat in{dims, CV_8UC2, const_cast<uint8_t *>(data)};
-             cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_UYVY);
-         }},
-        {V4L2_PIX_FMT_MJPEG, [](const uint8_t *data, cv::Mat &out, const cv::Size dims, const size_t data_bytes)
-         {
-             const cv::Mat in{1, static_cast<int>(data_bytes), CV_8UC1, const_cast<uint8_t *>(data)};
-             cv::cvtColor(cv::imdecode(in, cv::IMREAD_UNCHANGED), out, cv::COLOR_BGR2BGRA);
+
+             if (out.channels() == 1)
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2GRAY_UYVY);
+             }
+             else
+             {
+                 cv::cvtColor(in, out, cv::COLOR_YUV2BGRA_UYVY);
+             }
          }}};
 }
 
@@ -71,7 +89,8 @@ std::unique_ptr<decoder> decoder::create(__u32 pixel_format, size_t width, size_
 {
 
     // check for specialized decoders
-    if(pixel_format == decoder_mjpeg::v4l_format()){
+    if (pixel_format == decoder_mjpeg::v4l_format())
+    {
         return std::make_unique<decoder_mjpeg>(width, height);
     }
 

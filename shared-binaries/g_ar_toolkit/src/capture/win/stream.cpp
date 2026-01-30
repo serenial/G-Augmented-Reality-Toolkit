@@ -80,7 +80,7 @@ namespace
 // Specify all the Context Functionality inside a lambda which is controlled via
 // mutex/conditional_variable synchronization
 
-Stream::Stream(const std::string& device_id, stream_type_t stream_type)
+Stream::Stream(const std::string &device_id, stream_type_t stream_type)
     : m_last_state(states::WAITING_ON_INITIALIZED),
       m_rows(stream_type.height),
       m_cols(stream_type.width),
@@ -481,9 +481,19 @@ bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
 
     if (destination.size() != cv::Size(m_cols, m_rows))
     {
-        destination = cv::Mat(m_rows, m_cols, CV_8UC4);
+        destination = cv::Mat(m_rows, m_cols, destination.type());
     }
-    cv::swap(m_current_mat, destination);
+
+    if (destination.channels() = 1)
+    {
+        // convert BGRA to Greyscale
+        cv::cvtColor(m_current_mat, destination, cv::COLOR_BGRA2GRAY);
+    }
+    else
+    {
+        // swap for BGRA to BGRA
+        cv::swap(m_current_mat, destination);
+    }
 
     return false;
 }

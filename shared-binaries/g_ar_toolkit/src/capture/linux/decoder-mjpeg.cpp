@@ -59,9 +59,9 @@ void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size)
     }
 
     // Allocate cv::Mat if needed (BGRA format)
-    if (dst.empty() || dst.cols != width || dst.rows != height || dst.type() != CV_8UC4)
+    if (dst.empty() || dst.cols != width || dst.rows != height)
     {
-        dst = cv::Mat(height, width, CV_8UC4);
+        dst = cv::Mat(height, width, dst.type());
     }
 
     // Decompress directly to BGRA format
@@ -72,7 +72,7 @@ void decoder_mjpeg::decode(const uint8_t *data, cv::Mat &dst, size_t size)
                       width,
                       0,  // pitch (0 = use default)
                       height,
-                      TJPF_BGRA,  // TurboJPEG pixel format (BGRA)
+                      dst.channels() ==1? TJPF_GRAY :TJPF_BGRA,
                       TJFLAG_FASTDCT) != 0)  // Use fast DCT for speed
     {
         throw std::runtime_error("Failed to decompress JPEG header: " + std::string(tjGetErrorStr2(m_decompressor)) + ".");
