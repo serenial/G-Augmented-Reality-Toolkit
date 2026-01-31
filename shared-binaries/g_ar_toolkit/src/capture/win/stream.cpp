@@ -484,7 +484,7 @@ bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
         destination = cv::Mat(m_rows, m_cols, destination.type());
     }
 
-    if (destination.channels() = 1)
+    if (destination.channels() == 1)
     {
         // convert BGRA to Greyscale
         cv::cvtColor(m_current_mat, destination, cv::COLOR_BGRA2GRAY);
