@@ -194,9 +194,6 @@
 				<Item Name="VIPM API_vipm_api.lvlib" Type="Library" URL="/&lt;vilib&gt;/JKI/VIPM API/VIPM API_vipm_api.lvlib"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="gartoolkit_fd_64-1.so" Type="Document" URL="../common/bin/gartoolkit_fd_64-1.so"/>
-			<Item Name="gartoolkit_64-1.so" Type="Document" URL="../common/bin/gartoolkit_64-1.so"/>
-			<Item Name="NextCapture.vim" Type="VI" URL="../capture/Stream/NextCapture.vim"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Installer Source Distribution" Type="Source Distribution">
@@ -217,7 +214,7 @@
 				<Property Name="Bld_localDestDir" Type="Path">../build/installer-source-distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{E2A0ADA6-962A-4E89-87A1-2C05F03CA305}</Property>
-				<Property Name="Bld_version.build" Type="Int">19</Property>
+				<Property Name="Bld_version.build" Type="Int">21</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/installer-source-distribution</Property>
