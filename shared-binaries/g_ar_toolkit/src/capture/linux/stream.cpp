@@ -5,6 +5,7 @@
 
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <sys/select.h>
 
 #include "g_ar_toolkit/capture/stream.hpp"
 #include "g_ar_toolkit/capture/linux/utils.hpp"
@@ -16,7 +17,7 @@ using namespace std::chrono_literals;
 
 namespace
 {
-    std::pair<scoped_file_descriptor, __u32> open_and_configure_device_file_descriptor(const std::string& device_id, Stream::stream_type_t stream_type)
+    std::pair<scoped_file_descriptor, __u32> open_and_configure_device_file_descriptor(const std::string &device_id, Stream::stream_type_t stream_type)
     {
         // lookup the device path
 
@@ -34,8 +35,11 @@ namespace
         // try and find the specified stream type
 
         auto format_match = find_if(device_match->format_info.begin(), device_match->format_info.end(), [&](const auto &f)
-                                    { return stream_type.height == f.first.height && stream_type.width == f.first.width && stream_type.fps_numerator == f.first.discrete.denominator // frame interval so denominator => numerator
-                                             && f.first.discrete.numerator == 1; });
+                                    { return stream_type.height == f.first.height &&
+                                             stream_type.width == f.first.width &&
+                                             // linux uses frame interval so 1/fps
+                                             stream_type.fps_numerator == f.first.discrete.denominator &&
+                                             stream_type.fps_denominator == f.first.discrete.numerator; });
 
         if (format_match == device_match->format_info.end())
         {
@@ -57,12 +61,13 @@ namespace
 
         param.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-        param.parm.capture.timeperframe.numerator = 1;
+        // reminder - linux uses time interval so 1/FPS
+        param.parm.capture.timeperframe.numerator = stream_type.fps_denominator;
         param.parm.capture.timeperframe.denominator = stream_type.fps_numerator;
 
         scoped_file_descriptor s_fd{device_match->path, O_RDWR};
 
-        if (xioctl(s_fd, VIDIOC_S_FMT, &format) != -1 && xioctl(s_fd, VIDIOC_S_PARM, &param) !=-1)
+        if (xioctl(s_fd, VIDIOC_S_FMT, &format) != -1 && xioctl(s_fd, VIDIOC_S_PARM, &param) != -1)
         {
             // it worked
             return std::make_pair(std::move(s_fd), format_match->first.pixel_format);
@@ -71,7 +76,7 @@ namespace
         throw std::runtime_error("Unable to configure the stream for device with device-id:\"" + std::string(device_id) + "\" with the dimensions and FPS requested.");
     }
 
-    std::vector<scoped_mmap_buffer> create_buffer_list(int fd, const std::string& device_id)
+    std::vector<scoped_mmap_buffer> create_buffer_list(int fd, const std::string &device_id)
     {
 
         std::vector<scoped_mmap_buffer> buffer_list;
@@ -128,12 +133,12 @@ Stream::~Stream()
 }
 
 // call delegated constructor
-Stream::Stream(const std::string& device_id, stream_type_t stream_type) : Stream(device_id, stream_type, open_and_configure_device_file_descriptor(device_id, stream_type))
+Stream::Stream(const std::string &device_id, stream_type_t stream_type) : Stream(device_id, stream_type, open_and_configure_device_file_descriptor(device_id, stream_type))
 {
 }
 
 // private constructor that actually does the constructing
-Stream::Stream(const std::string& device_id, stream_type_t stream_type, std::pair<scoped_file_descriptor, __u32> fd)
+Stream::Stream(const std::string &device_id, stream_type_t stream_type, std::pair<scoped_file_descriptor, __u32> fd)
     : m_stream_type(stream_type), m_device_id(device_id), m_scoped_fd(std::move(fd.first)),
       m_pixel_format(fd.second), m_decoder(decoder::create(fd.second, stream_type.width, stream_type.height)),
       m_buffer_list(create_buffer_list(m_scoped_fd, device_id)), m_is_streaming(false)
@@ -169,14 +174,17 @@ void Stream::stop_stream()
         return;
     }
 
-    // Start the stream
+    // Stop the stream
     enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (xioctl(m_scoped_fd, VIDIOC_STREAMOFF, &type) == -1)
     {
-        throw std::runtime_error("Unable to stop stream.");
+        if (errno != ENODEV)
+        {
+            throw std::runtime_error("Unable to stop stream.");
+        }
     }
 
-    m_is_streaming = false;
+    m_is_streaming = false; // even if this errors we don't want to throw when nothing will catch
 }
 
 bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
@@ -185,26 +193,53 @@ bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
     {
         throw std::invalid_argument("Stream has not been started.");
     }
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    std::chrono::steady_clock::time_point end = begin + timeout;
 
-    while (std::chrono::steady_clock::now() < end)
+    // setup timeout structure - this will be reused if we loop as select() on linux updates
+    // the structure to keep track of time remaining
+    auto timeout_duration_us = std::chrono::microseconds(timeout).count();
+
+    struct timeval time_value;
+
+    // get integer number of seconds and a remainder of us
+    auto timeout_qr = std::div(timeout_duration_us, std::chrono::microseconds(1s).count());
+
+    time_value.tv_sec = timeout_qr.quot; // integer seconds quotient
+    time_value.tv_usec = timeout_qr.rem; // remainder is us
+
+    for (;;)
     {
-        // try and dequeue buffer
-        size_t bytes;
-        int index = dequeue_buffer(&bytes);
-        if (index >= 0 && index < m_buffer_list.size())
+
+        // use select() to wait for an I/O operation
+
+        fd_set read_fd_set;
+
+        FD_ZERO(&read_fd_set);
+        FD_SET(m_scoped_fd, &read_fd_set);
+
+        switch (select(m_scoped_fd + 1, &read_fd_set, NULL, NULL, &time_value))
         {
-            // buffer dequeued OK
-            m_decoder->decode(m_buffer_list[index], destination, bytes);
-            // enqueue the buffer so it can be reused
-            enqueue_buffer(index);
-            // escape the loop
-            return false;
+        case 0: // timeout
+            return true;
+        case -1: // check error
+            if (errno == EINTR)
+            {
+                continue; // loop again
+            }
+            throw std::runtime_error("An unexpected error occurred whilst waiting for a new frame to read.");
+        default: // we probably have something to dequeue
+            size_t bytes;
+            int index = dequeue_buffer(&bytes);
+            if (index >= 0 && index < m_buffer_list.size())
+            {
+                // buffer dequeued OK
+                m_decoder->decode(m_buffer_list[index], destination, bytes);
+                // enqueue the buffer so it can be reused
+                enqueue_buffer(index);
+                // return no timeout
+                return false;
+            }
         }
     }
-
-    return true; // timed out!
 }
 
 int Stream::dequeue_buffer(size_t *n_bytes)
@@ -214,7 +249,6 @@ int Stream::dequeue_buffer(size_t *n_bytes)
 
     bufd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     bufd.memory = V4L2_MEMORY_MMAP;
-    bufd.index = 0;
 
     if (xioctl(m_scoped_fd, VIDIOC_DQBUF, &bufd) == -1)
     {

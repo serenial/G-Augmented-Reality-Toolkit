@@ -18,6 +18,9 @@ using namespace std::chrono_literals;
 
 namespace
 {
+    const auto DEFAULT_TIMEOUT = 10s;
+    const auto DEFAULT_LONG_TIMEOUT = 2* DEFAULT_TIMEOUT;
+
     std::optional<SourceReader::parameters> stream_param_to_source_reader_param(Stream::camera_parameters param)
     {
         switch (param)
@@ -80,7 +83,7 @@ namespace
 // Specify all the Context Functionality inside a lambda which is controlled via
 // mutex/conditional_variable synchronization
 
-Stream::Stream(const std::string& device_id, stream_type_t stream_type)
+Stream::Stream(const std::string &device_id, stream_type_t stream_type)
     : m_last_state(states::WAITING_ON_INITIALIZED),
       m_rows(stream_type.height),
       m_cols(stream_type.width),
@@ -217,8 +220,12 @@ Stream::Stream(const std::string& device_id, stream_type_t stream_type)
                            {
                                std::unique_lock<std::mutex> lk(m_mtx);
                                // wait for the state to change
-                               m_notifier.wait(lk, [&]
+                               auto completed = m_notifier.wait_for(lk, DEFAULT_LONG_TIMEOUT,[&]
                                                { return m_last_state != states::NOTHING_PENDING; });
+
+                               if(!completed){
+                                throw std::runtime_error("Internal timeout whilst waiting for the camera to initialize.");
+                               }
 
                                switch (m_last_state)
                                {
@@ -425,18 +432,20 @@ Stream::Stream(const std::string& device_id, stream_type_t stream_type)
 {
     // wait on cv to see if the co-thread initialized ok
     std::unique_lock lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk, DEFAULT_LONG_TIMEOUT, [&]
                     { return m_last_state != states::WAITING_ON_INITIALIZED; });
 
     if (m_last_exception)
     {
         std::rethrow_exception(m_last_exception);
     }
+    if(!completed){
+        throw std::runtime_error("Internal timeout exceeded whilst waiting for the capture thread to initialize.");
+    }
 }
 
 Stream::~Stream()
 {
-
     std::unique_lock<std::mutex> lk(m_mtx);
     if (m_last_state != states::WAITING_ON_INITIALIZED)
     {
@@ -445,8 +454,9 @@ Stream::~Stream()
     }
     lk.unlock();
     m_notifier.notify_one();
+
     // wait on future to return
-    m_ftr.wait();
+    auto result = m_ftr.wait_for(DEFAULT_LONG_TIMEOUT);
 }
 
 bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeout)
@@ -481,9 +491,19 @@ bool Stream::capture_frame(cv::Mat &destination, std::chrono::milliseconds timeo
 
     if (destination.size() != cv::Size(m_cols, m_rows))
     {
-        destination = cv::Mat(m_rows, m_cols, CV_8UC4);
+        destination = cv::Mat(m_rows, m_cols, destination.type());
     }
-    cv::swap(m_current_mat, destination);
+
+    if (destination.channels() == 1)
+    {
+        // convert BGRA to Greyscale
+        cv::cvtColor(m_current_mat, destination, cv::COLOR_BGRA2GRAY);
+    }
+    else
+    {
+        // swap for BGRA to BGRA
+        cv::swap(m_current_mat, destination);
+    }
 
     return false;
 }
@@ -501,11 +521,15 @@ void Stream::start_stream()
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
-                    { return m_last_state != states::WAITING_ON_STREAM_STARTED; });
+    auto completed = m_notifier.wait_for(lk, DEFAULT_TIMEOUT, [&]
+                                         { return m_last_state != states::WAITING_ON_STREAM_STARTED; });
     if (m_last_exception)
     {
         std::rethrow_exception(m_last_exception);
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the stream has started.");
     }
 }
 
@@ -522,11 +546,15 @@ void Stream::stop_stream()
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk,DEFAULT_TIMEOUT,[&]
                     { return m_last_state != states::WAITING_ON_STREAM_STOPPED; });
     if (m_last_exception)
     {
         std::rethrow_exception(m_last_exception);
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the stream has stopped.");
     }
 }
 
@@ -544,12 +572,16 @@ void Stream::get_camera_parameter_info(Stream::camera_parameters param, Stream::
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk,DEFAULT_TIMEOUT ,[&]
                     { return m_last_state != states::WAITING_ON_STREAM_PARAM_READ; });
 
     if (m_last_exception)
     {
         info->is_supported = false;
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the stream has started.");
     }
     info->default_value = m_last_param_info.default_value;
     info->max = m_last_param_info.max;
@@ -571,12 +603,16 @@ int32_t Stream::get_camera_parameter(Stream::camera_parameters param)
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk, DEFAULT_TIMEOUT ,[&]
                     { return m_last_state != states::WAITING_ON_STREAM_PARAM_READ; });
 
     if (m_last_exception)
     {
         throw Stream::param_error{param, "Camera parameter %s not supported."};
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the parameter has been read.");
     }
     value = m_last_param_value;
     return value;
@@ -596,12 +632,16 @@ void Stream::set_camera_parameter(Stream::camera_parameters param, int32_t value
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk, DEFAULT_TIMEOUT,[&]
                     { return m_last_state != states::WAITING_ON_STREAM_PARAM_UPDATED; });
 
     if (m_last_exception)
     {
         throw Stream::param_error{param, "Camera parameter %s not supported."};
+    }
+        if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the parameter has been written.");
     }
 }
 
@@ -620,12 +660,16 @@ bool Stream::get_camera_auto_mode(Stream::camera_auto_parameters param)
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk,DEFAULT_TIMEOUT, [&]
                     { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED; });
 
     if (m_last_exception)
     {
         throw Stream::auto_param_error{param, "Automatic/Manual control of parameter %s not supported."};
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the parameter auto mode has been read.");
     }
     is_auto = m_last_auto_param_is_automatic;
     return is_auto;
@@ -647,12 +691,16 @@ void Stream::set_camera_auto_mode(camera_auto_parameters param, bool automatic)
 
     // wait for result
     std::unique_lock<std::mutex> lk(m_mtx);
-    m_notifier.wait(lk, [&]
+    auto completed = m_notifier.wait_for(lk, DEFAULT_TIMEOUT,[&]
                     { return m_last_state != states::WAITING_ON_STREAM_PARAM_AUTO_UPDATED; });
 
     if (m_last_exception)
     {
         throw Stream::auto_param_error{param, "Automatic/Manual control of parameter %s not supported."};
+    }
+    if (!completed)
+    {
+        throw std::runtime_error("Internal timeout exceeded waiting for state to change to indicate the parameter auto mode has been written.");
     }
 }
 

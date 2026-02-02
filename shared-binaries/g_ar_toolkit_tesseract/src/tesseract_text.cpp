@@ -102,8 +102,10 @@ namespace
     {
     public:
         tesseract_t() = delete;
-        tesseract_t(const char *datapath, const char *language, const char *char_whitelist, cv::text::ocr_engine_mode oem, cv::text::page_seg_mode psm) {
-            try{
+        tesseract_t(const char *datapath, const char *language, const char *char_whitelist, cv::text::ocr_engine_mode oem, cv::text::page_seg_mode psm)
+        {
+            try
+            {
                 m_ocr = cv::text::OCRTesseract::create(datapath, language, char_whitelist, oem, psm);
             }
             catch (int e)
@@ -114,10 +116,10 @@ namespace
                     throw std::runtime_error("Could not initialize Tesseract. Ensure it is installed and the system environment variables are correctly set.");
                 }
             }
-            catch(...){
+            catch (...)
+            {
                 throw std::current_exception();
             }
-
         }
         cv::Ptr<cv::text::OCRTesseract> operator->() const
         {
@@ -182,7 +184,8 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             cv::Mat to_ocr = src;
 
-            if(src.is_bgra()){
+            if (src.is_bgra())
+            {
                 cv::cvtColor(src, to_ocr, cv::COLOR_BGRA2BGR);
             }
 
@@ -201,6 +204,19 @@ extern "C"
         catch (...)
         {
             error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
+        }
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_TESSERACT_EXPORT LV_MgErr_t g_ar_tk_tesseract_version(LV_StringHandle_t ver_handle)
+    {
+        try
+        {
+            ver_handle.copy_from(G_AR_TOOLKIT_VERSION);
+        }
+        catch (...)
+        {
+            return LV_ERR_bogusError;
         }
         return LV_ERR_noError;
     }

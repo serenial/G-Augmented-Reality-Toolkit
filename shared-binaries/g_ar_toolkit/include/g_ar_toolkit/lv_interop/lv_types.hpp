@@ -14,6 +14,11 @@
 
 namespace g_ar_toolkit
 {
+
+#ifndef G_AR_TOOLKIT_VERSION
+    #define G_AR_TOOLKIT_VERSION "G_AR_TOOLKIT_VERSION_NOT_SPECIFIED"
+#endif
+
     namespace lv_interop
     {
         // define templates for pointers, handles and handle pointers

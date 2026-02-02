@@ -20,6 +20,7 @@ if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
         ${CMAKE_CURRENT_LIST_DIR}/linux/enumerator.cpp
         ${CMAKE_CURRENT_LIST_DIR}/linux/stream.cpp
         ${CMAKE_CURRENT_LIST_DIR}/linux/decoders.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/linux/decoder-mjpeg.cpp
         ${CMAKE_CURRENT_LIST_DIR}/linux/utils.cpp
     )
 
@@ -28,6 +29,7 @@ if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
         BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
         FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/include/g_ar_toolkit/capture/linux/decoders.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/g_ar_toolkit/capture/linux/decoder-mjpeg.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/g_ar_toolkit/capture/linux/utils.hpp
     )
 

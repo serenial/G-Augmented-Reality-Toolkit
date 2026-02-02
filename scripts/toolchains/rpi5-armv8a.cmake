@@ -24,8 +24,8 @@ if(NOT _RPI_BOOKWORM_AARCH64)
     set(CMAKE_SYSROOT ~/trixie-mnt/partition_1)
 
     # Additional compiler flags optimized for Raspberry Pi 5 (Cortex-A76)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv8-a+fp+simd -fPIC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv8-a+fp+simd -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv8-a+fp+simd -fPIC -O3")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv8-a+fp+simd -fPIC -O3")
 
     set(CMAKE_MODULE_LINKER_FLAGS_INIT "-Wl,-O1")
     set(CMAKE_SHARED_LINKER_FLAGS_INIT "-Wl,-O1")

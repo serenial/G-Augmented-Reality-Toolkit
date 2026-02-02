@@ -14,4 +14,4 @@ elif [[ "$1" -eq "debug" ]];
     BUILD_TYPE="debug"
 fi
 
-cmake --preset=linux-x64-$BUILD_TYPE && cmake --build --preset=linux-x64-$BUILD_TYPE
+cmake --preset=linux-aarch64-$BUILD_TYPE && cmake --build --preset=linux-aarch64-$BUILD_TYPE
