@@ -32,11 +32,11 @@
             }
         },
         {
-            "name": "linux-debug",
+            "name": "linux-x64-debug",
             "inherits": "base",
             "binaryDir": "${sourceDir}/build/linux-x64",
             "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-linux-ci"
+                "VCPKG_TARGET_TRIPLET": "x64-linux-desktop"
             },
             "condition": {
                 "type": "equals",
@@ -52,19 +52,34 @@
             }
         },
         {
-            "name": "linux-release",
-            "inherits": "linux-debug",
+            "name": "linux-x64-release",
+            "inherits": "linux-x64-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "linux-aarch64-debug",
+            "inherits": "linux-x64-debug",
+            "binaryDir": "${sourceDir}/build/linux-aarch64",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "aarch64-linux-desktop"
+            }
+        },
+        {
+            "name": "linux-aarch64-release",
+            "inherits": "linux-aarch64-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
             "name": "nilrt-armv7a-cross",
-            "inherits": "linux-release",
+            "inherits": "linux-x64-release",
             "binaryDir": "${sourceDir}/build/nilrt-armv7a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-linux-ci",
+                "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-linux-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
                 "CMAKE_CXX_STANDARD": "14",
                 "CMAKE_C_STANDARD": "11",
@@ -76,13 +91,13 @@
             }
         },
         {
-            "name": "rpi5-aarch64-cross",
-            "inherits": "linux-release",
-            "binaryDir": "${sourceDir}/build/nilrt-aarch64",
+            "name": "rpi5-armv8a-cross",
+            "inherits": "linux-x64-release",
+            "binaryDir": "${sourceDir}/build/rpi5-armv8a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "aarch64-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/linux-aarch64.cmake"
+                "VCPKG_TARGET_TRIPLET": "armv8a-rpi5-linux-ci",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/rpi5-armv8a.cmake"
             }
         },
         {
@@ -126,7 +141,7 @@
             }
         },
         {
-            "name": "ci-linux-armv7a",
+            "name": "ci-linux-armv7a-nilrt",
             "inherits": "nilrt-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
@@ -136,11 +151,11 @@
             }
         },
         {
-            "name": "ci-linux-aarch64",
-            "inherits": "rpi5-aarch64-cross",
+            "name": "ci-linux-armv8a-rpi5",
+            "inherits": "rpi5-armv8a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "ARCHIVE_PLATFORM_NAME":"aarch64",
+                "ARCHIVE_PLATFORM_NAME":"armv8a-rpi5",
                 "GENERATE_ARCHIVE": "ON"
             }
         }
@@ -159,14 +174,26 @@
             "configuration": "Release"
         },
         {
-            "name": "linux-debug",
-            "configurePreset": "linux-debug",
+            "name": "linux-x64-debug",
+            "configurePreset": "linux-x64-debug",
             "targets": "install",
             "configuration": "Debug"
         },
         {
-            "name": "linux-release",
-            "configurePreset": "linux-release",
+            "name": "linux-x64-release",
+            "configurePreset": "linux-x64-release",
+            "targets": "install",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-aarch64-debug",
+            "configurePreset": "linux-aarch64-debug",
+            "targets": "install",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-aarch64-release",
+            "configurePreset": "linux-aarch64-release",
             "targets": "install",
             "configuration": "Release"
         },
@@ -189,16 +216,16 @@
             "configurePreset": "ci-linux-x64"
         },
         {
-            "name": "ci-linux-armv7a",
+            "name": "ci-linux-armv7a-nilrt",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-armv7a"
+            "configurePreset": "ci-linux-armv7a-nilrt"
         },
         {
-            "name": "ci-linux-aarch64",
+            "name": "ci-linux-armv8a-rpi5",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-aarch64"
+            "configurePreset": "ci-linux-armv8a-rpi5"
         }
         
     ]

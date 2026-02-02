@@ -52,6 +52,7 @@ target_sources(g_ar_toolkit_ar PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_distortion.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_undistort.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_undistortion.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/ar_version.cpp 
 )
 
 if(NOT OMIT_OBJLOADER)

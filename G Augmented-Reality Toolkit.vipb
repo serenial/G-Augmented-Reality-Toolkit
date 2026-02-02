@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-01-07 17:30:48" Creator="john" Comments="" ID="f64dc5485f6cdb6ca4315d84f8ccd346">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-02-01 09:57:58" Creator="john" Comments="" ID="b93f86d10ca48b7fb98370afb057b41c">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit</Package_File_Name>
-    <Library_Version>1.4.0.15</Library_Version>
+    <Library_Version>1.6.0.2</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>build\source-distribution</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
@@ -17,7 +17,7 @@
   </Library_General_Settings>
   <Advanced_Settings>
     <Package_Dependencies>
-      <Additional_External_Dependencies>serenial_io_g_augmented_reality_toolkit_shared_binaries =1.4.0.6</Additional_External_Dependencies>
+      <Additional_External_Dependencies>serenial_io_g_augmented_reality_toolkit_shared_binaries =1.6.0.1</Additional_External_Dependencies>
     </Package_Dependencies>
     <Custom_Action_VIs>
       <Pre-Build_VI/>
@@ -50,7 +50,8 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
       <Copyright>Copyright (c) 2025, serenial and contributors</Copyright>
       <Packager>Serenial</Packager>
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit/</URL>
-      <Release_Notes>Added AR tools for Roll-Pitch-Yaw representations of rotation</Release_Notes>
+      <Release_Notes>* Added AprilTag Time-Profiler Information
+* Support Capturing Frames from a Webcam directly as Greyscale</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -368,7 +369,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\Video IO</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>22F0B9DEC5D0ABE8E5084DBF5155B81D</GUID>
+      <GUID>A6A7C7CD44BE1633450D84EE40CDD0D0</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -641,7 +642,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.image\Copy Buffer to Image.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>49448A2677A089A3AA882BE082417742</GUID>
+      <GUID>943F18146658362C885DF73D3B7A3EC9</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>1</Parent_Palette_Index>
@@ -718,7 +719,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.image\Get Mapped Memory Access Information.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>444A1FB269E8B16D186BC528EB80F589</GUID>
+      <GUID>8F25785284BBEA1F6C1DEB49B996432A</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1229,7 +1230,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.image\CLAHE</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>0E06955C28C2FEEBBE28C5B3E093C415</GUID>
+      <GUID>C2BAC57D9C5FA4047422F06C094C81A8</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1474,7 +1475,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.capture\Stream\Stop.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>5CEC7848C1817DC7C846AF1EA0DAF3CF</GUID>
+      <GUID>E47084A026D0F9853D186BE22DCBF6B5</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1621,7 +1622,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\DNN Detection Model</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>0F982979FFA67EE16FB1E318442725A9</GUID>
+      <GUID>F52A6E6AF5E56F5A0A44D966DD57A231</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -1712,7 +1713,21 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Generate AprilTag Image Data.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>171A0FD47E73E4603C8F0658995BFA1F</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get Time Profiler Data.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>build\source-distribution\g_ar_toolkit.feature_detection\Apriltag Detector\Get Time Profiler Data.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>41234A0910314290275D556A90D1CF11</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -1859,7 +1874,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Barcode Detector\Detect Barcodes.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>BB3B5A7516A4B55747CB3027B8E7F35C</GUID>
+      <GUID>AF1421C734F2322CD7A8604B21339316</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -1936,7 +1951,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.shape\Contour Convex Hull.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>B78058BEE85D138BFC1EE1E18DFBEBE2</GUID>
+      <GUID>B96C1285429F1338166F50C1E5B61AB2</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2349,7 +2364,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar\Quaternion Average.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>7A5451F18C5A2F0CF1E2EF974EB7FF28</GUID>
+      <GUID>82B0A1FBC50D2944E4F1E68C6F1F386C</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2426,7 +2441,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar\Estimate Affine.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9B8E173F0BBF7AD4D7521AC4240AD86C</GUID>
+      <GUID>5429A519B29F1F38F8168121090C8A2E</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -2727,7 +2742,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.examples\U16 Image Data Processing.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>5A32AF2F5185C52C4FAEE0CA522C56D7</GUID>
+      <GUID>1EE0676F54CD690EFB700C08B7FEBA6D</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -2790,7 +2805,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Encoder</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>76FEE60C144F50BBA364D17D8C8CFE15</GUID>
+      <GUID>223D4C9ACD76D2A5320FACBE35D3F4CC</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -2937,7 +2952,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Detector\Detect and Decode Multiple.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>D5B3236605ED1C0F73647FC442BC80AB</GUID>
+      <GUID>048BDB95FA9E1597CB1AEFDF77D27490</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -3028,7 +3043,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\WeChat QR Code Detector\Set Scaling Factor.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9CCFCB975F8965E5BD2A427DBF7F7EC4</GUID>
+      <GUID>34B8EC7D1163A912767A92BF6092FB68</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>12</Parent_Palette_Index>
@@ -3091,7 +3106,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\QR Code Encoder\Encode.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>A512F5AEAE576008C52A099DE441ADFD</GUID>
+      <GUID>369A2E89D2A1DE82217E641CA61B54ED</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -3154,7 +3169,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path/>
         <VI_Title/>
       </Items_Data>
-      <GUID>89E98E27D75D535A4D05F7DE1D5EAA3D</GUID>
+      <GUID>C209093A4C6F2D1B08C6CA901FE6532C</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -3217,7 +3232,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Recognizer</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>158ED2E81A11466DE14A07AC15FD669F</GUID>
+      <GUID>61D0585F99CEE00AB8735515A670CCE3</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3280,7 +3295,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Detector\Detect Text.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>C0E962885F16B428F3F7BEE052633EE2</GUID>
+      <GUID>BCAE80B9417A267E164E96CB94645A7D</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3343,7 +3358,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Recognizer\Recognize Text.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>F6EE3FEC440201799E81950703CCE56E</GUID>
+      <GUID>6FC78B091CDBBF67C89C2C8B7F7F227F</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>17</Parent_Palette_Index>
@@ -3406,7 +3421,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\Text Tesseract\Run.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>131709176AA4E22F252CDD841501648A</GUID>
+      <GUID>6DA886D2BA27F3D096C31A2E52FAAD47</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>9</Parent_Palette_Index>
@@ -3483,7 +3498,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar\Image Distorter\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>2E05AA5CE9CB05C0E18A880C7001EE54</GUID>
+      <GUID>851153529D85943977CB0EA92D8535D2</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>9</Parent_Palette_Index>
@@ -3588,7 +3603,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar\Image Undistorter\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9354570BD07313451E7AD77F35C18313</GUID>
+      <GUID>D8B3B34404DA9B6114ADB63D08B2BB60</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -3651,7 +3666,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (ARGB)</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>E6099C782241E17E8AF56672458AB54B</GUID>
+      <GUID>9993E6CD773272D6C0C6816892B76055</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3756,7 +3771,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.video_io\Reader\Read Frame.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>AB7E297126E817C38A77B57FDFCF3FA1</GUID>
+      <GUID>DAC59F87252DE927ED1EABBD842FD4CA</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3819,7 +3834,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (ARGB)\Write Frame.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>ECA52FF8FB16E313E92BDEE7B0F04DE7</GUID>
+      <GUID>76FC810C7D71A6B8BC4D1DF649359C07</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>23</Parent_Palette_Index>
@@ -3882,7 +3897,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.video_io\Writer (Greyscale)\Write Frame.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>7F2040CBA1C4CF03D61CEDA0093533EA</GUID>
+      <GUID>C305C15903424082F996A61B94C050E6</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>3</Parent_Palette_Index>
@@ -3945,7 +3960,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.image\CLAHE\Destroy.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>E72F2538FC8B9B59D29D6C44DB1CCFD8</GUID>
+      <GUID>5510ADF0F685FFAE94126A17A6950CBA</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>5</Parent_Palette_Index>
@@ -4008,7 +4023,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.feature_detection\DNN Detection Model\Detect.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>6D0F8765A70C5BBD9DA0F30B302790EE</GUID>
+      <GUID>78A5F8204CE0642DA39228D9335D9D57</GUID>
     </Functions_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>-1</Parent_Palette_Index>
@@ -4071,7 +4086,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9F03E5BA956A9CEE680B91E4A8F12E98</GUID>
+      <GUID>F7CBB2FCCF4D16C6B5E5FEA507285FB4</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -4218,7 +4233,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.common\Window Size (Integer).ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>6CC2D4444D428A8719144E15083C9EB2</GUID>
+      <GUID>EC9FF2C06B321B950D50E5F2BD984D9A</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -4533,7 +4548,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.image\Poly Lines Shape Draw Mode.ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>05B7083B9F838A7E5EA7802377507115</GUID>
+      <GUID>798B322EEBF7A7B91BCE811ABF457EEE</GUID>
     </Controls_Palette_Data>
     <Controls_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -4694,7 +4709,7 @@ This toolkit supports Windows and Linux Desktop, NI-Linux-RT (x64) targets. The 
         <Path>build\source-distribution\g_ar_toolkit.ar\tvec.ctl</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9270496F4E376F0030B8545729B35DE1</GUID>
+      <GUID>626E40CEF749D474157828D58556E263</GUID>
     </Controls_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>

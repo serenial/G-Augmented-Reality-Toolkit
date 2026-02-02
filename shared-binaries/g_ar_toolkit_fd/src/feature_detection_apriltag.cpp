@@ -20,6 +20,7 @@
 #include "g_ar_toolkit/lv_interop/lv_enums.hpp"
 #include "g_ar_toolkit/lv_interop/lv_array_1d.hpp"
 #include "g_ar_toolkit/lv_interop/lv_vec_types.hpp"
+#include "g_ar_toolkit/lv_interop/lv_str.hpp"
 
 #include "g_ar_toolkit_fd_export.h"
 
@@ -31,6 +32,11 @@ namespace
 #include "g_ar_toolkit/lv_interop/set_packing.hpp"
 
     using LV_AprilTagFamily_t = uint8_t;
+
+    struct LV_TimeProfilerEntry_t{
+        LV_StringHandle_t what;
+        double duration_ms, cumulative_ms;
+    };
 
     class LV_ApriltagDetection_t
     {
@@ -114,6 +120,11 @@ namespace
         zarray_t *m_detections;
 
     public:
+        struct tp_entry{
+            const std::string what;
+            const int64_t when_nsec;
+            tp_entry(const char stamp[32], int64_t u_sec):what(stamp),when_nsec(u_sec){}
+        };
         TagDetector(TagDetector const &) = delete;
         void operator=(TagDetector const &x) = delete;
         TagDetector(LV_AprilTagFamily_t family, int bits, float decimate, float blur, int32_t threads, bool refine_edges) : m_tag_family(family),
@@ -161,6 +172,23 @@ namespace
                 *handle_element = detection;
             }
         }
+
+        int64_t get_time_profile(std::vector<tp_entry>& entries){
+
+           const auto tp = m_detector->tp;
+           const size_t n_entries = zarray_size(tp->stamps);
+           entries.reserve(n_entries);
+
+            for (int i = 0; i < n_entries; i++) {
+                struct ::timeprofile_entry *stamp;
+
+                zarray_get_volatile(tp->stamps, i, &stamp);
+
+                entries.emplace_back(stamp->name, stamp->utime);
+            }
+
+            return tp->utime;
+        }
     };
 }
 
@@ -205,6 +233,39 @@ extern "C"
             }
 
             tag_detector->detect_tags(image, detections_handle);
+        }
+        catch (...)
+        {
+            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
+        }
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_FD_EXPORT LV_MgErr_t g_ar_tk_fd_apriltag_detector_time_profile(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_EDVRReferencePtr_t detector_ref_ptr,
+        LV_1DArrayHandle_t<LV_TimeProfilerEntry_t> profile_entries_handle)
+    {
+        try
+        {
+            std::vector<TagDetector::tp_entry> entries;
+            const auto final_ns = EDVRManagedObject<TagDetector>(detector_ref_ptr)->get_time_profile(entries);
+
+            profile_entries_handle.size_to_fit(entries.size());
+
+            auto e = profile_entries_handle.begin();
+            auto last_ns = final_ns;
+
+            for(const auto &entry : entries){
+                
+                e->what.copy_from(entry.what);
+                e->cumulative_ms = (entry.when_nsec - final_ns)/1000000.0;
+                e->duration_ms = (entry.when_nsec - last_ns)/1000000.0;
+
+                last_ns = entry.when_nsec;
+                ++e;
+            }
+
         }
         catch (...)
         {

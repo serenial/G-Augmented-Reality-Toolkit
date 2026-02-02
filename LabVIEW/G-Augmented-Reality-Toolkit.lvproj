@@ -214,7 +214,7 @@
 				<Property Name="Bld_localDestDir" Type="Path">../build/installer-source-distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{E2A0ADA6-962A-4E89-87A1-2C05F03CA305}</Property>
-				<Property Name="Bld_version.build" Type="Int">19</Property>
+				<Property Name="Bld_version.build" Type="Int">26</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/installer-source-distribution</Property>
@@ -223,29 +223,29 @@
 				<Property Name="Destination[2].destName" Type="Str">common.bin</Property>
 				<Property Name="Destination[2].path" Type="Path">../build/installer-source-distribution/common/bin</Property>
 				<Property Name="DestinationCount" Type="Int">3</Property>
-				<Property Name="Source[0].itemID" Type="Str">{654DF4CE-1D38-4C0D-8822-D4A4D8826739}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{79E666A8-2E5B-48F7-8EE1-6B8D358CA06D}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib</Property>
 				<Property Name="Source[1].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[1].newName" Type="Str">g_ar_toolkit.bit.lvlib</Property>
 				<Property Name="Source[1].type" Type="Str">Library</Property>
-				<Property Name="Source[2].destinationIndex" Type="Int">2</Property>
-				<Property Name="Source[2].itemID" Type="Ref">/My Computer/bin/COPYING</Property>
+				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[2].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Pre-Uninstall Custom Action.vi</Property>
+				<Property Name="Source[2].newName" Type="Str">__Toolkit Binaries Pre-Uninstall Custom Action__.vi</Property>
 				<Property Name="Source[2].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[2].type" Type="Str">VI</Property>
 				<Property Name="Source[3].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[3].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Pre-Uninstall Custom Action.vi</Property>
-				<Property Name="Source[3].newName" Type="Str">__Toolkit Binaries Pre-Uninstall Custom Action__.vi</Property>
+				<Property Name="Source[3].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Post-Install Custom Action.vi</Property>
+				<Property Name="Source[3].newName" Type="Str">__Toolkit Binaries Post-Install Custom Action__.vi</Property>
 				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[3].type" Type="Str">VI</Property>
 				<Property Name="Source[4].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[4].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Post-Install Custom Action.vi</Property>
-				<Property Name="Source[4].newName" Type="Str">__Toolkit Binaries Post-Install Custom Action__.vi</Property>
-				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[4].itemID" Type="Ref">/My Computer/VIPM/Toolkit Post-Install Custom Action.vi</Property>
 				<Property Name="Source[4].type" Type="Str">VI</Property>
-				<Property Name="Source[5].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[5].itemID" Type="Ref">/My Computer/VIPM/Toolkit Post-Install Custom Action.vi</Property>
-				<Property Name="Source[5].type" Type="Str">VI</Property>
+				<Property Name="Source[5].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[5].itemID" Type="Ref">/My Computer/bin/COPYING</Property>
+				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="SourceCount" Type="Int">6</Property>
 			</Item>
 			<Item Name="Source Distribution" Type="Source Distribution">

@@ -67,7 +67,8 @@ extern "C"
                 break;
             }
 
-            if(!set_ok){
+            if (!set_ok)
+            {
                 throw std::invalid_argument("Unable to set the position to the specified position.");
             }
 
@@ -158,10 +159,9 @@ extern "C"
     G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_reader_get_set_position(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t reader_edvr_ref,
-        double* position,
+        double *position,
         LV_BooleanPtr_t get,
-        LV_BooleanPtr_t frame_index
-    )
+        LV_BooleanPtr_t frame_index)
     {
         try
         {
@@ -173,24 +173,31 @@ extern "C"
                 throw std::runtime_error("Video source is invalid.");
             }
 
-            if(*get){
-                if(*frame_index){
+            if (*get)
+            {
+                if (*frame_index)
+                {
                     *position = cap->get(cv::VideoCaptureProperties::CAP_PROP_POS_FRAMES);
                 }
-                else{
+                else
+                {
                     *position = cap->get(cv::VideoCaptureProperties::CAP_PROP_POS_MSEC);
                 }
             }
-            else{
+            else
+            {
                 bool ok = false;
-                if(*frame_index){
+                if (*frame_index)
+                {
                     ok = cap->set(cv::VideoCaptureProperties::CAP_PROP_POS_FRAMES, *position);
                 }
-                else{
+                else
+                {
                     ok = cap->set(cv::VideoCaptureProperties::CAP_PROP_POS_MSEC, *position);
                 }
 
-                if(!ok){
+                if (!ok)
+                {
                     throw std::invalid_argument("Unable to set the position to the specified position.");
                 }
             }
@@ -203,7 +210,7 @@ extern "C"
         return LV_ERR_noError;
     }
 
-        G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_create(
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t path_string_handle,
         uint8_t fourcc_0,
@@ -215,21 +222,21 @@ extern "C"
         double fps,
         LV_BooleanPtr_t is_colour,
         int8_t quality,
-        LV_BooleanPtr_t use_hw_acceleration
-    )
+        LV_BooleanPtr_t use_hw_acceleration)
     {
         try
         {
-            auto fourcc = cv::VideoWriter::fourcc(fourcc_0,fourcc_1,fourcc_2,fourcc_3);
+            auto fourcc = cv::VideoWriter::fourcc(fourcc_0, fourcc_1, fourcc_2, fourcc_3);
 
             std::vector<int> args(4);
 
             args[0] = cv::VideoWriterProperties::VIDEOWRITER_PROP_IS_COLOR;
             args[1] = *is_colour;
             args[2] = cv::VideoWriterProperties::VIDEOWRITER_PROP_HW_ACCELERATION;
-            args[3] = *use_hw_acceleration? cv::VIDEO_ACCELERATION_ANY : cv::VIDEO_ACCELERATION_NONE;
+            args[3] = *use_hw_acceleration ? cv::VIDEO_ACCELERATION_ANY : cv::VIDEO_ACCELERATION_NONE;
 
-            if(quality>=0){
+            if (quality >= 0)
+            {
                 args.push_back(cv::VideoWriterProperties::VIDEOWRITER_PROP_QUALITY);
                 args.push_back(quality);
             }
@@ -254,8 +261,7 @@ extern "C"
     G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_writer_write_frame(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t writer_edvr_ref,
-        LV_EDVRReferencePtr_t img_edvr_ref
-    )
+        LV_EDVRReferencePtr_t img_edvr_ref)
     {
         try
         {
@@ -284,6 +290,19 @@ extern "C"
             error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
         }
 
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_VIDEOIO_EXPORT LV_MgErr_t g_ar_tk_video_io_version(LV_StringHandle_t ver_handle)
+    {
+        try
+        {
+            ver_handle.copy_from(G_AR_TOOLKIT_VERSION);
+        }
+        catch (...)
+        {
+            return LV_ERR_bogusError;
+        }
         return LV_ERR_noError;
     }
 }

@@ -10,7 +10,7 @@ add_library(g_ar_toolkit_videoio SHARED)
 generate_export_header(g_ar_toolkit_videoio)
 
 # plaform specific definitions
-if(UNIX)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   # don't use "lib"-prefix on linux
   set_target_properties(g_ar_toolkit_videoio PROPERTIES PREFIX "")
 

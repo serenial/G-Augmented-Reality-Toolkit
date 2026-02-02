@@ -42,6 +42,7 @@ target_link_libraries(g_ar_toolkit_fd PRIVATE
 )
 
 target_sources(g_ar_toolkit_fd PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_version.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_apriltag.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_contours.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_hough.cpp
