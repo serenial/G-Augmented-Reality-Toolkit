@@ -10,6 +10,7 @@ vcpkg_from_github(
     HEAD_REF master
     PATCHES
         custom-001-fix-compile-errors-on-vardiac-macro.patch
+        custom-002-windows-perf.patch
 )
 
 vcpkg_cmake_configure(
