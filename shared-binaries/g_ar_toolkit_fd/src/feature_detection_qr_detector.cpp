@@ -63,7 +63,7 @@ extern "C"
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<cv::Point2f> points;
 
@@ -94,7 +94,7 @@ extern "C"
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<cv::Point2f> points;
 
@@ -130,7 +130,7 @@ extern "C"
         try
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(detector_ref_ptr);
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             info.copy_from(*is_curved_ptr ? qr_detector->decodeCurved(image, detection->as_vector()) : qr_detector->decode(image, detection->as_vector()));
         }
@@ -151,7 +151,7 @@ extern "C"
         try
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(detector_ref_ptr);
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<std::string> infos;
             std::vector<cv::Point2f> points;
@@ -185,7 +185,7 @@ extern "C"
         try
         {
             EDVRManagedObject<cv::QRCodeDetector> qr_detector(detector_ref_ptr);
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<std::string> infos;
             std::vector<cv::Point2f> points;

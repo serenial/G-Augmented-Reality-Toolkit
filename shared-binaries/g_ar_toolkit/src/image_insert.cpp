@@ -23,8 +23,8 @@ extern "C"
         {
 
             throw_if_edvr_ref_pointers_not_unique({src_parent_edvr_ref_ptr, src_child_edvr_ref_ptr, dst_edvr_ref_ptr, mask_edvr_ref_ptr});
-            lv_image src_parent(src_parent_edvr_ref_ptr);
-            lv_image src_child(src_child_edvr_ref_ptr);
+            lv_image src_parent(src_parent_edvr_ref_ptr, true);
+            lv_image src_child(src_child_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(src_parent);
@@ -44,7 +44,7 @@ extern "C"
 
             if (*has_mask_ptr)
             {
-                lv_image mask(mask_edvr_ref_ptr);
+                lv_image mask(mask_edvr_ref_ptr, true);
                 src_rect.copyTo(dst_rect, mask);
             }
             else

@@ -271,7 +271,7 @@ extern "C"
         {
             EDVRManagedObject<TagDetector> tag_detector(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             if (image.is_bgra())
             {

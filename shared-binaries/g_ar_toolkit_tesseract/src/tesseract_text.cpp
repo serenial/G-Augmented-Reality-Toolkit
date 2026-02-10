@@ -181,7 +181,7 @@ extern "C"
 
             auto level = *text_line ? cv::text::OCR_LEVEL_TEXTLINE : cv::text::OCR_LEVEL_WORD;
 
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             cv::Mat to_ocr = src;
 
             if (src.is_bgra())

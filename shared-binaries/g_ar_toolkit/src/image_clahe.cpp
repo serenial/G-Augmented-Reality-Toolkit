@@ -139,7 +139,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
 
             EDVRManagedObject<LV_CLAHE_t>(clahe_ref_ptr)->apply_conversion(src, dst);
