@@ -30,7 +30,7 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(*dst_size_ptr);
@@ -61,7 +61,7 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
 
             dst.ensure_sized_to_match(*dst_size_ptr);

@@ -33,7 +33,8 @@ namespace
 
     using LV_AprilTagFamily_t = uint8_t;
 
-    struct LV_TimeProfilerEntry_t{
+    struct LV_TimeProfilerEntry_t
+    {
         LV_StringHandle_t what;
         double duration_ms, cumulative_ms;
     };
@@ -58,6 +59,14 @@ namespace
             m_top_right = detection->p[2];
             m_top_left = detection->p[3];
             return *this;
+        }
+        void offset(const cv::Point2i &point)
+        {
+            m_centre = m_centre + point;
+            m_bottom_left = m_bottom_left + point;
+            m_bottom_right = m_bottom_right + point;
+            m_top_right = m_top_right + point;
+            m_top_left = m_top_left + point;
         }
     };
 
@@ -120,10 +129,11 @@ namespace
         zarray_t *m_detections;
 
     public:
-        struct tp_entry{
+        struct tp_entry
+        {
             const std::string what;
             const int64_t when_nsec;
-            tp_entry(const char stamp[32], int64_t u_sec):what(stamp),when_nsec(u_sec){}
+            tp_entry(const char stamp[32], int64_t u_sec) : what(stamp), when_nsec(u_sec) {}
         };
         TagDetector(TagDetector const &) = delete;
         void operator=(TagDetector const &x) = delete;
@@ -147,14 +157,40 @@ namespace
             apriltag_detector_destroy(m_detector);
         }
 
-        void detect_tags(const cv::Mat &image, LV_1DArrayHandle_t<LV_ApriltagDetection_t> handle)
+        cv::Size2i detect_tags(const cv::Mat &image, LV_1DArrayHandle_t<LV_ApriltagDetection_t> handle, const cv::Point2i &offset, const cv::Size2i &region_size)
         {
-            image_u8_t apriltag_image{image.cols, image.rows, image.cols, image.data};
 
             if (m_detections != nullptr)
             {
                 apriltag_detections_destroy(m_detections);
             }
+
+            // handle default values
+
+            bool has_offset = offset.x > 0 || offset.y > 0;
+            bool has_region_size = region_size.height > 0 && region_size.width > 0 ;
+            
+            cv::Rect2i roi(offset.x, offset.y, image.cols-offset.x, image.rows-offset.y);
+
+            // use specified region
+            if(has_region_size){
+                roi = cv::Rect2i{offset, region_size};
+            }
+
+            // trim roi to intersection of roi and image
+            roi = roi & cv::Rect2i(0,0, image.cols, image.rows);
+
+            cv::Mat img = image;
+
+            if(has_offset || has_region_size){
+                img = image(roi);
+            }
+
+            if(img.empty() || roi.area() == 0 ){
+                throw std::invalid_argument("The input image is empty or the detection region has an area of zero.");
+            }
+
+            image_u8_t apriltag_image{img.cols, img.rows, static_cast<int32_t>(img.step), img.data};
 
             m_detections = apriltag_detector_detect(m_detector, &apriltag_image);
 
@@ -168,18 +204,26 @@ namespace
 
                 apriltag_detection_t *detection;
                 zarray_get(m_detections, i, &detection);
-
                 *handle_element = detection;
+
+                if (has_offset)
+                {
+                    handle_element->offset(offset);
+                }
             }
+
+            return roi.size();
         }
 
-        int64_t get_time_profile(std::vector<tp_entry>& entries){
+        int64_t get_time_profile(std::vector<tp_entry> &entries)
+        {
 
-           const auto tp = m_detector->tp;
-           const size_t n_entries = zarray_size(tp->stamps);
-           entries.reserve(n_entries);
+            const auto tp = m_detector->tp;
+            const size_t n_entries = zarray_size(tp->stamps);
+            entries.reserve(n_entries);
 
-            for (int i = 0; i < n_entries; i++) {
+            for (int i = 0; i < n_entries; i++)
+            {
                 struct ::timeprofile_entry *stamp;
 
                 zarray_get_volatile(tp->stamps, i, &stamp);
@@ -206,7 +250,7 @@ extern "C"
     {
         try
         {
-            EDVRManagedObject<TagDetector> tag_detector(edvr_ref_ptr, new TagDetector(tag_family, bits, decimate, blur, threads, refine_edges_ptr));
+            EDVRManagedObject<TagDetector> tag_detector(edvr_ref_ptr, new TagDetector(tag_family, bits, decimate, blur, threads, *refine_edges_ptr));
         }
         catch (...)
         {
@@ -219,20 +263,22 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t detector_ref_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
+        LV_ImagePointIntPtr_t offset_ptr,
+        LV_ImageSizePtr_t size_ptr,
         LV_1DArrayHandle_t<LV_ApriltagDetection_t> detections_handle)
     {
         try
         {
             EDVRManagedObject<TagDetector> tag_detector(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             if (image.is_bgra())
             {
                 throw std::invalid_argument("Image should be greyscale.");
             }
 
-            tag_detector->detect_tags(image, detections_handle);
+            *size_ptr = tag_detector->detect_tags(image, detections_handle, *offset_ptr, *size_ptr);
         }
         catch (...)
         {
@@ -256,16 +302,16 @@ extern "C"
             auto e = profile_entries_handle.begin();
             auto last_ns = final_ns;
 
-            for(const auto &entry : entries){
-                
+            for (const auto &entry : entries)
+            {
+
                 e->what.copy_from(entry.what);
-                e->cumulative_ms = (entry.when_nsec - final_ns)/1000000.0;
-                e->duration_ms = (entry.when_nsec - last_ns)/1000000.0;
+                e->cumulative_ms = (entry.when_nsec - final_ns) / 1000000.0;
+                e->duration_ms = (entry.when_nsec - last_ns) / 1000000.0;
 
                 last_ns = entry.when_nsec;
                 ++e;
             }
-
         }
         catch (...)
         {

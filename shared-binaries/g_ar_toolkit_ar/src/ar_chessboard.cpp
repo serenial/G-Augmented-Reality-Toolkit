@@ -75,7 +75,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             // cv::Point2f cannot point to LabVIEW managed memory so we have to copy from corners_handle
             // into a std::vector and then copy that vector back into the corners_handle after the function call
@@ -102,7 +102,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             // cv::Point2f cannot point to LabVIEW managed memory so we have to copy from corners_handle
             // into a std::vector and then copy that vector back into the corners_handle after the function call
@@ -130,7 +130,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             cv::Mat meta{*pattern_ptr, CV_8UC1};
 

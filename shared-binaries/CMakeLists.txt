@@ -1,5 +1,5 @@
 # Specify Project
-project(gartoolkit-shared-binaries VERSION 1.6 LANGUAGES C CXX)
+project(gartoolkit-shared-binaries VERSION 1.7 LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

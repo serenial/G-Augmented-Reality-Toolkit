@@ -272,7 +272,7 @@ extern "C"
                 throw std::runtime_error("Video writer is invalid.");
             }
 
-            lv_image src(img_edvr_ref);
+            lv_image src(img_edvr_ref, true);
 
             if (src.is_greyscale())
             {

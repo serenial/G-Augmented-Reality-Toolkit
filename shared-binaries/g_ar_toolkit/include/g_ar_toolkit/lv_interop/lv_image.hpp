@@ -17,7 +17,7 @@ namespace g_ar_toolkit
         // create a new edvr_ref and add the cv::Mat
         lv_image(LV_EDVRReferencePtr_t, cv::Size, bool);
         // convert an existing edvr_ref
-        lv_image(LV_EDVRReferencePtr_t);
+        lv_image(LV_EDVRReferencePtr_t, bool parallel_read = false);
         // destructor
         ~lv_image();
         bool is_bgra() const;
@@ -62,16 +62,18 @@ namespace g_ar_toolkit
                 NONE,
                 LABVIEW,
                 CPP,
-                CPP_MAPPED
+                CPP_MAPPED,
+                CPP_READ_ONLY
             };
             cv::Mat mat;
             lock_states locked;
             std::mutex m;
             std::condition_variable cv;
+            uint32_t ref_count;
 
             // locking and unlocking utility functions
             static void lock(image_persistant_data_t *, lock_states);
-            static void unlock(image_persistant_data_t *, lock_states);
+            static void unlock(image_persistant_data_t *);
         };
 
         // private functions required for initialization

@@ -44,7 +44,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image edge_map(edge_map_edvr_ref_ptr);
 
             cv::Canny(src, edge_map, threshold_1, threshold_2, aperture_size);

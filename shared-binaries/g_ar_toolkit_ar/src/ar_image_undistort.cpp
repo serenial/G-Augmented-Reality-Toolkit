@@ -23,7 +23,7 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
 
             cv::undistort(src, dst, camera_matrix_ptr->as_cv_mat(), camera_distortion_ptr->as_cv_mat());

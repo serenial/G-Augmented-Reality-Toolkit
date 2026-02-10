@@ -47,7 +47,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             cv::Size dst_size = src.size();
             auto use_mask = *use_mask_ptr;
             size_t mask_row_length = 0, mask_bytes_length = 0;

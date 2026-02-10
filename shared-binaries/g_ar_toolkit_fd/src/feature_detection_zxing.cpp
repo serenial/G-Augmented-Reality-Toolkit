@@ -432,7 +432,7 @@ extern "C"
     {
         try
         {
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             ZXing::ImageView zx_im_view(image.data(), image.width(), image.height(), image.is_bgra()? ZXing::ImageFormat::BGRA : ZXing::ImageFormat::Lum);
 

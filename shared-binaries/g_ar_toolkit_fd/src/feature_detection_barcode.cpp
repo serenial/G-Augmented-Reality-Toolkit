@@ -59,7 +59,7 @@ extern "C"
         {
             EDVRManagedObject<barcode_detector_t> bd(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<std::string> info, types;
             std::vector<cv::Point2i> points;

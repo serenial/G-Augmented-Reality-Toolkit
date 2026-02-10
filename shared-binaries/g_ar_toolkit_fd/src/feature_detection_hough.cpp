@@ -77,7 +77,7 @@ extern "C"
         {
             std::vector<cv::Vec4f> circles;
 
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             cv::HoughCircles(src, circles, hough_mode, dp, min_distance, param1, param2, min_radius, max_radius);
 

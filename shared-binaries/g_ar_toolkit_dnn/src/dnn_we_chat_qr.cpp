@@ -63,7 +63,7 @@ extern "C"
         {
             EDVRManagedObject<wechat_qr_t> qr(detector_ref_ptr);
 
-            lv_image image(src_edvr_ref_ptr);
+            lv_image image(src_edvr_ref_ptr, true);
 
             std::vector<cv::Mat> points;
 
