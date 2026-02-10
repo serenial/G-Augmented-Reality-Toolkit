@@ -23,6 +23,10 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
+            if(src.is_empty()){
+                throw std::invalid_argument("Source image cannot be empty.");
+            }
+
             // destination will be auto-sized so no need to force with ensure_sized_to_match()
 
             switch (operation)

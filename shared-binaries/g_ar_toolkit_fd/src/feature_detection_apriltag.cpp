@@ -186,6 +186,10 @@ namespace
                 img = image(roi);
             }
 
+            if(img.empty() || roi.area() == 0 ){
+                throw std::invalid_argument("The input image is empty or the detection region has an area of zero.");
+            }
+
             image_u8_t apriltag_image{img.cols, img.rows, static_cast<int32_t>(img.step), img.data};
 
             m_detections = apriltag_detector_detect(m_detector, &apriltag_image);

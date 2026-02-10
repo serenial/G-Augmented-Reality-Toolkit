@@ -25,6 +25,9 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
+            offset_ptr->m_x = std::max(offset_ptr->m_x, 0);
+            offset_ptr->m_y = std::max(offset_ptr->m_y, 0);
+
             bool has_region_size = size_ptr->m_height > 0 && size_ptr->m_width > 0;
 
             // create from corner points;
@@ -46,6 +49,10 @@ extern "C"
 
             // trim crop-region to intersection of crop-region and image
             crop = crop & cv::Rect2i(0, 0, src.width(), src.height());
+
+            if(crop.size().area() == 0){
+                throw std::invalid_argument("Crop area is zero.");
+            }
 
             (src(crop)).copyTo(dst);
 
