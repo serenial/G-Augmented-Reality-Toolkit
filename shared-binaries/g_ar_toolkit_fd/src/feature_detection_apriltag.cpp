@@ -170,7 +170,7 @@ namespace
             bool has_offset = offset.x > 0 || offset.y > 0;
             bool has_region_size = region_size.height > 0 && region_size.width > 0 ;
             
-            cv::Rect2i roi(offset.x, offset.y, image.cols, image.rows);
+            cv::Rect2i roi(offset.x, offset.y, image.cols-offset.x, image.rows-offset.y);
 
             // use specified region
             if(has_region_size){

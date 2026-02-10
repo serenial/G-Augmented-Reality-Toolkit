@@ -14,7 +14,7 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
         LV_EDVRReferencePtr_t dst_edvr_ref_ptr,
-        LV_ImagePointIntPtr_t origin_ptr,
+        LV_ImagePointIntPtr_t offset_ptr,
         LV_ImageSizePtr_t size_ptr,
         LV_ImagePointIntPtr_t bottom_right_ptr,
         LV_BooleanPtr_t use_size)
@@ -25,28 +25,31 @@ extern "C"
             lv_image src(src_edvr_ref_ptr);
             lv_image dst(dst_edvr_ref_ptr);
 
-            auto max_x = src.width();
-            auto max_y = src.height();
+            bool has_region_size = size_ptr->m_height > 0 && size_ptr->m_width > 0;
 
-            cv::Point2i bottom_right{*bottom_right_ptr};
+            // create from corner points;
+            cv::Rect2i crop(*offset_ptr, *bottom_right_ptr);
 
             if (*use_size)
             {
-                bottom_right = cv::Rect(*origin_ptr, *size_ptr).br();
+                if (has_region_size)
+                {
+                    // use specified size
+                    crop = cv::Rect2i{offset_ptr->m_x, offset_ptr->m_y, size_ptr->m_width, size_ptr->m_height};
+                }
+                else
+                {
+                    // use rest of image
+                    crop = cv::Rect2i{offset_ptr->m_x, offset_ptr->m_y, src.mat().cols - offset_ptr->m_x, src.mat().rows - offset_ptr->m_y};
+                }
             }
 
-            if (bottom_right.x > max_x)
-            {
-                bottom_right.x = max_x;
-            }
-            if (bottom_right.y > max_y)
-            {
-                bottom_right.y = max_y;
-            }
+            // trim crop-region to intersection of crop-region and image
+            crop = crop & cv::Rect2i(0, 0, src.width(), src.height());
 
-            cv::Rect crop_rect(*origin_ptr, bottom_right);
+            (src(crop)).copyTo(dst);
 
-            (src(crop_rect)).copyTo(dst);
+            *size_ptr = crop.size();
         }
         catch (...)
         {
