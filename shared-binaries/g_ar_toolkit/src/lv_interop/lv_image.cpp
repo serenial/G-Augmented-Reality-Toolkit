@@ -23,7 +23,7 @@ lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, bool allow_parallel_reads
                                                          m_edvr_data_ptr(get_edvr_data_ptr()),
                                                          m_data(get_metadata())
 {
-    image_persistant_data_t::lock(m_data, image_persistant_data_t::lock_states::CPP);
+    image_persistant_data_t::lock(m_data, allow_parallel_reads? image_persistant_data_t::lock_states::CPP_READ_ONLY : image_persistant_data_t::lock_states::CPP);
 }
 
 lv_image::~lv_image()
