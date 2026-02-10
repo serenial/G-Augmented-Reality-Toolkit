@@ -196,58 +196,6 @@
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
-			<Item Name="Installer Source Distribution" Type="Source Distribution">
-				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
-				<Property Name="Bld_buildCacheID" Type="Str">{80C320E8-24C6-4243-99FF-15221D3F3FBA}</Property>
-				<Property Name="Bld_buildSpecName" Type="Str">Installer Source Distribution</Property>
-				<Property Name="Bld_excludedDirectory[0]" Type="Path">vi.lib</Property>
-				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[1]" Type="Path">instr.lib</Property>
-				<Property Name="Bld_excludedDirectory[1].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[2]" Type="Path">user.lib</Property>
-				<Property Name="Bld_excludedDirectory[2].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[3]" Type="Path">resource/objmgr</Property>
-				<Property Name="Bld_excludedDirectory[3].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[4]" Type="Path">/C/ProgramData/National Instruments/InstCache/20.0</Property>
-				<Property Name="Bld_excludedDirectory[5]" Type="Path">/C/Users/john/Documents/LabVIEW Data/2020(32-bit)/ExtraVILib</Property>
-				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
-				<Property Name="Bld_localDestDir" Type="Path">../build/installer-source-distribution</Property>
-				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
-				<Property Name="Bld_previewCacheID" Type="Str">{E2A0ADA6-962A-4E89-87A1-2C05F03CA305}</Property>
-				<Property Name="Bld_version.build" Type="Int">27</Property>
-				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
-				<Property Name="Destination[0].path" Type="Path">../build/installer-source-distribution</Property>
-				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../build/installer-source-distribution/data</Property>
-				<Property Name="Destination[2].destName" Type="Str">common.bin</Property>
-				<Property Name="Destination[2].path" Type="Path">../build/installer-source-distribution/common/bin</Property>
-				<Property Name="DestinationCount" Type="Int">3</Property>
-				<Property Name="Source[0].itemID" Type="Str">{79E666A8-2E5B-48F7-8EE1-6B8D358CA06D}</Property>
-				<Property Name="Source[0].type" Type="Str">Container</Property>
-				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib</Property>
-				<Property Name="Source[1].Library.allowMissingMembers" Type="Bool">true</Property>
-				<Property Name="Source[1].newName" Type="Str">g_ar_toolkit.bit.lvlib</Property>
-				<Property Name="Source[1].type" Type="Str">Library</Property>
-				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[2].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Pre-Uninstall Custom Action.vi</Property>
-				<Property Name="Source[2].newName" Type="Str">__Toolkit Binaries Pre-Uninstall Custom Action__.vi</Property>
-				<Property Name="Source[2].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[2].type" Type="Str">VI</Property>
-				<Property Name="Source[3].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[3].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Post-Install Custom Action.vi</Property>
-				<Property Name="Source[3].newName" Type="Str">__Toolkit Binaries Post-Install Custom Action__.vi</Property>
-				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[3].type" Type="Str">VI</Property>
-				<Property Name="Source[4].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[4].itemID" Type="Ref">/My Computer/VIPM/Toolkit Post-Install Custom Action.vi</Property>
-				<Property Name="Source[4].type" Type="Str">VI</Property>
-				<Property Name="Source[5].destinationIndex" Type="Int">2</Property>
-				<Property Name="Source[5].itemID" Type="Ref">/My Computer/bin/COPYING</Property>
-				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="SourceCount" Type="Int">6</Property>
-			</Item>
 			<Item Name="Source Distribution" Type="Source Distribution">
 				<Property Name="Bld_buildCacheID" Type="Str">{2D2DC497-4EC7-44A6-9CE9-936A5A75204D}</Property>
 				<Property Name="Bld_buildSpecName" Type="Str">Source Distribution</Property>
@@ -548,6 +496,58 @@
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
 				<Property Name="SourceCount" Type="Int">50</Property>
+			</Item>
+			<Item Name="Installer Source Distribution" Type="Source Distribution">
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{80C320E8-24C6-4243-99FF-15221D3F3FBA}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Installer Source Distribution</Property>
+				<Property Name="Bld_excludedDirectory[0]" Type="Path">vi.lib</Property>
+				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectory[1]" Type="Path">instr.lib</Property>
+				<Property Name="Bld_excludedDirectory[1].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectory[2]" Type="Path">user.lib</Property>
+				<Property Name="Bld_excludedDirectory[2].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectory[3]" Type="Path">resource/objmgr</Property>
+				<Property Name="Bld_excludedDirectory[3].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectory[4]" Type="Path">/C/ProgramData/National Instruments/InstCache/20.0</Property>
+				<Property Name="Bld_excludedDirectory[5]" Type="Path">/C/Users/john/Documents/LabVIEW Data/2020(32-bit)/ExtraVILib</Property>
+				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../build/installer-source-distribution</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{E2A0ADA6-962A-4E89-87A1-2C05F03CA305}</Property>
+				<Property Name="Bld_version.build" Type="Int">28</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
+				<Property Name="Destination[0].path" Type="Path">../build/installer-source-distribution</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../build/installer-source-distribution/data</Property>
+				<Property Name="Destination[2].destName" Type="Str">common.bin</Property>
+				<Property Name="Destination[2].path" Type="Path">../build/installer-source-distribution/common/bin</Property>
+				<Property Name="DestinationCount" Type="Int">3</Property>
+				<Property Name="Source[0].itemID" Type="Str">{79E666A8-2E5B-48F7-8EE1-6B8D358CA06D}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib</Property>
+				<Property Name="Source[1].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[1].newName" Type="Str">g_ar_toolkit.bit.lvlib</Property>
+				<Property Name="Source[1].type" Type="Str">Library</Property>
+				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[2].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Pre-Uninstall Custom Action.vi</Property>
+				<Property Name="Source[2].newName" Type="Str">__Toolkit Binaries Pre-Uninstall Custom Action__.vi</Property>
+				<Property Name="Source[2].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[2].type" Type="Str">VI</Property>
+				<Property Name="Source[3].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[3].itemID" Type="Ref">/My Computer/VIPM/Toolkit Binaries Post-Install Custom Action.vi</Property>
+				<Property Name="Source[3].newName" Type="Str">__Toolkit Binaries Post-Install Custom Action__.vi</Property>
+				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[3].type" Type="Str">VI</Property>
+				<Property Name="Source[4].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[4].itemID" Type="Ref">/My Computer/VIPM/Toolkit Post-Install Custom Action.vi</Property>
+				<Property Name="Source[4].type" Type="Str">VI</Property>
+				<Property Name="Source[5].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[5].itemID" Type="Ref">/My Computer/bin/COPYING</Property>
+				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="SourceCount" Type="Int">6</Property>
 			</Item>
 		</Item>
 	</Item>

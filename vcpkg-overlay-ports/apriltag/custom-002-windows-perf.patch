@@ -1,8 +1,8 @@
 diff --git a/common/time_util.c b/common/time_util.c
-index 7a25f42..17ec17c 100644
+index 7a25f42..cd1edbd 100644
 --- a/common/time_util.c
 +++ b/common/time_util.c
-@@ -29,6 +29,56 @@ either expressed or implied, of the Regents of The University of Michigan.
+@@ -29,6 +29,65 @@ either expressed or implied, of the Regents of The University of Michigan.
  #include <math.h>
  #include "time_util.h"
  
@@ -20,7 +20,16 @@ index 7a25f42..17ec17c 100644
 +__declspec(dllimport) void __stdcall Sleep(unsigned long miliseconds);
 +__declspec(dllimport) int __stdcall QueryPerformanceCounter(PERF_QUAD_INTEGER* lpPerformanceCount);
 +__declspec(dllimport) int __stdcall QueryPerformanceFrequency(PERF_QUAD_INTEGER* lpFrequency);
++
++#ifdef _WIN64
++// 64-bit - use intrinsic
++#pragma intrinsic(_InterlockedCompareExchange)
++long _InterlockedCompareExchange(volatile long* Destination, long Exchange, long Comparand);
++#define InterlockedCompareExchange _InterlockedCompareExchange
++#else
++// 32-bit - use dllimport
 +__declspec(dllimport) long __stdcall InterlockedCompareExchange(volatile long* Destination, long Exchange, long Comparand);
++#endif
 +
 +#ifdef __cplusplus
 +}
