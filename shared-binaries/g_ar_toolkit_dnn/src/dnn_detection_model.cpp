@@ -159,7 +159,7 @@ extern "C"
         try
         {
             EDVRManagedObject<dnn_model_t> model(detector_edvr_ref_ptr);
-            lv_image src(image_edvr_ref_ptr);
+            lv_image src(image_edvr_ref_ptr, true);
 
             cv::Mat frame;
 

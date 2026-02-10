@@ -141,7 +141,7 @@ extern "C"
         try
         {
             EDVRManagedObject<text_detector_t> td(detector_edvr_ref_ptr);
-            lv_image src(image_edvr_ref_ptr);
+            lv_image src(image_edvr_ref_ptr, true);
 
             cv::Mat frame;
 
@@ -216,7 +216,7 @@ extern "C"
         {
             EDVRManagedObject<text_recognizer_t> r(recognizer_edvr_ref_ptr);
 
-            lv_image src(image_edvr_ref_ptr);
+            lv_image src(image_edvr_ref_ptr, true);
 
             cv::Mat frame;
 

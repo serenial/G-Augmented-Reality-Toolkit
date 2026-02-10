@@ -41,6 +41,13 @@ LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator=(const double array[2])
     return *this;
 }
 
+LV_ImagePointFloat_t &LV_ImagePointFloat_t::operator+(const cv::Point2i& other)
+{
+    m_x = m_x + other.x;
+    m_y = m_y + other.y;
+    return *this;
+}
+
 LV_ImagePointFloat_t &LV_ImagePointFloat_t::copy_from(const float *element_ptr)
 {
     m_x = *element_ptr++;

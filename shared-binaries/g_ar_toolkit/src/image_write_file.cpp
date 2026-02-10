@@ -21,7 +21,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             if (*save_alpha_ptr && src.is_bgra())
             {

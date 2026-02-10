@@ -97,7 +97,7 @@ extern "C"
             std::vector<std::vector<cv::Point>> contours;
             std::vector<cv::Vec4i> hierarchy;
 
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
 
             cv::findContours(src, contours, hierarchy, retrieval_mode, contour_mode);
 

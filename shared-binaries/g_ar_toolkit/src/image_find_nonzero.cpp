@@ -18,7 +18,7 @@ extern "C"
     {
         try
         {
-            lv_image img(img_edvr_ref_ptr);
+            lv_image img(img_edvr_ref_ptr, true);
             std::vector<cv::Point> points;
 
             cv::findNonZero(img, points);

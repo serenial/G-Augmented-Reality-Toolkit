@@ -19,11 +19,11 @@ lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, cv::Size size, bool is_ab
     image_persistant_data_t::lock(m_data, image_persistant_data_t::lock_states::CPP);
 }
 
-lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr) : m_edvr_ref_ptr(edvr_ref_ptr), m_ctx(get_ctx()),
+lv_image::lv_image(LV_EDVRReferencePtr_t edvr_ref_ptr, bool allow_parallel_reads) : m_edvr_ref_ptr(edvr_ref_ptr), m_ctx(get_ctx()),
                                                          m_edvr_data_ptr(get_edvr_data_ptr()),
                                                          m_data(get_metadata())
 {
-    image_persistant_data_t::lock(m_data, image_persistant_data_t::lock_states::CPP);
+    image_persistant_data_t::lock(m_data, allow_parallel_reads? image_persistant_data_t::lock_states::CPP_READ_ONLY : image_persistant_data_t::lock_states::CPP);
 }
 
 lv_image::~lv_image()
@@ -39,7 +39,7 @@ lv_image::~lv_image()
     m_edvr_data_ptr->sub_array.dimension_specifier[1] = {static_cast<size_t>(m_data->mat.cols), static_cast<ptrdiff_t>(m_data->mat.step[1])};
 
     // unlock
-    image_persistant_data_t::unlock(m_data, image_persistant_data_t::lock_states::CPP);
+    image_persistant_data_t::unlock(m_data);
 
     // release ref if originally added
     if (m_ctx)
@@ -105,26 +105,34 @@ lv_image::image_persistant_data_t *lv_image::get_metadata()
 
 void lv_image::image_persistant_data_t::lock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_to)
 {
+    bool read_only = transition_to == CPP_READ_ONLY;
     // obtain the mutex
     std::unique_lock<std::mutex> lk(d->m);
     // wait for the locked flag to be NONE
     // this will lead to deadlocks if CPP or CPP_MAPPED but that is probably desired behaviour
     d->cv.wait(lk, [&]
-               { return d->locked == NONE; });
+               { return d->locked == NONE || (read_only && d->locked == CPP_READ_ONLY); });
     d->locked = transition_to;
+    if(read_only){
+        ++d->ref_count;
+    }
     lk.unlock();
     d->cv.notify_all();
 }
 
-void lv_image::image_persistant_data_t::unlock(lv_image::image_persistant_data_t *d, lv_image::image_persistant_data_t::lock_states transition_from)
+void lv_image::image_persistant_data_t::unlock(lv_image::image_persistant_data_t *d)
 {
     {
         // obtain the mutex
         std::lock_guard<std::mutex> lk(d->m);
-        if (d->locked == transition_from)
-        {
+
+        if (d->locked == CPP_READ_ONLY && d->ref_count >0){
+            --d->ref_count;
+        }
+
+        if(d->ref_count == 0){
             d->locked = NONE;
-        };
+        }
     }
     // scoped-unlock and notify
     d->cv.notify_all();
@@ -179,7 +187,7 @@ LV_MgErr_t lv_image::on_labview_unlock(LV_EDVRDataPtr_t ptr)
     try
     {
         auto data = reinterpret_cast<image_persistant_data_t *>(ptr->metadata_ptr);
-        image_persistant_data_t::unlock(data, image_persistant_data_t::lock_states::LABVIEW);
+        image_persistant_data_t::unlock(data);
     }
     catch (...)
     {

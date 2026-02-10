@@ -20,8 +20,12 @@ extern "C"
         try
         {
             throw_if_edvr_ref_pointers_not_unique({src_edvr_ref_ptr, dst_edvr_ref_ptr});
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image dst(dst_edvr_ref_ptr);
+
+            if(src.is_empty()){
+                throw std::invalid_argument("Source image cannot be empty.");
+            }
 
             // destination will be auto-sized so no need to force with ensure_sized_to_match()
 
@@ -54,7 +58,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             // https://stackoverflow.com/a/23518786/5609762
             (*src).reshape(1, src.size().area()).col(channel).setTo(cv::Scalar(value));
         }
@@ -73,7 +77,7 @@ extern "C"
     {
         try
         {
-            lv_image src(src_edvr_ref_ptr);
+            lv_image src(src_edvr_ref_ptr, true);
             lv_image single_channel(single_channel_edvr_ref_ptr);
 
             int32_t from_to[] = {0, 0, 1, 1, 2, 2, 3, 3};
