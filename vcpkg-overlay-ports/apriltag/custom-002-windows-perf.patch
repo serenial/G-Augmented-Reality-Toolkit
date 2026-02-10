@@ -1,25 +1,23 @@
 diff --git a/common/time_util.c b/common/time_util.c
-index 7a25f42..cd1edbd 100644
+index 7a25f42..9cd100d 100644
 --- a/common/time_util.c
 +++ b/common/time_util.c
-@@ -29,6 +29,65 @@ either expressed or implied, of the Regents of The University of Michigan.
+@@ -29,6 +29,63 @@ either expressed or implied, of the Regents of The University of Michigan.
  #include <math.h>
  #include "time_util.h"
  
-+#ifdef _WIN32
++#ifdef _MSC_VER
 +
 +static long long performance_frequency = 0;
 +static volatile long performance_components_initialized = 0;
-+
-+typedef struct{long long QuadPart;} PERF_QUAD_INTEGER;
 +
 +#ifdef __cplusplus
 +extern "C" {
 +#endif
 +
 +__declspec(dllimport) void __stdcall Sleep(unsigned long miliseconds);
-+__declspec(dllimport) int __stdcall QueryPerformanceCounter(PERF_QUAD_INTEGER* lpPerformanceCount);
-+__declspec(dllimport) int __stdcall QueryPerformanceFrequency(PERF_QUAD_INTEGER* lpFrequency);
++__declspec(dllimport) int __stdcall QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
++__declspec(dllimport) int __stdcall QueryPerformanceFrequency(LARGE_INTEGER* lpFrequency);
 +
 +#ifdef _WIN64
 +// 64-bit - use intrinsic
@@ -37,7 +35,7 @@ index 7a25f42..cd1edbd 100644
 +
 +static void init_perf_components()
 +{
-+    PERF_QUAD_INTEGER freq;
++    LARGE_INTEGER freq;
 +    QueryPerformanceFrequency(&freq);
 +    performance_frequency = freq.QuadPart;
 +}
@@ -46,7 +44,7 @@ index 7a25f42..cd1edbd 100644
 +{
 +    (void)tzp;
 +
-+    PERF_QUAD_INTEGER counter;
++    LARGE_INTEGER counter;
 +    long long elapsed;
 +
 +    if (performance_components_initialized == 0)
@@ -69,39 +67,27 @@ index 7a25f42..cd1edbd 100644
  {
      int64_t acc_time;
 diff --git a/common/time_util.h b/common/time_util.h
-index a2ead4c..b7b36d6 100644
+index a2ead4c..be7ec5f 100644
 --- a/common/time_util.h
 +++ b/common/time_util.h
-@@ -32,26 +32,15 @@ either expressed or implied, of the Regents of The University of Michigan.
- #include <time.h>
- 
- #ifdef _WIN32
--#if defined __has_include && __has_include ("winsock2.h")
--#include <winsock2.h>
--#else
--#include <Winsock2.h>
--#endif
--typedef long long suseconds_t;
--#endif
+@@ -40,19 +40,7 @@ either expressed or implied, of the Regents of The University of Michigan.
+ typedef long long suseconds_t;
+ #endif
  
 -#ifdef _MSC_VER
-+typedef long long time_t;
-+typedef long suseconds_t;
- 
+-
 -inline int gettimeofday(struct timeval* tp, void* tzp)
 -{
 -  (void)tzp;
-+struct timeval {
-+    time_t      tv_sec;   /* Seconds */
-+    suseconds_t tv_usec;  /* Microseconds */
-+};
- 
+-
 -  unsigned long t;
 -  t = time(NULL);
 -  tp->tv_sec = t / 1000;
 -  tp->tv_usec = t % 1000;
 -  return 0;
 -}
- #else
+-#else
++#ifndef _MSC_VER
  #include <sys/time.h>
  #include <unistd.h>
+ #endif
