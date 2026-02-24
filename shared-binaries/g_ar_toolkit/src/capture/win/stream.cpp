@@ -220,12 +220,7 @@ Stream::Stream(const std::string &device_id, stream_type_t stream_type)
                            {
                                std::unique_lock<std::mutex> lk(m_mtx);
                                // wait for the state to change
-                               auto completed = m_notifier.wait_for(lk, DEFAULT_LONG_TIMEOUT,[&]
-                                               { return m_last_state != states::NOTHING_PENDING; });
-
-                               if(!completed){
-                                throw std::runtime_error("Internal timeout whilst waiting for the camera to initialize.");
-                               }
+                               m_notifier.wait(lk,[&]{ return m_last_state != states::NOTHING_PENDING; });
 
                                switch (m_last_state)
                                {

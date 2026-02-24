@@ -5,12 +5,10 @@ endif()
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO AprilRobotics/apriltag
-    REF 122ab9b4a1ee37e8bebfab59fa5808fe317b7b93 # master commit on Feb 5, 2026
-    SHA512 a4503d74597225813bd0ed2319a1b108bbdec774f003454aaafa297c379b33071ace7c5bd4b3e987006b0a2e6da99d63f48ea3d88e0d29f7e7138bbee14c0aeb
+    REF 8c52e4c6f2c85cf753367bc45212e652ece5ffc2 # master commit on Feb 24, 2026
+    SHA512 373a4b0d140af91c4aadd06a735346f93a013cf3105c3b77c56d400f946568fc7d3e8fcd919065223c6e70d16fbb3168e921fc7c9cf404bfc6fba481682e5f93
     HEAD_REF master
     PATCHES
-        custom-001-fix-compile-errors-on-vardiac-macro.patch
-        custom-002-windows-perf.patch
 )
 
 vcpkg_cmake_configure(
