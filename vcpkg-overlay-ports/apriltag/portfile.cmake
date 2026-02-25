@@ -9,6 +9,7 @@ vcpkg_from_github(
     SHA512 373a4b0d140af91c4aadd06a735346f93a013cf3105c3b77c56d400f946568fc7d3e8fcd919065223c6e70d16fbb3168e921fc7c9cf404bfc6fba481682e5f93
     HEAD_REF master
     PATCHES
+	    custom-001-fix-compile-errors-on-vardiac-macro.patch
 )
 
 vcpkg_cmake_configure(
