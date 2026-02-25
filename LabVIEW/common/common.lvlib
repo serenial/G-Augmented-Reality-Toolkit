@@ -36,7 +36,6 @@
 	</Item>
 	<Item Name="Utility" Type="Folder">
 		<Item Name="Break on NILRT-ARM32.vi" Type="VI" URL="../Break on NILRT-ARM32.vi"/>
-		<Item Name="Break on NILRT-ARM64.vi" Type="VI" URL="../Break on NILRT-ARM64.vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (Augmented Reality).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (Augmented Reality).vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (Core).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (Core).vi"/>
 		<Item Name="NI-Linux-RT Shared Library Path (DNN).vi" Type="VI" URL="../NI-Linux-RT Shared Library Path (DNN).vi"/>

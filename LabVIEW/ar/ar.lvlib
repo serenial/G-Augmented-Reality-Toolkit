@@ -145,6 +145,7 @@
 		<Item Name="Roll-Pitch-Yaw to Quaternion.vi" Type="VI" URL="../Roll-Pitch-Yaw to Quaternion.vi"/>
 		<Item Name="Rotation Matrix to Quaternion.vi" Type="VI" URL="../Rotation Matrix to Quaternion.vi"/>
 		<Item Name="Scale Camera Parameters to New Size.vi" Type="VI" URL="../Scale Camera Parameters to New Size.vi"/>
+		<Item Name="Shared Binary Version.vi" Type="VI" URL="../Shared Binary Version.vi"/>
 		<Item Name="Solve PnP.vi" Type="VI" URL="../Solve PnP.vi"/>
 		<Item Name="Transform Components to Transformation Matrix.vi" Type="VI" URL="../Transform Components to Transformation Matrix.vi"/>
 		<Item Name="Transformation Matrix to 3D Model View Matrix.vi" Type="VI" URL="../Transformation Matrix to 3D Model View Matrix.vi"/>

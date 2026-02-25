@@ -7,7 +7,7 @@ using namespace lv_interop;
 
 extern "C"
 {
-    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_verson(LV_StringHandle_t ver_handle)
+    G_AR_TOOLKIT_DNN_EXPORT LV_MgErr_t g_ar_tk_dnn_version(LV_StringHandle_t ver_handle)
     {
         try
         {
