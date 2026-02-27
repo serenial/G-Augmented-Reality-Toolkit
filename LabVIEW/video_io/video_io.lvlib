@@ -1,6 +1,7 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <Library LVVersion="20008000">
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!+9!!!*Q(C=\:7B&lt;BN"%)&lt;`6!5N;719&amp;BHWJ"&lt;-+RC&lt;G&lt;&gt;E8C$!V.!P5$"3+A557?I4'*50+\:5K;D%M#D2^NPVRKXL3&amp;'6A),-XNTN`LM\]XFP&lt;SUV?S%^6\H08N`;^#[L`8U1^&gt;IO83^4;N&gt;UX5&lt;9^&lt;&gt;LWCNFWPL,\J)'$=0!I`LOM:N@WP4B'%[`]U^LI_DQ^H004]I\@OO".,1Z[N:KQ\\:J+0_1XNQ`T(@X`V(NX_:`W20&gt;I=N\DU$3PGOU`,N$\`?_[09S7YXFZ*YY)Z&lt;_U:+IC&gt;[IC&gt;[IC&gt;[I!&gt;[I!&gt;[I!?[ITO[ITO[ITO[I2O[I2O[I6P^+'N"&amp;\L1:@6$6:)]3:1%41)EAU&amp;2=ENY%J[%*_'BK91HY5FY%J[%BS&amp;+?"+?B#@B38C9JI1HY5FY%J[%BV#.*&amp;N"BS@B)&lt;Q#HI!HY!FY!BZ3+O!*!)*E1?!A#"A+/I.+Q"0Q"$R5&amp;@!%0!&amp;0Q"0QU+W!*_!*?!+?A)=J&lt;67CU&gt;3#$A^BZ0!Y0![0Q_0Q%&amp;I/D]0D]$A]$A`JZ0!Y0![%E^!*$I+=3=Y!J_(Q/$Q]Z0!Y0![0Q_0QU.8?E,?6K43VI-.D]"A]"I`"9`!11A;0Q70Q'$Q'$W&amp;F]"A]"I`"9`#13A;0Q70Q'#"'5N,,#':-.!9:AM($V8;,N&lt;=5D=2;E@LG6&gt;_5[JN.@2/J&lt;Q\VF[\_-N6@EPLCKS_K_G+J,Y,[DV/(6I&gt;24[)_O1\5FPM'8_-L@)H0]2E_Q=@YK%Z^Z)(&lt;\6;&lt;T5&lt;L^6KLV5L,Z6,T_6STW5S4S54D]6CDU7B`$*R4^A@#\FR;5,]]_`,V[OT]Q_=LH8R[7WYOXVR]8*S7G`*D]6YP&amp;_`W8M_D6R?8DX=O`1^HIZY&gt;`./T2L]![4`*G!!!!!!</Property>
+	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SaveVersion" Type="Str">20.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
@@ -15,6 +16,7 @@
 		<Item Name="Reader.lvclass" Type="LVClass" URL="../Reader/Reader.lvclass"/>
 		<Item Name="Writer (ARGB).lvclass" Type="LVClass" URL="../Writer (ARGB)/Writer (ARGB).lvclass"/>
 		<Item Name="Writer (Greyscale).lvclass" Type="LVClass" URL="../Writer (Greyscale)/Writer (Greyscale).lvclass"/>
+		<Item Name="Shared Binary Version.vi" Type="VI" URL="../Shared Binary Version.vi"/>
 	</Item>
 	<Item Name="Private" Type="Folder">
 		<Property Name="NI.LibItem.Scope" Type="Int">2</Property>

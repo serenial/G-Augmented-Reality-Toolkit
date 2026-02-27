@@ -3,6 +3,7 @@
 	<Property Name="NI.Lib.Description" Type="Str">G Augmented Reality Toolkit Image Library contains the base image types and image transformation operations.</Property>
 	<Property Name="NI.Lib.HelpPath" Type="Str"></Property>
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*7!!!*Q(C=\&gt;5B&lt;BN2%-&lt;RLV6!K7'9:;GE&gt;(#:L_!LT!&amp;-4!0.IY#2!AJ;9KEH-#I@&amp;OQL_!36NP]X/Y[CKEJ)7V66XPIZ[_`NG`@T\HID68MH87F[K8WYN/WPWBDPA^A@H[@/JSV\XRG[6*D([\8NH7F&lt;Y^0]KG1O-I^8(`/H?@J=]_@ZP@YF?4J?[T_D,_@T4;`NN@X@\?&lt;&amp;(]%@`RW]U8A1U:-?&gt;+?&lt;RL*4EC&gt;ZEC&gt;ZEC&gt;ZE!&gt;ZE!&gt;ZE!?ZETOZETOZETOZE2OZE2OZE2NZ&lt;?1C&amp;\H))37,*QMF2:-#S=&amp;1F,QFHM34?")0(Z6Y%E`C34S*BU/5?"*0YEE]C9&gt;J3DS**`%EHM2$K:*E&lt;?2Y%A`F&amp;8A#4_!*0)'(*26Y!E#Q7&amp;!Y+!*$Q7#Q%XA#4_"B6Y%H]!3?Q".Y'&amp;&lt;A#4S"*`!%(K&lt;579H3D)U=$W8E?"S0YX%]DI@3=DS/R`%Y(M@$=H)]DM&gt;"/!M[R3()G?1=Y(RQ0)[(0X)]DM@R/"\(QV"&gt;);]T-T2D)]&gt;D?!S0Y4%]BI=3-DS'R`!9(M.$72E?QW.Y$)`B93E:(M.D?!S)M3D,SSBG4$1/-A,$Q[PO&amp;KOL&amp;#7RWK3_?&gt;5XJ@JG5^^%[JN$@&gt;(6&amp;V.^E&gt;1H8XV3V3&gt;,@2,58U[.6G05C[AHDQ.VZPV%0^)0^$V^2^`1V`16@4'G`O9$T_?T4K?4DM?D$I?$^PO^&gt;LO&gt;.JO.VOOV6KO6&amp;IP&amp;YW.AS@&lt;Y1*C@3T@MXV^`?`BUP&lt;T\_C8D]]@FX@X\Z?X)`],`ZX`AW;CX?LI'Z_A(_#V^Y1!!!!!</Property>
+	<Property Name="NI.Lib.SourceVersion" Type="Int">536903680</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SaveVersion" Type="Str">20.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
@@ -366,6 +367,7 @@
 		<Item Name="Warp Affine.vi" Type="VI" URL="../Warp Affine.vi"/>
 		<Item Name="Warp Perspective.vi" Type="VI" URL="../Warp Perspective.vi"/>
 		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
+		<Item Name="Shared Library Version.vi" Type="VI" URL="../Shared Library Version.vi"/>
 		<Item Name="CLAHE.lvclass" Type="LVClass" URL="../CLAHE/CLAHE.lvclass"/>
 	</Item>
 </Library>
