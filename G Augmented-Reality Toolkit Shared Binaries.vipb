@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-02-10 18:58:05" Creator="john" Comments="" ID="c15cd8ecfd2eae407518c27d7768ebd0">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-02-26 22:06:36" Creator="john" Comments="" ID="3c7412aed3459632d33e81e5e25c1058">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit_shared_binaries</Package_File_Name>
-    <Library_Version>1.7.0.2</Library_Version>
+    <Library_Version>1.8.0.4</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>build\installer-source-distribution\common\bin</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
@@ -32,9 +32,7 @@
       <Copyright>Copyright (c) 2025, Serenial and contributors</Copyright>
       <Packager>Serenial</Packager>
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit</URL>
-      <Release_Notes>* Apriltag Detector Region of Interest
-* Fix Apriltag Detector Refine Edges
-* Support parallel read-only access to image data</Release_Notes>
+      <Release_Notes>* Fix Windows Webcam Streaming Bug</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
