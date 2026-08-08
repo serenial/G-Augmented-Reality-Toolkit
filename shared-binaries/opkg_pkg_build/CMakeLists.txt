@@ -7,8 +7,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND BUILD_OPKG)
 
     ExternalProject_Add(
         opkg_utils
-        URL https://git.yoctoproject.org/opkg-utils/snapshot/opkg-utils-0.7.0.tar.gz
-        URL_HASH SHA512=441ee5ed416c3565617ae5fc413846ebc53e33876f9cce5e721afef2b8d9cd68723231ea12c8a2effaba2ccb33a36dc6e180994a57e6871f34d671c03ab36b7b
+        GIT_REPOSITORY https://git.yoctoproject.org/opkg-utils
+        GIT_TAG 0.7.0
         CONFIGURE_COMMAND ""
         INSTALL_COMMAND ""
         BUILD_COMMAND "make"
