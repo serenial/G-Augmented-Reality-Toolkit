@@ -9,7 +9,7 @@ if(NOT _NILRT_ARM3V7_A_TOOLCHAIN)
     set(CMAKE_CROSSCOMPILING ON)
 
     # Compile tools location
-    set(OE_COMPILE_TOOLS_DIR "/usr/local/oecore-x86_64/")
+    set(OE_COMPILE_TOOLS_DIR "/usr/local/oecore-x86_64")
 
     # Sysroot configuration
     set(SDKTARGETSYSROOT "${OE_COMPILE_TOOLS_DIR}/sysroots/cortexa9-vfpv3-nilrt-linux-gnueabi")
