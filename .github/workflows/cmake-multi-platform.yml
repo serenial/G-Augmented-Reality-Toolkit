@@ -14,19 +14,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest]
+        os: [ubuntu-22.04, windows-2022]
         arch: [x86, x64, armv7a-nilrt, armv8a-rpi5]
         include:
-          - os: windows-latest
+          - os: windows-2022
             triplet_platform: windows-static
           - os: ubuntu-22.04
             triplet_platform: linux
         exclude:
         - os: ubuntu-22.04
           arch: x86
-        - os: windows-latest
+        - os: windows-2022
           arch: armv7a-nilrt
-        - os: windows-latest
+        - os: windows-2022
           arch: armv8a-rpi5
         
     steps:
