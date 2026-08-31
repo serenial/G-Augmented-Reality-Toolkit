@@ -3,6 +3,8 @@
     "apriltag",
     "eigen3",
     "libjpeg-turbo",
+    "nu-book-zxing-cpp",
+    "tinyobjloader",
     {
       "name": "opencv4",
       "default-features": false,
@@ -15,30 +17,15 @@
         "png",
         "tiff",
         "webp",
+        "contrib",
+        "dnn",
+        "text",
+        "ffmpeg",
         {
           "name": "ipp",
           "platform": "x86|x64"
         }
       ]
-    },
-    {
-      "name": "opencv4",
-      "default-features": false,
-      "platform": "!arm32",
-      "features": [
-        "contrib",
-        "dnn",
-        "text",
-        "ffmpeg"
-      ]
-    },
-    {
-      "name": "nu-book-zxing-cpp",
-      "platform": "!arm32"
-    },
-    {
-      "name": "tinyobjloader",
-      "platform": "!arm32"
     }
   ]
 }
