@@ -139,7 +139,6 @@
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
-                "GENERATE_ARCHIVE": "OFF",
                 "ARCHIVE_PLATFORM_NAME" : "armv7a"
             }
         },

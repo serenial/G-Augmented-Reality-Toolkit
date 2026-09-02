@@ -7,6 +7,9 @@ find_package(apriltag 3.4.5 REQUIRED)
 # Find OpenCV
 find_package(OpenCV 4.11 REQUIRED objdetect)
 
+# Find ZXing
+find_package(ZXing CONFIG REQUIRED)
+
 # specify shared-library target
 add_library(g_ar_toolkit_fd SHARED)
 
@@ -39,6 +42,8 @@ target_link_libraries(g_ar_toolkit_fd PRIVATE
   g_ar_toolkit
   apriltag::apriltag
   opencv_objdetect
+  ZXing::Core
+  ZXing::ZXing
 )
 
 target_sources(g_ar_toolkit_fd PRIVATE
@@ -49,18 +54,5 @@ target_sources(g_ar_toolkit_fd PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_encoder.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_qr_detector.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_barcode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
 )
-
-if(NOT OMIT_ZXING)
-  # Find ZXing
-  find_package(ZXing CONFIG REQUIRED)
-
-  target_link_libraries(g_ar_toolkit_fd PRIVATE
-    ZXing::Core
-    ZXing::ZXing
-  )
-
-  target_sources(g_ar_toolkit_fd PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/src/feature_detection_zxing.cpp
-  )
-endif()

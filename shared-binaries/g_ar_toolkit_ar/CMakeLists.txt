@@ -7,6 +7,9 @@ find_package(OpenCV 4.11 REQUIRED imgproc calib3d)
 # Find Eigen
 find_package(Eigen3 REQUIRED NO_MODULE)
 
+# Find tinyobjloader
+find_package(tinyobjloader REQUIRED)
+
 # specify shared-library target
 add_library(g_ar_toolkit_ar SHARED)
 
@@ -40,6 +43,7 @@ target_link_libraries(g_ar_toolkit_ar PRIVATE
   opencv_imgproc
   opencv_calib3d
   Eigen3::Eigen
+  tinyobjloader::tinyobjloader
 )
 
 target_sources(g_ar_toolkit_ar PRIVATE
@@ -52,17 +56,6 @@ target_sources(g_ar_toolkit_ar PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_distortion.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_undistort.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_image_undistortion.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ar_version.cpp 
-)
-
-if(NOT OMIT_OBJLOADER)
-# Find tinyobjloader
-find_package(tinyobjloader REQUIRED)
-
-target_link_libraries(g_ar_toolkit_ar PRIVATE
-  tinyobjloader::tinyobjloader
-)
-target_sources(g_ar_toolkit_ar PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/src/ar_version.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/ar_obj_loader.cpp
 )
-endif()
