@@ -56,7 +56,6 @@
 			<Item Name="Source Distribution" Type="Source Distribution">
 				<Property Name="Bld_buildCacheID" Type="Str">{2D2DC497-4EC7-44A6-9CE9-936A5A75204D}</Property>
 				<Property Name="Bld_buildSpecName" Type="Str">Source Distribution</Property>
-				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_excludedDirectory[0]" Type="Path">vi.lib</Property>
 				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[1]" Type="Path">resource/objmgr</Property>
@@ -67,6 +66,7 @@
 				<Property Name="Bld_excludedDirectory[4].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[5]" Type="Path">user.lib</Property>
 				<Property Name="Bld_excludedDirectory[5].pathType" Type="Str">relativeToAppDir</Property>
+				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_excludeDependentDLLs" Type="Bool">true</Property>
 				<Property Name="Bld_excludeDependentPPLs" Type="Bool">true</Property>
 				<Property Name="Bld_localDestDir" Type="Path">../build/source-distribution</Property>
@@ -75,10 +75,11 @@
 				<Property Name="Bld_removeVIObj" Type="Int">1</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Bld_version.minor" Type="Int">1</Property>
-				<Property Name="DestinationCount" Type="Int">13</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/source-distribution</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../build/source-distribution/data</Property>
 				<Property Name="Destination[10].destName" Type="Str">examples</Property>
 				<Property Name="Destination[10].path" Type="Path">../build/source-distribution/g_ar_toolkit.examples</Property>
 				<Property Name="Destination[11].destName" Type="Str">video_io</Property>
@@ -87,8 +88,6 @@
 				<Property Name="Destination[12].destName" Type="Str">binary-installation-tools</Property>
 				<Property Name="Destination[12].path" Type="Path">../build/source-distribution/g_ar_toolkit.binary-installation-tools</Property>
 				<Property Name="Destination[12].preserveHierarchy" Type="Bool">true</Property>
-				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../build/source-distribution/data</Property>
 				<Property Name="Destination[2].destName" Type="Str">common</Property>
 				<Property Name="Destination[2].path" Type="Path">../build/source-distribution/g_ar_toolkit.common</Property>
 				<Property Name="Destination[2].preserveHierarchy" Type="Bool">true</Property>
@@ -111,9 +110,16 @@
 				<Property Name="Destination[8].path" Type="Path">../build/source-distribution/g_ar_toolkit.common/bin</Property>
 				<Property Name="Destination[9].destName" Type="Str">root</Property>
 				<Property Name="Destination[9].path" Type="Path">../build/source-distribution</Property>
-				<Property Name="SourceCount" Type="Int">50</Property>
+				<Property Name="DestinationCount" Type="Int">13</Property>
 				<Property Name="Source[0].itemID" Type="Str">{24A02B5B-4FFB-4987-A109-7CE4D12013D5}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
+				<Property Name="Source[1].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/test-images</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[1].type" Type="Str">Container</Property>
 				<Property Name="Source[10].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[10].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[10].destinationIndex" Type="Int">2</Property>
@@ -158,13 +164,11 @@
 				<Property Name="Source[19].destinationIndex" Type="Int">5</Property>
 				<Property Name="Source[19].itemID" Type="Ref">/My Computer/feature_detection.lvlib/Polymorphic Implementations</Property>
 				<Property Name="Source[19].type" Type="Str">Container</Property>
-				<Property Name="Source[1].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[1].Container.applyInclusion" Type="Bool">true</Property>
-				<Property Name="Source[1].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/test-images</Property>
-				<Property Name="Source[1].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[1].type" Type="Str">Container</Property>
+				<Property Name="Source[2].Container.applyDestination" Type="Bool">true</Property>
+				<Property Name="Source[2].Container.depDestIndex" Type="Int">0</Property>
+				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[2].itemID" Type="Ref">/My Computer/models</Property>
+				<Property Name="Source[2].type" Type="Str">Container</Property>
 				<Property Name="Source[20].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[20].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[20].destinationIndex" Type="Int">5</Property>
@@ -207,11 +211,12 @@
 				<Property Name="Source[29].destinationIndex" Type="Int">5</Property>
 				<Property Name="Source[29].itemID" Type="Ref">/My Computer/feature_detection.lvlib/API</Property>
 				<Property Name="Source[29].type" Type="Str">Container</Property>
-				<Property Name="Source[2].Container.applyDestination" Type="Bool">true</Property>
-				<Property Name="Source[2].Container.depDestIndex" Type="Int">0</Property>
-				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[2].itemID" Type="Ref">/My Computer/models</Property>
-				<Property Name="Source[2].type" Type="Str">Container</Property>
+				<Property Name="Source[3].destinationIndex" Type="Int">2</Property>
+				<Property Name="Source[3].itemID" Type="Ref">/My Computer/common.lvlib</Property>
+				<Property Name="Source[3].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[3].newName" Type="Str">g_ar_toolkit.common.lvlib</Property>
+				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[3].type" Type="Str">Library</Property>
 				<Property Name="Source[30].Container.applyDestination" Type="Bool">true</Property>
 				<Property Name="Source[30].Container.depDestIndex" Type="Int">0</Property>
 				<Property Name="Source[30].destinationIndex" Type="Int">7</Property>
@@ -263,12 +268,12 @@
 				<Property Name="Source[39].destinationIndex" Type="Int">9</Property>
 				<Property Name="Source[39].itemID" Type="Ref">/My Computer/LICENSE</Property>
 				<Property Name="Source[39].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[3].destinationIndex" Type="Int">2</Property>
-				<Property Name="Source[3].itemID" Type="Ref">/My Computer/common.lvlib</Property>
-				<Property Name="Source[3].Library.allowMissingMembers" Type="Bool">true</Property>
-				<Property Name="Source[3].newName" Type="Str">g_ar_toolkit.common.lvlib</Property>
-				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[3].type" Type="Str">Library</Property>
+				<Property Name="Source[4].destinationIndex" Type="Int">3</Property>
+				<Property Name="Source[4].itemID" Type="Ref">/My Computer/image.lvlib</Property>
+				<Property Name="Source[4].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[4].newName" Type="Str">g_ar_toolkit.image.lvlib</Property>
+				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[4].type" Type="Str">Library</Property>
 				<Property Name="Source[40].destinationIndex" Type="Int">11</Property>
 				<Property Name="Source[40].itemID" Type="Ref">/My Computer/video_io.lvlib</Property>
 				<Property Name="Source[40].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -318,12 +323,6 @@
 				<Property Name="Source[49].destinationIndex" Type="Int">12</Property>
 				<Property Name="Source[49].itemID" Type="Ref">/My Computer/binary_installation_tools.lvlib/API</Property>
 				<Property Name="Source[49].type" Type="Str">Container</Property>
-				<Property Name="Source[4].destinationIndex" Type="Int">3</Property>
-				<Property Name="Source[4].itemID" Type="Ref">/My Computer/image.lvlib</Property>
-				<Property Name="Source[4].Library.allowMissingMembers" Type="Bool">true</Property>
-				<Property Name="Source[4].newName" Type="Str">g_ar_toolkit.image.lvlib</Property>
-				<Property Name="Source[4].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="Source[4].type" Type="Str">Library</Property>
 				<Property Name="Source[5].destinationIndex" Type="Int">6</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/capture.lvlib</Property>
 				<Property Name="Source[5].Library.allowMissingMembers" Type="Bool">true</Property>
@@ -353,12 +352,12 @@
 				<Property Name="Source[9].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[9].itemID" Type="Ref">/My Computer/common.lvlib/Mathematical</Property>
 				<Property Name="Source[9].type" Type="Str">Container</Property>
+				<Property Name="SourceCount" Type="Int">50</Property>
 			</Item>
 			<Item Name="Installer Source Distribution" Type="Source Distribution">
 				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
 				<Property Name="Bld_buildCacheID" Type="Str">{80C320E8-24C6-4243-99FF-15221D3F3FBA}</Property>
 				<Property Name="Bld_buildSpecName" Type="Str">Installer Source Distribution</Property>
-				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_excludedDirectory[0]" Type="Path">vi.lib</Property>
 				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[1]" Type="Path">instr.lib</Property>
@@ -369,19 +368,19 @@
 				<Property Name="Bld_excludedDirectory[3].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[4]" Type="Path">/C/ProgramData/National Instruments/InstCache/20.0</Property>
 				<Property Name="Bld_excludedDirectory[5]" Type="Path">/C/Users/john/Documents/LabVIEW Data/2020(32-bit)/ExtraVILib</Property>
+				<Property Name="Bld_excludedDirectoryCount" Type="Int">6</Property>
 				<Property Name="Bld_localDestDir" Type="Path">../build/installer-source-distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{E2A0ADA6-962A-4E89-87A1-2C05F03CA305}</Property>
 				<Property Name="Bld_version.build" Type="Int">31</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="DestinationCount" Type="Int">3</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/installer-source-distribution</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
 				<Property Name="Destination[1].path" Type="Path">../build/installer-source-distribution/data</Property>
 				<Property Name="Destination[2].destName" Type="Str">common.bin</Property>
 				<Property Name="Destination[2].path" Type="Path">../build/installer-source-distribution/common/bin</Property>
-				<Property Name="SourceCount" Type="Int">6</Property>
+				<Property Name="DestinationCount" Type="Int">3</Property>
 				<Property Name="Source[0].itemID" Type="Str">{79E666A8-2E5B-48F7-8EE1-6B8D358CA06D}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
@@ -405,6 +404,7 @@
 				<Property Name="Source[5].destinationIndex" Type="Int">2</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/bin/COPYING</Property>
 				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="SourceCount" Type="Int">6</Property>
 			</Item>
 		</Item>
 	</Item>
