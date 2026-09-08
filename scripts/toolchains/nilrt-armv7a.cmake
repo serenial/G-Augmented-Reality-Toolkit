@@ -36,6 +36,7 @@ if(NOT _NILRT_ARM3V7_A_TOOLCHAIN)
     set(CMAKE_OBJDUMP "${TOOLCHAIN_BIN_DIR}/${CROSS_COMPILE_PREFIX}objdump" CACHE FILEPATH "Objdump")
 
     # Compiler and Linker Flags
+    set(CMAKE_CXX_STANDARD 17)
     set(CMAKE_C_FLAGS_INIT "-march=armv7-a -mfpu=vfpv3  -mfloat-abi=softfp -mcpu=cortex-a9 -O3 -fPIC")
     set(CMAKE_CXX_FLAGS_INIT "-march=armv7-a -mfpu=vfpv3  -mfloat-abi=softfp -mcpu=cortex-a9 -O3 -fPIC")
 

@@ -19,7 +19,7 @@
 		<Item Name="Binary Dependency Platform.ctl" Type="VI" URL="../Binary Dependency Platform.ctl"/>
 		<Item Name="Determine Platform.vi" Type="VI" URL="../Determine Platform.vi"/>
 		<Item Name="Download Dependencies.vi" Type="VI" URL="../Download Dependencies.vi"/>
-		<Item Name="Extract Tar Archive.vi" Type="VI" URL="../Extract Tar Archive.vi"/>
+		<Item Name="Extract Zip Archive.vi" Type="VI" URL="../Extract Zip Archive.vi"/>
 		<Item Name="Resolve Redirects.vi" Type="VI" URL="../Resolve Redirects.vi"/>
 	</Item>
 </Library>
