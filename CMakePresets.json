@@ -74,20 +74,20 @@
             }
         },
         {
-            "name": "nilrt-armv7a-cross",
+            "name": "linux-oe-armv7a-cross",
             "inherits": "linux-x64-release",
-            "binaryDir": "${sourceDir}/build/nilrt-armv7a",
+            "binaryDir": "${sourceDir}/build/oe-armv7a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
+                "VCPKG_TARGET_TRIPLET": "armv7a-oe-linux-ci",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/oe-armv7a.cmake",
                 "OMIT_ZXING": "ON",
                 "OMIT_TESSERACT": "ON",
                 "OMIT_OBJLOADER": "ON"
             }
         },
         {
-            "name": "rpi5-armv8a-cross",
+            "name": "linux-rpi5-armv8a-cross",
             "inherits": "linux-x64-release",
             "binaryDir": "${sourceDir}/build/rpi5-armv8a",
             "cacheVariables": {
@@ -137,18 +137,18 @@
             }
         },
         {
-            "name": "ci-linux-armv7a-nilrt",
-            "inherits": "nilrt-armv7a-cross",
+            "name": "ci-linux-armv7a-oe",
+            "inherits": "linux-oe-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
                 "GENERATE_ARCHIVE": "OFF",
-                "ARCHIVE_PLATFORM_NAME" : "armv7a"
+                "ARCHIVE_PLATFORM_NAME" : "armv7a-vfp"
             }
         },
         {
             "name": "ci-linux-armv8a-rpi5",
-            "inherits": "rpi5-armv8a-cross",
+            "inherits": "linux-rpi5-armv8a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "ARCHIVE_PLATFORM_NAME":"armv8a-rpi5",
@@ -212,10 +212,10 @@
             "configurePreset": "ci-linux-x64"
         },
         {
-            "name": "ci-linux-armv7a-nilrt",
+            "name": "ci-linux-armv7a-oe",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-armv7a-nilrt"
+            "configurePreset": "ci-linux-armv7a-oe"
         },
         {
             "name": "ci-linux-armv8a-rpi5",
