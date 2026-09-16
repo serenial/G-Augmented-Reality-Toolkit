@@ -23,17 +23,24 @@ extern "C"
         {
             lv_image src(src_edvr_ref_ptr, true);
 
-            if (*save_alpha_ptr && src.is_bgra())
+            bool success;
+
+            if (src.is_bgra() && *save_alpha_ptr || src.is_greyscale())
             {
-                cv::imwrite(path_string_handle, src);
+                // colour and write ARGB or greyscale
+                success = cv::imwrite(path_string_handle, src);
+            }
+            else
+            {
+
+                cv::Mat bgr(src.size(), CV_8UC3);
+                cv::cvtColor(src, bgr, cv::COLOR_BGRA2BGR);
+
+                success = cv::imwrite(path_string_handle, bgr);
             }
 
-            cv::Mat bgr(src.size(), CV_8UC3);
-            cv::cvtColor(src, bgr, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
-            
-            auto success = cv::imwrite(path_string_handle, bgr);
-
-            if(!success){
+            if (!success)
+            {
                 throw std::invalid_argument("Unable to write file to \"" + std::string(path_string_handle) + "\".");
             }
         }
