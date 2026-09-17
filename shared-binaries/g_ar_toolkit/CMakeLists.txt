@@ -160,7 +160,7 @@ target_sources(g_ar_toolkit PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/image_bitwise.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/image_read_file.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/image_write_file.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/src/image_write_buffer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_file_encoder.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/image_add_weighted.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/image_flip.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/image_crop.cpp
