@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-2022]
-        arch: [x86, x64, coretexa9-nilrt, armv8a-rpi5, armv7a-oe]
+        arch: [x86, x64, cortexa9-nilrt, armv8a-rpi5, armv7a-oe]
         include:
           - os: windows-2022
             triplet_platform: windows-static
