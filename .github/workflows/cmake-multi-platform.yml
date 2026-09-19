@@ -29,7 +29,7 @@ jobs:
         - os: windows-2022
           arch: armv8a-rpi5
         - os: windows-2022
-          arch: armv8a-rpi5
+          arch: armv7a-oe
         
     steps:
     - name: Restore vcpkg cache
