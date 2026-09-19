@@ -92,7 +92,7 @@
             "binaryDir": "${sourceDir}/build/nilrt-cortexa9",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-oe-linux-ci",
+                "VCPKG_TARGET_TRIPLET": "cortexa9-nilrt-linux-ci",
                 "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-cortexa9.cmake",
                 "OMIT_ZXING": "ON",
                 "OMIT_TESSERACT": "ON",
