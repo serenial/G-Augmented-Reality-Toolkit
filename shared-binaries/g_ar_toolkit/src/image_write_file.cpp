@@ -56,7 +56,9 @@ extern "C"
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t extension_handle,
         LV_EDVRReferencePtr_t src_edvr_ref_ptr,
-        LV_StringHandle_t buffer_handle)
+        LV_BooleanPtr_t write_alpha_ptr,
+        LV_StringHandle_t buffer_handle
+    )
     {
         try
         {
@@ -65,7 +67,8 @@ extern "C"
             bool success;
             std::vector<uchar> buffer;
 
-            if (src.is_greyscale())
+
+            if (src.is_bgra() && *write_alpha_ptr || src.is_greyscale())
             {
                 // colour and write ARGB or greyscale
                 success = cv::imencode(extension_handle, src, buffer);

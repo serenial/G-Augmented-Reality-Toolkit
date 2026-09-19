@@ -188,12 +188,6 @@
 				<Item Name="LUnit Runnable.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Astemes/LUnit/LUnit Runnable.lvclass"/>
 				<Item Name="Create Mask.vi" Type="VI" URL="/&lt;vilib&gt;/picture/pictutil.llb/Create Mask.vi"/>
 				<Item Name="Empty Picture" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Empty Picture"/>
-				<Item Name="Append Pass Result.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Append Pass Result.vi"/>
-				<Item Name="Append Fail Result.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Append Fail Result.vi"/>
-				<Item Name="Describe Comparison.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Describe Comparison.vi"/>
-				<Item Name="Compare Variants.vim" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Compare Variants.vim"/>
-				<Item Name="Run In UI.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Run In UI.vi"/>
-				<Item Name="Describe Variant.vi" Type="VI" URL="/&lt;vilib&gt;/Astemes/LUnit/Describe Variant.vi"/>
 				<Item Name="Parameterized Test Case.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Astemes/LUnit Parameterized/Parameterized Test Case/Parameterized Test Case.lvclass"/>
 				<Item Name="Space Constant.vi" Type="VI" URL="/&lt;vilib&gt;/dlg_ctls.llb/Space Constant.vi"/>
 				<Item Name="Parameterized Test Suite.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Astemes/LUnit Parameterized/Parameterized Test Suite/Parameterized Test Suite.lvclass"/>
@@ -202,11 +196,9 @@
 				<Item Name="NI_SHA-3.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/security/Message Digest/SHA-3/NI_SHA-3.lvclass"/>
 				<Item Name="NI_Keccak.lvlib" Type="Library" URL="/&lt;vilib&gt;/security/Message Digest/Keccak/NI_Keccak.lvlib"/>
 				<Item Name="TRef Traverse.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/traverseref.llb/TRef Traverse.vi"/>
+				<Item Name="g_ar_toolkit.common.lvlib" Type="Library" URL="/&lt;vilib&gt;/Serenial/G Augmented-Reality Toolkit/g_ar_toolkit.common/g_ar_toolkit.common.lvlib"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="gartoolkit_fd_64-1.so" Type="Document" URL="../common/bin/gartoolkit_fd_64-1.so"/>
-			<Item Name="gartoolkit_ar_64-1.so" Type="Document" URL="../common/bin/gartoolkit_ar_64-1.so"/>
-			<Item Name="Break on NILRT-ARM32.vi" Type="VI" URL="../common/Break on NILRT-ARM32.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="Source Distribution" Type="Source Distribution">

@@ -71,6 +71,7 @@
 		<Item Name="ThresholdCore.vi" Type="VI" URL="../ThresholdCore.vi"/>
 		<Item Name="WarpAffineCore.vim" Type="VI" URL="../WarpAffineCore.vim"/>
 		<Item Name="WarpPerspectiveCore.vim" Type="VI" URL="../WarpPerspectiveCore.vim"/>
+		<Item Name="WriteImageFileBufferCore.vim" Type="VI" URL="../WriteImageFileBufferCore.vim"/>
 		<Item Name="WriteImageFileCore.vim" Type="VI" URL="../WriteImageFileCore.vim"/>
 	</Item>
 	<Item Name="Mapped Memory Access Image" Type="Folder">
@@ -172,6 +173,11 @@
 			<Item Name="Draw Rectangle (Greyscale).vi" Type="VI" URL="../Draw Rectangle (Greyscale).vi"/>
 			<Item Name="Draw Text (ARGB).vi" Type="VI" URL="../Draw Text (ARGB).vi"/>
 			<Item Name="Draw Text (Greyscale).vi" Type="VI" URL="../Draw Text (Greyscale).vi"/>
+		</Item>
+		<Item Name="Encode Image to File Buffer" Type="Folder">
+			<Item Name="Encode Image to File Buffer (ARGB).vi" Type="VI" URL="../Encode Image to File Buffer (ARGB).vi"/>
+			<Item Name="Encode Image to File Buffer (Greyscale).vi" Type="VI" URL="../Encode Image to File Buffer (Greyscale).vi"/>
+			<Item Name="Encode Image to PNG File Buffer with Alpha.vi" Type="VI" URL="../Encode Image to PNG File Buffer with Alpha.vi"/>
 		</Item>
 		<Item Name="Flip" Type="Folder">
 			<Item Name="Flip (ARGB Both Axes).vi" Type="VI" URL="../Flip (ARGB Both Axes).vi"/>
@@ -314,6 +320,7 @@
 			<Item Name="Raw Memory Information.ctl" Type="VI" URL="../Raw Memory Information.ctl"/>
 			<Item Name="Text Drawing Settings.ctl" Type="VI" URL="../Text Drawing Settings.ctl"/>
 		</Item>
+		<Item Name="Image to File-Buffer Encoder.lvclass" Type="LVClass" URL="../Image to File-Buffer Encoder/Image to File-Buffer Encoder.lvclass"/>
 		<Item Name="Acquire Mapped Memory Access.vi" Type="VI" URL="../Acquire Mapped Memory Access.vi"/>
 		<Item Name="Add Weighted Images.vi" Type="VI" URL="../Add Weighted Images.vi"/>
 		<Item Name="ARGB Colour to U32 Pixel Value.vi" Type="VI" URL="../ARGB Colour to U32 Pixel Value.vi"/>
@@ -368,6 +375,7 @@
 		<Item Name="Warp Perspective.vi" Type="VI" URL="../Warp Perspective.vi"/>
 		<Item Name="Write Image File.vi" Type="VI" URL="../Write Image File.vi"/>
 		<Item Name="Shared Library Version.vi" Type="VI" URL="../Shared Library Version.vi"/>
+		<Item Name="Encode Image to File Buffer.vi" Type="VI" URL="../Encode Image to File Buffer.vi"/>
 		<Item Name="CLAHE.lvclass" Type="LVClass" URL="../CLAHE/CLAHE.lvclass"/>
 	</Item>
 </Library>

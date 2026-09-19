@@ -19,12 +19,13 @@ namespace
     {
     public:
         ImageEncoder() = delete;
-        ImageEncoder(const std::string &ext);
-        bool encode(const cv::Mat src, LV_StringHandle_t result);
+        ImageEncoder(const std::string &ext, LV_BooleanPtr_t write_alpha_ptr);
+        bool encode(lv_image &src, LV_StringHandle_t result);
 
     private:
         std::vector<uchar> buffer;
         const std::string ext;
+        const bool write_alpha;
     };
 }
 
@@ -33,11 +34,15 @@ extern "C"
     G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_encoder_create(
         LV_ErrorClusterPtr_t error_cluster_ptr,
         LV_StringHandle_t extension_handle,
+        LV_BooleanPtr_t write_alpha_ptr,
         LV_EDVRReferencePtr_t edvr_ref_ptr)
     {
         try
         {
-            EDVRManagedObject<ImageEncoder>(edvr_ref_ptr, new ImageEncoder(extension_handle));
+            if(!cv::haveImageWriter(extension_handle)){
+                throw std::invalid_argument("No codec support for file-extension \"" + std::string(extension_handle) + "\".");
+            }
+            EDVRManagedObject<ImageEncoder>(edvr_ref_ptr, new ImageEncoder(extension_handle, write_alpha_ptr));
         }
         catch (...)
         {
@@ -72,16 +77,31 @@ extern "C"
     }
 }
 
-ImageEncoder::ImageEncoder(const std::string &ext) : ext(ext)
+ImageEncoder::ImageEncoder(const std::string &ext, LV_BooleanPtr_t write_alpha_ptr) : ext(ext), write_alpha(*write_alpha_ptr)
 {
     // nothing else to construct
 }
 
-bool ImageEncoder::encode(const cv::Mat src, LV_StringHandle_t result)
+bool ImageEncoder::encode(lv_image &src, LV_StringHandle_t result)
 {
-    auto success = cv::imencode(ext, src, buffer);
+    bool success;
 
-    if(success){
+    if (src.is_bgra() && write_alpha || src.is_greyscale())
+    {
+        // colour and write ARGB or greyscale
+        success = cv::imencode(ext, src, buffer);
+    }
+    else
+    {
+
+        cv::Mat bgr(src.size(), CV_8UC3);
+        cv::cvtColor(src, bgr, cv::COLOR_BGRA2BGR);
+
+        success = cv::imencode(ext, bgr, buffer);
+    }
+
+    if (success)
+    {
         result.copy_memory_from(buffer);
         return success;
     }
