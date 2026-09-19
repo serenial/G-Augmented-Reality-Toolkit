@@ -52,7 +52,7 @@ jobs:
     - name: Install NILRT cortexa9 Cross Compilation Tools
       if: ${{ matrix.arch == 'cortexa9-nilrt' }}
       run: |
-        sudo bash scripts/install-nilrt-coretexa9-tools.sh
+        sudo bash scripts/install-nilrt-cortexa9-tools.sh
 
     - name: Install rpi5 armv8a Cross Compilation Tools
       if: ${{ matrix.arch == 'armv8a-rpi5'}}
