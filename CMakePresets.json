@@ -74,24 +74,33 @@
             }
         },
         {
-            "name": "nilrt-armv7a-cross",
+            "name": "linux-oe-armv7a-cross",
             "inherits": "linux-x64-release",
-            "binaryDir": "${sourceDir}/build/nilrt-armv7a",
+            "binaryDir": "${sourceDir}/build/oe-armv7a",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "VCPKG_TARGET_TRIPLET": "armv7a-nilrt-linux-ci",
-                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-armv7a.cmake",
-                "CMAKE_CXX_STANDARD": "14",
-                "CMAKE_C_STANDARD": "11",
+                "VCPKG_TARGET_TRIPLET": "armv7a-oe-linux-ci",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/oe-armv7a.cmake",
                 "OMIT_ZXING": "ON",
-                "OMIT_DNN": "ON",
-                "OMIT_VIDEOIO": "ON",
                 "OMIT_TESSERACT": "ON",
                 "OMIT_OBJLOADER": "ON"
             }
         },
         {
-            "name": "rpi5-armv8a-cross",
+            "name": "linux-nilrt-cortexa9-cross",
+            "inherits": "linux-x64-release",
+            "binaryDir": "${sourceDir}/build/nilrt-cortexa9",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "VCPKG_TARGET_TRIPLET": "cortexa9-nilrt-linux-ci",
+                "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/scripts/toolchains/nilrt-cortexa9.cmake",
+                "OMIT_ZXING": "ON",
+                "OMIT_TESSERACT": "ON",
+                "OMIT_OBJLOADER": "ON"
+            }
+        },
+        {
+            "name": "linux-rpi5-armv8a-cross",
             "inherits": "linux-x64-release",
             "binaryDir": "${sourceDir}/build/rpi5-armv8a",
             "cacheVariables": {
@@ -120,7 +129,7 @@
             "inherits": "ci",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x86-windows-static-ci",
-                "ARCHIVE_PLATFORM_NAME":"x86"
+                "ARCHIVE_PLATFORM_NAME": "x86"
             }
         },
         {
@@ -128,7 +137,7 @@
             "inherits": "ci",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x64-windows-static-ci",
-                "ARCHIVE_PLATFORM_NAME":"x64"
+                "ARCHIVE_PLATFORM_NAME": "x64"
             }
         },
         {
@@ -137,25 +146,35 @@
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
                 "VCPKG_TARGET_TRIPLET": "x64-linux-ci",
-                "ARCHIVE_PLATFORM_NAME":"x64"
+                "ARCHIVE_PLATFORM_NAME": "x64"
             }
         },
         {
-            "name": "ci-linux-armv7a-nilrt",
-            "inherits": "nilrt-armv7a-cross",
+            "name": "ci-linux-armv7a-oe",
+            "inherits": "linux-oe-armv7a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "BUILD_OPKG": "ON",
                 "GENERATE_ARCHIVE": "OFF",
-                "ARCHIVE_PLATFORM_NAME" : "armv7a"
+                "ARCHIVE_PLATFORM_NAME": "armv7a-vfp"
+            }
+        },
+        {
+            "name": "ci-linux-cortexa9-nilrt",
+            "inherits": "linux-nilrt-cortexa9-cross",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "BUILD_OPKG": "ON",
+                "GENERATE_ARCHIVE": "OFF",
+                "ARCHIVE_PLATFORM_NAME": "cortexa9-vfpv3"
             }
         },
         {
             "name": "ci-linux-armv8a-rpi5",
-            "inherits": "rpi5-armv8a-cross",
+            "inherits": "linux-rpi5-armv8a-cross",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "ARCHIVE_PLATFORM_NAME":"armv8a-rpi5",
+                "ARCHIVE_PLATFORM_NAME": "armv8a-rpi5",
                 "GENERATE_ARCHIVE": "ON"
             }
         }
@@ -216,10 +235,16 @@
             "configurePreset": "ci-linux-x64"
         },
         {
-            "name": "ci-linux-armv7a-nilrt",
+            "name": "ci-linux-armv7a-oe",
             "configuration": "Release",
             "targets": "all",
-            "configurePreset": "ci-linux-armv7a-nilrt"
+            "configurePreset": "ci-linux-armv7a-oe"
+        },
+        {
+            "name": "ci-linux-cortexa9-nilrt",
+            "configuration": "Release",
+            "targets": "all",
+            "configurePreset": "ci-linux-cortexa9-nilrt"
         },
         {
             "name": "ci-linux-armv8a-rpi5",
@@ -227,6 +252,5 @@
             "targets": "all",
             "configurePreset": "ci-linux-armv8a-rpi5"
         }
-        
     ]
 }

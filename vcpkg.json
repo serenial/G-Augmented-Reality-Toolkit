@@ -15,6 +15,9 @@
         "png",
         "tiff",
         "webp",
+        "ffmpeg",
+        "contrib",
+        "dnn",
         {
           "name": "ipp",
           "platform": "x86|x64"
@@ -26,10 +29,7 @@
       "default-features": false,
       "platform": "!arm32",
       "features": [
-        "contrib",
-        "dnn",
-        "text",
-        "ffmpeg"
+        "text"
       ]
     },
     {
