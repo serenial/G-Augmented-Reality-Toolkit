@@ -20,7 +20,7 @@ namespace
     public:
         ImageEncoder() = delete;
         ImageEncoder(const std::string &ext, LV_BooleanPtr_t write_alpha_ptr);
-        bool encode(lv_image &src, LV_StringHandle_t result);
+        bool encode(lv_image src, LV_StringHandle_t result);
 
     private:
         std::vector<uchar> buffer;
@@ -82,7 +82,7 @@ ImageEncoder::ImageEncoder(const std::string &ext, LV_BooleanPtr_t write_alpha_p
     // nothing else to construct
 }
 
-bool ImageEncoder::encode(lv_image &src, LV_StringHandle_t result)
+bool ImageEncoder::encode(lv_image src, LV_StringHandle_t result)
 {
     bool success;
 
