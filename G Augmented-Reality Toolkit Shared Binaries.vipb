@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-02-26 22:06:36" Creator="john" Comments="" ID="3c7412aed3459632d33e81e5e25c1058">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2025-01-26 14:39:25" Modified_Date="2026-09-20 16:27:03" Creator="john" Comments="" ID="ae70953e149447ac22997bc91d17af4b">
   <Library_General_Settings>
     <Package_File_Name>serenial_io_g_augmented_reality_toolkit_shared_binaries</Package_File_Name>
-    <Library_Version>1.8.0.4</Library_Version>
+    <Library_Version>1.9.0.6</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>build\installer-source-distribution\common\bin</Library_Source_Folder>
     <Library_Output_Folder>build</Library_Output_Folder>
@@ -14,9 +14,13 @@
     <Product_Name>G Augmented-Reality Toolkit Shared Binaries</Product_Name>
     <Was_Built>true</Was_Built>
     <Target>LabVIEW</Target>
+    <Package_LabVIEW_Save_Version>false</Package_LabVIEW_Save_Version>
+    <LabVIEW_Save_Version/>
   </Library_General_Settings>
   <Advanced_Settings>
-    <Package_Dependencies/>
+    <Package_Dependencies>
+      <Additional_External_Dependencies>jki_lib_http_client_extensions &gt;=0.2.0.3</Additional_External_Dependencies>
+    </Package_Dependencies>
     <Custom_Action_VIs>
       <Pre-Build_VI/>
       <Post-Build_VI/>
@@ -32,7 +36,7 @@
       <Copyright>Copyright (c) 2025, Serenial and contributors</Copyright>
       <Packager>Serenial</Packager>
       <URL>https://gitlab.com/serenial/g-augmented-reality-toolkit</URL>
-      <Release_Notes>* Fix Windows Webcam Streaming Bug</Release_Notes>
+      <Release_Notes>* Added Encode to Image File</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>

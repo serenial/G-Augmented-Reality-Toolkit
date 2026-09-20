@@ -35,6 +35,7 @@
 *.aliases
 *.lvlps
 *.ipk
+*.UserState/
 
 # VSCode Files
 *.vscode

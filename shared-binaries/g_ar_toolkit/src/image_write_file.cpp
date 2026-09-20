@@ -23,19 +23,71 @@ extern "C"
         {
             lv_image src(src_edvr_ref_ptr, true);
 
-            if (*save_alpha_ptr && src.is_bgra())
+            bool success;
+
+            if (src.is_bgra() && *save_alpha_ptr || src.is_greyscale())
             {
-                cv::imwrite(path_string_handle, src);
+                // colour and write ARGB or greyscale
+                success = cv::imwrite(path_string_handle, src);
+            }
+            else
+            {
+
+                cv::Mat bgr(src.size(), CV_8UC3);
+                cv::cvtColor(src, bgr, cv::COLOR_BGRA2BGR);
+
+                success = cv::imwrite(path_string_handle, bgr);
             }
 
-            cv::Mat bgr(src.size(), CV_8UC3);
-            cv::cvtColor(src, bgr, src.is_bgra() ? cv::COLOR_BGRA2BGR : cv::COLOR_GRAY2BGR);
-            
-            auto success = cv::imwrite(path_string_handle, bgr);
-
-            if(!success){
+            if (!success)
+            {
                 throw std::invalid_argument("Unable to write file to \"" + std::string(path_string_handle) + "\".");
             }
+        }
+        catch (...)
+        {
+            error_cluster_ptr.copy_from_exception(std::current_exception(), __func__);
+        }
+
+        return LV_ERR_noError;
+    }
+
+    G_AR_TOOLKIT_EXPORT LV_MgErr_t g_ar_tk_image_write_file_buffer(
+        LV_ErrorClusterPtr_t error_cluster_ptr,
+        LV_StringHandle_t extension_handle,
+        LV_EDVRReferencePtr_t src_edvr_ref_ptr,
+        LV_BooleanPtr_t write_alpha_ptr,
+        LV_StringHandle_t buffer_handle
+    )
+    {
+        try
+        {
+            lv_image src(src_edvr_ref_ptr, true);
+
+            bool success;
+            std::vector<uchar> buffer;
+
+
+            if (src.is_bgra() && *write_alpha_ptr || src.is_greyscale())
+            {
+                // colour and write ARGB or greyscale
+                success = cv::imencode(extension_handle, src, buffer);
+            }
+            else
+            {
+
+                cv::Mat bgr(src.size(), CV_8UC3);
+                cv::cvtColor(src, bgr, cv::COLOR_BGRA2BGR);
+
+                success = cv::imencode(extension_handle, bgr, buffer);
+            }
+
+            if (!success)
+            {
+                throw std::invalid_argument("Unable to encode the source image to buffer.");
+            }
+
+            buffer_handle.copy_memory_from(buffer);
         }
         catch (...)
         {
